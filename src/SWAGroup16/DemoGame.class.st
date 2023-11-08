@@ -4,7 +4,7 @@ I am a DemoGame that can be opened with 'DemoGame open'. Delete me and replace m
 Class {
 	#name : #DemoGame,
 	#superclass : #Morph,
-	#category : 'SWAGroup01-Core',
+	#category : 'SWAGroup16-Core',
 	#'squeak_changestamp' : 'ek 10/22/2021 12:51'
 }
 
