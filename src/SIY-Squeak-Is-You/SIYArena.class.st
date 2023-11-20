@@ -53,13 +53,13 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:20'
+	#'squeak_changestamp' : 'LK 11/20/2023 14:41'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
 
 	super initialize.
-	super color: Color black.
+	self color: Color black.
 	
 	"Arena dimensions"
 	self pixelPerBlock: 50.

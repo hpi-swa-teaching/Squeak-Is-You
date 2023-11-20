@@ -1,4 +1,4 @@
 Package {
-	#'squeak_changestamp' : true,
-	#name : #'SIY-Squeak-Is-You'
+	#name : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : true
 }
