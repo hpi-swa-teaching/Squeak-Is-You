@@ -15,7 +15,7 @@ OrderedCollection [
 	},
 	SquotTonelMapper {
 		#package : MCPackage {
-			#name : 'Squeak Is You'
+			#name : 'SIY-Squeak-Is-You'
 		},
 		#path : @4
 	}
