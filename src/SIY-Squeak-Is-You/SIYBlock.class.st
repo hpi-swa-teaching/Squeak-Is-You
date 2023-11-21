@@ -19,10 +19,9 @@ SIYBlock class >> newInArena: arena [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:44'
+	#'squeak_changestamp' : 'LK 11/21/2023 22:52'
 }
-SIYBlock >> alignWithGrid [
-	"align block with arena grid"
+SIYBlock >> alignToGrid [
 
 	self posX: self posX.
 	self posY: self posY
@@ -78,7 +77,7 @@ SIYBlock >> posX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:43'
+	#'squeak_changestamp' : 'LK 11/21/2023 22:52'
 }
 SIYBlock >> posX: value [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -89,7 +88,7 @@ SIYBlock >> posX: value [
 		setX: (value clampLow: 0 high: arena arenaWidth - 1) * arena pixelPerBlock
 		setY: self relativePosition y.
 	
-	self position: arena position + newPos
+	super position: arena position + newPos
 
 ]
 
@@ -117,7 +116,7 @@ SIYBlock >> posY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:43'
+	#'squeak_changestamp' : 'LK 11/21/2023 22:52'
 }
 SIYBlock >> posY: value [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -128,8 +127,19 @@ SIYBlock >> posY: value [
 		setX: self relativePosition x
 		setY: (value clampLow: 0 high: arena arenaHeight - 1) * arena pixelPerBlock.
 	
-	self position: arena position + newPos
+	super position: arena position + newPos
 
+]
+
+{
+	#category : #positioning,
+	#'squeak_changestamp' : 'LK 11/21/2023 22:53'
+}
+SIYBlock >> position: aPoint [
+
+	"super position: (self alignPoint: aPoint)"
+	super position: aPoint.
+	self alignToGrid
 ]
 
 {
