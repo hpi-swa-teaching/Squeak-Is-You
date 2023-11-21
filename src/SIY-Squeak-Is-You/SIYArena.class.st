@@ -79,12 +79,13 @@ SIYArena >> pixelPerBlock [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:18'
+	#'squeak_changestamp' : 'LK 11/21/2023 21:08'
 }
 SIYArena >> pixelPerBlock: val [
+	"specify pixel width of one block - do not change during an objects lifetime"
 
 	pixelPerBlock := val.
-	self updateDimensions
+
 ]
 
 {
