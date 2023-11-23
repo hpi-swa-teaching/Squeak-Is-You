@@ -2,17 +2,9 @@
 
 Hier finden Sie sämtliche Dokumentation für den Codestyle des SWA-Projekts von der Gruppe 16 aka. die Programmier Pandas für das Spiel: "SQUEAK IS YOU" 
 
-## Objekte deklarieren
+## Beispiel für schönen Code
 
-- Objekte initialisiert mit `SIY...`
-- Lokale Variablen werden klein geschrieben `lowercase`
-- globale Variablen in CAPS  `UPPERCASE`
-- private Funktionen `lowercase`
-- public Funktionen `UPPERCASE`           
-
-
-
-```
+```smalltalk
 | y |
 (true or: [false not] or: [nil isNil]) ifFalse: [self halt].
 y := self size + super size.
@@ -31,10 +23,16 @@ y := self size + super size.
 3. **DON'T** capitilize instance and temp variables, parameters and methods
 4. wichtig: Projekt spezifischer Präfix (hier in diesem Projekt `SIY`)
 5. Have it make sense in natural Language
-    1. `aVehicle hasFourWheels `vs.` aVehicle fourWheels`
+    
+        aVehicle hasFourWheels `VS.` aVehicle fourWheels
 6. Use a phrase beginning with a verb for methods that answer a Boolean
-7. no magic numbers
+7. __NO__ magic numbers => put them in variables
 8. Spell out identifiers
+9. Avoid the parameter type or name in the method name
+    
+        fileSystem at: aKey put: aFile
+        VS. 
+        fileSystem atKey: aKey putFile: aFile
 
 ## Comments
 
@@ -77,33 +75,58 @@ y := self size + super size.
 3. Employ a **consistent spacing** around messages and delimiters
 4. Employ at least one blank before and after a binary selector
 
-    `answer := (3 + 4 * 36) >= (32 + x).  `vs.` answer:=(3+4*36)>=(32+x).`
+        answer := (3 + 4 * 36) >= (32 + x).  `vs.` answer:=(3+4*36)>=(32+x).
 
 5. Leave spaces around @ (when both receiver and argument are positive integers) 
 
-    `10 @ 235 `vs.` 10@235`
+        10 @ 235 `vs.` 10@235
 
 6. Leave at least one blank before a left parenthesis and after a right parenthesis
 
-    `#((2 3) (3 4) (4 5)) `vs.` #((2 3)(3 4)(4 5))`
+        #((2 3) (3 4) (4 5)) `VS.` #((2 3)(3 4)(4 5))
 
 7. Leave at least one blank after but not before a comma (,), a semicolon (;), and a colon (:) in a selector
 
-    `value between: top and: bottom `vs.` value between:top and:bottom`
+        value between: top and: bottom `VS.` value between:top and:bottom
 
 8. Indent, align nested continuation lines **consistently**
 
-9. Do not break a short expression across lines
-10. Use indentation to delineate the logical nesting and match the alternative cases
-11. To reflect control flow, indent blocks that follow iteration messages
-12. Break up long key word messages over multiple lines to avoid line wraps
-13. Choose one way to align brackets in blocks and use it consistently
+9. **Embrace Oneliners** and avoid to break them across lines
+10.     Use 
+            INDENTATION
+                für Abgrenzung im logischen Fluss 
+12. **AVOID** line wraps
+13. Choose one way to align brackets in blocks and use it consistently (TODO)
+
 14. Use a cascade instead of repeating the receiver, even when the receiver is self
-15. In a cascaded message, separate the receiver from the message
-16. Separate cascaded long keyword messages with a blank line or further indent
-17. Start each statement on a new line
-18. If a binary or Boolean expression will not fit on a single line, break it up
-19. Use a blank line to separate sections of code in a long method
-20. Limit source code line length to 60 characters or the window width
-21. Use extra parenthesis to simplify the reading of a complicated expression
- 
+    ```smalltalk
+    self
+        label: self model label;
+        minimumSize: 35 @ 7;
+        when: #reactive perform: #reactiveWindow:; yourself 
+    VS.
+    self label: self model label.
+    self minimumSize: 35 @ 7.
+    self when: #reactive perform: #reactiveWindow:.
+    ```
+17.         NEW LINES 
+            for ever 
+            new statement
+
+20. **60 Character** Code Line Width (Window Width)
+
+## Reuse
+1. Functions every Method needs:
+        
+        #open (if it opens a window)
+        #execute (if it executes a window)
+        #initialize and #new (check if/how a superclass already implements those)
+        #close (if superclass requires it)
+2. Write small methods
+3. For each variable defined by a class, define two accessor methods
+
+             name
+                ^ name
+             name: aString 
+                name := aString.
+4. Use inheritance to organize classes with similar behavior
