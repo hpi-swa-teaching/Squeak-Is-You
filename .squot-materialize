@@ -12,5 +12,11 @@ OrderedCollection [
 			'README.md'
 		],
 		#encoding : 'TXT'
+	},
+	SquotTonelMapper {
+		#package : MCPackage {
+			#name : 'SIY-Squeak-Is-You'
+		},
+		#path : @4
 	}
 ]
