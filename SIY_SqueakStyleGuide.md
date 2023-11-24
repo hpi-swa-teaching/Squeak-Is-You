@@ -6,13 +6,17 @@ Hier finden Sie sämtliche Dokumentation für den Codestyle des SWA-Projekts von
 
 ```smalltalk
 | y |
+
 (true or: [false not] or: [nil isNil]) ifFalse: [self halt].
+
 y := self size + super size.
-{$a. #a. 'a’. 1. 1.0}
+
+{$a . #a . 'a’ . 1 . 1,0}
     do: [:each | Transcript
         show: each class name;
         show: each printString;
         show: ' '].
+
 ^ x < y
 ```
 
