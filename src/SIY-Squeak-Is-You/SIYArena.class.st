@@ -53,7 +53,7 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:41'
+	#'squeak_changestamp' : 'jt 11/30/2023 15:16'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -65,6 +65,11 @@ SIYArena >> initialize [
 	self pixelPerBlock: 50.
 	self arenaHeight: 10.
 	self arenaWidth: 18.
+	
+	"Register Morph to GMKeyHandler"
+	self gmRegisterToKeyHandler.
+	
+	self openInWorld.
 	
 ]
 

@@ -9,7 +9,7 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 11/21/2023 21:00'
+	#'squeak_changestamp' : 'jt 11/29/2023 15:21'
 }
 SIYBlock class >> newInArena: arena [
 	"create new block in SIY arena"
@@ -60,6 +60,23 @@ SIYBlock >> initialize [
 	arena addMorph: self.
 	self position: arena position
 	
+	
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'jt 11/30/2023 20:30'
+}
+SIYBlock >> move [
+
+	(arena gmIsKeyPressed: Character arrowUp)
+		ifTrue: [self posY: self posY -1].
+	(arena gmIsKeyPressed: Character arrowDown)
+		ifTrue: [self posY: self posY +1].
+	(arena gmIsKeyPressed: Character arrowRight)
+		ifTrue: [self posX: self posX +1].
+	(arena gmIsKeyPressed: Character arrowLeft)
+		ifTrue: [self posX: self posX -1].
 	
 ]
 
@@ -150,4 +167,24 @@ SIYBlock >> relativePosition [
 	"position relative to Morph (measured in pixel)"
 
 	^ self position - arena position
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'jt 11/30/2023 20:13'
+}
+SIYBlock >> step [
+	"comment stating purpose of message"
+
+	self move.
+
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'jt 11/30/2023 22:19'
+}
+SIYBlock >> stepTime [
+	
+	^ 125
 ]
