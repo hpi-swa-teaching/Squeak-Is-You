@@ -1,14 +1,35 @@
 Class {
 	#name : #SIYBlock,
-	#superclass : #Morph,
+	#superclass : #ImageMorph,
 	#instVars : [
 		'arena'
+	],
+	#classInstVars : [
+		'isYou'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
-	#category : #'as yet unclassified',
+	#category : #operators,
+	#'squeak_changestamp' : 'LK 12/3/2023 21:01'
+}
+SIYBlock class >> isYou [
+
+	^ isYou
+]
+
+{
+	#category : #operators,
+	#'squeak_changestamp' : 'LK 12/3/2023 21:01'
+}
+SIYBlock class >> isYou: aBoolean [
+
+	isYou := aBoolean
+]
+
+{
+	#category : #'instance creation',
 	#'squeak_changestamp' : 'jt 11/29/2023 15:21'
 }
 SIYBlock class >> newInArena: arena [
@@ -46,16 +67,25 @@ SIYBlock >> arena: a [
 ]
 
 {
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 12/3/2023 20:26'
+}
+SIYBlock >> imageForm [
+
+	^ SubclassResponsibility
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:04'
+	#'squeak_changestamp' : 'LK 12/3/2023 20:52'
 }
 SIYBlock >> initialize [
 	
 	super initialize.
 	
-	self width: arena pixelPerBlock.
-	self height: arena pixelPerBlock.
-	self color: Color white.
+	self image: (Form fromFileNamed: self textureFile).
+	
+	self extent: arena pixelPerBlock @ arena pixelPerBlock.
 	
 	arena addMorph: self.
 	self position: arena position
@@ -171,12 +201,13 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'jt 11/30/2023 20:13'
+	#'squeak_changestamp' : 'LK 12/3/2023 21:13'
 }
 SIYBlock >> step [
 	"comment stating purpose of message"
 
-	self move.
+	(self class isYou)
+		ifTrue: [self move].
 
 ]
 
@@ -187,4 +218,13 @@ SIYBlock >> step [
 SIYBlock >> stepTime [
 	
 	^ 125
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 12/3/2023 20:50'
+}
+SIYBlock >> textureFile [
+
+	^ SubclassResponsibility
 ]
