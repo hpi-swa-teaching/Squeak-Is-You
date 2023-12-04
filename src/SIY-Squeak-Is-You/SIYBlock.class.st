@@ -166,9 +166,11 @@ SIYBlock >> imageForm [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:45'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:21'
 }
 SIYBlock >> initialize [
+	
+	stepTime := 3.
 	
 	super initialize.
 	
@@ -233,19 +235,18 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/3/2023 21:13'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:18'
 }
 SIYBlock >> step [
-	"comment stating purpose of message"
 
-	(self class isYou)
+	(SIYRuleManager new isYou: self)
 		ifTrue: [self move].
 
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:12'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:21'
 }
 SIYBlock >> stepTime [
 	

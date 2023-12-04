@@ -21,8 +21,16 @@ OrderedCollection [
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
+			'textures',
 			'SIYWall.png'
 		],
 		#encoding : Class [ #PNGReadWriter ]
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYSqueak.png'
+		],
+		#encoding : @11
 	}
 ]

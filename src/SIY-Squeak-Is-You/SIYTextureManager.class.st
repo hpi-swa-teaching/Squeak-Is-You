@@ -18,10 +18,10 @@ SIYTextureManager >> getTexture: aFilename [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:36'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:05'
 }
 SIYTextureManager >> initialize [
 
-	assetLoader := GitAssetLoader for: 'swa23-24-group16'.
+	assetLoader := GitAssetLoader for: 'swa23-24-group16' basePath: 'textures'.
 
 ]
