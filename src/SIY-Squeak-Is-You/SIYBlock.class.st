@@ -166,13 +166,13 @@ SIYBlock >> imageForm [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:01'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:45'
 }
 SIYBlock >> initialize [
 	
 	super initialize.
 	
-	self image: (Form fromFileNamed: self textureFile).
+	self image: (SIYTextureManager new getTexture: self textureFile).
 	arena addMorph: self.
 	
 	

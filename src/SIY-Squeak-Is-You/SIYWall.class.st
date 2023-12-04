@@ -17,9 +17,9 @@ SIYWall >> initialize [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 12/3/2023 20:47'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:45'
 }
 SIYWall >> textureFile [
 
-	^ '/Users/linus/Downloads/SIYWall.png'
+	^ '/SIYWall.png'
 ]
