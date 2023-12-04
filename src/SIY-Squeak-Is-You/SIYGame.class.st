@@ -19,12 +19,12 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'jt 11/30/2023 15:21'
+	#'squeak_changestamp' : 'LK 12/4/2023 16:55'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	arena := SIYArena	 new.
+	arena := SIYArena	new.
 	block := SIYBlock newInArena: arena.
 ]
