@@ -2,7 +2,8 @@ Class {
 	#name : #SIYBlock,
 	#superclass : #ImageMorph,
 	#instVars : [
-		'arena'
+		'arena',
+		'stepTime'
 	],
 	#classInstVars : [
 		'isYou'
@@ -179,18 +180,33 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:49'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:22'
 }
 SIYBlock >> move [
-
+	"needs refactoring"
+	
+	| timeBetweenSteps timeElse |
+	
+	timeBetweenSteps := 185.
+	timeElse := 3.
+	
 	(arena gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self coordY: self coordY -1].
+		ifTrue: [self coordY: self coordY - 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self coordY: self coordY +1].
+		ifTrue: [self coordY: self coordY + 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self coordX: self coordX +1].
+		ifTrue: [self coordX: self coordX + 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self coordX: self coordX -1].
+		ifTrue: [self coordX: self coordX - 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [self stepTime: 5]
+	]]].
 	
 ]
 
@@ -229,16 +245,27 @@ SIYBlock >> step [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'jt 11/30/2023 22:19'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:12'
 }
 SIYBlock >> stepTime [
 	
-	^ 125
+	^ stepTime
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/4/2023 17:12'
+}
+SIYBlock >> stepTime: aNumber [
+
+	stepTime := aNumber
+
+	
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:50'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:09'
 }
 SIYBlock >> textureFile [
 
