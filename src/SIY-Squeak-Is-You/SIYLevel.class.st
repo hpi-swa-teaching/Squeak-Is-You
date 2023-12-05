@@ -18,18 +18,20 @@ SIYLevel >> arena [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 10:39'
+	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
 }
 SIYLevel >> arenaDimensions [
 
-	^ 24@16
+	^ SubclassResponsibility
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 10:40'
+	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
 }
 SIYLevel >> buildLevel [
+
+	^ SubclassResponsibility
 ]
 
 {
