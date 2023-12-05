@@ -15,7 +15,7 @@ SIYLevel01 >> arenaDimensions [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 12:02'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/5/2023 13:19'
 }
 SIYLevel01 >> buildLevel [
 	
@@ -24,6 +24,7 @@ SIYLevel01 >> buildLevel [
 	self placeBlock: SIYRock at: 6@3.
 	self placeBlock: SIYRock at: 9@7.
 	self placeBlock: SIYRock at: 13@8.
+	self placeBlock: SIYRock at: 8@9.
 	
 	self placeBlock: SIYSqueak at: 4@4.
 ]
