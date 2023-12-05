@@ -18,5 +18,26 @@ OrderedCollection [
 			#name : 'SIY-Squeak-Is-You'
 		},
 		#path : @4
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYWall.png'
+		],
+		#encoding : Class [ #PNGReadWriter ]
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYSqueak.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYRock.png'
+		],
+		#encoding : @11
 	}
 ]

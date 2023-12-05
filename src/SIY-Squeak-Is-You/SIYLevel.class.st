@@ -1,0 +1,102 @@
+Class {
+	#name : #SIYLevel,
+	#superclass : #Object,
+	#instVars : [
+		'arena'
+	],
+	#category : #'SIY-Squeak-Is-You'
+}
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
+}
+SIYLevel >> arena [
+
+	^ arena
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 12/5/2023 10:39'
+}
+SIYLevel >> arenaDimensions [
+
+	^ 24@16
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 12/5/2023 10:40'
+}
+SIYLevel >> buildLevel [
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/5/2023 10:39'
+}
+SIYLevel >> createLevel [
+
+	arena := SIYArena newWithDimension: self arenaDimensions.
+	
+	self buildLevel.
+	
+	arena openInWorld.
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/5/2023 11:51'
+}
+SIYLevel >> initialize [
+
+	super initialize.
+	
+	self createLevel.
+	
+	^ self
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 12/5/2023 11:33'
+}
+SIYLevel >> placeBlock: aBlockClass at: aPoint [
+
+	aBlockClass newInArena: self arena at: aPoint
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 12/5/2023 11:40'
+}
+SIYLevel >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
+
+	(firstPoint x) to: (secondPoint x) do: 
+		[:coordX | (firstPoint y) to: (secondPoint y) do: 
+			[:coordY | self placeBlock: aBlockClass at: coordX@coordY]]
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 12/5/2023 11:55'
+}
+SIYLevel >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
+
+	self placeBlocks: aBlockClass
+		from: firstPoint
+		to: (firstPoint x)@(secondPoint y).
+		
+	self placeBlocks: aBlockClass
+		from: firstPoint
+		to: (secondPoint x)@(firstPoint y).
+		
+	self placeBlocks: aBlockClass
+		from: (firstPoint x)@(secondPoint y)
+		to: secondPoint.
+		
+	self placeBlocks: aBlockClass
+		from: (secondPoint x)@(firstPoint y)
+		to: secondPoint.
+]

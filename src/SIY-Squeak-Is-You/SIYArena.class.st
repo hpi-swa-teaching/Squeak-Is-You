@@ -3,11 +3,22 @@ Class {
 	#superclass : #Morph,
 	#instVars : [
 		'arenaWidth',
-		'arenaHeight',
-		'pixelPerBlock'
+		'arenaHeight'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 12/5/2023 10:38'
+}
+SIYArena class >> newWithDimension: aPoint [
+
+	^ (SIYArena new)
+		arenaWidth: aPoint x;
+		arenaHeight: aPoint y;
+		yourself
+]
 
 {
 	#category : #layout,
@@ -53,7 +64,7 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'jt 11/30/2023 15:16'
+	#'squeak_changestamp' : 'LK 12/5/2023 10:36'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -61,48 +72,28 @@ SIYArena >> initialize [
 	super initialize.
 	self color: Color black.
 	
-	"Arena dimensions"
-	self pixelPerBlock: 50.
-	self arenaHeight: 10.
-	self arenaWidth: 18.
-	
 	"Register Morph to GMKeyHandler"
 	self gmRegisterToKeyHandler.
 	
-	self openInWorld.
-	
 ]
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 13:33'
+	#'squeak_changestamp' : 'LK 12/3/2023 20:56'
 }
 SIYArena >> pixelPerBlock [
 
-	^ pixelPerBlock
+	^ 60
 ]
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:08'
-}
-SIYArena >> pixelPerBlock: val [
-	"specify pixel width of one block - do not change during an objects lifetime"
-
-	pixelPerBlock := val.
-
-]
-
-{
-	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:09'
+	#'squeak_changestamp' : 'LK 12/3/2023 20:55'
 }
 SIYArena >> updateDimensions [
-	"Update arena dimensions according to width/height/pixelPerBlock"
-	
-	(pixelPerBlock)
-		ifNotNil: [
-			(arenaWidth) ifNotNil: [self width: pixelPerBlock * arenaWidth].
-			(arenaHeight) ifNotNil: [self height: pixelPerBlock * arenaHeight]
-		]
+	"Update arena dimensions according to width/height"
+
+	(arenaWidth) ifNotNil: [self width: self pixelPerBlock * arenaWidth].
+	(arenaHeight) ifNotNil: [self height: self pixelPerBlock * arenaHeight]
+
 ]

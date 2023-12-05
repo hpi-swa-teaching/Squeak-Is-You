@@ -1,30 +1,44 @@
 Class {
 	#name : #SIYBlock,
-	#superclass : #Morph,
+	#superclass : #ImageMorph,
 	#instVars : [
-		'arena'
+		'arena',
+		'stepTime'
+	],
+	#classInstVars : [
+		'isYou'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'jt 11/29/2023 15:21'
+	#category : #'instance creation',
+	#'squeak_changestamp' : 'LK 12/4/2023 17:02'
 }
-SIYBlock class >> newInArena: arena [
+SIYBlock class >> newInArena: anArena [
 	"create new block in SIY arena"
 
-	^ (self basicNew arena: arena) initialize
+	^ self newInArena: anArena at: 0@0
+]
+
+{
+	#category : #'instance creation',
+	#'squeak_changestamp' : 'LK 12/4/2023 16:57'
+}
+SIYBlock class >> newInArena: anArena at: aPoint [
+	"create new block in SIY arena at given coordinates"
+
+	^ (self basicNew arena: anArena) initialize; coords: aPoint; yourself
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 22:52'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
 }
 SIYBlock >> alignToGrid [
 
-	self posX: self posX.
-	self posY: self posY
+	self coordX: self coordX.
+	self coordY: self coordY
 ]
 
 {
@@ -38,54 +52,19 @@ SIYBlock >> arena [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 11/21/2023 20:47'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
 }
-SIYBlock >> arena: a [
+SIYBlock >> arena: anArena [
 	
-	arena := a
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:04'
-}
-SIYBlock >> initialize [
-	
-	super initialize.
-	
-	self width: arena pixelPerBlock.
-	self height: arena pixelPerBlock.
-	self color: Color white.
-	
-	arena addMorph: self.
-	self position: arena position
-	
-	
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'jt 11/30/2023 20:30'
-}
-SIYBlock >> move [
-
-	(arena gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self posY: self posY -1].
-	(arena gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self posY: self posY +1].
-	(arena gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self posX: self posX +1].
-	(arena gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self posX: self posX -1].
-	
+	arena := anArena
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:46'
+	#'squeak_changestamp' : 'LK 12/4/2023 16:52'
 }
-SIYBlock >> posX [
-	"x coordinate within arena (measured in blocks)"
+SIYBlock >> coordX [
+	"x coordinate within arena (rounded to nearest block)"
 	
 	^ ((self relativePosition x) / (arena pixelPerBlock)) rounded
 
@@ -94,15 +73,15 @@ SIYBlock >> posX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 22:52'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
 }
-SIYBlock >> posX: value [
+SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
 	
 	| newPos |
 	
 	newPos := Point new
-		setX: (value clampLow: 0 high: arena arenaWidth - 1) * arena pixelPerBlock
+		setX: (aNumber clampLow: 0 high: arena arenaWidth - 1) * arena pixelPerBlock
 		setY: self relativePosition y.
 	
 	super position: arena position + newPos
@@ -111,20 +90,10 @@ SIYBlock >> posX: value [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:43'
+	#'squeak_changestamp' : 'LK 12/4/2023 16:52'
 }
-SIYBlock >> posX: valueX posY: valueY [
-
-	self posX: valueX.
-	self posY: valueY
-]
-
-{
-	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:46'
-}
-SIYBlock >> posY [
-	"y coordinate within arena (measured in blocks)"
+SIYBlock >> coordY [
+	"y coordinate within arena (rounded to nearest block)"
 	
 	^ ((self relativePosition y) / (arena pixelPerBlock)) rounded
 
@@ -133,16 +102,16 @@ SIYBlock >> posY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 22:52'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
 }
-SIYBlock >> posY: value [
+SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
 	
 	| newPos |
 	
 	newPos := Point new
 		setX: self relativePosition x
-		setY: (value clampLow: 0 high: arena arenaHeight - 1) * arena pixelPerBlock.
+		setY: (aNumber clampLow: 0 high: arena arenaHeight - 1) * arena pixelPerBlock.
 	
 	super position: arena position + newPos
 
@@ -150,41 +119,138 @@ SIYBlock >> posY: value [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 22:53'
+	#'squeak_changestamp' : 'LK 12/4/2023 17:03'
+}
+SIYBlock >> coords [
+	
+	^ (self coordX)@(self coordY)
+]
+
+{
+	#category : #positioning,
+	#'squeak_changestamp' : 'LK 12/4/2023 17:03'
+}
+SIYBlock >> coords: aPoint [
+	"place block at coordinates clamped within arena"
+
+	self coordX: aPoint x.
+	self coordY: aPoint y
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 12/3/2023 20:26'
+}
+SIYBlock >> imageForm [
+
+	^ SubclassResponsibility
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/4/2023 18:36'
+}
+SIYBlock >> initialize [
+	
+	self stepTime: 3.
+	
+	super initialize.
+	
+	self image: (SIYTextureManager new getTexture: self textureFile).
+	arena addMorph: self.
+	
+	
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/4/2023 17:22'
+}
+SIYBlock >> move [
+	"needs refactoring"
+	
+	| timeBetweenSteps timeElse |
+	
+	timeBetweenSteps := 185.
+	timeElse := 3.
+	
+	(arena gmIsKeyPressed: Character arrowUp)
+		ifTrue: [self coordY: self coordY - 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [
+	(arena gmIsKeyPressed: Character arrowDown)
+		ifTrue: [self coordY: self coordY + 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [
+	(arena gmIsKeyPressed: Character arrowRight)
+		ifTrue: [self coordX: self coordX + 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [
+	(arena gmIsKeyPressed: Character arrowLeft)
+		ifTrue: [self coordX: self coordX - 1.
+			   self stepTime: timeBetweenSteps]
+		ifFalse: [self stepTime: 5]
+	]]].
+	
+]
+
+{
+	#category : #positioning,
+	#'squeak_changestamp' : 'LK 12/4/2023 16:51'
 }
 SIYBlock >> position: aPoint [
-
-	"super position: (self alignPoint: aPoint)"
+	"Overwritten position method forces blocks to stay aligned when moving with halo."
+	
 	super position: aPoint.
 	self alignToGrid
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 11/21/2023 21:12'
+	#'squeak_changestamp' : 'LK 12/4/2023 16:51'
 }
 SIYBlock >> relativePosition [
-	"position relative to Morph (measured in pixel)"
+	"returns position relative to Morph (measured in pixel)"
 
 	^ self position - arena position
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'jt 11/30/2023 20:13'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:18'
 }
 SIYBlock >> step [
-	"comment stating purpose of message"
 
-	self move.
+	(SIYRuleManager new isYou: self)
+		ifTrue: [self move].
 
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'jt 11/30/2023 22:19'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:21'
 }
 SIYBlock >> stepTime [
 	
-	^ 125
+	^ stepTime
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/4/2023 17:12'
+}
+SIYBlock >> stepTime: aNumber [
+
+	stepTime := aNumber
+
+	
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 12/4/2023 17:09'
+}
+SIYBlock >> textureFile [
+
+	^ SubclassResponsibility
 ]
