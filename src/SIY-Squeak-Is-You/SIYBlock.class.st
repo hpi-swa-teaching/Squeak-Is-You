@@ -148,11 +148,11 @@ SIYBlock >> imageForm [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/4/2023 18:36'
+	#'squeak_changestamp' : 'LK 12/5/2023 13:32'
 }
 SIYBlock >> initialize [
 	
-	self stepTime: 3.
+	self stepTime: self stepRefreshTime.
 	
 	super initialize.
 	
@@ -164,34 +164,74 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:22'
+	#'squeak_changestamp' : 'LK 12/5/2023 13:32'
 }
 SIYBlock >> move [
 	"needs refactoring"
 	
-	| timeBetweenSteps timeElse |
-	
-	timeBetweenSteps := 185.
-	timeElse := 3.
-	
 	(arena gmIsKeyPressed: Character arrowUp)
 		ifTrue: [self coordY: self coordY - 1.
-			   self stepTime: timeBetweenSteps]
+			   self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowDown)
 		ifTrue: [self coordY: self coordY + 1.
-			   self stepTime: timeBetweenSteps]
+			   self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowRight)
 		ifTrue: [self coordX: self coordX + 1.
-			   self stepTime: timeBetweenSteps]
+			   self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowLeft)
 		ifTrue: [self coordX: self coordX - 1.
-			   self stepTime: timeBetweenSteps]
-		ifFalse: [self stepTime: 5]
+			   self stepTime: self stepInbetweenTime]
+		ifFalse: [self stepTime: self stepRefreshTime]
 	]]].
 	
+]
+
+{
+	#category : #'neighbour sensing',
+	#'squeak_changestamp' : 'LK 12/5/2023 13:27'
+}
+SIYBlock >> neighborsAbove [
+	"TODO: Return set of neighbor blocks (objects) at coords above.
+	Return empty set if none. Return nil if out of arena."
+]
+
+{
+	#category : #'neighbour sensing',
+	#'squeak_changestamp' : 'LK 12/5/2023 13:27'
+}
+SIYBlock >> neighborsBelow [
+	"TODO: Return set of neighbor blocks (objects) at coords below.
+	Return empty set if none. Return nil if out of arena."
+]
+
+{
+	#category : #'neighbour sensing',
+	#'squeak_changestamp' : 'LK 12/5/2023 13:27'
+}
+SIYBlock >> neighborsHere [
+	"TODO: Return set of neighbor blocks (objects) at coords where self is right now.
+	Return empty set if none. Return nil if out of arena."
+]
+
+{
+	#category : #'neighbour sensing',
+	#'squeak_changestamp' : 'LK 12/5/2023 13:27'
+}
+SIYBlock >> neighborsLeft [
+	"TODO: Return set of neighbor blocks (objects) at coords to the left.
+	Return empty set if none. Return nil if out of arena."
+]
+
+{
+	#category : #'neighbour sensing',
+	#'squeak_changestamp' : 'LK 12/5/2023 13:27'
+}
+SIYBlock >> neighborsRight [
+	"TODO: Return set of neighbor blocks (objects) at coords to the right.
+	Return empty set if none. Return nil if out of arena."
 ]
 
 {
@@ -224,6 +264,24 @@ SIYBlock >> step [
 	(SIYRuleManager new isYou: self)
 		ifTrue: [self move].
 
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/5/2023 13:31'
+}
+SIYBlock >> stepInbetweenTime [
+
+	^ 185
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/5/2023 13:31'
+}
+SIYBlock >> stepRefreshTime [
+
+	^ 1
 ]
 
 {
