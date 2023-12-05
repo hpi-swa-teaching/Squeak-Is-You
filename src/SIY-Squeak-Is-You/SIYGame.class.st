@@ -3,7 +3,9 @@ Class {
 	#superclass : #Morph,
 	#instVars : [
 		'arena',
-		'block'
+		'block',
+		'rules',
+		'level'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -19,12 +21,13 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:55'
+	#'squeak_changestamp' : 'LK 12/5/2023 11:51'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	arena := SIYArena	new.
-	block := SIYBlock newInArena: arena.
+	level := SIYLevel01 new.
+	arena := level arena.
+	rules := SIYRuleManager new.
 ]

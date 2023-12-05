@@ -12,24 +12,6 @@ Class {
 }
 
 {
-	#category : #operators,
-	#'squeak_changestamp' : 'LK 12/3/2023 21:01'
-}
-SIYBlock class >> isYou [
-
-	^ isYou
-]
-
-{
-	#category : #operators,
-	#'squeak_changestamp' : 'LK 12/3/2023 21:01'
-}
-SIYBlock class >> isYou: aBoolean [
-
-	isYou := aBoolean
-]
-
-{
 	#category : #'instance creation',
 	#'squeak_changestamp' : 'LK 12/4/2023 17:02'
 }
@@ -166,11 +148,11 @@ SIYBlock >> imageForm [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/4/2023 18:21'
+	#'squeak_changestamp' : 'LK 12/4/2023 18:36'
 }
 SIYBlock >> initialize [
 	
-	stepTime := 3.
+	self stepTime: 3.
 	
 	super initialize.
 	

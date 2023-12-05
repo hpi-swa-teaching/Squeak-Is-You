@@ -9,6 +9,18 @@ Class {
 }
 
 {
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 12/5/2023 10:38'
+}
+SIYArena class >> newWithDimension: aPoint [
+
+	^ (SIYArena new)
+		arenaWidth: aPoint x;
+		arenaHeight: aPoint y;
+		yourself
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 11/20/2023 14:15'
 }
@@ -52,7 +64,7 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:53'
+	#'squeak_changestamp' : 'LK 12/5/2023 10:36'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -60,14 +72,8 @@ SIYArena >> initialize [
 	super initialize.
 	self color: Color black.
 	
-	"Arena dimensions"
-	self arenaHeight: 10.
-	self arenaWidth: 18.
-	
 	"Register Morph to GMKeyHandler"
 	self gmRegisterToKeyHandler.
-	
-	self openInWorld.
 	
 ]
 

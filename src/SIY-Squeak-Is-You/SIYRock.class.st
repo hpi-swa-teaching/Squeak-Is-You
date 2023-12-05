@@ -1,14 +1,14 @@
 Class {
-	#name : #SIYWall,
+	#name : #SIYRock,
 	#superclass : #SIYBlock,
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 12/4/2023 17:45'
+	#'squeak_changestamp' : 'LK 12/5/2023 12:01'
 }
-SIYWall >> textureFile [
+SIYRock >> textureFile [
 
-	^ '/SIYWall.png'
+	^ '/SIYRock.png'
 ]

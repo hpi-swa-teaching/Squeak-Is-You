@@ -32,5 +32,12 @@ OrderedCollection [
 			'SIYSqueak.png'
 		],
 		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYRock.png'
+		],
+		#encoding : @11
 	}
 ]
