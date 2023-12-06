@@ -15,11 +15,11 @@ SIYLevel01 >> arenaDimensions [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 18:09'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:42'
 }
 SIYLevel01 >> buildLevel [
 	
-	self placeBlocksHollow: SIYWall from: 0@0 to: self arenaDimensions.
+	self placeBlocksHollow: SIYWall from: 1@1 to: self arenaDimensions.
 	
 	self placeBlock: SIYRock at: 6@8.
 	self placeBlock: SIYRock at: 9@7.
