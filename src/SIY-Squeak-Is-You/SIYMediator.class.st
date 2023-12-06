@@ -57,7 +57,7 @@ SIYMediator >> initializeGameBoard [
 
 {
 	#category : #public,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:34'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:52'
 }
 SIYMediator >> notify: sender with: coordinates [
 	"function that causes init/move/delete of an object from the Board"
@@ -65,10 +65,10 @@ SIYMediator >> notify: sender with: coordinates [
 	| currentTile |
 	currentTile := gameBoard detect: [ :each | each includes: sender] ifNone: [nil].
 	coordinates isNil
- 		ifTrue: [ self privateRemove: sender from: currentTile. ] 
+ 		ifTrue: [ self privateRemove: sender fromTile: currentTile. ] 
 		ifFalse: [ currentTile isNil
 			ifTrue: [ self privateAdd: sender to: coordinates ] 
-			ifFalse: [ self privateMove: sender from: currentTile to: coordinates].].
+			ifFalse: [ self privateMove: sender fromTile: currentTile to: coordinates].].
 
 	
 	
@@ -89,24 +89,22 @@ SIYMediator >> privateAdd: object to: coordinates [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/6/2023 19:53'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:52'
 }
-SIYMediator >> privateMove: target from: pointA  to: pointB [
+SIYMediator >> privateMove: target fromTile: aTile to: pointB [
 
 	
-	self privateRemove: target from: pointA.
+	self privateRemove: target fromTile: aTile.
 	self privateAdd: target to: pointB.
 ]
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/6/2023 19:53'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:53'
 }
-SIYMediator >> privateRemove: object from: coordinates [
+SIYMediator >> privateRemove: object fromTile: aTile [
 	
-	| tile |
-	tile := gameBoard at: coordinates x at: coordinates y.
-	tile remove: object.
+	aTile remove: object.
 
 ]
 

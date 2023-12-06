@@ -75,7 +75,7 @@ SIYBlock >> coordX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:12'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -86,7 +86,9 @@ SIYBlock >> coordX: aNumber [
 		setX: ((aNumber clampLow: 1 high: arena arenaWidth ) - 1) * arena pixelPerBlock
 		setY: self relativePosition y.
 	
-	super position: arena position + newPos
+	super position: arena position + newPos.
+	
+	self informMediator
 
 ]
 
@@ -104,7 +106,7 @@ SIYBlock >> coordY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -115,7 +117,9 @@ SIYBlock >> coordY: aNumber [
 		setX: self relativePosition x
 		setY: ((aNumber clampLow: 1 high: arena arenaHeight) - 1)* arena pixelPerBlock.
 	
-	super position: arena position + newPos
+	super position: arena position + newPos.
+	
+	self informMediator
 
 ]
 
@@ -149,6 +153,15 @@ SIYBlock >> imageForm [
 ]
 
 {
+	#category : #positioning,
+	#'squeak_changestamp' : 'LK 12/6/2023 22:00'
+}
+SIYBlock >> informMediator [
+
+	^ (mediator notNil) ifTrue: [mediator notify: self with: self coords]
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'LK 12/6/2023 21:38'
 }
@@ -171,26 +184,22 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/5/2023 13:32'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:58'
 }
 SIYBlock >> move [
 	"needs refactoring"
 	
 	(arena gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self coordY: self coordY - 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveUp. self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self coordY: self coordY + 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveDown. self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self coordX: self coordX + 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveRight. self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self coordX: self coordX - 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveLeft. self stepTime: self stepInbetweenTime]
 		ifFalse: [self stepTime: self stepRefreshTime]
 	]]].
 	
@@ -198,13 +207,13 @@ SIYBlock >> move [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:22'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:01'
 }
-SIYBlock >> moveDirections: aPoint [
+SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
 	
-	neighbours := mediator request: self coords + aPoint.
+	neighbours := mediator request: (self coords + aPoint).
 	
 	(neighbours isNil)
 		ifTrue: [^ false].
@@ -217,6 +226,11 @@ SIYBlock >> moveDirections: aPoint [
 	
 	(neighbours size = 0)
 		ifTrue: [self coords: self coords + aPoint. ^ true]
+		ifFalse: [
+			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
+				ifTrue: [self coords: self coords + aPoint. ^ true]
+				ifFalse: [^ false]
+			]
 		
 	
 
@@ -224,11 +238,38 @@ SIYBlock >> moveDirections: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 20:49'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+}
+SIYBlock >> moveDown [
+	
+	^ self moveDirection: 0@1
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+}
+SIYBlock >> moveLeft [
+	
+	^ self moveDirection: (-1)@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+}
+SIYBlock >> moveRight [
+	
+	^ self moveDirection: 1@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:42'
 }
 SIYBlock >> moveUp [
 	
-	^ self moveDirections: 0@(-1)
+	^ self moveDirection: 0@(-1)
 ]
 
 {
