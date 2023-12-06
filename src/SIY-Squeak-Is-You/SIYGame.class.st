@@ -21,7 +21,7 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 11:51'
+	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:04'
 }
 SIYGame >> initialize [
 

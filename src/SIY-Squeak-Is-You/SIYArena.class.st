@@ -3,7 +3,8 @@ Class {
 	#superclass : #Morph,
 	#instVars : [
 		'arenaWidth',
-		'arenaHeight'
+		'arenaHeight',
+		'mediator'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -64,7 +65,7 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 10:36'
+	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:58'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -74,7 +75,6 @@ SIYArena >> initialize [
 	
 	"Register Morph to GMKeyHandler"
 	self gmRegisterToKeyHandler.
-	
 ]
 
 {
@@ -84,6 +84,24 @@ SIYArena >> initialize [
 SIYArena >> pixelPerBlock [
 
 	^ 60
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:16'
+}
+SIYArena >> returnMediator [
+
+	^mediator
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:57'
+}
+SIYArena >> setMediator: aMediator [
+
+	mediator := aMediator.
 ]
 
 {

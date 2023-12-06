@@ -2,7 +2,8 @@ Class {
 	#name : #SIYLevel,
 	#superclass : #Object,
 	#instVars : [
-		'arena'
+		'arena',
+		'mediator'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -36,11 +37,14 @@ SIYLevel >> buildLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 10:39'
+	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:00'
 }
 SIYLevel >> createLevel [
 
 	arena := SIYArena newWithDimension: self arenaDimensions.
+	mediator := SIYMediator new.
+	mediator createMediator: self arenaDimensions.
+	arena setMediator: mediator.
 	
 	self buildLevel.
 	
