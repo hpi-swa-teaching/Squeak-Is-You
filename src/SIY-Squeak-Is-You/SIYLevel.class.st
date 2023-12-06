@@ -86,7 +86,7 @@ SIYLevel >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 12/5/2023 11:55'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:20'
 }
 SIYLevel >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
@@ -94,15 +94,16 @@ SIYLevel >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 		from: firstPoint
 		to: (firstPoint x)@(secondPoint y).
 		
+
 	self placeBlocks: aBlockClass
-		from: firstPoint
+		from: firstPoint + (1@0)
 		to: (secondPoint x)@(firstPoint y).
 		
 	self placeBlocks: aBlockClass
-		from: (firstPoint x)@(secondPoint y)
+		from: (firstPoint x)@(secondPoint y) + (1@0)
 		to: secondPoint.
 		
 	self placeBlocks: aBlockClass
-		from: (secondPoint x)@(firstPoint y)
-		to: secondPoint.
+		from: (secondPoint x)@(firstPoint y) + (0@1)
+		to: secondPoint - (0@1).
 ]
