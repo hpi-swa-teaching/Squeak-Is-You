@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'arena',
 		'stepTime',
-		'mediator'
+		'mediator',
+		'rules'
 	],
 	#classInstVars : [
 		'isYou'
@@ -24,12 +25,12 @@ SIYBlock class >> newInArena: anArena [
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'LK 12/4/2023 16:57'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:39'
 }
 SIYBlock class >> newInArena: anArena at: aPoint [
 	"create new block in SIY arena at given coordinates"
 
-	^ (self basicNew arena: anArena) initialize; coords: aPoint; yourself
+	^ (self basicNew arena: anArena) superInitialize; coords: aPoint; initialize; yourself
 ]
 
 {
@@ -53,29 +54,28 @@ SIYBlock >> arena [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:23'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:24'
 }
 SIYBlock >> arena: anArena [
 	
 	arena := anArena.
-	mediator := arena returnMediator.
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:52'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
 }
 SIYBlock >> coordX [
 	"x coordinate within arena (rounded to nearest block)"
 	
-	^ ((self relativePosition x) / (arena pixelPerBlock)) rounded
+	^ ((self relativePosition x) / (arena pixelPerBlock)) rounded + 1
 
 	
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:12'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -83,7 +83,7 @@ SIYBlock >> coordX: aNumber [
 	| newPos |
 	
 	newPos := Point new
-		setX: (aNumber clampLow: 0 high: arena arenaWidth - 1) * arena pixelPerBlock
+		setX: ((aNumber clampLow: 1 high: arena arenaWidth ) - 1) * arena pixelPerBlock
 		setY: self relativePosition y.
 	
 	super position: arena position + newPos
@@ -92,19 +92,19 @@ SIYBlock >> coordX: aNumber [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:52'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
 }
 SIYBlock >> coordY [
 	"y coordinate within arena (rounded to nearest block)"
 	
-	^ ((self relativePosition y) / (arena pixelPerBlock)) rounded
+	^ ((self relativePosition y) / (arena pixelPerBlock)) rounded + 1
 
 	
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -113,7 +113,7 @@ SIYBlock >> coordY: aNumber [
 	
 	newPos := Point new
 		setX: self relativePosition x
-		setY: (aNumber clampLow: 0 high: arena arenaHeight - 1) * arena pixelPerBlock.
+		setY: ((aNumber clampLow: 1 high: arena arenaHeight) - 1)* arena pixelPerBlock.
 	
 	super position: arena position + newPos
 
@@ -150,17 +150,22 @@ SIYBlock >> imageForm [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 13:32'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:38'
 }
 SIYBlock >> initialize [
 	
 	self stepTime: self stepRefreshTime.
 	
-	super initialize.
-	
 	self image: (SIYTextureManager new getTexture: self textureFile).
-	arena addMorph: self.
 	
+	arena addMorph: self.
+	rules := arena ruleManager.
+	mediator := arena mediator.
+	mediator notify: self with: self coords
+	
+	
+	
+
 	
 ]
 
@@ -189,6 +194,41 @@ SIYBlock >> move [
 		ifFalse: [self stepTime: self stepRefreshTime]
 	]]].
 	
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:22'
+}
+SIYBlock >> moveDirections: aPoint [
+	
+	| neighbours |
+	
+	neighbours := mediator request: self coords + aPoint.
+	
+	(neighbours isNil)
+		ifTrue: [^ false].
+		
+	(rules isStop: self)
+		ifTrue: [^ false].
+		
+	((rules isPush: self) or: (rules isYou: self)) not
+		ifTrue: [^ true].
+	
+	(neighbours size = 0)
+		ifTrue: [self coords: self coords + aPoint. ^ true]
+		
+	
+
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 20:49'
+}
+SIYBlock >> moveUp [
+	
+	^ self moveDirections: 0@(-1)
 ]
 
 {
@@ -330,6 +370,15 @@ SIYBlock >> stepTime: aNumber [
 	stepTime := aNumber
 
 	
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:39'
+}
+SIYBlock >> superInitialize [
+
+	super initialize
 ]
 
 {

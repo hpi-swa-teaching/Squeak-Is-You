@@ -3,47 +3,71 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'gameBoard',
-		'arenaEnd'
+		'arena'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
-	#category : #initialisation,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:32'
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 12/6/2023 20:03'
 }
-SIYMediator >> createMediator: arena [
-	
-	arenaEnd := arena.
-	gameBoard := Matrix rows: arena x columns: arena y.
+SIYMediator class >> newForArena: anArena [
 
-	
+	^ (self basicNew) arena: anArena; initialize; yourself
 ]
 
 {
-	#category : #initialisation,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:20'
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 19:59'
+}
+SIYMediator >> arena: anArena [
+
+	arena := anArena
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 20:59'
 }
 SIYMediator >> initialize [
 
 	super initialize.
 	
+	self initializeGameBoard.
+	
 	^ self
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:06'
+}
+SIYMediator >> initializeGameBoard [
+
+	gameBoard := Matrix rows: (arena arenaWidth) columns: (arena arenaHeight).
+	
+	"initialize with empty sets"
+	1 to: (arena arenaWidth ) do: [:x |
+		1 to: (arena arenaHeight ) do: [:y |
+			gameBoard at: x at: y put: Set new
+		]
+	]
+]
+
+{
 	#category : #public,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 17:48'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:34'
 }
 SIYMediator >> notify: sender with: coordinates [
 	"function that causes init/move/delete of an object from the Board"
 
 	| currentTile |
-	currentTile := gameBoard detect: [ : each | each contains: sender].
-	coordinates = [0@0] 
- 		ifTrue: [ self priveteRemove: sender from: currentTile. ] 
+	currentTile := gameBoard detect: [ :each | each includes: sender] ifNone: [nil].
+	coordinates isNil
+ 		ifTrue: [ self privateRemove: sender from: currentTile. ] 
 		ifFalse: [ currentTile isNil
-			ifTrue: [ self priveteAdd: sender to: coordinates ] 
+			ifTrue: [ self privateAdd: sender to: coordinates ] 
 			ifFalse: [ self privateMove: sender from: currentTile to: coordinates].].
 
 	
@@ -52,20 +76,9 @@ SIYMediator >> notify: sender with: coordinates [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:17'
+	#'squeak_changestamp' : 'LK 12/6/2023 19:53'
 }
-SIYMediator >> privateMove: target from: pointA  to: pointB [
-
-	
-	self priveteRemove: target from: pointA.
-	self priveteAdd: target to: pointB.
-]
-
-{
-	#category : #private,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:12'
-}
-SIYMediator >> priveteAdd: object to: coordinates [
+SIYMediator >> privateAdd: object to: coordinates [
 	
 	| tile |
 	tile := gameBoard at: coordinates x at: coordinates y.
@@ -76,9 +89,20 @@ SIYMediator >> priveteAdd: object to: coordinates [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 17:37'
+	#'squeak_changestamp' : 'LK 12/6/2023 19:53'
 }
-SIYMediator >> priveteRemove: object from: coordinates [
+SIYMediator >> privateMove: target from: pointA  to: pointB [
+
+	
+	self privateRemove: target from: pointA.
+	self privateAdd: target to: pointB.
+]
+
+{
+	#category : #private,
+	#'squeak_changestamp' : 'LK 12/6/2023 19:53'
+}
+SIYMediator >> privateRemove: object from: coordinates [
 	
 	| tile |
 	tile := gameBoard at: coordinates x at: coordinates y.
@@ -88,15 +112,16 @@ SIYMediator >> priveteRemove: object from: coordinates [
 
 {
 	#category : #public,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:31'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:21'
 }
 SIYMediator >> request: point [
 	"function that calls for the objects on a coordinate, returns nil if point is not on field."
 
 	| itemsOnField |
-	(point < [0@0] or: point > arenaEnd) ifTrue: [^nil].
+	((point x < 1) or: (point y < 1) or: (point x > arena arenaWidth) or: (point y > arena arenaHeight))
+		ifTrue: [^ nil].
 	itemsOnField := gameBoard at: point x at: point y.
-	
+
 	^itemsOnField
 		
 ]

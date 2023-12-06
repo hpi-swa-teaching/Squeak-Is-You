@@ -37,14 +37,14 @@ SIYLevel >> buildLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:00'
+	#'squeak_changestamp' : 'LK 12/6/2023 20:54'
 }
 SIYLevel >> createLevel [
 
 	arena := SIYArena newWithDimension: self arenaDimensions.
-	mediator := SIYMediator new.
-	mediator createMediator: self arenaDimensions.
-	arena setMediator: mediator.
+	
+	arena mediator: (SIYMediator newForArena: arena).
+	arena ruleManager: (SIYRuleManager new).
 	
 	self buildLevel.
 	
