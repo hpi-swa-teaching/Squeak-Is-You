@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'arenaWidth',
 		'arenaHeight',
-		'mediator'
+		'mediator',
+		'rules'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -78,6 +79,24 @@ SIYArena >> initialize [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 19:54'
+}
+SIYArena >> mediator [
+
+	^mediator
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 19:55'
+}
+SIYArena >> mediator: aMediator [
+
+	mediator := aMediator.
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 12/3/2023 20:56'
 }
@@ -88,20 +107,20 @@ SIYArena >> pixelPerBlock [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:16'
+	#'squeak_changestamp' : 'LK 12/6/2023 20:26'
 }
-SIYArena >> returnMediator [
+SIYArena >> ruleManager [
 
-	^mediator
+	^ rules
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:57'
+	#'squeak_changestamp' : 'LK 12/6/2023 20:25'
 }
-SIYArena >> setMediator: aMediator [
+SIYArena >> ruleManager: aRuleManager [
 
-	mediator := aMediator.
+	rules := aRuleManager
 ]
 
 {
