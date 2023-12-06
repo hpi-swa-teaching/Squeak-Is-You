@@ -274,10 +274,10 @@ SIYBlock >> moveUp [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:27'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsAbove [
-	"TODO: Return set of neighbor blocks (objects) at coords above.
+	"Return set of neighbor blocks (objects) at coords above.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition abovePosition |
@@ -289,10 +289,10 @@ SIYBlock >> neighborsAbove [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:28'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsBelow [
-	"TODO: Return set of neighbor blocks (objects) at coords below.
+	"Return set of neighbor blocks (objects) at coords below.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition belowPosition |
@@ -304,10 +304,10 @@ SIYBlock >> neighborsBelow [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:29'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsHere [
-	"TODO: Return set of neighbor blocks (objects) at coords where self is right now.
+	"Return set of neighbor blocks (objects) at coords where self is right now.
 	Return empty set if none. Return nil if out of arena."
 	
 	^mediator request: self coords
@@ -315,10 +315,10 @@ SIYBlock >> neighborsHere [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:33'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsLeft [
-	"TODO: Return set of neighbor blocks (objects) at coords to the left.
+	"Return set of neighbor blocks (objects) at coords to the left.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition leftPosition |
@@ -330,10 +330,10 @@ SIYBlock >> neighborsLeft [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:34'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsRight [
-	"TODO: Return set of neighbor blocks (objects) at coords to the right.
+	"Return set of neighbor blocks (objects) at coords to the right.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition rightPosition |
