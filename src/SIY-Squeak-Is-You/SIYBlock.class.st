@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'arena',
 		'stepTime',
-		'mediator'
+		'mediator',
+		'rules'
 	],
 	#classInstVars : [
 		'isYou'
@@ -24,12 +25,12 @@ SIYBlock class >> newInArena: anArena [
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'LK 12/4/2023 16:57'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:39'
 }
 SIYBlock class >> newInArena: anArena at: aPoint [
 	"create new block in SIY arena at given coordinates"
 
-	^ (self basicNew arena: anArena) initialize; coords: aPoint; yourself
+	^ (self basicNew arena: anArena) superInitialize; coords: aPoint; initialize; yourself
 ]
 
 {
@@ -53,29 +54,28 @@ SIYBlock >> arena [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:23'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:24'
 }
 SIYBlock >> arena: anArena [
 	
 	arena := anArena.
-	mediator := arena returnMediator.
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:52'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
 }
 SIYBlock >> coordX [
 	"x coordinate within arena (rounded to nearest block)"
 	
-	^ ((self relativePosition x) / (arena pixelPerBlock)) rounded
+	^ ((self relativePosition x) / (arena pixelPerBlock)) rounded + 1
 
 	
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -83,28 +83,30 @@ SIYBlock >> coordX: aNumber [
 	| newPos |
 	
 	newPos := Point new
-		setX: (aNumber clampLow: 0 high: arena arenaWidth - 1) * arena pixelPerBlock
+		setX: ((aNumber clampLow: 1 high: arena arenaWidth ) - 1) * arena pixelPerBlock
 		setY: self relativePosition y.
 	
-	super position: arena position + newPos
+	super position: arena position + newPos.
+	
+	self informMediator
 
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:52'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
 }
 SIYBlock >> coordY [
 	"y coordinate within arena (rounded to nearest block)"
 	
-	^ ((self relativePosition y) / (arena pixelPerBlock)) rounded
+	^ ((self relativePosition y) / (arena pixelPerBlock)) rounded + 1
 
 	
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -113,9 +115,11 @@ SIYBlock >> coordY: aNumber [
 	
 	newPos := Point new
 		setX: self relativePosition x
-		setY: (aNumber clampLow: 0 high: arena arenaHeight - 1) * arena pixelPerBlock.
+		setY: ((aNumber clampLow: 1 high: arena arenaHeight) - 1)* arena pixelPerBlock.
 	
-	super position: arena position + newPos
+	super position: arena position + newPos.
+	
+	self informMediator
 
 ]
 
@@ -149,54 +153,131 @@ SIYBlock >> imageForm [
 ]
 
 {
+	#category : #positioning,
+	#'squeak_changestamp' : 'LK 12/6/2023 22:00'
+}
+SIYBlock >> informMediator [
+
+	^ (mediator notNil) ifTrue: [mediator notify: self with: self coords]
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 13:32'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:38'
 }
 SIYBlock >> initialize [
 	
 	self stepTime: self stepRefreshTime.
 	
-	super initialize.
-	
 	self image: (SIYTextureManager new getTexture: self textureFile).
-	arena addMorph: self.
 	
+	arena addMorph: self.
+	rules := arena ruleManager.
+	mediator := arena mediator.
+	mediator notify: self with: self coords
+	
+	
+	
+
 	
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/5/2023 13:32'
+	#'squeak_changestamp' : 'LK 12/6/2023 21:58'
 }
 SIYBlock >> move [
 	"needs refactoring"
 	
 	(arena gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self coordY: self coordY - 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveUp. self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self coordY: self coordY + 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveDown. self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self coordX: self coordX + 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveRight. self stepTime: self stepInbetweenTime]
 		ifFalse: [
 	(arena gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self coordX: self coordX - 1.
-			   self stepTime: self stepInbetweenTime]
+		ifTrue: [self moveLeft. self stepTime: self stepInbetweenTime]
 		ifFalse: [self stepTime: self stepRefreshTime]
 	]]].
 	
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 22:01'
+}
+SIYBlock >> moveDirection: aPoint [
+	
+	| neighbours |
+	
+	neighbours := mediator request: (self coords + aPoint).
+	
+	(neighbours isNil)
+		ifTrue: [^ false].
+		
+	(rules isStop: self)
+		ifTrue: [^ false].
+		
+	((rules isPush: self) or: (rules isYou: self)) not
+		ifTrue: [^ true].
+	
+	(neighbours size = 0)
+		ifTrue: [self coords: self coords + aPoint. ^ true]
+		ifFalse: [
+			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
+				ifTrue: [self coords: self coords + aPoint. ^ true]
+				ifFalse: [^ false]
+			]
+		
+	
+
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+}
+SIYBlock >> moveDown [
+	
+	^ self moveDirection: 0@1
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+}
+SIYBlock >> moveLeft [
+	
+	^ self moveDirection: (-1)@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+}
+SIYBlock >> moveRight [
+	
+	^ self moveDirection: 1@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:42'
+}
+SIYBlock >> moveUp [
+	
+	^ self moveDirection: 0@(-1)
+]
+
+{
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:27'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsAbove [
-	"TODO: Return set of neighbor blocks (objects) at coords above.
+	"Return set of neighbor blocks (objects) at coords above.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition abovePosition |
@@ -208,10 +289,10 @@ SIYBlock >> neighborsAbove [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:28'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsBelow [
-	"TODO: Return set of neighbor blocks (objects) at coords below.
+	"Return set of neighbor blocks (objects) at coords below.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition belowPosition |
@@ -223,10 +304,10 @@ SIYBlock >> neighborsBelow [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:29'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsHere [
-	"TODO: Return set of neighbor blocks (objects) at coords where self is right now.
+	"Return set of neighbor blocks (objects) at coords where self is right now.
 	Return empty set if none. Return nil if out of arena."
 	
 	^mediator request: self coords
@@ -234,10 +315,10 @@ SIYBlock >> neighborsHere [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:33'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsLeft [
-	"TODO: Return set of neighbor blocks (objects) at coords to the left.
+	"Return set of neighbor blocks (objects) at coords to the left.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition leftPosition |
@@ -249,10 +330,10 @@ SIYBlock >> neighborsLeft [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:34'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
 }
 SIYBlock >> neighborsRight [
-	"TODO: Return set of neighbor blocks (objects) at coords to the right.
+	"Return set of neighbor blocks (objects) at coords to the right.
 	Return empty set if none. Return nil if out of arena."
 	
 	| currentPosition rightPosition |
@@ -330,6 +411,15 @@ SIYBlock >> stepTime: aNumber [
 	stepTime := aNumber
 
 	
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/6/2023 21:39'
+}
+SIYBlock >> superInitialize [
+
+	super initialize
 ]
 
 {

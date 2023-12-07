@@ -37,14 +37,14 @@ SIYLevel >> buildLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 19:00'
+	#'squeak_changestamp' : 'LK 12/6/2023 20:54'
 }
 SIYLevel >> createLevel [
 
 	arena := SIYArena newWithDimension: self arenaDimensions.
-	mediator := SIYMediator new.
-	mediator createMediator: self arenaDimensions.
-	arena setMediator: mediator.
+	
+	arena mediator: (SIYMediator newForArena: arena).
+	arena ruleManager: (SIYRuleManager new).
 	
 	self buildLevel.
 	
@@ -86,7 +86,7 @@ SIYLevel >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 12/5/2023 11:55'
+	#'squeak_changestamp' : 'LK 12/6/2023 22:20'
 }
 SIYLevel >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
@@ -94,15 +94,16 @@ SIYLevel >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 		from: firstPoint
 		to: (firstPoint x)@(secondPoint y).
 		
+
 	self placeBlocks: aBlockClass
-		from: firstPoint
+		from: firstPoint + (1@0)
 		to: (secondPoint x)@(firstPoint y).
 		
 	self placeBlocks: aBlockClass
-		from: (firstPoint x)@(secondPoint y)
+		from: (firstPoint x)@(secondPoint y) + (1@0)
 		to: secondPoint.
 		
 	self placeBlocks: aBlockClass
-		from: (secondPoint x)@(firstPoint y)
-		to: secondPoint.
+		from: (secondPoint x)@(firstPoint y) + (0@1)
+		to: secondPoint - (0@1).
 ]
