@@ -7,9 +7,6 @@ Class {
 		'mediator',
 		'rules'
 	],
-	#classInstVars : [
-		'isYou'
-	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
@@ -35,12 +32,12 @@ SIYBlock class >> newInArena: anArena at: aPoint [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:00'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:15'
 }
 SIYBlock >> alignToGrid [
 
 	self coordX: self coordX.
-	self coordY: self coordY
+	self coordY: self coordY.
 ]
 
 {
@@ -63,14 +60,12 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:03'
 }
 SIYBlock >> coordX [
 	"x coordinate within arena (rounded to nearest block)"
 	
-	^ ((self relativePosition x) / (arena pixelPerBlock)) rounded + 1
-
-	
+	^ (((self relativePosition x) / (arena pixelPerBlock)) rounded + 1) clampLow: 1 high: arena arenaWidth
 ]
 
 {
@@ -94,19 +89,19 @@ SIYBlock >> coordX: aNumber [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:13'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:02'
 }
 SIYBlock >> coordY [
 	"y coordinate within arena (rounded to nearest block)"
 	
-	^ ((self relativePosition y) / (arena pixelPerBlock)) rounded + 1
+	^ (((self relativePosition y) / (arena pixelPerBlock)) rounded + 1) clampLow: 1 high: arena arenaHeight
 
 	
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
+	#'squeak_changestamp' : 'LK 12/7/2023 20:49'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -115,7 +110,7 @@ SIYBlock >> coordY: aNumber [
 	
 	newPos := Point new
 		setX: self relativePosition x
-		setY: ((aNumber clampLow: 1 high: arena arenaHeight) - 1)* arena pixelPerBlock.
+		setY: ((aNumber clampLow: 1 high: arena arenaHeight) - 1) * arena pixelPerBlock.
 	
 	super position: arena position + newPos.
 	
@@ -144,6 +139,35 @@ SIYBlock >> coords: aPoint [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/7/2023 21:25'
+}
+SIYBlock >> duplicateMorph: evt [
+	
+	| dup |
+	
+	dup := self class newInArena: arena at: self coords.
+
+	^ dup
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/7/2023 22:16'
+}
+SIYBlock >> getsPushedFromDirection: aPoint [
+
+	| neighbours |
+
+	(rules isYou: self)
+		ifTrue: [^ true]
+		ifFalse: [neighbours := mediator request: (self coords - aPoint).
+				neighbours ifNil: [^ false].
+				^ (neighbours anySatisfy: [:each | each getsPushedFromDirection: aPoint]).
+			]
+]
+
+{
 	#category : #appearance,
 	#'squeak_changestamp' : 'LK 12/3/2023 20:26'
 }
@@ -163,7 +187,7 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:38'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:16'
 }
 SIYBlock >> initialize [
 	
@@ -172,6 +196,7 @@ SIYBlock >> initialize [
 	self image: (SIYTextureManager new getTexture: self textureFile).
 	
 	arena addMorph: self.
+	
 	rules := arena ruleManager.
 	mediator := arena mediator.
 	mediator notify: self with: self coords
@@ -207,7 +232,7 @@ SIYBlock >> move [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 22:01'
+	#'squeak_changestamp' : 'LK 12/7/2023 22:00'
 }
 SIYBlock >> moveDirection: aPoint [
 	
@@ -215,13 +240,13 @@ SIYBlock >> moveDirection: aPoint [
 	
 	neighbours := mediator request: (self coords + aPoint).
 	
-	(neighbours isNil)
+	 (neighbours isNil)
 		ifTrue: [^ false].
 		
 	(rules isStop: self)
 		ifTrue: [^ false].
-		
-	((rules isPush: self) or: (rules isYou: self)) not
+	
+	((rules isPush: self) not and: (rules isYou: self) not)
 		ifTrue: [^ true].
 	
 	(neighbours size = 0)
@@ -238,38 +263,54 @@ SIYBlock >> moveDirection: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+	#'squeak_changestamp' : 'LK 12/7/2023 22:15'
+}
+SIYBlock >> moveDirectionIfSafe: aPoint [
+	
+	| neighbours |
+	
+	neighbours := mediator request: (self coords - aPoint).
+	
+	
+	((neighbours isNil) or: (neighbours noneSatisfy: [:each | each getsPushedFromDirection: aPoint]))
+		ifTrue: [self moveDirection: aPoint]
+	
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/7/2023 21:57'
 }
 SIYBlock >> moveDown [
 	
-	^ self moveDirection: 0@1
+	^ self moveDirectionIfSafe: 0@1
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:58'
 }
 SIYBlock >> moveLeft [
 	
-	^ self moveDirection: (-1)@0
+	^ self moveDirectionIfSafe: (-1)@0
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:57'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:58'
 }
 SIYBlock >> moveRight [
 	
-	^ self moveDirection: 1@0
+	^ self moveDirectionIfSafe: 1@0
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:42'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:58'
 }
 SIYBlock >> moveUp [
 	
-	^ self moveDirection: 0@(-1)
+	^ self moveDirectionIfSafe: 0@(-1)
 ]
 
 {
@@ -366,13 +407,16 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 18:18'
+	#'squeak_changestamp' : 'LK 12/7/2023 21:26'
 }
 SIYBlock >> step [
 
-	(SIYRuleManager new isYou: self)
+	(rules isYou: self)
 		ifTrue: [self move].
 
+	"fix for duplication bug"
+	(self owner class = PasteUpMorph)
+		ifTrue: [arena addMorph: self]
 ]
 
 {
