@@ -6,7 +6,7 @@ Class {
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/7/2023 18:58'
+	#'squeak_changestamp' : 'LK 12/7/2023 22:17'
 }
 SIYRuleManager >> isPush: anObject [
 	"work in progress, only returns true if object is SIYRock right now"
@@ -26,7 +26,7 @@ SIYRuleManager >> isStop: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/7/2023 18:58'
+	#'squeak_changestamp' : 'LK 12/7/2023 22:17'
 }
 SIYRuleManager >> isYou: anObject [
 	"work in progress, only returns true if object is SIYSqueak right now"
