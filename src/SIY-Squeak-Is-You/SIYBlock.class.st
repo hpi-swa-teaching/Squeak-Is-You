@@ -7,9 +7,6 @@ Class {
 		'mediator',
 		'rules'
 	],
-	#classInstVars : [
-		'isYou'
-	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
