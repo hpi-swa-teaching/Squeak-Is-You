@@ -366,11 +366,11 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 18:18'
+	#'squeak_changestamp' : 'LK 12/7/2023 18:50'
 }
 SIYBlock >> step [
 
-	(SIYRuleManager new isYou: self)
+	(rules isYou: self)
 		ifTrue: [self move].
 
 ]
