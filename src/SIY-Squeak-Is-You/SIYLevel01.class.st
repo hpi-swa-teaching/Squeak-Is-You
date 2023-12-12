@@ -1,6 +1,6 @@
 Class {
 	#name : #SIYLevel01,
-	#superclass : #SIYLevel,
+	#superclass : #SIYLevelFactory,
 	#category : #'SIY-Squeak-Is-You'
 }
 

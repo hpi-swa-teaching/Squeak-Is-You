@@ -65,6 +65,15 @@ SIYArena >> arenaWidth: val [
 ]
 
 {
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
+}
+SIYArena >> dropEnabled [
+
+	^ true
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:58'
 }

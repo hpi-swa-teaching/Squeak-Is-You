@@ -22,12 +22,15 @@ SIYBlock class >> newInArena: anArena [
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'LK 12/6/2023 21:39'
+	#'squeak_changestamp' : 'LK 12/8/2023 11:07'
 }
 SIYBlock class >> newInArena: anArena at: aPoint [
 	"create new block in SIY arena at given coordinates"
 
-	^ (self basicNew arena: anArena) superInitialize; coords: aPoint; initialize; yourself
+	^ (self basicNew arena: anArena) superInitialize;
+		coords: aPoint;
+		initialize;
+		yourself
 ]
 
 {
@@ -140,7 +143,7 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:25'
+	#'squeak_changestamp' : 'LK 12/12/2023 11:10'
 }
 SIYBlock >> duplicateMorph: evt [
 	
@@ -407,16 +410,12 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:26'
+	#'squeak_changestamp' : 'LK 12/12/2023 11:10'
 }
 SIYBlock >> step [
 
 	(rules isYou: self)
 		ifTrue: [self move].
-
-	"fix for duplication bug"
-	(self owner class = PasteUpMorph)
-		ifTrue: [arena addMorph: self]
 ]
 
 {
