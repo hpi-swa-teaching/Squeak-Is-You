@@ -65,6 +65,16 @@ SIYArena >> arenaWidth: val [
 ]
 
 {
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 23:52'
+}
+SIYArena >> createSnapshot [
+	
+	"When a block moves, "
+	^nil
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:58'
 }
@@ -103,6 +113,15 @@ SIYArena >> mediator: aMediator [
 SIYArena >> pixelPerBlock [
 
 	^ 60
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 14:13'
+}
+SIYArena >> restoreSnapshot: snapshot [
+	
+	^nil
 ]
 
 {
