@@ -65,6 +65,7 @@ SIYArena >> arenaWidth: val [
 	self updateDimensions
 ]
 
+
 {
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
@@ -72,6 +73,16 @@ SIYArena >> arenaWidth: val [
 SIYArena >> dropEnabled [
 
 	^ true
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 23:52'
+}
+SIYArena >> createSnapshot [
+	
+	"When a block moves, "
+	^nil
 ]
 
 {
@@ -151,6 +162,15 @@ SIYArena >> moveBlocksDirection: aPoint [
 SIYArena >> pixelPerBlock [
 
 	^ 60
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 14:13'
+}
+SIYArena >> restoreSnapshot: snapshot [
+	
+	^nil
 ]
 
 {
