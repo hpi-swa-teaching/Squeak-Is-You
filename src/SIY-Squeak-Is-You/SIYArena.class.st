@@ -227,3 +227,12 @@ SIYArena >> updateDimensions [
 	(arenaHeight) ifNotNil: [self height: self pixelPerBlock * arenaHeight]
 
 ]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 12/15/2023 20:33'
+}
+SIYArena >> wantsDroppedMorph: aMorph event: evt [
+
+	^ aMorph isKindOf: SIYBlock
+]
