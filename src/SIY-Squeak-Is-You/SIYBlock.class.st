@@ -155,22 +155,6 @@ SIYBlock >> duplicateMorph: evt [
 ]
 
 {
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
-}
-SIYBlock >> getsPushedFromDirection: aPoint [
-
-	| neighbours |
-
-	(rules isYou: self)
-		ifTrue: [^ true]
-		ifFalse: [neighbours := mediator requestPos: (self coords - aPoint).
-				neighbours ifNil: [^ false].
-				^ (neighbours anySatisfy: [:each | each getsPushedFromDirection: aPoint]).
-			]
-]
-
-{
 	#category : #appearance,
 	#'squeak_changestamp' : 'LK 12/3/2023 20:26'
 }
@@ -190,11 +174,9 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:44'
+	#'squeak_changestamp' : 'LK 12/15/2023 19:44'
 }
 SIYBlock >> initialize [
-	
-	self stepTime: self stepRefreshTime.
 	
 	self image: (SIYTextureManager new getTexture: self textureFile).
 	
@@ -212,36 +194,14 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:58'
-}
-SIYBlock >> move [
-	"needs refactoring"
-	
-	(arena gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self moveUp. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(arena gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self moveDown. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(arena gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self moveRight. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(arena gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self moveLeft. self stepTime: self stepInbetweenTime]
-		ifFalse: [self stepTime: self stepRefreshTime]
-	]]].
-	
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/15/2023 19:53'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
 	
 	neighbours := mediator requestPos: (self coords + aPoint).
+
 	
 	 (neighbours isNil)
 		ifTrue: [^ false].
@@ -262,58 +222,6 @@ SIYBlock >> moveDirection: aPoint [
 		
 	
 
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
-}
-SIYBlock >> moveDirectionIfSafe: aPoint [
-	
-	| neighbours |
-	
-	neighbours := mediator requestPos: (self coords - aPoint).
-	
-	
-	((neighbours isNil) or: (neighbours noneSatisfy: [:each | each getsPushedFromDirection: aPoint]))
-		ifTrue: [self moveDirection: aPoint]
-	
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:57'
-}
-SIYBlock >> moveDown [
-	
-	^ self moveDirectionIfSafe: 0@1
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:58'
-}
-SIYBlock >> moveLeft [
-	
-	^ self moveDirectionIfSafe: (-1)@0
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:58'
-}
-SIYBlock >> moveRight [
-	
-	^ self moveDirectionIfSafe: 1@0
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:58'
-}
-SIYBlock >> moveUp [
-	
-	^ self moveDirectionIfSafe: 0@(-1)
 ]
 
 {
@@ -348,13 +256,13 @@ SIYBlock >> neighborsBelow [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/15/2023 19:51'
 }
 SIYBlock >> neighborsHere [
 	"Return set of neighbor blocks (objects) at coords where self is right now.
 	Return empty set if none. Return nil if out of arena."
 	
-	^mediator requestPos: self coords
+	^ mediator requestPos: self coords
 ]
 
 {
@@ -406,54 +314,6 @@ SIYBlock >> relativePosition [
 	"returns position relative to Morph (measured in pixel)"
 
 	^ self position - arena position
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/12/2023 11:10'
-}
-SIYBlock >> step [
-
-	(rules isYou: self)
-		ifTrue: [self move].
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/5/2023 13:31'
-}
-SIYBlock >> stepInbetweenTime [
-
-	^ 185
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/5/2023 13:31'
-}
-SIYBlock >> stepRefreshTime [
-
-	^ 1
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 18:21'
-}
-SIYBlock >> stepTime [
-	
-	^ stepTime
-]
-
-{
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:12'
-}
-SIYBlock >> stepTime: aNumber [
-
-	stepTime := aNumber
-
-	
 ]
 
 {

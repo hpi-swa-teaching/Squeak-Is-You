@@ -28,24 +28,94 @@ SIYBlockMediator >> arena: anArena [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:48'
+	#'squeak_changestamp' : 'LK 12/15/2023 19:40'
 }
 SIYBlockMediator >> generateQueueForDirection: aPoint [
+
+	(1@0 = aPoint) ifTrue: [^ self generateQueueFromRight].
+	((-1)@0 = aPoint) ifTrue: [^ self generateQueueFromLeft].
+	(0@(-1)= aPoint) ifTrue: [^ self generateQueueFromTop].
+	(0@1 = aPoint) ifTrue: [^ self generateQueueFromBottom].
+	
 ]
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 12/15/2023 14:17'
+	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
 }
-SIYBlockMediator >> generateQueueFromRight [
-	"movement queue for moving right: returns array of blocks which are isYou, 
-	reverse ordered by x coordinate"
+SIYBlockMediator >> generateQueueFromBottom [
+	"movement queue for moving up returns array of blocks, 
+	ordered by y coordinate"
+	
+	| aSet queue |
+	
+	queue := OrderedCollection new.
+	
+	1 to: (arena arenaWidth) do: [:x |
+		(arena arenaHeight) to: 1 by: -1 do: [:y |
+			aSet := gameBoard at: x at: y.
+			aSet do: [:aBlock | queue add: aBlock]
+	]].
+
+	^ queue
+]
+
+{
+	#category : #'movement queue',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+}
+SIYBlockMediator >> generateQueueFromLeft [
+	"movement queue for moving left returns array of blocks, 
+	ordered by x coordinate"
+	
 	| aSet queue |
 	
 	queue := OrderedCollection new.
 	
 	1 to: (arena arenaHeight) do: [:y |
-		(arena arenaHeight) to: 1 do: [:x |
+		1 to: (arena arenaWidth) do: [:x |
+			aSet := gameBoard at: x at: y.
+			aSet do: [:aBlock | queue add: aBlock]
+	]].
+
+	^ queue
+]
+
+{
+	#category : #'movement queue',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+}
+SIYBlockMediator >> generateQueueFromRight [
+	"movement queue for moving right: returns array of blocks, 
+	reverse ordered by x coordinate"
+	
+	| aSet queue |
+	
+	queue := OrderedCollection new.
+	
+	1 to: (arena arenaHeight) do: [:y |
+		(arena arenaWidth) to: 1 by: -1 do: [:x |
+			aSet := gameBoard at: x at: y.
+			aSet do: [:aBlock | queue add: aBlock]
+	]].
+
+	^ queue
+]
+
+{
+	#category : #'movement queue',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+}
+SIYBlockMediator >> generateQueueFromTop [
+	"movement queue for moving up returns array of blocks, 
+	ordered by y coordinate"
+	
+	| aSet queue |
+	
+	queue := OrderedCollection new.
+	
+	1 to: (arena arenaWidth) do: [:x |
+		1 to: (arena arenaHeight) do: [:y |
 			aSet := gameBoard at: x at: y.
 			aSet do: [:aBlock | queue add: aBlock]
 	]].
