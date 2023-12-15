@@ -156,7 +156,7 @@ SIYBlock >> duplicateMorph: evt [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 22:16'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> getsPushedFromDirection: aPoint [
 
@@ -164,7 +164,7 @@ SIYBlock >> getsPushedFromDirection: aPoint [
 
 	(rules isYou: self)
 		ifTrue: [^ true]
-		ifFalse: [neighbours := mediator request: (self coords - aPoint).
+		ifFalse: [neighbours := mediator requestPos: (self coords - aPoint).
 				neighbours ifNil: [^ false].
 				^ (neighbours anySatisfy: [:each | each getsPushedFromDirection: aPoint]).
 			]
@@ -181,16 +181,16 @@ SIYBlock >> imageForm [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 22:00'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:44'
 }
 SIYBlock >> informMediator [
 
-	^ (mediator notNil) ifTrue: [mediator notify: self with: self coords]
+	^ (mediator notNil) ifTrue: [mediator rememberBlock: self withPos: self coords]
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:16'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:44'
 }
 SIYBlock >> initialize [
 	
@@ -202,7 +202,7 @@ SIYBlock >> initialize [
 	
 	rules := arena ruleManager.
 	mediator := arena mediator.
-	mediator notify: self with: self coords
+	mediator rememberBlock: self withPos: self coords
 	
 	
 	
@@ -235,13 +235,13 @@ SIYBlock >> move [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 22:00'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
 	
-	neighbours := mediator request: (self coords + aPoint).
+	neighbours := mediator requestPos: (self coords + aPoint).
 	
 	 (neighbours isNil)
 		ifTrue: [^ false].
@@ -266,13 +266,13 @@ SIYBlock >> moveDirection: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/7/2023 22:15'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> moveDirectionIfSafe: aPoint [
 	
 	| neighbours |
 	
-	neighbours := mediator request: (self coords - aPoint).
+	neighbours := mediator requestPos: (self coords - aPoint).
 	
 	
 	((neighbours isNil) or: (neighbours noneSatisfy: [:each | each getsPushedFromDirection: aPoint]))
@@ -318,7 +318,7 @@ SIYBlock >> moveUp [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of neighbor blocks (objects) at coords above.
@@ -328,12 +328,12 @@ SIYBlock >> neighborsAbove [
 	currentPosition := self coords.
 	abovePosition := [(currentPosition x) - 1 @ currentPosition y].
 	
-	^mediator request: abovePosition
+	^mediator requestPos: abovePosition
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of neighbor blocks (objects) at coords below.
@@ -343,23 +343,23 @@ SIYBlock >> neighborsBelow [
 	currentPosition := self coords.
 	belowPosition := [(currentPosition x) + 1 @ currentPosition y].
 	
-	^mediator request: belowPosition
+	^mediator requestPos: belowPosition
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> neighborsHere [
 	"Return set of neighbor blocks (objects) at coords where self is right now.
 	Return empty set if none. Return nil if out of arena."
 	
-	^mediator request: self coords
+	^mediator requestPos: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of neighbor blocks (objects) at coords to the left.
@@ -369,12 +369,12 @@ SIYBlock >> neighborsLeft [
 	currentPosition := self coords.
 	leftPosition := [currentPosition @ currentPosition - 1].
 	
-	^mediator request: leftPosition
+	^mediator requestPos: leftPosition
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/6/2023 22:25'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
 }
 SIYBlock >> neighborsRight [
 	"Return set of neighbor blocks (objects) at coords to the right.
@@ -384,7 +384,7 @@ SIYBlock >> neighborsRight [
 	currentPosition := self coords.
 	rightPosition := [currentPosition @ currentPosition + 1].
 	
-	^mediator request: rightPosition
+	^mediator requestPos: rightPosition
 ]
 
 {
