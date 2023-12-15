@@ -208,6 +208,42 @@ SIYBlock >> initialize [
 ]
 
 {
+	#category : #blocktype,
+	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
+}
+SIYBlock >> isNounBlock [
+
+	^ false
+]
+
+{
+	#category : #blocktype,
+	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
+}
+SIYBlock >> isOperatorBlock [
+
+	^ false
+]
+
+{
+	#category : #blocktype,
+	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
+}
+SIYBlock >> isPropertyBlock [
+
+	^ false
+]
+
+{
+	#category : #blocktype,
+	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
+}
+SIYBlock >> isTextBlock [
+
+	^ false
+]
+
+{
 	#category : #movement,
 	#'squeak_changestamp' : 'LK 12/6/2023 21:58'
 }
