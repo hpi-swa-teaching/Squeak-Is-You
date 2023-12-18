@@ -178,11 +178,12 @@ SIYBlockMediator >> privateMove: target fromTile: aTile to: pointB [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:53'
+	#'squeak_changestamp' : 'LK 12/19/2023 00:04'
 }
 SIYBlockMediator >> privateRemove: object fromTile: aTile [
 	
-	aTile remove: object.
+	aTile ifNotNil: [aTile remove: object]
+	
 
 ]
 

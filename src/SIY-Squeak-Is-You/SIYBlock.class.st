@@ -143,6 +143,17 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/19/2023 00:08'
+}
+SIYBlock >> delete [
+	
+	mediator rememberBlock: self withPos: nil.
+	
+	super delete.
+]
+
+{
+	#category : #initialization,
 	#'squeak_changestamp' : 'LK 12/12/2023 11:10'
 }
 SIYBlock >> duplicateMorph: evt [

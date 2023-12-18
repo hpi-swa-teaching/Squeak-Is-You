@@ -65,16 +65,6 @@ SIYArena >> arenaWidth: val [
 	self updateDimensions
 ]
 
-
-{
-	#category : #layout,
-	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
-}
-SIYArena >> dropEnabled [
-
-	^ true
-]
-
 {
 	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 23:52'
@@ -83,6 +73,15 @@ SIYArena >> createSnapshot [
 	
 	"When a block moves, "
 	^nil
+]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
+}
+SIYArena >> dropEnabled [
+
+	^ true
 ]
 
 {
