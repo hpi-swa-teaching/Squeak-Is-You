@@ -2,7 +2,6 @@ Class {
 	#name : #SIYCaretaker,
 	#superclass : #Object,
 	#instVars : [
-		'arena',
 		'history'
 	],
 	#category : #'SIY-Squeak-Is-You'
@@ -24,11 +23,11 @@ SIYCaretaker >> createSnapshot: snapshot [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 11:07'
+	#'squeak_changestamp' : 'LK 12/21/2023 18:14'
 }
 SIYCaretaker >> history [
 
-	^history
+	^ history
 ]
 
 {
@@ -38,15 +37,6 @@ SIYCaretaker >> history [
 SIYCaretaker >> history: hist [
 
 	history := hist.
-]
-
-{
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 11:20'
-}
-SIYCaretaker >> historyLength [ 
-
-	^20.
 ]
 
 {
@@ -63,15 +53,14 @@ SIYCaretaker >> initialize [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/21/2023 17:41'
+	#'squeak_changestamp' : 'LK 12/21/2023 18:12'
 }
 SIYCaretaker >> restoreSnapshot [
 	
 	| snapshot |
-	self halt.
-	snapshot := history pop.
-	Transcript show: 'snapshot'.
-	Transcript show: snapshot.
-	(snapshot dict) keysAndValuesDo: [:key :value | 
-		key position: value]
+	history isEmpty 
+		ifFalse: [snapshot := history pop.
+				(snapshot dict) keysAndValuesDo: [:key :value | 
+					key coords: value]]
+
 ]

@@ -86,13 +86,28 @@ SIYArena >> blockPositionDict: dict [
 ]
 
 {
-	#category : #undo,
-	#'squeak_changestamp' : 'LK 12/21/2023 17:41'
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
 }
-SIYArena >> checkUndo [
+SIYArena >> checkKeyboardInputs [
 	
-	(self gmIsKeyPressed: $z )
-		ifTrue: [caretaker restoreSnapshot]
+	(self gmIsKeyPressed: $z)
+		ifTrue: [caretaker restoreSnapshot. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowUp)
+		ifTrue: [self moveBlocksDirection: 0@(-1). self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowDown)
+		ifTrue: [self moveBlocksDirection: 0@1. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowRight)
+		ifTrue: [self moveBlocksDirection: 1@0. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowLeft)
+		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
+		ifFalse: [self stepTime: self stepRefreshTime]
+	]]]].
+	
 ]
 
 {
@@ -143,28 +158,6 @@ SIYArena >> mediator: aMediator [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:28'
-}
-SIYArena >> moveBlocks [
-	
-	(self gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self moveBlocksDirection: 0@(-1). self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(self gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self moveBlocksDirection: 0@1. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(self gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self moveBlocksDirection: 1@0. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(self gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
-		ifFalse: [self stepTime: self stepRefreshTime]
-	]]].
-	
-]
-
-{
-	#category : #'block movement',
 	#'squeak_changestamp' : 'LK 12/21/2023 17:56'
 }
 SIYArena >> moveBlocksDirection: aPoint [
@@ -210,12 +203,12 @@ SIYArena >> ruleManager: aRuleManager [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 17:41'
+	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
 }
 SIYArena >> step [
 
-	self moveBlocks.
-	self checkUndo.
+	self checkKeyboardInputs.
+
 ]
 
 {
