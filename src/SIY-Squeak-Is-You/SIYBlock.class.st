@@ -63,7 +63,7 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/21/2023 16:57'
+	#'squeak_changestamp' : 'LK 12/21/2023 18:19'
 }
 SIYBlock >> checkRulesAtCurrentTile [
 	"Method to invoke location based rules"
@@ -71,9 +71,11 @@ SIYBlock >> checkRulesAtCurrentTile [
 	| currentTile |
 	currentTile := self neighborsHere.
 	
-	(currentTile  anySatisfy: [:each | rules isDefeat: each])
+	"isDefeat"
+	(currentTile anySatisfy: [:each | rules isDefeat: each])
 				ifTrue: [rules invokeDeath: self].
 	
+	"isWin"
 	(rules isYou: self) 
 		ifTrue:	[(currentTile  anySatisfy: [:each | rules isWin: each])
 			  		ifTrue: [rules invokeWin: self]]
