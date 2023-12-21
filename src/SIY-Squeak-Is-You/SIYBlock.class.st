@@ -358,6 +358,16 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/21/2023 22:16'
+}
+SIYBlock >> respawn [
+
+	self openInWorld.
+	self arena addMorph: self
+]
+
+{
+	#category : #initialization,
 	#'squeak_changestamp' : 'LK 12/6/2023 21:39'
 }
 SIYBlock >> superInitialize [

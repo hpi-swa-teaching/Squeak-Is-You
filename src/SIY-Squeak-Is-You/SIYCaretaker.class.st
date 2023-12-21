@@ -53,7 +53,7 @@ SIYCaretaker >> initialize [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/21/2023 18:12'
+	#'squeak_changestamp' : 'LK 12/21/2023 22:18'
 }
 SIYCaretaker >> restoreSnapshot [
 	
@@ -61,6 +61,7 @@ SIYCaretaker >> restoreSnapshot [
 	history isEmpty 
 		ifFalse: [snapshot := history pop.
 				(snapshot dict) keysAndValuesDo: [:key :value | 
+					key owner ifNil: [key respawn].
 					key coords: value]]
 
 ]

@@ -48,7 +48,7 @@ SIYRuleManager >> isPush: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:22'
+	#'squeak_changestamp' : 'LK 12/21/2023 22:06'
 }
 SIYRuleManager >> isStop: anObject [
 	"work in progress, only returns true if object is SIYWall right now"
