@@ -62,6 +62,27 @@ SIYBlock >> arena: anArena [
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:50'
+}
+SIYBlock >> checkRulesAtCurrentTile [
+	"Method to invoke location based rules"
+
+	| currentTile |
+	currentTile := self neighborsHere.
+	
+	(currentTile  anySatisfy: [:each | rules isDeath: each])
+				ifTrue: [rules invokeDeath: self].
+				
+	(currentTile  anySatisfy: [:each | rules isWin: each])
+				ifTrue: [rules invokeWin: self]
+				
+	
+	
+	
+]
+
+{
 	#category : #positioning,
 	#'squeak_changestamp' : 'LK 12/7/2023 21:03'
 }
@@ -132,7 +153,7 @@ SIYBlock >> coords [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:03'
+	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:59'
 }
 SIYBlock >> coords: aPoint [
 	"place block at coordinates clamped within arena"
@@ -205,12 +226,11 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:53'
+	#'squeak_changestamp' : 'Karl Duda 12/21/2023 12:01'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
-	
 	neighbours := mediator requestPos: (self coords + aPoint).
 
 	
@@ -227,7 +247,9 @@ SIYBlock >> moveDirection: aPoint [
 		ifTrue: [self coords: self coords + aPoint. ^ true]
 		ifFalse: [
 			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
-				ifTrue: [self coords: self coords + aPoint. ^ true]
+				ifTrue: [self coords: self coords + aPoint; 
+						 			checkRulesAtCurrentTile.
+						^ true]
 				ifFalse: [^ false]
 			]
 		
