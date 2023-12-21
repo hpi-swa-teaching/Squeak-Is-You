@@ -5,7 +5,8 @@ Class {
 		'arenaWidth',
 		'arenaHeight',
 		'mediator',
-		'rules'
+		'rules',
+		'stepTime'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -65,11 +66,32 @@ SIYArena >> arenaWidth: val [
 ]
 
 {
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 23:52'
+}
+SIYArena >> createSnapshot [
+	
+	"When a block moves, "
+	^nil
+]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
+}
+SIYArena >> dropEnabled [
+
+	^ true
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:58'
+	#'squeak_changestamp' : 'LK 12/15/2023 19:25'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
+
+	self stepTime: self stepRefreshTime.
 
 	super initialize.
 	self color: Color black.
@@ -97,12 +119,57 @@ SIYArena >> mediator: aMediator [
 ]
 
 {
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:28'
+}
+SIYArena >> moveBlocks [
+	
+	(self gmIsKeyPressed: Character arrowUp)
+		ifTrue: [self moveBlocksDirection: 0@(-1). self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowDown)
+		ifTrue: [self moveBlocksDirection: 0@1. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowRight)
+		ifTrue: [self moveBlocksDirection: 1@0. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowLeft)
+		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
+		ifFalse: [self stepTime: self stepRefreshTime]
+	]]].
+	
+]
+
+{
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:28'
+}
+SIYArena >> moveBlocksDirection: aPoint [
+
+	| movementQueue |
+	
+	movementQueue := mediator generateQueueForDirection: aPoint.
+	
+	movementQueue do: [:aBlock | 
+		(rules isYou: aBlock) ifTrue: [aBlock moveDirection: aPoint]]
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 12/3/2023 20:56'
 }
 SIYArena >> pixelPerBlock [
 
 	^ 60
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 14:13'
+}
+SIYArena >> restoreSnapshot: snapshot [
+	
+	^nil
 ]
 
 {
@@ -124,6 +191,51 @@ SIYArena >> ruleManager: aRuleManager [
 ]
 
 {
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:17'
+}
+SIYArena >> step [
+
+	self moveBlocks.
+]
+
+{
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:15'
+}
+SIYArena >> stepInbetweenTime [
+
+	^ 185
+]
+
+{
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:16'
+}
+SIYArena >> stepRefreshTime [
+
+	^ 1
+]
+
+{
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:16'
+}
+SIYArena >> stepTime [
+
+	^ stepTime
+]
+
+{
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/15/2023 19:16'
+}
+SIYArena >> stepTime: aNumber [
+
+	stepTime := aNumber
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 12/3/2023 20:55'
 }
@@ -133,4 +245,13 @@ SIYArena >> updateDimensions [
 	(arenaWidth) ifNotNil: [self width: self pixelPerBlock * arenaWidth].
 	(arenaHeight) ifNotNil: [self height: self pixelPerBlock * arenaHeight]
 
+]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 12/15/2023 20:33'
+}
+SIYArena >> wantsDroppedMorph: aMorph event: evt [
+
+	^ aMorph isKindOf: SIYBlock
 ]
