@@ -62,6 +62,28 @@ SIYBlock >> arena: anArena [
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 12/21/2023 16:57'
+}
+SIYBlock >> checkRulesAtCurrentTile [
+	"Method to invoke location based rules"
+
+	| currentTile |
+	currentTile := self neighborsHere.
+	
+	(currentTile  anySatisfy: [:each | rules isDefeat: each])
+				ifTrue: [rules invokeDeath: self].
+	
+	(rules isYou: self) 
+		ifTrue:	[(currentTile  anySatisfy: [:each | rules isWin: each])
+			  		ifTrue: [rules invokeWin: self]]
+				
+	
+	
+	
+]
+
+{
 	#category : #positioning,
 	#'squeak_changestamp' : 'LK 12/7/2023 21:03'
 }
@@ -73,7 +95,7 @@ SIYBlock >> coordX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:31'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -86,7 +108,7 @@ SIYBlock >> coordX: aNumber [
 	
 	super position: arena position + newPos.
 	
-	self informMediator
+	self informMediator.
 
 ]
 
@@ -132,7 +154,7 @@ SIYBlock >> coords [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:03'
+	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:59'
 }
 SIYBlock >> coords: aPoint [
 	"place block at coordinates clamped within arena"
@@ -205,12 +227,11 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:53'
+	#'squeak_changestamp' : 'Karl Duda 12/21/2023 12:01'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
-	
 	neighbours := mediator requestPos: (self coords + aPoint).
 
 	
@@ -227,7 +248,9 @@ SIYBlock >> moveDirection: aPoint [
 		ifTrue: [self coords: self coords + aPoint. ^ true]
 		ifFalse: [
 			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
-				ifTrue: [self coords: self coords + aPoint. ^ true]
+				ifTrue: [self coords: self coords + aPoint; 
+						 			checkRulesAtCurrentTile.
+						^ true]
 				ifFalse: [^ false]
 			]
 		
@@ -308,7 +331,7 @@ SIYBlock >> neighborsRight [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:51'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:26'
 }
 SIYBlock >> position: aPoint [
 	"Overwritten position method forces blocks to stay aligned when moving with halo."
