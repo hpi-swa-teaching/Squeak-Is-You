@@ -227,7 +227,7 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 12:01'
+	#'squeak_changestamp' : 'LK 12/21/2023 18:15'
 }
 SIYBlock >> moveDirection: aPoint [
 	
@@ -245,17 +245,21 @@ SIYBlock >> moveDirection: aPoint [
 		ifTrue: [^ true].
 	
 	(neighbours size = 0)
-		ifTrue: [self coords: self coords + aPoint. ^ true]
+		ifTrue: [
+			arena blockPositionDict at: (self) put: (self coords). 
+			self coords: self coords + aPoint.
+			^ true]
 		ifFalse: [
 			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
-				ifTrue: [self coords: self coords + aPoint; 
-						 			checkRulesAtCurrentTile.
-						^ true]
+				ifTrue: [
+					arena blockPositionDict at: (self) put: (self coords). 
+					self coords: self coords + aPoint.
+					self checkRulesAtCurrentTile.
+					^ true]
 				ifFalse: [^ false]
 			]
 		
 	
-
 ]
 
 {

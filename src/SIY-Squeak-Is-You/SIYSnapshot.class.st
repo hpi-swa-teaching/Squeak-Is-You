@@ -20,6 +20,15 @@ SIYSnapshot class >> newWithDict: dict [
 
 {
 	#category : #private,
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 12:49'
+}
+SIYSnapshot >> dict [
+
+	^blockPositionDict.
+]
+
+{
+	#category : #private,
 	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 13:50'
 }
 SIYSnapshot >> dict: dictionary [
