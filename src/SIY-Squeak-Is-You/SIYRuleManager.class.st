@@ -38,12 +38,12 @@ SIYRuleManager >> isDefeat: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:23'
+	#'squeak_changestamp' : 'LK 12/21/2023 22:24'
 }
 SIYRuleManager >> isPush: anObject [
 	"work in progress, only returns true if object is SIYRock right now"
 
-	^ (anObject class = SIYRock)
+	^ (anObject class = SIYRock) or: (anObject isKindOf: SIYText)
 ]
 
 {
