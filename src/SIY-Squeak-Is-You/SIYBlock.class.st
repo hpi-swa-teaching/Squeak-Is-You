@@ -63,7 +63,7 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:50'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:57'
 }
 SIYBlock >> checkRulesAtCurrentTile [
 	"Method to invoke location based rules"
@@ -71,11 +71,12 @@ SIYBlock >> checkRulesAtCurrentTile [
 	| currentTile |
 	currentTile := self neighborsHere.
 	
-	(currentTile  anySatisfy: [:each | rules isDeath: each])
+	(currentTile  anySatisfy: [:each | rules isDefeat: each])
 				ifTrue: [rules invokeDeath: self].
-				
-	(currentTile  anySatisfy: [:each | rules isWin: each])
-				ifTrue: [rules invokeWin: self]
+	
+	(rules isYou: self) 
+		ifTrue:	[(currentTile  anySatisfy: [:each | rules isWin: each])
+			  		ifTrue: [rules invokeWin: self]]
 				
 	
 	
@@ -94,7 +95,7 @@ SIYBlock >> coordX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:50'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:31'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -107,7 +108,7 @@ SIYBlock >> coordX: aNumber [
 	
 	super position: arena position + newPos.
 	
-	self informMediator
+	self informMediator.
 
 ]
 
@@ -330,7 +331,7 @@ SIYBlock >> neighborsRight [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:51'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:26'
 }
 SIYBlock >> position: aPoint [
 	"Overwritten position method forces blocks to stay aligned when moving with halo."

@@ -6,7 +6,8 @@ Class {
 		'arenaHeight',
 		'mediator',
 		'rules',
-		'stepTime'
+		'stepTime',
+		'game'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -82,6 +83,24 @@ SIYArena >> createSnapshot [
 SIYArena >> dropEnabled [
 
 	^ true
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/21/2023 16:37'
+}
+SIYArena >> game [
+
+	^ game
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/21/2023 16:38'
+}
+SIYArena >> game: aGame [
+
+	game :=  aGame
 ]
 
 {

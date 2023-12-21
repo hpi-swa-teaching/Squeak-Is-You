@@ -6,14 +6,12 @@ Class {
 
 {
 	#category : #'invoke rules',
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:57'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:24'
 }
 SIYRuleManager >> invokeDeath: anObject [
-	"TODO"
-	
+
 	anObject delete.
-	Transcript show: 'You have died'.
-	Transcript cr.
+
 	
 	
 
@@ -21,20 +19,18 @@ SIYRuleManager >> invokeDeath: anObject [
 
 {
 	#category : #'invoke rules',
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:57'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:44'
 }
 SIYRuleManager >> invokeWin: anObject [
-	"TODO"
 	
-	Transcript show: 'You have won'.
-	Transcript cr.
+	anObject arena game nextLevel
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:43'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:22'
 }
-SIYRuleManager >> isDeath: anObject [
+SIYRuleManager >> isDefeat: anObject [
 	"work in progress, only returns true if object is SIYLava right now"
 
 	^ (anObject class = SIYLava)
@@ -42,22 +38,22 @@ SIYRuleManager >> isDeath: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 12:04'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:23'
 }
 SIYRuleManager >> isPush: anObject [
 	"work in progress, only returns true if object is SIYRock right now"
 
-	^ (anObject class = SIYSqueak)
+	^ (anObject class = SIYRock)
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/15/2023 20:14'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:22'
 }
 SIYRuleManager >> isStop: anObject [
 	"work in progress, only returns true if object is SIYWall right now"
 
-	^ (anObject class == SIYWall)
+	^ (anObject class = SIYWall)
 ]
 
 {
@@ -72,10 +68,10 @@ SIYRuleManager >> isWin: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 12:04'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:23'
 }
 SIYRuleManager >> isYou: anObject [
 	"work in progress, only returns true if object is SIYSqueak right now"
 
-	^ (anObject class == SIYRock)
+	^ (anObject class = SIYSqueak)
 ]

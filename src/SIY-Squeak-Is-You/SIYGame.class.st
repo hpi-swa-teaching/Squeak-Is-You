@@ -3,7 +3,6 @@ Class {
 	#superclass : #Morph,
 	#instVars : [
 		'arena',
-		'block',
 		'rules',
 		'level'
 	],
@@ -20,14 +19,61 @@ SIYGame class >> start [
 ]
 
 {
+	#category : #'level generation',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:54'
+}
+SIYGame >> abortLevel [
+	
+	arena delete.
+	rules := nil.
+	level := nil
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'Karl Duda 12/6/2023 18:04'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:40'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	level := SIYLevel01 new.
+	self startLevel: SIYLevel01
+]
+
+{
+	#category : #'level generation',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:53'
+}
+SIYGame >> nextLevel [
+
+	| aLevel aPoint |
+
+	aLevel := level nextLevel.
+	aPoint := arena position.
+	
+	self abortLevel.
+	
+	aLevel ifNotNil: [self startLevel: aLevel atPosition: aPoint]
+]
+
+{
+	#category : #'level generation',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:40'
+}
+SIYGame >> startLevel: aLevel [
+
+	level := aLevel new.
 	arena := level arena.
+	arena game: self.
 	rules := SIYRuleManager new.
+]
+
+{
+	#category : #'level generation',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:53'
+}
+SIYGame >> startLevel: aLevel atPosition: aPoint [
+
+	self startLevel: aLevel.
+	arena position: aPoint.
 ]

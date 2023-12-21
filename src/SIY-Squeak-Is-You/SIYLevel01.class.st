@@ -57,3 +57,12 @@ SIYLevel01 >> buildLevel [
 	self placeBlock: SIYIsT at: 4@7.
 	self placeBlock: SIYDefeatT at: 5@7.
 ]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:34'
+}
+SIYLevel01 >> nextLevel [
+
+	^ SIYLevel02
+]
