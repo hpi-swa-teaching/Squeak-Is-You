@@ -86,6 +86,16 @@ SIYArena >> blockPositionDict: dict [
 ]
 
 {
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 12/21/2023 17:41'
+}
+SIYArena >> checkUndo [
+	
+	(self gmIsKeyPressed: $z )
+		ifTrue: [caretaker restoreSnapshot]
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
 }
@@ -155,7 +165,7 @@ SIYArena >> moveBlocks [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 12:46'
+	#'squeak_changestamp' : 'LK 12/21/2023 17:56'
 }
 SIYArena >> moveBlocksDirection: aPoint [
 
@@ -168,7 +178,7 @@ SIYArena >> moveBlocksDirection: aPoint [
 	movementQueue do: [:aBlock | 
 		(rules isYou: aBlock) ifTrue: [aBlock moveDirection: aPoint]].
 	
-	caretaker createSnapshot: (SIYSnapshot newWithDict: blockPositionDict).
+	caretaker createSnapshot: (SIYSnapshot newWithDict: (blockPositionDict copy)).
 ]
 
 {
@@ -178,16 +188,6 @@ SIYArena >> moveBlocksDirection: aPoint [
 SIYArena >> pixelPerBlock [
 
 	^ 60
-]
-
-{
-	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/19/2023 01:28'
-}
-SIYArena >> restoreSnapshot [
-	
-	(self gmIsKeyPressed: $z )
-		ifTrue: [caretaker restoreSnapshot]
 ]
 
 {
@@ -210,12 +210,12 @@ SIYArena >> ruleManager: aRuleManager [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/19/2023 00:37'
+	#'squeak_changestamp' : 'LK 12/21/2023 17:41'
 }
 SIYArena >> step [
 
 	self moveBlocks.
-	self restoreSnapshot.
+	self checkUndo.
 ]
 
 {

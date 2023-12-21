@@ -10,12 +10,12 @@ Class {
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/21/2023 17:31'
+	#'squeak_changestamp' : 'LK 12/21/2023 17:38'
 }
 SIYCaretaker >> createSnapshot: snapshot [
 
 	"todo: wenn größe = historyLength, dann muss erstes Element entfernt werden"
-	self halt.
+	"self halt."
 	Transcript show: 'push onto stack'.
 	history push: snapshot.
 
@@ -63,7 +63,7 @@ SIYCaretaker >> initialize [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/21/2023 17:31'
+	#'squeak_changestamp' : 'LK 12/21/2023 17:41'
 }
 SIYCaretaker >> restoreSnapshot [
 	
