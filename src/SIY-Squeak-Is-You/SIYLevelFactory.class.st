@@ -65,6 +65,15 @@ SIYLevelFactory >> initialize [
 ]
 
 {
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:34'
+}
+SIYLevelFactory >> nextlevel [
+
+	^ nil
+]
+
+{
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 11:33'
 }

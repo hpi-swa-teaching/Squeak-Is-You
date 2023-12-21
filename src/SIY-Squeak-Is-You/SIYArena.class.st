@@ -8,9 +8,10 @@ Class {
 		'rules',
 		'stepTime',
 		'blockPositionDict',
-		'caretaker'
+		'caretaker',
+		'game'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : 'SIY-Squeak-Is-You'
 }
 
 {
@@ -117,6 +118,24 @@ SIYArena >> checkKeyboardInputs [
 SIYArena >> dropEnabled [
 
 	^ true
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/21/2023 16:37'
+}
+SIYArena >> game [
+
+	^ game
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 12/21/2023 16:38'
+}
+SIYArena >> game: aGame [
+
+	game :=  aGame
 ]
 
 {
