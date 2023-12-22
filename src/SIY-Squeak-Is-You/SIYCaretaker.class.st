@@ -9,16 +9,13 @@ Class {
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/21/2023 17:38'
+	#'squeak_changestamp' : 'LK 12/22/2023 11:26'
 }
 SIYCaretaker >> createSnapshot: snapshot [
 
-	"todo: wenn größe = historyLength, dann muss erstes Element entfernt werden"
-	"self halt."
-	Transcript show: 'push onto stack'.
-	history push: snapshot.
-
-
+	snapshot dict isEmpty
+		ifFalse: [history push: snapshot]
+	
 ]
 
 {

@@ -229,13 +229,12 @@ SIYBlock >> initialize [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/21/2023 18:15'
+	#'squeak_changestamp' : 'LK 12/22/2023 11:14'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
 	neighbours := mediator requestPos: (self coords + aPoint).
-
 	
 	 (neighbours isNil)
 		ifTrue: [^ false].
