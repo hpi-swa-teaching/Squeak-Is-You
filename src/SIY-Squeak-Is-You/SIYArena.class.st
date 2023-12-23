@@ -88,10 +88,13 @@ SIYArena >> blockPositionDict: dict [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:17'
 }
 SIYArena >> checkKeyboardInputs [
 	
+	(self gmIsKeyPressed: $r)
+		ifTrue: [self game restartLevel. self stepTime: self stepInbetweenTime]
+		ifFalse:[
 	(self gmIsKeyPressed: $z)
 		ifTrue: [caretaker restoreSnapshot. self stepTime: self stepInbetweenTime]
 		ifFalse: [
@@ -107,7 +110,7 @@ SIYArena >> checkKeyboardInputs [
 	(self gmIsKeyPressed: Character arrowLeft)
 		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
 		ifFalse: [self stepTime: self stepRefreshTime]
-	]]]].
+	]]]]].
 	
 ]
 
@@ -177,7 +180,7 @@ SIYArena >> mediator: aMediator [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 17:56'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:29'
 }
 SIYArena >> moveBlocksDirection: aPoint [
 
@@ -190,7 +193,10 @@ SIYArena >> moveBlocksDirection: aPoint [
 	movementQueue do: [:aBlock | 
 		(rules isYou: aBlock) ifTrue: [aBlock moveDirection: aPoint]].
 	
-	caretaker createSnapshot: (SIYSnapshot newWithDict: (blockPositionDict copy)).
+	(blockPositionDict isEmpty)
+	ifFalse: [
+		caretaker createSnapshot: (SIYSnapshot newWithDict: (blockPositionDict copy)).]
+	
 ]
 
 {

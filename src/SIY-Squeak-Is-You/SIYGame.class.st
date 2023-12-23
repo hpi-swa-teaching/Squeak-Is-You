@@ -42,6 +42,15 @@ SIYGame >> initialize [
 
 {
 	#category : #'level generation',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:26'
+}
+SIYGame >> level [ 
+
+	^ level class.
+]
+
+{
+	#category : #'level generation',
 	#'squeak_changestamp' : 'LK 12/21/2023 16:53'
 }
 SIYGame >> nextLevel [
@@ -58,7 +67,18 @@ SIYGame >> nextLevel [
 
 {
 	#category : #'level generation',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:40'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:16'
+}
+SIYGame >> restartLevel [
+
+	self abortLevel.
+	self startLevel: level.
+	
+]
+
+{
+	#category : #'level generation',
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:27'
 }
 SIYGame >> startLevel: aLevel [
 
