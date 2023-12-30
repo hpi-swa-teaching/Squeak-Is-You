@@ -15,7 +15,7 @@ SIYLevel01 >> arenaDimensions [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/7/2023 18:58'
+	#'squeak_changestamp' : 'jt 12/30/2023 20:08'
 }
 SIYLevel01 >> buildLevel [
 	

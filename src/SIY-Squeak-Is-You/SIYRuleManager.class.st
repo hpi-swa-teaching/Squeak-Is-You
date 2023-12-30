@@ -1,6 +1,9 @@
 Class {
 	#name : #SIYRuleManager,
 	#superclass : #Object,
+	#instVars : [
+		'currentRules'
+	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
@@ -28,50 +31,120 @@ SIYRuleManager >> invokeWin: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:22'
+	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
 }
 SIYRuleManager >> isDefeat: anObject [
-	"work in progress, only returns true if object is SIYLava right now"
-
-	^ (anObject class = SIYLava)
+		
+	| ruleSet |
+	
+	(currentRules includesKey: SIYDefeatT)
+	ifTrue: [ruleSet := currentRules at: SIYDefeatT. ^ (ruleSet includes: anObject class)]
+	ifFalse: [^ false].
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 22:24'
+	#'squeak_changestamp' : 'jt 12/30/2023 20:30'
 }
 SIYRuleManager >> isPush: anObject [
-	"work in progress, only returns true if object is SIYRock right now"
+	
+	| ruleSet |
+	
+	(anObject isKindOf: SIYText) 
+	ifTrue: [^ true].
+	
+	(currentRules includesKey: SIYPushT)
+	ifTrue: [ruleSet := currentRules at: SIYPushT. ^ (ruleSet includes: anObject class)]
+	ifFalse: [^ false].
 
-	^ (anObject class = SIYRock) or: (anObject isKindOf: SIYText)
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 22:06'
+	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
 }
 SIYRuleManager >> isStop: anObject [
-	"work in progress, only returns true if object is SIYWall right now"
-
-	^ (anObject class = SIYWall)
+	
+	| ruleSet |
+	
+	(currentRules includesKey: SIYStopT)
+	ifTrue: [ruleSet := currentRules at: SIYStopT. ^ (ruleSet includes: anObject class)]
+	ifFalse: [^ false].
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:42'
+	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
 }
 SIYRuleManager >> isWin: anObject [
-	"work in progress, only returns true if object is SIYFlag right now"
-
-	^ (anObject class = SIYFlag)
+	
+	| ruleSet |
+	
+	(currentRules includesKey: SIYWinT)
+	ifTrue: [ruleSet := currentRules at: SIYWinT. ^ (ruleSet includes: anObject class)]
+	ifFalse: [^ false].
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:23'
+	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
 }
 SIYRuleManager >> isYou: anObject [
-	"work in progress, only returns true if object is SIYSqueak right now"
 
-	^ (anObject class = SIYSqueak)
+	| ruleSet |
+	
+	(currentRules includesKey: SIYYouT)
+	ifTrue: [ruleSet := currentRules at: SIYYouT. ^ (ruleSet includes: anObject class)]
+	ifFalse: [^ false].
+	
+	
+	
+	
+	
+]
+
+{
+	#category : #'update rules',
+	#'squeak_changestamp' : 'jt 12/30/2023 20:26'
+}
+SIYRuleManager >> updateRules: anArena [
+
+	"Rules only work for 'is' Operator right now + code is really ugly"
+	
+	| noun property ruleSet |
+	
+	currentRules := Dictionary new.
+	
+	1 to: (anArena arenaWidth) do: [:x |
+		1 to: (anArena arenaHeight) do: [:y |
+			((anArena mediator requestPos: x@y) anySatisfy: [:each | each isOperatorBlock])
+				ifTrue: [
+					noun := (anArena mediator requestPos: (x-1)@y) detect: [:each | each isNounBlock] ifNone: [nil].
+					property := (anArena mediator requestPos: (x+1)@y) detect: [:each | each isPropertyBlock] ifNone: [nil].
+		
+					((noun isNil not) and: (property isNil not)) ifTrue: [(currentRules includesKey: property class) 
+						ifTrue: [ruleSet := currentRules at: property class. 
+							ruleSet add: noun correspondingBlock. 
+							currentRules at: property class put: ruleSet]
+						ifFalse: [ruleSet := Set new. 
+							ruleSet add: noun correspondingBlock. 
+							currentRules at: property class put: ruleSet]
+					].
+				
+					noun := (anArena mediator requestPos: x@(y-1)) detect: [:each | each isNounBlock] ifNone: [nil].
+					property := (anArena mediator requestPos: x@(y+1)) detect: [:each | each isPropertyBlock] ifNone: [nil].
+		
+					((noun  isNil not) and: (property  isNil not)) ifTrue: [(currentRules includesKey: property class) 
+						ifTrue: [ruleSet := currentRules at: property class. 
+							ruleSet add: noun correspondingBlock. 
+							currentRules at: property class put: ruleSet]
+						ifFalse: [ruleSet := Set new. 
+							ruleSet add: noun correspondingBlock. 
+							currentRules at: property class put: ruleSet]
+					].
+					
+			]	
+		]
+	 ].
+
 ]

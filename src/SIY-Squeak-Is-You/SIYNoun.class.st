@@ -6,6 +6,15 @@ Class {
 
 {
 	#category : #blocktype,
+	#'squeak_changestamp' : 'jt 12/30/2023 13:09'
+}
+SIYNoun >> correspondingBlock [
+
+	^ SubclassResponsibility
+]
+
+{
+	#category : #blocktype,
 	#'squeak_changestamp' : 'jt 12/15/2023 12:22'
 }
 SIYNoun >> isNounBlock [
