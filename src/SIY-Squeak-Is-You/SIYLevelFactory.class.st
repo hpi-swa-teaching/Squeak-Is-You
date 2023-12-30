@@ -1,5 +1,5 @@
 Class {
-	#name : #SIYLevel,
+	#name : #SIYLevelFactory,
 	#superclass : #Object,
 	#instVars : [
 		'arena',
@@ -12,7 +12,7 @@ Class {
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
 }
-SIYLevel >> arena [
+SIYLevelFactory >> arena [
 
 	^ arena
 ]
@@ -21,7 +21,7 @@ SIYLevel >> arena [
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
 }
-SIYLevel >> arenaDimensions [
+SIYLevelFactory >> arenaDimensions [
 
 	^ SubclassResponsibility
 ]
@@ -30,20 +30,20 @@ SIYLevel >> arenaDimensions [
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
 }
-SIYLevel >> buildLevel [
+SIYLevelFactory >> buildLevel [
 
 	^ SubclassResponsibility
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/6/2023 20:54'
+	#'squeak_changestamp' : 'LK 12/15/2023 13:40'
 }
-SIYLevel >> createLevel [
+SIYLevelFactory >> createLevel [
 
 	arena := SIYArena newWithDimension: self arenaDimensions.
 	
-	arena mediator: (SIYMediator newForArena: arena).
+	arena mediator: (SIYBlockMediator newForArena: arena).
 	arena ruleManager: (SIYRuleManager new).
 	
 	self buildLevel.
@@ -55,7 +55,7 @@ SIYLevel >> createLevel [
 	#category : #initialization,
 	#'squeak_changestamp' : 'LK 12/5/2023 11:51'
 }
-SIYLevel >> initialize [
+SIYLevelFactory >> initialize [
 
 	super initialize.
 	
@@ -65,10 +65,19 @@ SIYLevel >> initialize [
 ]
 
 {
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 12/21/2023 16:34'
+}
+SIYLevelFactory >> nextlevel [
+
+	^ nil
+]
+
+{
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 11:33'
 }
-SIYLevel >> placeBlock: aBlockClass at: aPoint [
+SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 	aBlockClass newInArena: self arena at: aPoint
 ]
@@ -77,7 +86,7 @@ SIYLevel >> placeBlock: aBlockClass at: aPoint [
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 11:40'
 }
-SIYLevel >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
+SIYLevelFactory >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
 
 	(firstPoint x) to: (secondPoint x) do: 
 		[:coordX | (firstPoint y) to: (secondPoint y) do: 
@@ -88,7 +97,7 @@ SIYLevel >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/7/2023 21:29'
 }
-SIYLevel >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
+SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
 	self placeBlocks: aBlockClass
 		from: firstPoint
