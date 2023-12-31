@@ -228,42 +228,6 @@ SIYBlock >> initialize [
 ]
 
 {
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
-}
-SIYBlock >> isNounBlock [
-
-	^ false
-]
-
-{
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
-}
-SIYBlock >> isOperatorBlock [
-
-	^ false
-]
-
-{
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
-}
-SIYBlock >> isPropertyBlock [
-
-	^ false
-]
-
-{
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:21'
-}
-SIYBlock >> isTextBlock [
-
-	^ false
-]
-
-{
 	#category : #movement,
 	#'squeak_changestamp' : 'LK 12/22/2023 11:14'
 }
@@ -301,32 +265,24 @@ SIYBlock >> moveDirection: aPoint [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:22'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of neighbor blocks (objects) at coords above.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition abovePosition |
-	currentPosition := self coords.
-	abovePosition := [(currentPosition x) - 1 @ currentPosition y].
-	
-	^mediator requestPos: abovePosition
+	^ mediator requestPos: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of neighbor blocks (objects) at coords below.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition belowPosition |
-	currentPosition := self coords.
-	belowPosition := [(currentPosition x) + 1 @ currentPosition y].
-	
-	^mediator requestPos: belowPosition
+	^ mediator requestPos: 1@0 + self coords
 ]
 
 {
@@ -342,32 +298,24 @@ SIYBlock >> neighborsHere [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of neighbor blocks (objects) at coords to the left.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition leftPosition |
-	currentPosition := self coords.
-	leftPosition := [currentPosition @ currentPosition - 1].
-	
-	^mediator requestPos: leftPosition
+	^ mediator requestPos: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
 }
 SIYBlock >> neighborsRight [
 	"Return set of neighbor blocks (objects) at coords to the right.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition rightPosition |
-	currentPosition := self coords.
-	rightPosition := [currentPosition @ currentPosition + 1].
-	
-	^mediator requestPos: rightPosition
+	^ mediator requestPos: 0@1 + self coords
 ]
 
 {

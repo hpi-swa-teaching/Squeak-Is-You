@@ -8,6 +8,56 @@ Class {
 }
 
 {
+	#category : #'update rules',
+	#'squeak_changestamp' : 'LK 12/31/2023 16:24'
+}
+SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock toDictionary: aDictionary [
+
+	| aNounBlock aPropertyBlock aSet |
+
+	aNounBlock := anOperatorBlock neighborsLeft
+		detect: [:each | each isKindOf: SIYNoun]
+		ifNone: [nil].
+		
+	aPropertyBlock := anOperatorBlock neighborsRight
+		detect: [:each | each isKindOf: SIYProperty]
+		ifNone: [nil].
+	
+	(aNounBlock notNil and: aPropertyBlock notNil)
+		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
+			aSet add: aNounBlock representsBlock.
+			aDictionary at: aPropertyBlock class put: aSet.].
+	
+	^ aDictionary
+
+]
+
+{
+	#category : #'update rules',
+	#'squeak_changestamp' : 'LK 12/31/2023 16:25'
+}
+SIYRuleManager >> addVerticalRulesFor: anOperatorBlock toDictionary: aDictionary [
+
+	| aNounBlock aPropertyBlock aSet |
+
+	aNounBlock := anOperatorBlock neighborsAbove
+		detect: [:each | each isKindOf: SIYNoun]
+		ifNone: [nil].
+		
+	aPropertyBlock := anOperatorBlock neighborsBelow
+		detect: [:each | each isKindOf: SIYProperty]
+		ifNone: [nil].
+	
+	(aNounBlock notNil and: aPropertyBlock notNil)
+		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
+			aSet add: aNounBlock representsBlock.
+			aDictionary at: aPropertyBlock class put: aSet.].
+	
+	^ aDictionary
+
+]
+
+{
 	#category : #'invoke rules',
 	#'squeak_changestamp' : 'LK 12/21/2023 18:23'
 }
@@ -105,46 +155,18 @@ SIYRuleManager >> isYou: anObject [
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'jt 12/30/2023 20:26'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:26'
 }
-SIYRuleManager >> updateRules: anArena [
+SIYRuleManager >> updateRulesInArena: anArena [
 
-	"Rules only work for 'is' Operator right now + code is really ugly"
+	| ruleDictionary |
 	
-	| noun property ruleSet |
+	ruleDictionary := Dictionary new.
 	
-	currentRules := Dictionary new.
+	(anArena mediator getOperatorBlocks) do: [:anOperatorBlock |
+			ruleDictionary := self addHorizontalRulesFor: anOperatorBlock toDictionary: ruleDictionary.
+			ruleDictionary := self addVerticalRulesFor: anOperatorBlock toDictionary: ruleDictionary.
+		].
 	
-	1 to: (anArena arenaWidth) do: [:x |
-		1 to: (anArena arenaHeight) do: [:y |
-			((anArena mediator requestPos: x@y) anySatisfy: [:each | each isOperatorBlock])
-				ifTrue: [
-					noun := (anArena mediator requestPos: (x-1)@y) detect: [:each | each isNounBlock] ifNone: [nil].
-					property := (anArena mediator requestPos: (x+1)@y) detect: [:each | each isPropertyBlock] ifNone: [nil].
-		
-					((noun isNil not) and: (property isNil not)) ifTrue: [(currentRules includesKey: property class) 
-						ifTrue: [ruleSet := currentRules at: property class. 
-							ruleSet add: noun correspondingBlock. 
-							currentRules at: property class put: ruleSet]
-						ifFalse: [ruleSet := Set new. 
-							ruleSet add: noun correspondingBlock. 
-							currentRules at: property class put: ruleSet]
-					].
-				
-					noun := (anArena mediator requestPos: x@(y-1)) detect: [:each | each isNounBlock] ifNone: [nil].
-					property := (anArena mediator requestPos: x@(y+1)) detect: [:each | each isPropertyBlock] ifNone: [nil].
-		
-					((noun  isNil not) and: (property  isNil not)) ifTrue: [(currentRules includesKey: property class) 
-						ifTrue: [ruleSet := currentRules at: property class. 
-							ruleSet add: noun correspondingBlock. 
-							currentRules at: property class put: ruleSet]
-						ifFalse: [ruleSet := Set new. 
-							ruleSet add: noun correspondingBlock. 
-							currentRules at: property class put: ruleSet]
-					].
-					
-			]	
-		]
-	 ].
-
+	currentRules := ruleDictionary.
 ]

@@ -5,21 +5,12 @@ Class {
 }
 
 {
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/30/2023 13:09'
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 12/31/2023 16:14'
 }
-SIYNoun >> correspondingBlock [
+SIYNoun >> representsBlock [
 
 	^ SubclassResponsibility
-]
-
-{
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:22'
-}
-SIYNoun >> isNounBlock [
-
-	^ true
 ]
 
 {

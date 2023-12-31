@@ -6,9 +6,9 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'jt 12/30/2023 13:09'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:14'
 }
-SIYLavaT >> correspondingBlock [
+SIYLavaT >> representsBlock [
 
 	^ SIYLava
 ]

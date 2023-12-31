@@ -5,15 +5,6 @@ Class {
 }
 
 {
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:22'
-}
-SIYText >> isTextBlock [
-
-	^ true
-]
-
-{
 	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 17:02'
 }
