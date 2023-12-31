@@ -62,7 +62,7 @@ SIYBlock >> arena: anArena [
 ]
 
 {
-	#category : #movement,
+	#category : #rules,
 	#'squeak_changestamp' : 'LK 12/21/2023 18:19'
 }
 SIYBlock >> checkRulesAtCurrentTile [
@@ -228,22 +228,22 @@ SIYBlock >> initialize [
 ]
 
 {
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/22/2023 11:14'
+	#category : #rules,
+	#'squeak_changestamp' : 'LK 12/31/2023 20:22'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
 	neighbours := mediator requestPos: (self coords + aPoint).
-	
-	 (neighbours isNil)
-		ifTrue: [^ false].
 		
 	(rules isStop: self)
 		ifTrue: [^ false].
 	
 	((rules isPush: self) not and: (rules isYou: self) not)
 		ifTrue: [^ true].
+		
+	(neighbours isNil)
+		ifTrue: [^ false].
 	
 	(neighbours size = 0)
 		ifTrue: [

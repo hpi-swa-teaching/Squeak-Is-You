@@ -140,7 +140,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/18/2023 13:30'
+	#'squeak_changestamp' : 'LK 12/31/2023 20:16'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -149,6 +149,7 @@ SIYArena >> initialize [
 
 	super initialize.
 	self color: Color black.
+	"self addFlexShell."
 	
 	blockPositionDict := Dictionary new.
 	caretaker := SIYCaretaker new.
