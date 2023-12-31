@@ -222,12 +222,13 @@ SIYArena >> ruleManager: aRuleManager [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
+	#'squeak_changestamp' : 'jt 12/30/2023 12:34'
 }
 SIYArena >> step [
 
 	self checkKeyboardInputs.
 
+	rules updateRules: self.
 ]
 
 {
