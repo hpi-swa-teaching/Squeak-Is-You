@@ -59,11 +59,11 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock toDictionary: aDictionary
 
 {
 	#category : #'invoke rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 18:23'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:29'
 }
 SIYRuleManager >> invokeDeath: aBlock [
 
-	aBlock delete.
+	aBlock delete
 
 	
 	
@@ -81,71 +81,53 @@ SIYRuleManager >> invokeWin: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:31'
 }
 SIYRuleManager >> isDefeat: anObject [
-		
-	| ruleSet |
 	
-	(currentRules includesKey: SIYDefeatT)
-	ifTrue: [ruleSet := currentRules at: SIYDefeatT. ^ (ruleSet includes: anObject class)]
-	ifFalse: [^ false].
+	^ (currentRules at: SIYDefeatT ifAbsent: [^ false]) includes: anObject class
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'jt 12/30/2023 20:30'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:32'
 }
 SIYRuleManager >> isPush: anObject [
 	
-	| ruleSet |
+	(anObject isKindOf: SIYText) ifTrue: [^ true].
 	
-	(anObject isKindOf: SIYText) 
-	ifTrue: [^ true].
-	
-	(currentRules includesKey: SIYPushT)
-	ifTrue: [ruleSet := currentRules at: SIYPushT. ^ (ruleSet includes: anObject class)]
-	ifFalse: [^ false].
+	^ (currentRules at: SIYPushT ifAbsent: [^ false]) includes: anObject class
 
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:58'
 }
 SIYRuleManager >> isStop: anObject [
 	
-	| ruleSet |
-	
-	(currentRules includesKey: SIYStopT)
-	ifTrue: [ruleSet := currentRules at: SIYStopT. ^ (ruleSet includes: anObject class)]
-	ifFalse: [^ false].
+	^ (currentRules at: SIYStopT ifAbsent: [^ false]) includes: anObject class
+
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:58'
 }
 SIYRuleManager >> isWin: anObject [
 	
-	| ruleSet |
-	
-	(currentRules includesKey: SIYWinT)
-	ifTrue: [ruleSet := currentRules at: SIYWinT. ^ (ruleSet includes: anObject class)]
-	ifFalse: [^ false].
+	^ (currentRules at: SIYWinT ifAbsent: [^ false]) includes: anObject class
+
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'jt 12/30/2023 20:27'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:59'
 }
 SIYRuleManager >> isYou: anObject [
 
-	| ruleSet |
-	
-	(currentRules includesKey: SIYYouT)
-	ifTrue: [ruleSet := currentRules at: SIYYouT. ^ (ruleSet includes: anObject class)]
-	ifFalse: [^ false].
+	^ (currentRules at: SIYYouT ifAbsent: [^ false]) includes: anObject class
+
 	
 	
 	
