@@ -34,12 +34,16 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock toDictionary: aDictiona
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:25'
+	#'squeak_changestamp' : 'LK 1/2/2024 18:13'
 }
 SIYRuleManager >> addVerticalRulesFor: anOperatorBlock toDictionary: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
-
+	
+	(anOperatorBlock neighborsAbove notNil 
+		and: anOperatorBlock neighborsBelow notNil)
+		ifFalse: [^ aDictionary].
+	
 	aNounBlock := anOperatorBlock neighborsAbove
 		detect: [:each | each isKindOf: SIYNoun]
 		ifNone: [nil].
