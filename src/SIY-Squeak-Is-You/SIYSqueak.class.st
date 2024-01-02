@@ -6,9 +6,18 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 12/4/2023 18:06'
+	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
 }
-SIYSqueak >> textureFile [
+SIYSqueak >> blockTexture [
 
 	^ '/SIYSqueak.png'
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 12:57'
+}
+SIYSqueak >> nounTexture [
+
+	^ '/SIYSqueakT.png'
 ]

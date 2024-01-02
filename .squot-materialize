@@ -130,5 +130,12 @@ OrderedCollection [
 			'SIYLava.png'
 		],
 		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYNoun.png'
+		],
+		#encoding : @11
 	}
 ]

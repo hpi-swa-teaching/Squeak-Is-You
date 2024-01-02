@@ -6,18 +6,18 @@ Class {
 
 {
 	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+}
+SIYTextT >> blockTexture [
+
+	^ '/SIYTextT.png'
+]
+
+{
+	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'LK 12/31/2023 16:14'
 }
 SIYTextT >> representsBlock [
 
 	^ SIYText
-]
-
-{
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 17:46'
-}
-SIYTextT >> textureFile [
-
-	^ '/SIYTextT.png'
 ]

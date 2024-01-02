@@ -62,6 +62,15 @@ SIYBlock >> arena: anArena [
 ]
 
 {
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+}
+SIYBlock >> blockTexture [
+
+	^ SubclassResponsibility
+]
+
+{
 	#category : #rules,
 	#'squeak_changestamp' : 'LK 12/21/2023 18:19'
 }
@@ -209,11 +218,11 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:44'
+	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
 }
 SIYBlock >> initialize [
 	
-	self image: (SIYTextureManager new getTexture: self textureFile).
+	self image: (SIYTextureManager new getTexture: self blockTexture).
 	
 	arena addMorph: self.
 	
@@ -319,6 +328,15 @@ SIYBlock >> neighborsRight [
 ]
 
 {
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 12:56'
+}
+SIYBlock >> nounTexture [
+
+	^ SubclassResponsibility
+]
+
+{
 	#category : #positioning,
 	#'squeak_changestamp' : 'LK 12/21/2023 16:26'
 }
@@ -356,13 +374,4 @@ SIYBlock >> respawn [
 SIYBlock >> superInitialize [
 
 	super initialize
-]
-
-{
-	#category : #appearance,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:09'
-}
-SIYBlock >> textureFile [
-
-	^ SubclassResponsibility
 ]
