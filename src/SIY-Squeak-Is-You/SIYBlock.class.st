@@ -108,7 +108,7 @@ SIYBlock >> blockTextureUp [
 
 {
 	#category : #rules,
-	#'squeak_changestamp' : 'LK 12/21/2023 18:19'
+	#'squeak_changestamp' : 'LK 1/2/2024 23:33'
 }
 SIYBlock >> checkRulesAtCurrentTile [
 	"Method to invoke location based rules"
@@ -117,7 +117,7 @@ SIYBlock >> checkRulesAtCurrentTile [
 	currentTile := self neighborsHere.
 	
 	"isDefeat"
-	(currentTile anySatisfy: [:each | rules isDefeat: each])
+	(currentTile anySatisfy: [:each | (rules isDefeat: each) and: (rules isYou: each) not])
 				ifTrue: [rules invokeDeath: self].
 	
 	"isWin"
@@ -277,7 +277,7 @@ SIYBlock >> initialize [
 
 {
 	#category : #rules,
-	#'squeak_changestamp' : 'LK 1/2/2024 17:09'
+	#'squeak_changestamp' : 'LK 1/2/2024 23:21'
 }
 SIYBlock >> moveDirection: aPoint [
 	
@@ -298,6 +298,7 @@ SIYBlock >> moveDirection: aPoint [
 		ifTrue: [
 			arena blockPositionDict at: (self) put: (self coords). 
 			self coords: self coords + aPoint.
+			self checkRulesAtCurrentTile.
 			self updateTextureForDirection: aPoint.
 			^ true]
 		ifFalse: [

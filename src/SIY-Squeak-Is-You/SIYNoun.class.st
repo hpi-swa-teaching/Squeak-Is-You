@@ -21,6 +21,20 @@ SIYNoun >> blockTexture [
 
 {
 	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 23:17'
+}
+SIYNoun >> duplicateMorph: evt [
+	
+	| dup |
+	
+	dup := (SIYNoun newInArena: self arena at: self coords)
+				representsBlock: self representsBlock.
+
+	^ dup
+]
+
+{
+	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'LK 1/2/2024 12:52'
 }
 SIYNoun >> representsBlock [

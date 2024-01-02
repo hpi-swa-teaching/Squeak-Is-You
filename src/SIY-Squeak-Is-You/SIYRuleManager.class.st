@@ -9,25 +9,25 @@ Class {
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'KD 1/2/2024 21:58'
+	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
 }
-SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock toDictionary: aDictionary [
+SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
 	anOperatorBlock neighborsLeft isEmptyOrNil
 		ifFalse: [aNounBlock := anOperatorBlock neighborsLeft
 			detect: [:each | each isKindOf: SIYNoun]
-			ifNone: [nil].].
+			ifNone: [nil]].
 			
 	anOperatorBlock neighborsRight isEmptyOrNil 
 		ifFalse: [aPropertyBlock := anOperatorBlock neighborsRight
 			detect: [:each | each isKindOf: SIYProperty]
-			ifNone: [nil].].
+			ifNone: [nil]].
 	
 	(aNounBlock notNil and: aPropertyBlock notNil)
 		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
 			aSet add: aNounBlock representsBlock.
-			aDictionary at: aPropertyBlock class put: aSet.].
+			aDictionary at: aPropertyBlock class put: aSet].
 	
 	^ aDictionary
 
@@ -35,25 +35,25 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock toDictionary: aDictiona
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'KD 1/2/2024 21:58'
+	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
 }
-SIYRuleManager >> addVerticalRulesFor: anOperatorBlock toDictionary: aDictionary [
+SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
 	anOperatorBlock neighborsAbove isEmptyOrNil
 		ifFalse: [aNounBlock := anOperatorBlock neighborsAbove
 			detect: [:each | each isKindOf: SIYNoun]
-			ifNone: [nil].].
+			ifNone: [nil]].
 
 	anOperatorBlock neighborsBelow isEmptyOrNil		
 		ifFalse: [aPropertyBlock := anOperatorBlock neighborsBelow
 			detect: [:each | each isKindOf: SIYProperty]
-			ifNone: [nil].].
+			ifNone: [nil]].
 	
 	(aNounBlock notNil and: aPropertyBlock notNil)
 		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
 			aSet add: aNounBlock representsBlock.
-			aDictionary at: aPropertyBlock class put: aSet.].
+			aDictionary at: aPropertyBlock class put: aSet].
 	
 	^ aDictionary
 
@@ -139,18 +139,18 @@ SIYRuleManager >> isYou: anObject [
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:26'
+	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 
-	| ruleDictionary |
+	| aDictionary |
 	
-	ruleDictionary := Dictionary new.
+	aDictionary := Dictionary new.
 	
-	(anArena mediator getOperatorBlocks) do: [:anOperatorBlock |
-			ruleDictionary := self addHorizontalRulesFor: anOperatorBlock toDictionary: ruleDictionary.
-			ruleDictionary := self addVerticalRulesFor: anOperatorBlock toDictionary: ruleDictionary.
+	(anArena mediator getOperatorBlocks) do: [:aBlock |
+			aDictionary := self addHorizontalRulesFor: aBlock to: aDictionary.
+			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary.
 		].
 	
-	currentRules := ruleDictionary.
+	currentRules := aDictionary.
 ]
