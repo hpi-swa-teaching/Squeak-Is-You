@@ -9,11 +9,14 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 16:50'
+	#'squeak_changestamp' : 'LK 1/2/2024 17:35'
 }
 SIYNoun >> blockTexture [
 
-	^ 'SIYUnknown.png'
+	representsBlock isNil
+		ifTrue: [^ 'SIYUnknown.png']
+		ifFalse: [^ representsBlock basicNew nounTexture]
+	
 ]
 
 {
@@ -27,10 +30,10 @@ SIYNoun >> representsBlock [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 13:15'
+	#'squeak_changestamp' : 'LK 1/2/2024 17:36'
 }
 SIYNoun >> representsBlock: aBlock [
 
 	representsBlock := aBlock.
-	self image: (SIYTextureManager new getTexture: aBlock basicNew nounTexture).
+	self updateTextureForDirection: 1@0.
 ]

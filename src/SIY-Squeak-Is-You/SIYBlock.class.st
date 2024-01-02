@@ -71,6 +71,42 @@ SIYBlock >> blockTexture [
 ]
 
 {
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureDown [
+
+	^ self blockTexture
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureLeft [
+
+	^ self blockTexture
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureRight [
+
+	^ self blockTexture
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureUp [
+
+	^ self blockTexture
+]
+
+{
 	#category : #rules,
 	#'squeak_changestamp' : 'LK 12/21/2023 18:19'
 }
@@ -200,11 +236,14 @@ SIYBlock >> duplicateMorph: evt [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:26'
+	#'squeak_changestamp' : 'LK 1/2/2024 17:00'
 }
-SIYBlock >> imageForm [
+SIYBlock >> getTextureForDirection: aPoint [
 
-	^ SubclassResponsibility
+	(1@0 = aPoint) ifTrue: [^ self blockTextureRight].
+	((-1)@0 = aPoint) ifTrue: [^ self blockTextureLeft].
+	(0@1 = aPoint) ifTrue: [^ self blockTextureDown].
+	(0@(-1) = aPoint) ifTrue: [^ self blockTextureUp].
 ]
 
 {
@@ -218,11 +257,11 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:58'
 }
 SIYBlock >> initialize [
 	
-	self image: (SIYTextureManager new getTexture: self blockTexture).
+	self updateTextureForDirection: 1@0.
 	
 	arena addMorph: self.
 	
@@ -238,11 +277,12 @@ SIYBlock >> initialize [
 
 {
 	#category : #rules,
-	#'squeak_changestamp' : 'LK 12/31/2023 20:22'
+	#'squeak_changestamp' : 'LK 1/2/2024 17:09'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
+	
 	neighbours := mediator requestPos: (self coords + aPoint).
 		
 	(rules isStop: self)
@@ -258,6 +298,7 @@ SIYBlock >> moveDirection: aPoint [
 		ifTrue: [
 			arena blockPositionDict at: (self) put: (self coords). 
 			self coords: self coords + aPoint.
+			self updateTextureForDirection: aPoint.
 			^ true]
 		ifFalse: [
 			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
@@ -265,6 +306,7 @@ SIYBlock >> moveDirection: aPoint [
 					arena blockPositionDict at: (self) put: (self coords). 
 					self coords: self coords + aPoint.
 					self checkRulesAtCurrentTile.
+					self updateTextureForDirection: aPoint.
 					^ true]
 				ifFalse: [^ false]
 			]
@@ -374,4 +416,13 @@ SIYBlock >> respawn [
 SIYBlock >> superInitialize [
 
 	super initialize
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:58'
+}
+SIYBlock >> updateTextureForDirection: aPoint [
+
+	self image: (SIYTextureManager new getTexture: (self getTextureForDirection: aPoint)).
 ]
