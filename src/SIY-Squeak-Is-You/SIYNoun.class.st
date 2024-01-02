@@ -1,32 +1,39 @@
 Class {
 	#name : #SIYNoun,
 	#superclass : #SIYText,
+	#instVars : [
+		'representsBlock'
+	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/30/2023 13:09'
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 17:35'
 }
-SIYNoun >> correspondingBlock [
+SIYNoun >> blockTexture [
 
-	^ SubclassResponsibility
-]
-
-{
-	#category : #blocktype,
-	#'squeak_changestamp' : 'jt 12/15/2023 12:22'
-}
-SIYNoun >> isNounBlock [
-
-	^ true
+	representsBlock isNil
+		ifTrue: [^ 'SIYUnknown.png']
+		ifFalse: [^ representsBlock basicNew nounTexture]
+	
 ]
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 17:02'
+	#'squeak_changestamp' : 'LK 1/2/2024 12:52'
 }
-SIYNoun >> textureFile [
+SIYNoun >> representsBlock [
 
-	^ SubclassResponsibility
+	^ representsBlock
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 17:36'
+}
+SIYNoun >> representsBlock: aBlock [
+
+	representsBlock := aBlock.
+	self updateTextureForDirection: 1@0.
 ]
