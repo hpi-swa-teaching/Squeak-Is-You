@@ -81,52 +81,52 @@ SIYRuleManager >> invokeWin: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:31'
+	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isDefeat: anObject [
 	
-	^ (currentRules at: SIYDefeatT ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: anObject class
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:32'
+	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isPush: anObject [
 	
 	(anObject isKindOf: SIYText) ifTrue: [^ true].
 	
-	^ (currentRules at: SIYPushT ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYPush ifAbsent: [^ false]) includes: anObject class
 
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:58'
+	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isStop: anObject [
 	
-	^ (currentRules at: SIYStopT ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: anObject class
 
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:58'
+	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isWin: anObject [
 	
-	^ (currentRules at: SIYWinT ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYWin ifAbsent: [^ false]) includes: anObject class
 
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:59'
+	#'squeak_changestamp' : 'LK 1/2/2024 15:46'
 }
 SIYRuleManager >> isYou: anObject [
 
-	^ (currentRules at: SIYYouT ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYYou ifAbsent: [^ false]) includes: anObject class
 
 	
 	

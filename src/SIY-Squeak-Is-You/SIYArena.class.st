@@ -196,11 +196,11 @@ SIYArena >> moveBlocksDirection: aPoint [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:56'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:28'
 }
 SIYArena >> pixelPerBlock [
 
-	^ 60
+	^ 72
 ]
 
 {

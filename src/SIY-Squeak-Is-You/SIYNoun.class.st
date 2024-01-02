@@ -9,11 +9,11 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 13:07'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:50'
 }
 SIYNoun >> blockTexture [
 
-	^ 'SIYNoun.png'
+	^ 'SIYUnknown.png'
 ]
 
 {
