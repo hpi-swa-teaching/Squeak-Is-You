@@ -9,19 +9,20 @@ Class {
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:24'
+	#'squeak_changestamp' : 'KD 1/2/2024 21:58'
 }
 SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock toDictionary: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
-
-	aNounBlock := anOperatorBlock neighborsLeft
-		detect: [:each | each isKindOf: SIYNoun]
-		ifNone: [nil].
-		
-	aPropertyBlock := anOperatorBlock neighborsRight
-		detect: [:each | each isKindOf: SIYProperty]
-		ifNone: [nil].
+	anOperatorBlock neighborsLeft isEmptyOrNil
+		ifFalse: [aNounBlock := anOperatorBlock neighborsLeft
+			detect: [:each | each isKindOf: SIYNoun]
+			ifNone: [nil].].
+			
+	anOperatorBlock neighborsRight isEmptyOrNil 
+		ifFalse: [aPropertyBlock := anOperatorBlock neighborsRight
+			detect: [:each | each isKindOf: SIYProperty]
+			ifNone: [nil].].
 	
 	(aNounBlock notNil and: aPropertyBlock notNil)
 		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
@@ -34,19 +35,20 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock toDictionary: aDictiona
 
 {
 	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:25'
+	#'squeak_changestamp' : 'KD 1/2/2024 21:58'
 }
 SIYRuleManager >> addVerticalRulesFor: anOperatorBlock toDictionary: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
+	anOperatorBlock neighborsAbove isEmptyOrNil
+		ifFalse: [aNounBlock := anOperatorBlock neighborsAbove
+			detect: [:each | each isKindOf: SIYNoun]
+			ifNone: [nil].].
 
-	aNounBlock := anOperatorBlock neighborsAbove
-		detect: [:each | each isKindOf: SIYNoun]
-		ifNone: [nil].
-		
-	aPropertyBlock := anOperatorBlock neighborsBelow
-		detect: [:each | each isKindOf: SIYProperty]
-		ifNone: [nil].
+	anOperatorBlock neighborsBelow isEmptyOrNil		
+		ifFalse: [aPropertyBlock := anOperatorBlock neighborsBelow
+			detect: [:each | each isKindOf: SIYProperty]
+			ifNone: [nil].].
 	
 	(aNounBlock notNil and: aPropertyBlock notNil)
 		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
