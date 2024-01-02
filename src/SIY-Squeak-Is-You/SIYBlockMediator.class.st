@@ -124,6 +124,25 @@ SIYBlockMediator >> generateQueueFromTop [
 ]
 
 {
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 12/31/2023 15:43'
+}
+SIYBlockMediator >> getOperatorBlocks [
+
+	| aSet |
+
+	aSet := Set new.
+	
+	1 to: (arena arenaHeight) do: [:y |
+		1 to: (arena arenaWidth) do: [:x |
+			(self requestPos: x@y) do: 
+				[:aBlock | (aBlock isKindOf: SIYOperator)
+					ifTrue: [aSet add: aBlock]]]].
+
+	^ aSet
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'LK 12/6/2023 20:59'
 }

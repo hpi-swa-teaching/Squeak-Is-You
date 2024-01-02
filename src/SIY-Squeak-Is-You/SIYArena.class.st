@@ -7,9 +7,11 @@ Class {
 		'mediator',
 		'rules',
 		'stepTime',
+		'blockPositionDict',
+		'caretaker',
 		'game'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : 'SIY-Squeak-Is-You'
 }
 
 {
@@ -67,13 +69,46 @@ SIYArena >> arenaWidth: val [
 ]
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 23:52'
+	#category : #undo,
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/16/2023 21:41'
 }
-SIYArena >> createSnapshot [
+SIYArena >> blockPositionDict [
+
+	^blockPositionDict.
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/16/2023 21:41'
+}
+SIYArena >> blockPositionDict: dict [
+
+	blockPositionDict := dict.
+]
+
+{
+	#category : #'block movement',
+	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
+}
+SIYArena >> checkKeyboardInputs [
 	
-	"When a block moves, "
-	^nil
+	(self gmIsKeyPressed: $z)
+		ifTrue: [caretaker restoreSnapshot. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowUp)
+		ifTrue: [self moveBlocksDirection: 0@(-1). self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowDown)
+		ifTrue: [self moveBlocksDirection: 0@1. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowRight)
+		ifTrue: [self moveBlocksDirection: 1@0. self stepTime: self stepInbetweenTime]
+		ifFalse: [
+	(self gmIsKeyPressed: Character arrowLeft)
+		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
+		ifFalse: [self stepTime: self stepRefreshTime]
+	]]]].
+	
 ]
 
 {
@@ -105,7 +140,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:25'
+	#'squeak_changestamp' : 'LK 12/31/2023 20:16'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -114,6 +149,10 @@ SIYArena >> initialize [
 
 	super initialize.
 	self color: Color black.
+	"self addFlexShell."
+	
+	blockPositionDict := Dictionary new.
+	caretaker := SIYCaretaker new.
 	
 	"Register Morph to GMKeyHandler"
 	self gmRegisterToKeyHandler.
@@ -139,29 +178,7 @@ SIYArena >> mediator: aMediator [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:28'
-}
-SIYArena >> moveBlocks [
-	
-	(self gmIsKeyPressed: Character arrowUp)
-		ifTrue: [self moveBlocksDirection: 0@(-1). self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(self gmIsKeyPressed: Character arrowDown)
-		ifTrue: [self moveBlocksDirection: 0@1. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(self gmIsKeyPressed: Character arrowRight)
-		ifTrue: [self moveBlocksDirection: 1@0. self stepTime: self stepInbetweenTime]
-		ifFalse: [
-	(self gmIsKeyPressed: Character arrowLeft)
-		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
-		ifFalse: [self stepTime: self stepRefreshTime]
-	]]].
-	
-]
-
-{
-	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:28'
+	#'squeak_changestamp' : 'LK 12/21/2023 17:56'
 }
 SIYArena >> moveBlocksDirection: aPoint [
 
@@ -169,26 +186,21 @@ SIYArena >> moveBlocksDirection: aPoint [
 	
 	movementQueue := mediator generateQueueForDirection: aPoint.
 	
+	blockPositionDict removeAll.
+	
 	movementQueue do: [:aBlock | 
-		(rules isYou: aBlock) ifTrue: [aBlock moveDirection: aPoint]]
+		(rules isYou: aBlock) ifTrue: [aBlock moveDirection: aPoint]].
+	
+	caretaker createSnapshot: (SIYSnapshot newWithDict: (blockPositionDict copy)).
 ]
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:56'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:28'
 }
 SIYArena >> pixelPerBlock [
 
-	^ 60
-]
-
-{
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 14:13'
-}
-SIYArena >> restoreSnapshot: snapshot [
-	
-	^nil
+	^ 72
 ]
 
 {
@@ -211,11 +223,13 @@ SIYArena >> ruleManager: aRuleManager [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:17'
+	#'squeak_changestamp' : 'LK 12/31/2023 15:45'
 }
 SIYArena >> step [
 
-	self moveBlocks.
+	self checkKeyboardInputs.
+
+	rules updateRulesInArena: self.
 ]
 
 {
@@ -229,7 +243,7 @@ SIYArena >> stepInbetweenTime [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:16'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/21/2023 17:32'
 }
 SIYArena >> stepRefreshTime [
 

@@ -134,4 +134,3 @@ y := self size + super size.
              name: aString 
                 name := aString.
 4. Use inheritance to organize classes with similar behavior
-
