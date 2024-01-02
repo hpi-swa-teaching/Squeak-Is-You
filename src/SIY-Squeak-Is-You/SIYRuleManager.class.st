@@ -60,6 +60,35 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 ]
 
 {
+	#category : #'update rules',
+	#'squeak_changestamp' : 'LK 1/2/2024 18:13'
+}
+SIYRuleManager >> addVerticalRulesFor: anOperatorBlock toDictionary: aDictionary [
+
+	| aNounBlock aPropertyBlock aSet |
+	
+	(anOperatorBlock neighborsAbove notNil 
+		and: anOperatorBlock neighborsBelow notNil)
+		ifFalse: [^ aDictionary].
+	
+	aNounBlock := anOperatorBlock neighborsAbove
+		detect: [:each | each isKindOf: SIYNoun]
+		ifNone: [nil].
+		
+	aPropertyBlock := anOperatorBlock neighborsBelow
+		detect: [:each | each isKindOf: SIYProperty]
+		ifNone: [nil].
+	
+	(aNounBlock notNil and: aPropertyBlock notNil)
+		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
+			aSet add: aNounBlock representsBlock.
+			aDictionary at: aPropertyBlock class put: aSet.].
+	
+	^ aDictionary
+
+]
+
+{
 	#category : #'invoke rules',
 	#'squeak_changestamp' : 'LK 12/31/2023 16:29'
 }
