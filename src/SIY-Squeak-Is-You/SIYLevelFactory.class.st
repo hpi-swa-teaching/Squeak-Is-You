@@ -37,31 +37,24 @@ SIYLevelFactory >> buildLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:40'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:21'
 }
 SIYLevelFactory >> createLevel [
-
+	
 	arena := SIYArena newWithDimension: self arenaDimensions.
 	
-	arena mediator: (SIYBlockMediator newForArena: arena).
-	arena ruleManager: (SIYRuleManager new).
-	
 	self buildLevel.
-	
 	arena openInWorld.
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 11:51'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:22'
 }
 SIYLevelFactory >> initialize [
 
 	super initialize.
-	
-	self createLevel.
-	
-	^ self
+	self createLevel
 ]
 
 {

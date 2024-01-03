@@ -3,7 +3,6 @@ Class {
 	#superclass : #ImageMorph,
 	#instVars : [
 		'arena',
-		'stepTime',
 		'mediator',
 		'rules'
 	],
@@ -44,7 +43,7 @@ SIYBlock >> alignToGrid [
 ]
 
 {
-	#category : #initialization,
+	#category : #'game accessing',
 	#'squeak_changestamp' : 'LK 11/21/2023 20:47'
 }
 SIYBlock >> arena [
@@ -53,7 +52,7 @@ SIYBlock >> arena [
 ]
 
 {
-	#category : #initialization,
+	#category : #'game accessing',
 	#'squeak_changestamp' : 'LK 12/6/2023 21:24'
 }
 SIYBlock >> arena: anArena [
@@ -249,7 +248,7 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/2/2024 16:58'
+	#'squeak_changestamp' : 'LK 1/3/2024 21:54'
 }
 SIYBlock >> initialize [
 	
@@ -258,7 +257,7 @@ SIYBlock >> initialize [
 	arena addMorph: self.
 	
 	rules := arena ruleManager.
-	mediator := arena mediator.
+	mediator := arena blockMediator.
 	mediator rememberBlock: self withPos: self coords
 	
 	
@@ -424,11 +423,11 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:15'
+	#'squeak_changestamp' : 'LK 1/3/2024 20:51'
 }
 SIYBlock >> preMoveRoutine: aDirection [
 
-	arena blockPositionDict at: self put: self coords.
+	arena positionDictionary at: self put: self coords.
 
 ]
 
@@ -453,21 +452,12 @@ SIYBlock >> respawn [
 ]
 
 {
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 19:38'
+	#category : #'game accessing',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:26'
 }
 SIYBlock >> ruleManager [
 
-	^ rules
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 19:38'
-}
-SIYBlock >> ruleManager: anObject [
-
-	rules := anObject
+	^ self arena ruleManager
 ]
 
 {

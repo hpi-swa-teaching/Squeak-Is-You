@@ -9,9 +9,9 @@ Class {
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 14:18'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:11'
 }
-SIYSnapshot class >> newWithDict: dict [
+SIYSnapshot class >> newWithDictionary: dict [
 	
 	^ (self basicNew dict: dict) initialize;
 		yourself.

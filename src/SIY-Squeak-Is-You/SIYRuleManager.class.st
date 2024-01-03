@@ -116,7 +116,7 @@ SIYRuleManager >> invokeWin: aBlock [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isDefeat: anObject [
@@ -125,7 +125,7 @@ SIYRuleManager >> isDefeat: anObject [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isPush: anObject [
@@ -137,7 +137,7 @@ SIYRuleManager >> isPush: anObject [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isStop: anObject [
@@ -147,7 +147,7 @@ SIYRuleManager >> isStop: anObject [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
 }
 SIYRuleManager >> isWin: anObject [
@@ -157,7 +157,7 @@ SIYRuleManager >> isWin: anObject [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/2/2024 15:46'
 }
 SIYRuleManager >> isYou: anObject [
@@ -173,7 +173,7 @@ SIYRuleManager >> isYou: anObject [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
+	#'squeak_changestamp' : 'LK 1/3/2024 21:54'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 
@@ -181,7 +181,7 @@ SIYRuleManager >> updateRulesInArena: anArena [
 	
 	aDictionary := Dictionary new.
 	
-	(anArena mediator getOperatorBlocks) do: [:aBlock |
+	(anArena blockMediator getOperatorBlocks) do: [:aBlock |
 			aDictionary := self addHorizontalRulesFor: aBlock to: aDictionary.
 			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary.
 		].

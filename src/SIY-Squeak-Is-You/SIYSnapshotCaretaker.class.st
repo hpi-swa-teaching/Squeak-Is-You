@@ -1,5 +1,5 @@
 Class {
-	#name : #SIYCaretaker,
+	#name : #SIYSnapshotCaretaker,
 	#superclass : #Object,
 	#instVars : [
 		'history'
@@ -11,7 +11,7 @@ Class {
 	#category : #private,
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:20'
 }
-SIYCaretaker >> createSnapshot: snapshot [
+SIYSnapshotCaretaker >> createSnapshot: snapshot [
 
 	snapshot dict isEmpty
 		ifFalse: [history push: snapshot].
@@ -22,7 +22,7 @@ SIYCaretaker >> createSnapshot: snapshot [
 	#category : #private,
 	#'squeak_changestamp' : 'LK 12/21/2023 18:14'
 }
-SIYCaretaker >> history [
+SIYSnapshotCaretaker >> history [
 
 	^ history
 ]
@@ -31,7 +31,7 @@ SIYCaretaker >> history [
 	#category : #private,
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:23'
 }
-SIYCaretaker >> history: aHistory [
+SIYSnapshotCaretaker >> history: aHistory [
 
 	history := aHistory.
 ]
@@ -40,7 +40,7 @@ SIYCaretaker >> history: aHistory [
 	#category : #private,
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:23'
 }
-SIYCaretaker >> initialize [
+SIYSnapshotCaretaker >> initialize [
 
 	history := Stack new.
 	super initialize.
@@ -51,7 +51,7 @@ SIYCaretaker >> initialize [
 	#category : #private,
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:26'
 }
-SIYCaretaker >> restoreSnapshot [
+SIYSnapshotCaretaker >> restoreSnapshot [
 	
 	| snapshot |
 	history isEmpty 

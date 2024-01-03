@@ -90,14 +90,13 @@ SIYGame >> restartLevel [
 
 {
 	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:27'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:22'
 }
 SIYGame >> startLevel: aLevel [
 
 	level := aLevel new.
 	arena := level arena.
-	arena game: self.
-	rules := SIYRuleManager new.
+	arena game: self
 ]
 
 {
