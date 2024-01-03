@@ -48,9 +48,9 @@ SIYLevel05 >> buildLevel [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'KD 1/2/2024 22:58'
+	#'squeak_changestamp' : 'KD 1/3/2024 12:48'
 }
 SIYLevel05 >> nextLevel [
 
-	^ SIYLevel02
+	^ SIYLevel06
 ]
