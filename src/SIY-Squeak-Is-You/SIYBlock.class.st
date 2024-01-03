@@ -277,7 +277,7 @@ SIYBlock >> initialize [
 
 {
 	#category : #rules,
-	#'squeak_changestamp' : 'LK 1/2/2024 23:21'
+	#'squeak_changestamp' : 'LK 1/3/2024 17:24'
 }
 SIYBlock >> moveDirection: aPoint [
 	
@@ -302,6 +302,7 @@ SIYBlock >> moveDirection: aPoint [
 			self updateTextureForDirection: aPoint.
 			^ true]
 		ifFalse: [
+			(neighbours anySatisfy: [:each | rules isStop: each]) ifTrue: [^ false].
 			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
 				ifTrue: [
 					arena blockPositionDict at: (self) put: (self coords). 
