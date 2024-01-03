@@ -1,71 +1,16 @@
 Class {
 	#name : #SIYRuleManager,
 	#superclass : #Object,
-	#instVars : [
-		'currentRules'
-	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
-	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
-}
-SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
-
-	| aNounBlock aPropertyBlock aSet |
-	anOperatorBlock neighborsLeft isEmptyOrNil
-		ifFalse: [aNounBlock := anOperatorBlock neighborsLeft
-			detect: [:each | each isKindOf: SIYNoun]
-			ifNone: [nil]].
-			
-	anOperatorBlock neighborsRight isEmptyOrNil 
-		ifFalse: [aPropertyBlock := anOperatorBlock neighborsRight
-			detect: [:each | each isKindOf: SIYProperty]
-			ifNone: [nil]].
-	
-	(aNounBlock notNil and: aPropertyBlock notNil)
-		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
-			aSet add: aNounBlock representsBlock.
-			aDictionary at: aPropertyBlock class put: aSet].
-	
-	^ aDictionary
-
-]
-
-{
-	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
-}
-SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
-
-	| aNounBlock aPropertyBlock aSet |
-	anOperatorBlock neighborsAbove isEmptyOrNil
-		ifFalse: [aNounBlock := anOperatorBlock neighborsAbove
-			detect: [:each | each isKindOf: SIYNoun]
-			ifNone: [nil]].
-
-	anOperatorBlock neighborsBelow isEmptyOrNil		
-		ifFalse: [aPropertyBlock := anOperatorBlock neighborsBelow
-			detect: [:each | each isKindOf: SIYProperty]
-			ifNone: [nil]].
-	
-	(aNounBlock notNil and: aPropertyBlock notNil)
-		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
-			aSet add: aNounBlock representsBlock.
-			aDictionary at: aPropertyBlock class put: aSet].
-	
-	^ aDictionary
-
-]
-
-{
 	#category : #'invoke rules',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:29'
+	#'squeak_changestamp' : 'LK 12/21/2023 18:23'
 }
 SIYRuleManager >> invokeDeath: aBlock [
 
-	aBlock delete
+	aBlock delete.
 
 	
 	
@@ -83,74 +28,50 @@ SIYRuleManager >> invokeWin: anObject [
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:22'
 }
 SIYRuleManager >> isDefeat: anObject [
-	
-	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: anObject class
+	"work in progress, only returns true if object is SIYLava right now"
+
+	^ (anObject class = SIYLava)
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:23'
 }
 SIYRuleManager >> isPush: anObject [
-	
-	(anObject isKindOf: SIYText) ifTrue: [^ true].
-	
-	^ (currentRules at: SIYPush ifAbsent: [^ false]) includes: anObject class
+	"work in progress, only returns true if object is SIYRock right now"
 
+	^ (anObject class = SIYRock)
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#'squeak_changestamp' : 'LK 12/21/2023 22:06'
 }
 SIYRuleManager >> isStop: anObject [
-	
-	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: anObject class
+	"work in progress, only returns true if object is SIYWall right now"
 
+	^ (anObject class = SIYWall)
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:42'
 }
 SIYRuleManager >> isWin: anObject [
-	
-	^ (currentRules at: SIYWin ifAbsent: [^ false]) includes: anObject class
+	"work in progress, only returns true if object is SIYFlag right now"
 
+	^ (anObject class = SIYFlag)
 ]
 
 {
 	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:46'
+	#'squeak_changestamp' : 'LK 12/21/2023 16:23'
 }
 SIYRuleManager >> isYou: anObject [
+	"work in progress, only returns true if object is SIYSqueak right now"
 
-	^ (currentRules at: SIYYou ifAbsent: [^ false]) includes: anObject class
-
-	
-	
-	
-	
-	
-]
-
-{
-	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
-}
-SIYRuleManager >> updateRulesInArena: anArena [
-
-	| aDictionary |
-	
-	aDictionary := Dictionary new.
-	
-	(anArena mediator getOperatorBlocks) do: [:aBlock |
-			aDictionary := self addHorizontalRulesFor: aBlock to: aDictionary.
-			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary.
-		].
-	
-	currentRules := aDictionary.
+	^ (anObject class = SIYSqueak)
 ]

@@ -115,13 +115,3 @@ SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoi
 		from: (secondPoint x)@(firstPoint y) + (0@1)
 		to: secondPoint - (0@1).
 ]
-
-{
-	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/2/2024 13:15'
-}
-SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
-	
-	(SIYNoun newInArena: self arena at: aPoint)
-		representsBlock: aBlockClass
-]

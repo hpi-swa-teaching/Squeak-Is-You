@@ -6,9 +6,9 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 17:02'
 }
-SIYOperator >> blockTexture [
+SIYOperator >> textureFile [
 
 	^ SubclassResponsibility
 ]

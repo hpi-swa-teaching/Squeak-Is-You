@@ -6,18 +6,9 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 16:35'
 }
-SIYFlag >> blockTexture [
+SIYFlag >> textureFile [
 
 	^ '/SIYFlag.png'
-]
-
-{
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 12:56'
-}
-SIYFlag >> nounTexture [
-
-	^ '/SIYFlagT.png'
 ]

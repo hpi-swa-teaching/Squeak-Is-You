@@ -6,18 +6,9 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/6/2023 18:00'
 }
-SIYLava >> blockTexture [
+SIYLava >> textureFile [
 
 	^ '/SIYLava.png'
-]
-
-{
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 12:56'
-}
-SIYLava >> nounTexture [
-
-	^ '/SIYLavaT.png'
 ]

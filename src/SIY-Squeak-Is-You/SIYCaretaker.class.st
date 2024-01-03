@@ -9,13 +9,16 @@ Class {
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/22/2023 11:26'
+	#'squeak_changestamp' : 'LK 12/21/2023 17:38'
 }
 SIYCaretaker >> createSnapshot: snapshot [
 
-	snapshot dict isEmpty
-		ifFalse: [history push: snapshot]
-	
+	"todo: wenn größe = historyLength, dann muss erstes Element entfernt werden"
+	"self halt."
+	Transcript show: 'push onto stack'.
+	history push: snapshot.
+
+
 ]
 
 {
@@ -50,7 +53,7 @@ SIYCaretaker >> initialize [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/2/2024 23:37'
+	#'squeak_changestamp' : 'LK 12/21/2023 22:18'
 }
 SIYCaretaker >> restoreSnapshot [
 	
@@ -59,7 +62,6 @@ SIYCaretaker >> restoreSnapshot [
 		ifFalse: [snapshot := history pop.
 				(snapshot dict) keysAndValuesDo: [:key :value | 
 					key owner ifNil: [key respawn].
-					key updateTextureForDirection: key coords - value.
 					key coords: value]]
 
 ]
