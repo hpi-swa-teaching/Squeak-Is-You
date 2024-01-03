@@ -70,11 +70,11 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/16/2023 21:41'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:15'
 }
 SIYArena >> blockPositionDict [
 
-	^blockPositionDict.
+	^ blockPositionDict
 ]
 
 {
