@@ -26,20 +26,18 @@ SIYArena class >> newWithDimension: aDimension [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:15'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:55'
 }
 SIYArena >> arenaHeight [
-	"Return arena height in blocks"
 	
 	^ arenaHeight
 ]
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:19'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:55'
 }
 SIYArena >> arenaHeight: val [
-	"Set arena height in blocks"
 	
 	arenaHeight := val.
 	self updateDimensions
@@ -47,20 +45,18 @@ SIYArena >> arenaHeight: val [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:15'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:55'
 }
 SIYArena >> arenaWidth [
-	"Return arena width in blocks"
 	
 	^ arenaWidth
 ]
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 11/20/2023 14:18'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:55'
 }
 SIYArena >> arenaWidth: val [
-	"Set arena width in blocks"
 	
 	arenaWidth := val.
 	self updateDimensions
@@ -76,7 +72,7 @@ SIYArena >> backgroundColor [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:17'
 }
 SIYArena >> blockMediator [
@@ -108,11 +104,12 @@ SIYArena >> checkKeyboardInputs [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:55'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:56'
 }
 SIYArena >> createSnapshot [
 
-	self snapshotCaretaker createSnapshot: (SIYSnapshot newWithDictionary: (self positionDictionary copy))
+	self snapshotCaretaker createSnapshot: 
+		(SIYSnapshot newWithDictionary: (self positionDictionary copy))
 ]
 
 {
@@ -134,7 +131,7 @@ SIYArena >> fastStepTime [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/21/2023 16:37'
 }
 SIYArena >> game [
@@ -143,7 +140,7 @@ SIYArena >> game [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:22'
 }
 SIYArena >> game: aGame [
@@ -166,13 +163,13 @@ SIYArena >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:37'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:56'
 }
 SIYArena >> initializeWithDimension: aDimension [
 
-	self initialize;
-		arenaWidth: aDimension x;
-		arenaHeight: aDimension y
+	self initialize.
+	self arenaWidth: aDimension x.
+	self arenaHeight: aDimension y
 	
 ]
 
@@ -243,7 +240,7 @@ SIYArena >> resetPositionDictionary [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:16'
 }
 SIYArena >> ruleManager [

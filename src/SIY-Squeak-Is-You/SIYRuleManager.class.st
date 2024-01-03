@@ -191,7 +191,7 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:06'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:34'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 
@@ -204,5 +204,5 @@ SIYRuleManager >> updateRulesInArena: anArena [
 			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary
 		].
 	
-	self currentRules: aDictionary.
+	self currentRules: aDictionary
 ]

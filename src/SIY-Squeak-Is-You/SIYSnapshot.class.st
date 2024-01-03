@@ -19,12 +19,12 @@ SIYSnapshot class >> newWithDictionary: aDictionary [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:04'
 }
 SIYSnapshot >> initializeWithDictionary: aDictionary [
 
 	super initialize.
-	self dictionary: aDictionary
+	self positionDictionary: aDictionary
 ]
 
 {

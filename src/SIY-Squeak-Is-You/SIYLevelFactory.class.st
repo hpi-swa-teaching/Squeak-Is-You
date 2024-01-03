@@ -59,11 +59,11 @@ SIYLevelFactory >> initialize [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:33'
 }
-SIYLevelFactory >> nextlevel [
+SIYLevelFactory >> nextLevel [
 
-	^ nil
+	^ SubclassResponsibility
 ]
 
 {
@@ -88,7 +88,7 @@ SIYLevelFactory >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 12/7/2023 21:29'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:33'
 }
 SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
@@ -106,7 +106,7 @@ SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoi
 		
 	self placeBlocks: aBlockClass
 		from: (secondPoint x)@(firstPoint y) + (0@1)
-		to: secondPoint - (0@1).
+		to: secondPoint - (0@1)
 ]
 
 {

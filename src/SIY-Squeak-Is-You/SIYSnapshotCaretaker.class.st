@@ -29,16 +29,17 @@ SIYSnapshotCaretaker >> history [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:35'
 }
 SIYSnapshotCaretaker >> restoreSnapshot [
 	
 	| snapshot |
+	
 	self history isEmpty 
 		ifFalse: [snapshot := self history pop.
 				 snapshot positionDictionary keysAndValuesDo: [:key :value | 
 					key owner ifNil: key respawn.
-					key updateTextureForDirection: key coords - value.
-					key coords: value]].
+					key setTextureForDirection: key coords - value.
+					key coords: value]]
 
 ]
