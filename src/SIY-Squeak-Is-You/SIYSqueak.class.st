@@ -6,9 +6,54 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 12/4/2023 18:06'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:53'
 }
-SIYSqueak >> textureFile [
+SIYSqueak >> blockTexture [
 
-	^ '/SIYSqueak.png'
+	^ self blockTextureRight
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 16:53'
+}
+SIYSqueak >> blockTextureDown [
+
+	^ '/SIYSqueak-FacingDown.png'
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 16:53'
+}
+SIYSqueak >> blockTextureLeft [
+
+	^ '/SIYSqueak-FacingLeft.png'
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 16:53'
+}
+SIYSqueak >> blockTextureRight [
+
+	^ '/SIYSqueak-FacingRight.png'
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 16:53'
+}
+SIYSqueak >> blockTextureUp [
+
+	^ '/SIYSqueak-FacingUp.png'
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 12:57'
+}
+SIYSqueak >> nounTexture [
+
+	^ '/SIYSqueakT.png'
 ]
