@@ -29,20 +29,19 @@ SIYSnapshot >> dict [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 13:50'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:28'
 }
-SIYSnapshot >> dict: dictionary [
+SIYSnapshot >> dict: aDictionary [
 	
-	blockPositionDict := dictionary
+	blockPositionDict := aDictionary.
 ]
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 13:54'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:28'
 }
 SIYSnapshot >> initialize [
 	
 	super initialize.
-	
-	^self
+	^ self
 ]

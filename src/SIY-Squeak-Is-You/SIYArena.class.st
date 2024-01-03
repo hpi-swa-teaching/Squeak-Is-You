@@ -70,7 +70,7 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 19:29'
+	#'squeak_changestamp' : 'LK 1/3/2024 20:24'
 }
 SIYArena >> blockPositionDict [
 
@@ -106,10 +106,13 @@ SIYArena >> caretaker: anObject [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
+	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:17'
 }
 SIYArena >> checkKeyboardInputs [
 	
+	(self gmIsKeyPressed: $r)
+		ifTrue: [self game restartLevel. self stepTime: self stepInbetweenTime]
+		ifFalse:[
 	(self gmIsKeyPressed: $z)
 		ifTrue: [caretaker restoreSnapshot. self stepTime: self stepInbetweenTime]
 		ifFalse: [
@@ -125,7 +128,7 @@ SIYArena >> checkKeyboardInputs [
 	(self gmIsKeyPressed: Character arrowLeft)
 		ifTrue: [self moveBlocksDirection: (-1)@0. self stepTime: self stepInbetweenTime]
 		ifFalse: [self stepTime: self stepRefreshTime]
-	]]]].
+	]]]]].
 	
 ]
 
@@ -205,7 +208,7 @@ SIYArena >> mediator: aMediator [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:30'
+	#'squeak_changestamp' : 'LK 1/3/2024 20:25'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Move all isYou-blocks in arena, in specified direction."
@@ -216,8 +219,7 @@ SIYArena >> moveBlocksDirection: aDirection [
 	
 	self resetPositionDict.
 	movementQueue do: [:aBlock | (rules isYou: aBlock) ifTrue: [aBlock move: aDirection]].
-	self createSnapshot.
-	
+	self createSnapshot
 ]
 
 {

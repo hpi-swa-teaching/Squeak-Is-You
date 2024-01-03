@@ -9,12 +9,12 @@ Class {
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 12/22/2023 11:26'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:20'
 }
 SIYCaretaker >> createSnapshot: snapshot [
 
 	snapshot dict isEmpty
-		ifFalse: [history push: snapshot]
+		ifFalse: [history push: snapshot].
 	
 ]
 
@@ -29,37 +29,36 @@ SIYCaretaker >> history [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 11:07'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:23'
 }
-SIYCaretaker >> history: hist [
+SIYCaretaker >> history: aHistory [
 
-	history := hist.
+	history := aHistory.
 ]
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 11:20'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:23'
 }
 SIYCaretaker >> initialize [
 
 	history := Stack new.
-	
 	super initialize.
-	^self
+	^ self
 ]
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/2/2024 23:37'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:26'
 }
 SIYCaretaker >> restoreSnapshot [
 	
 	| snapshot |
 	history isEmpty 
 		ifFalse: [snapshot := history pop.
-				(snapshot dict) keysAndValuesDo: [:key :value | 
-					key owner ifNil: [key respawn].
+				 snapshot dict keysAndValuesDo: [:key :value | 
+					key owner ifNil: key respawn.
 					key updateTextureForDirection: key coords - value.
-					key coords: value]]
+					key coords: value]].
 
 ]
