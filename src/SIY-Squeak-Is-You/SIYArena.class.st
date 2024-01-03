@@ -143,7 +143,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/18/2023 13:30'
+	#'squeak_changestamp' : 'LK 12/31/2023 20:16'
 }
 SIYArena >> initialize [
 	"Create new SIY game arena"
@@ -152,6 +152,7 @@ SIYArena >> initialize [
 
 	super initialize.
 	self color: Color black.
+	"self addFlexShell."
 	
 	blockPositionDict := Dictionary new.
 	caretaker := SIYCaretaker new.
@@ -201,11 +202,11 @@ SIYArena >> moveBlocksDirection: aPoint [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:56'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:28'
 }
 SIYArena >> pixelPerBlock [
 
-	^ 60
+	^ 72
 ]
 
 {
@@ -228,12 +229,13 @@ SIYArena >> ruleManager: aRuleManager [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 18:09'
+	#'squeak_changestamp' : 'LK 12/31/2023 15:45'
 }
 SIYArena >> step [
 
 	self checkKeyboardInputs.
 
+	rules updateRulesInArena: self.
 ]
 
 {

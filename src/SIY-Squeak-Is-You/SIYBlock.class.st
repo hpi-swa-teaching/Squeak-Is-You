@@ -62,8 +62,53 @@ SIYBlock >> arena: anArena [
 ]
 
 {
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/21/2023 18:19'
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
+}
+SIYBlock >> blockTexture [
+
+	^ SubclassResponsibility
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureDown [
+
+	^ self blockTexture
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureLeft [
+
+	^ self blockTexture
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureRight [
+
+	^ self blockTexture
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+}
+SIYBlock >> blockTextureUp [
+
+	^ self blockTexture
+]
+
+{
+	#category : #rules,
+	#'squeak_changestamp' : 'LK 1/2/2024 23:33'
 }
 SIYBlock >> checkRulesAtCurrentTile [
 	"Method to invoke location based rules"
@@ -72,7 +117,7 @@ SIYBlock >> checkRulesAtCurrentTile [
 	currentTile := self neighborsHere.
 	
 	"isDefeat"
-	(currentTile anySatisfy: [:each | rules isDefeat: each])
+	(currentTile anySatisfy: [:each | (rules isDefeat: each) and: (rules isYou: each) not])
 				ifTrue: [rules invokeDeath: self].
 	
 	"isWin"
@@ -191,11 +236,14 @@ SIYBlock >> duplicateMorph: evt [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 12/3/2023 20:26'
+	#'squeak_changestamp' : 'LK 1/2/2024 17:00'
 }
-SIYBlock >> imageForm [
+SIYBlock >> getTextureForDirection: aPoint [
 
-	^ SubclassResponsibility
+	(1@0 = aPoint) ifTrue: [^ self blockTextureRight].
+	((-1)@0 = aPoint) ifTrue: [^ self blockTextureLeft].
+	(0@1 = aPoint) ifTrue: [^ self blockTextureDown].
+	(0@(-1) = aPoint) ifTrue: [^ self blockTextureUp].
 ]
 
 {
@@ -209,11 +257,11 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:44'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:58'
 }
 SIYBlock >> initialize [
 	
-	self image: (SIYTextureManager new getTexture: self textureFile).
+	self updateTextureForDirection: 1@0.
 	
 	arena addMorph: self.
 	
@@ -228,28 +276,30 @@ SIYBlock >> initialize [
 ]
 
 {
-	#category : #movement,
-	#'squeak_changestamp' : 'LK 12/21/2023 18:15'
+	#category : #rules,
+	#'squeak_changestamp' : 'LK 1/2/2024 23:21'
 }
 SIYBlock >> moveDirection: aPoint [
 	
 	| neighbours |
-	neighbours := mediator requestPos: (self coords + aPoint).
-
 	
-	 (neighbours isNil)
-		ifTrue: [^ false].
+	neighbours := mediator requestPos: (self coords + aPoint).
 		
 	(rules isStop: self)
 		ifTrue: [^ false].
 	
 	((rules isPush: self) not and: (rules isYou: self) not)
 		ifTrue: [^ true].
+		
+	(neighbours isNil)
+		ifTrue: [^ false].
 	
 	(neighbours size = 0)
 		ifTrue: [
 			arena blockPositionDict at: (self) put: (self coords). 
 			self coords: self coords + aPoint.
+			self checkRulesAtCurrentTile.
+			self updateTextureForDirection: aPoint.
 			^ true]
 		ifFalse: [
 			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
@@ -257,6 +307,7 @@ SIYBlock >> moveDirection: aPoint [
 					arena blockPositionDict at: (self) put: (self coords). 
 					self coords: self coords + aPoint.
 					self checkRulesAtCurrentTile.
+					self updateTextureForDirection: aPoint.
 					^ true]
 				ifFalse: [^ false]
 			]
@@ -266,32 +317,24 @@ SIYBlock >> moveDirection: aPoint [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:22'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of neighbor blocks (objects) at coords above.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition abovePosition |
-	currentPosition := self coords.
-	abovePosition := [(currentPosition x) - 1 @ currentPosition y].
-	
-	^mediator requestPos: abovePosition
+	^ mediator requestPos: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of neighbor blocks (objects) at coords below.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition belowPosition |
-	currentPosition := self coords.
-	belowPosition := [(currentPosition x) + 1 @ currentPosition y].
-	
-	^mediator requestPos: belowPosition
+	^ mediator requestPos: 1@0 + self coords
 ]
 
 {
@@ -307,32 +350,33 @@ SIYBlock >> neighborsHere [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of neighbor blocks (objects) at coords to the left.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition leftPosition |
-	currentPosition := self coords.
-	leftPosition := [currentPosition @ currentPosition - 1].
-	
-	^mediator requestPos: leftPosition
+	^ mediator requestPos: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
 }
 SIYBlock >> neighborsRight [
 	"Return set of neighbor blocks (objects) at coords to the right.
 	Return empty set if none. Return nil if out of arena."
 	
-	| currentPosition rightPosition |
-	currentPosition := self coords.
-	rightPosition := [currentPosition @ currentPosition + 1].
-	
-	^mediator requestPos: rightPosition
+	^ mediator requestPos: 0@1 + self coords
+]
+
+{
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/2/2024 12:56'
+}
+SIYBlock >> nounTexture [
+
+	^ SubclassResponsibility
 ]
 
 {
@@ -377,9 +421,9 @@ SIYBlock >> superInitialize [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:09'
+	#'squeak_changestamp' : 'LK 1/2/2024 16:58'
 }
-SIYBlock >> textureFile [
+SIYBlock >> updateTextureForDirection: aPoint [
 
-	^ SubclassResponsibility
+	self image: (SIYTextureManager new getTexture: (self getTextureForDirection: aPoint)).
 ]

@@ -6,9 +6,18 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 12/4/2023 17:45'
+	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
 }
-SIYWall >> textureFile [
+SIYWall >> blockTexture [
 
 	^ '/SIYWall.png'
+]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/2/2024 13:00'
+}
+SIYWall >> nounTexture [
+
+	^ '/SIYWallT.png'
 ]

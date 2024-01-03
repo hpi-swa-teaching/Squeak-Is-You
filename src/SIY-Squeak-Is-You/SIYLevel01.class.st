@@ -15,7 +15,7 @@ SIYLevel01 >> arenaDimensions [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/7/2023 18:58'
+	#'squeak_changestamp' : 'LK 1/2/2024 15:46'
 }
 SIYLevel01 >> buildLevel [
 	
@@ -37,32 +37,32 @@ SIYLevel01 >> buildLevel [
 	
 	self placeBlock: SIYSqueak at: 3@10.
 	
-	self placeBlock: SIYSqueakT at: 3@3.
-	self placeBlock: SIYIsT at: 3@4.
-	self placeBlock: SIYYouT at: 3@5.
+	self placeNounFor: SIYSqueak at: 3@3.
+	self placeBlock: SIYIs at: 3@4.
+	self placeBlock: SIYYou at: 3@5.
 	
-	self placeBlock: SIYWallT at: 4@3.
-	self placeBlock: SIYIsT at: 4@4.
-	self placeBlock: SIYStopT at: 4@5.
+	self placeNounFor: SIYWall at: 4@3.
+	self placeBlock: SIYIs at: 4@4.
+	self placeBlock: SIYStop at: 4@5.
 	
-	self placeBlock: SIYFlagT at: 5@3.
-	self placeBlock: SIYIsT at: 5@4.
-	self placeBlock: SIYWinT at: 5@5.
+	self placeNounFor: SIYFlag at: 5@3.
+	self placeBlock: SIYIs at: 5@4.
+	self placeBlock: SIYWin at: 5@5.
 	
-	self placeBlock: SIYRockT at: 6@3.
-	self placeBlock: SIYIsT at: 6@4.
-	self placeBlock: SIYPushT at: 6@5.
+	self placeNounFor: SIYRock at: 6@3.
+	self placeBlock: SIYIs at: 6@4.
+	self placeBlock: SIYPush at: 6@5.
 	
-	self placeBlock: SIYLavaT at: 3@7.
-	self placeBlock: SIYIsT at: 4@7.
-	self placeBlock: SIYDefeatT at: 5@7.
+	self placeNounFor: SIYLava at: 3@7.
+	self placeBlock: SIYIs at: 4@7.
+	self placeBlock: SIYDefeat at: 5@7.
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:34'
+	#'squeak_changestamp' : 'KD 1/2/2024 21:08'
 }
 SIYLevel01 >> nextLevel [
 
-	^ SIYLevel02
+	^ SIYLevel03
 ]
