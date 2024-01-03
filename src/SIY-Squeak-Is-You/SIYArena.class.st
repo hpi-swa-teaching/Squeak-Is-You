@@ -70,11 +70,11 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/16/2023 21:41'
+	#'squeak_changestamp' : 'LK 1/3/2024 19:14'
 }
 SIYArena >> blockPositionDict [
 
-	^blockPositionDict.
+	^ blockPositionDict.
 ]
 
 {
@@ -84,6 +84,24 @@ SIYArena >> blockPositionDict [
 SIYArena >> blockPositionDict: dict [
 
 	blockPositionDict := dict.
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/3/2024 19:23'
+}
+SIYArena >> caretaker [
+
+	^ caretaker
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/3/2024 19:23'
+}
+SIYArena >> caretaker: anObject [
+
+	caretaker := anObject
 ]
 
 {
@@ -109,6 +127,15 @@ SIYArena >> checkKeyboardInputs [
 		ifFalse: [self stepTime: self stepRefreshTime]
 	]]]].
 	
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/3/2024 19:22'
+}
+SIYArena >> createSnapshot [
+
+	caretaker createSnapshot: (SIYSnapshot newWithDict: (self blockPositionDict copy))
 ]
 
 {
@@ -178,20 +205,19 @@ SIYArena >> mediator: aMediator [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 12/21/2023 17:56'
+	#'squeak_changestamp' : 'LK 1/3/2024 19:22'
 }
-SIYArena >> moveBlocksDirection: aPoint [
+SIYArena >> moveBlocksDirection: aDirection [
+	"Move all isYou-blocks in arena, in specified direction."
 
 	| movementQueue |
 	
-	movementQueue := mediator generateQueueForDirection: aPoint.
+	movementQueue := mediator generateQueueForDirection: aDirection.
 	
-	blockPositionDict removeAll.
+	self resetPositionDict.
 	
-	movementQueue do: [:aBlock | 
-		(rules isYou: aBlock) ifTrue: [aBlock moveDirection: aPoint]].
+	movementQueue do: [:aBlock | (rules isYou: aBlock) ifTrue: [aBlock moveDirection: aDirection]].
 	
-	caretaker createSnapshot: (SIYSnapshot newWithDict: (blockPositionDict copy)).
 ]
 
 {
@@ -201,6 +227,15 @@ SIYArena >> moveBlocksDirection: aPoint [
 SIYArena >> pixelPerBlock [
 
 	^ 72
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/3/2024 19:20'
+}
+SIYArena >> resetPositionDict [
+
+	^ self blockPositionDict removeAll
 ]
 
 {
