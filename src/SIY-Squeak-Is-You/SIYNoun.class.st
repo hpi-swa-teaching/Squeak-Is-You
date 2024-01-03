@@ -44,10 +44,10 @@ SIYNoun >> representsBlock [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 17:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
 }
 SIYNoun >> representsBlock: aBlock [
 
 	representsBlock := aBlock.
-	self updateTextureForDirection: 1@0.
+	self setTextureForDirection: 1@0.
 ]

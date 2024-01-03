@@ -19,23 +19,21 @@ SIYGame class >> start [
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:54'
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:42'
 }
 SIYGame >> abortLevel [
 	
-	arena delete.
-	rules := nil.
-	level := nil
+	self arena delete
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 17:51'
+	#category : #'game accessing',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:46'
 }
 SIYGame >> arena [
 
-	^ arena
+	^ self level arena
 ]
 
 {
@@ -50,62 +48,71 @@ SIYGame >> initialize [
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 17:51'
+	#category : #'game accessing',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:42'
 }
 SIYGame >> level [ 
 
-	^ level class
+	^ level
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:53'
+	#category : #'game accessing',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:49'
+}
+SIYGame >> level: aLevel [
+
+	level := aLevel
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:48'
 }
 SIYGame >> nextLevel [
 
-	| aLevel aPoint |
-
-	aLevel := level nextLevel.
-	aPoint := arena position.
-	
-	self abortLevel.
-	
-	aLevel ifNotNil: [self startLevel: aLevel atPosition: aPoint]
+	self replaceLevelWith: self level nextLevel
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 17:51'
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:48'
+}
+SIYGame >> replaceLevelWith: aLevelClass [
+	
+	| aPoint |
+	
+	aPoint := self arena position.
+	self level ifNotNil: [self abortLevel].
+	aLevelClass ifNotNil: [self startLevel: aLevelClass atPosition: aPoint]
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:49'
 }
 SIYGame >> restartLevel [
 
-	| aPoint aLevel |
-	aLevel := self level.
-	aPoint := self arena position.
-	self abortLevel.
-	aLevel ifNotNil: [self startLevel: aLevel atPosition: aPoint].
+	self replaceLevelWith: self level class
 	
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:27'
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:50'
 }
 SIYGame >> startLevel: aLevel [
 
-	level := aLevel new.
-	arena := level arena.
-	arena game: self.
-	rules := SIYRuleManager new.
+	self level: aLevel new.
+	self arena game: self
 ]
 
 {
-	#category : #'level generation',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:53'
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:52'
 }
 SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
-	arena position: aPoint.
+	self arena position: aPoint.
 ]

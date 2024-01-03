@@ -8,7 +8,7 @@ Class {
 }
 
 {
-	#category : #'update rules',
+	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
 }
 SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
@@ -34,7 +34,7 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
 ]
 
 {
-	#category : #'update rules',
+	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
 }
 SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
@@ -60,7 +60,59 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 ]
 
 {
-	#category : #'invoke rules',
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 1/3/2024 20:10'
+}
+SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
+
+	(aTile anySatisfy: [:each | each isDefeat and: each isYou not])
+		ifTrue: [self invokeDeath: aBlock]
+]
+
+{
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 1/3/2024 20:22'
+}
+SIYRuleManager >> checkRulesFor: aBlock [
+
+	| aTile |
+	
+	aTile := aBlock neighborsHere.
+	
+	self checkWin: aBlock onTile: aTile.
+	self checkDefeat: aBlock onTile: aTile
+]
+
+{
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 1/3/2024 20:01'
+}
+SIYRuleManager >> checkWin: aBlock onTile: aTile [
+
+	(aBlock isYou and: (aTile anySatisfy: [:each | each isWin]))
+		ifTrue: [self invokeWin: aBlock]
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/3/2024 23:00'
+}
+SIYRuleManager >> currentRules [
+
+	^ currentRules ifNil: [currentRules := Dictionary new]
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:59'
+}
+SIYRuleManager >> currentRules: aDictionary [
+
+	currentRules := aDictionary
+]
+
+{
+	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 12/31/2023 16:29'
 }
 SIYRuleManager >> invokeDeath: aBlock [
@@ -73,62 +125,62 @@ SIYRuleManager >> invokeDeath: aBlock [
 ]
 
 {
-	#category : #'invoke rules',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:44'
+	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/3/2024 20:08'
 }
-SIYRuleManager >> invokeWin: anObject [
+SIYRuleManager >> invokeWin: aBlock [
 	
-	anObject arena game nextLevel
+	aBlock arena game nextLevel
 ]
 
 {
-	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
 }
-SIYRuleManager >> isDefeat: anObject [
+SIYRuleManager >> isDefeat: aBlock [
 	
-	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
-	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
 }
-SIYRuleManager >> isPush: anObject [
+SIYRuleManager >> isPush: aBlock [
 	
-	(anObject isKindOf: SIYText) ifTrue: [^ true].
+	(aBlock isKindOf: SIYText) ifTrue: [^ true].
 	
-	^ (currentRules at: SIYPush ifAbsent: [^ false]) includes: anObject class
-
-]
-
-{
-	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
-}
-SIYRuleManager >> isStop: anObject [
-	
-	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYPush ifAbsent: [^ false]) includes: aBlock class
 
 ]
 
 {
-	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:45'
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
 }
-SIYRuleManager >> isWin: anObject [
+SIYRuleManager >> isStop: aBlock [
 	
-	^ (currentRules at: SIYWin ifAbsent: [^ false]) includes: anObject class
+	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: aBlock class
 
 ]
 
 {
-	#category : #'check rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 15:46'
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
 }
-SIYRuleManager >> isYou: anObject [
+SIYRuleManager >> isWin: aBlock [
+	
+	^ (currentRules at: SIYWin ifAbsent: [^ false]) includes: aBlock class
 
-	^ (currentRules at: SIYYou ifAbsent: [^ false]) includes: anObject class
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+}
+SIYRuleManager >> isYou: aBlock [
+
+	^ (currentRules at: SIYYou ifAbsent: [^ false]) includes: aBlock class
 
 	
 	
@@ -138,8 +190,8 @@ SIYRuleManager >> isYou: anObject [
 ]
 
 {
-	#category : #'update rules',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/4/2024 00:34'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 
@@ -147,10 +199,10 @@ SIYRuleManager >> updateRulesInArena: anArena [
 	
 	aDictionary := Dictionary new.
 	
-	(anArena mediator getOperatorBlocks) do: [:aBlock |
+	(anArena blockMediator getOperatorBlocks) do: [:aBlock |
 			aDictionary := self addHorizontalRulesFor: aBlock to: aDictionary.
-			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary.
+			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary
 		].
 	
-	currentRules := aDictionary.
+	self currentRules: aDictionary
 ]
