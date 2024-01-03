@@ -62,6 +62,20 @@ SIYBlock >> arena: anArena [
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/3/2024 20:15'
+}
+SIYBlock >> basicMove: aDirection [
+
+	self preMoveRoutine: aDirection.
+	self coords: self coords + aDirection.
+	self postMoveRoutine: aDirection.
+	
+	^ true
+
+]
+
+{
 	#category : #appearance,
 	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
 }
@@ -104,30 +118,6 @@ SIYBlock >> blockTextureRight [
 SIYBlock >> blockTextureUp [
 
 	^ self blockTexture
-]
-
-{
-	#category : #rules,
-	#'squeak_changestamp' : 'LK 1/2/2024 23:33'
-}
-SIYBlock >> checkRulesAtCurrentTile [
-	"Method to invoke location based rules"
-
-	| currentTile |
-	currentTile := self neighborsHere.
-	
-	"isDefeat"
-	(currentTile anySatisfy: [:each | (rules isDefeat: each) and: (rules isYou: each) not])
-				ifTrue: [rules invokeDeath: self].
-	
-	"isWin"
-	(rules isYou: self) 
-		ifTrue:	[(currentTile  anySatisfy: [:each | rules isWin: each])
-			  		ifTrue: [rules invokeWin: self]]
-				
-	
-	
-	
 ]
 
 {
@@ -236,7 +226,7 @@ SIYBlock >> duplicateMorph: evt [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/2/2024 17:00'
+	#'squeak_changestamp' : 'LK 1/3/2024 20:12'
 }
 SIYBlock >> getTextureForDirection: aPoint [
 
@@ -244,6 +234,8 @@ SIYBlock >> getTextureForDirection: aPoint [
 	((-1)@0 = aPoint) ifTrue: [^ self blockTextureLeft].
 	(0@1 = aPoint) ifTrue: [^ self blockTextureDown].
 	(0@(-1) = aPoint) ifTrue: [^ self blockTextureUp].
+	
+	^ self blockTexture
 ]
 
 {
@@ -276,44 +268,73 @@ SIYBlock >> initialize [
 ]
 
 {
-	#category : #rules,
-	#'squeak_changestamp' : 'LK 1/3/2024 17:24'
+	#category : #'rule getting',
+	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
 }
-SIYBlock >> moveDirection: aPoint [
+SIYBlock >> isDefeat [
+
+	^ self ruleManager isDefeat: self
+]
+
+{
+	#category : #'rule getting',
+	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
+}
+SIYBlock >> isPush [
+
+	^ self ruleManager isPush: self
+]
+
+{
+	#category : #'rule getting',
+	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
+}
+SIYBlock >> isStop [
+
+	^ self ruleManager isStop: self
+	
+]
+
+{
+	#category : #'rule getting',
+	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
+}
+SIYBlock >> isWin [
+
+	^ self ruleManager isWin: self
+]
+
+{
+	#category : #'rule getting',
+	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
+}
+SIYBlock >> isYou [
+
+	^ self ruleManager isYou: self
+	
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/3/2024 20:14'
+}
+SIYBlock >> move: aDirection [
 	
 	| neighbours |
 	
-	neighbours := mediator requestPos: (self coords + aPoint).
+	neighbours := mediator requestPos: (self coords + aDirection).
 		
-	(rules isStop: self)
-		ifTrue: [^ false].
-	
-	((rules isPush: self) not and: (rules isYou: self) not)
-		ifTrue: [^ true].
-		
-	(neighbours isNil)
-		ifTrue: [^ false].
+	(self isStop) ifTrue: [^ false].
+	(self isPush or: self isYou) ifFalse: [^ true].
+	(neighbours isNil) ifTrue: [^ false].
+	(neighbours anySatisfy: [:each | each isStop]) ifTrue: [^ false].
 	
 	(neighbours size = 0)
-		ifTrue: [
-			arena blockPositionDict at: (self) put: (self coords). 
-			self coords: self coords + aPoint.
-			self checkRulesAtCurrentTile.
-			self updateTextureForDirection: aPoint.
-			^ true]
-		ifFalse: [
-			(neighbours anySatisfy: [:each | rules isStop: each]) ifTrue: [^ false].
-			(neighbours allSatisfy: [:each | each moveDirection: aPoint])
-				ifTrue: [
-					arena blockPositionDict at: (self) put: (self coords). 
-					self coords: self coords + aPoint.
-					self checkRulesAtCurrentTile.
-					self updateTextureForDirection: aPoint.
-					^ true]
-				ifFalse: [^ false]
-			]
-		
-	
+		ifTrue: [^ self basicMove: aDirection]
+		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection])
+					ifTrue: [^ self basicMove: aDirection]
+					ifFalse: [^ false]]
+
 ]
 
 {
@@ -392,6 +413,26 @@ SIYBlock >> position: aPoint [
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/3/2024 20:15'
+}
+SIYBlock >> postMoveRoutine: aDirection [
+
+	self updateTextureForDirection: aDirection.
+	self ruleManager checkRulesFor: self
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/3/2024 20:15'
+}
+SIYBlock >> preMoveRoutine: aDirection [
+
+	arena blockPositionDict at: self put: self coords.
+
+]
+
+{
 	#category : #positioning,
 	#'squeak_changestamp' : 'LK 12/4/2023 16:51'
 }
@@ -409,6 +450,24 @@ SIYBlock >> respawn [
 
 	self openInWorld.
 	self arena addMorph: self
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/3/2024 19:38'
+}
+SIYBlock >> ruleManager [
+
+	^ rules
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/3/2024 19:38'
+}
+SIYBlock >> ruleManager: anObject [
+
+	rules := anObject
 ]
 
 {

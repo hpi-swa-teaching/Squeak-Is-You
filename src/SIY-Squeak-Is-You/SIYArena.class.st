@@ -70,20 +70,20 @@ SIYArena >> arenaWidth: val [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 19:14'
+	#'squeak_changestamp' : 'LK 1/3/2024 19:29'
 }
 SIYArena >> blockPositionDict [
 
-	^ blockPositionDict.
+	^ blockPositionDict
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/16/2023 21:41'
+	#'squeak_changestamp' : 'LK 1/3/2024 19:29'
 }
 SIYArena >> blockPositionDict: dict [
 
-	blockPositionDict := dict.
+	blockPositionDict := dict
 ]
 
 {
@@ -148,7 +148,7 @@ SIYArena >> dropEnabled [
 ]
 
 {
-	#category : #initialization,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/21/2023 16:37'
 }
 SIYArena >> game [
@@ -157,7 +157,7 @@ SIYArena >> game [
 ]
 
 {
-	#category : #initialization,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/21/2023 16:38'
 }
 SIYArena >> game: aGame [
@@ -186,7 +186,7 @@ SIYArena >> initialize [
 ]
 
 {
-	#category : #initialization,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/6/2023 19:54'
 }
 SIYArena >> mediator [
@@ -195,7 +195,7 @@ SIYArena >> mediator [
 ]
 
 {
-	#category : #initialization,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/6/2023 19:55'
 }
 SIYArena >> mediator: aMediator [
@@ -205,7 +205,7 @@ SIYArena >> mediator: aMediator [
 
 {
 	#category : #'block movement',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:22'
+	#'squeak_changestamp' : 'LK 1/3/2024 19:30'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Move all isYou-blocks in arena, in specified direction."
@@ -215,8 +215,8 @@ SIYArena >> moveBlocksDirection: aDirection [
 	movementQueue := mediator generateQueueForDirection: aDirection.
 	
 	self resetPositionDict.
-	
-	movementQueue do: [:aBlock | (rules isYou: aBlock) ifTrue: [aBlock moveDirection: aDirection]].
+	movementQueue do: [:aBlock | (rules isYou: aBlock) ifTrue: [aBlock move: aDirection]].
+	self createSnapshot.
 	
 ]
 
@@ -239,7 +239,7 @@ SIYArena >> resetPositionDict [
 ]
 
 {
-	#category : #initialization,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/6/2023 20:26'
 }
 SIYArena >> ruleManager [
@@ -248,7 +248,7 @@ SIYArena >> ruleManager [
 ]
 
 {
-	#category : #initialization,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/6/2023 20:25'
 }
 SIYArena >> ruleManager: aRuleManager [
