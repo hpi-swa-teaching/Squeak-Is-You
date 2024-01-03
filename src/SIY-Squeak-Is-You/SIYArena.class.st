@@ -166,30 +166,29 @@ SIYArena >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:31'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:37'
 }
 SIYArena >> initializeWithDimension: aDimension [
 
 	self initialize;
 		arenaWidth: aDimension x;
-		arenaHeight: aDimension y;
-		yourself
+		arenaHeight: aDimension y
 	
 ]
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:52'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:10'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Move all isYou-blocks in arena, in specified direction."
 
 	| movementQueue |
 	
-	movementQueue := blockMediator generateQueueForDirection: aDirection.
+	movementQueue := self blockMediator generateQueueForDirection: aDirection.
 	
 	self resetPositionDictionary.
-	movementQueue do: [:aBlock | (ruleManager isYou: aBlock) ifTrue: [aBlock move: aDirection]].
+	movementQueue do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self createSnapshot
 ]
 
@@ -272,12 +271,11 @@ SIYArena >> snapshotCaretaker [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:51'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:08'
 }
 SIYArena >> step [
 
-	self checkKeyboardInputs.
-	self ruleManager updateRulesInArena: self.
+	self checkKeyboardInputs
 ]
 
 {

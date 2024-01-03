@@ -19,15 +19,12 @@ SIYBlock class >> newInArena: anArena [
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'LK 12/8/2023 11:07'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:48'
 }
 SIYBlock class >> newInArena: anArena at: aPoint [
 	"create new block in SIY arena at given coordinates"
 
-	^ (self basicNew arena: anArena) superInitialize;
-		coords: aPoint;
-		initialize;
-		yourself
+	^ self basicNew initializeInArena: anArena at: aPoint
 ]
 
 {
@@ -138,7 +135,7 @@ SIYBlock >> coordX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:16'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -151,7 +148,7 @@ SIYBlock >> coordX: aNumber [
 	
 	super position: self arena position + newPos.
 	
-	self informMediator.
+	self postPositionRoutine
 
 ]
 
@@ -169,7 +166,7 @@ SIYBlock >> coordY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:16'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -182,7 +179,7 @@ SIYBlock >> coordY: aNumber [
 	
 	super position: self arena position + newPos.
 	
-	self informMediator
+	self postPositionRoutine
 
 ]
 
@@ -255,20 +252,30 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:47'
 }
 SIYBlock >> initialize [
 	
 	self updateTextureForDirection: 1@0.
-	
 	self arena addMorph: self.
-
 	self informMediator
 	
 	
 	
 
 	
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:47'
+}
+SIYBlock >> initializeInArena: anArena at: aPoint [
+
+	self arena: anArena.
+	super initialize.
+	self coords: aPoint.
+	self initialize
 ]
 
 {
@@ -418,12 +425,22 @@ SIYBlock >> position: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:15'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:12'
 }
 SIYBlock >> postMoveRoutine: aDirection [
 
 	self updateTextureForDirection: aDirection.
 	self ruleManager checkRulesFor: self
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:16'
+}
+SIYBlock >> postPositionRoutine [
+
+	self informMediator.
+	self ruleManager updateRulesInArena: self
 ]
 
 {

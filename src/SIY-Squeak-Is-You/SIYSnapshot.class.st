@@ -2,46 +2,45 @@ Class {
 	#name : #SIYSnapshot,
 	#superclass : #Object,
 	#instVars : [
-		'blockPositionDict'
+		'positionDictionary'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:11'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
 }
-SIYSnapshot class >> newWithDictionary: dict [
+SIYSnapshot class >> newWithDictionary: aDictionary [
 	
-	^ (self basicNew dict: dict) initialize;
-		yourself.
+	^ self basicNew initializeWithDictionary: aDictionary
 	
 ]
 
 {
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 12:49'
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
 }
-SIYSnapshot >> dict [
+SIYSnapshot >> initializeWithDictionary: aDictionary [
 
-	^blockPositionDict.
-]
-
-{
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:28'
-}
-SIYSnapshot >> dict: aDictionary [
-	
-	blockPositionDict := aDictionary.
-]
-
-{
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 19:28'
-}
-SIYSnapshot >> initialize [
-	
 	super initialize.
-	^ self
+	self dictionary: aDictionary
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+}
+SIYSnapshot >> positionDictionary [
+
+	^ positionDictionary
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+}
+SIYSnapshot >> positionDictionary: aDictionary [
+	
+	positionDictionary := aDictionary
 ]
