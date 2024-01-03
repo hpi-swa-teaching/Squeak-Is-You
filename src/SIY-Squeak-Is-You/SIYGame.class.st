@@ -30,6 +30,15 @@ SIYGame >> abortLevel [
 ]
 
 {
+	#category : #'level generation',
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 17:51'
+}
+SIYGame >> arena [
+
+	^ arena
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'LK 12/21/2023 16:40'
 }
@@ -42,11 +51,11 @@ SIYGame >> initialize [
 
 {
 	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:26'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 17:51'
 }
 SIYGame >> level [ 
 
-	^ level class.
+	^ level class
 ]
 
 {
@@ -67,12 +76,15 @@ SIYGame >> nextLevel [
 
 {
 	#category : #'level generation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/23/2023 22:16'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/3/2024 17:51'
 }
 SIYGame >> restartLevel [
 
+	| aPoint aLevel |
+	aLevel := self level.
+	aPoint := self arena position.
 	self abortLevel.
-	self startLevel: level.
+	aLevel ifNotNil: [self startLevel: aLevel atPosition: aPoint].
 	
 ]
 
