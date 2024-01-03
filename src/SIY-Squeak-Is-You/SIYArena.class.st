@@ -85,26 +85,8 @@ SIYArena >> blockMediator [
 ]
 
 {
-	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:10'
-}
-SIYArena >> caretaker [
-
-	^ snapshotCaretaker ifNil: [SIYSnapshotCaretaker new]
-]
-
-{
-	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 21:51'
-}
-SIYArena >> caretaker: anObject [
-
-	snapshotCaretaker := anObject
-]
-
-{
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/3/2024 21:49'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:55'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -115,7 +97,7 @@ SIYArena >> checkKeyboardInputs [
     
 	aKey caseOf: {
 		[$r] -> [self game restartLevel].
-        	[$z] -> [self caretaker restoreSnapshot].
+        	[$z] -> [self snapshotCaretaker restoreSnapshot].
 		[Character arrowUp] -> [self moveBlocksDirection: 0 @ (-1)].
 		[Character arrowDown] -> [self moveBlocksDirection: 0 @ 1].
 		[Character arrowRight] -> [self moveBlocksDirection: 1 @ 0].
@@ -126,11 +108,11 @@ SIYArena >> checkKeyboardInputs [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:11'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:55'
 }
 SIYArena >> createSnapshot [
 
-	self caretaker createSnapshot: (SIYSnapshot newWithDictionary: (self positionDictionary copy))
+	self snapshotCaretaker createSnapshot: (SIYSnapshot newWithDictionary: (self positionDictionary copy))
 ]
 
 {
@@ -280,14 +262,22 @@ SIYArena >> slowStepTime [
 ]
 
 {
-	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/3/2024 21:23'
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/3/2024 22:57'
+}
+SIYArena >> snapshotCaretaker [
+
+	^ snapshotCaretaker ifNil: [snapshotCaretaker := SIYSnapshotCaretaker new]
+]
+
+{
+	#category : #stepping,
+	#'squeak_changestamp' : 'LK 1/3/2024 22:51'
 }
 SIYArena >> step [
 
 	self checkKeyboardInputs.
-
-	ruleManager updateRulesInArena: self.
+	self ruleManager updateRulesInArena: self.
 ]
 
 {

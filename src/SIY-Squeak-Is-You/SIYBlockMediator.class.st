@@ -18,7 +18,16 @@ SIYBlockMediator class >> newForArena: anArena [
 ]
 
 {
-	#category : #initialization,
+	#category : #'game accessing',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:38'
+}
+SIYBlockMediator >> arena [
+
+	^ arena
+]
+
+{
+	#category : #'game accessing',
 	#'squeak_changestamp' : 'LK 12/6/2023 19:59'
 }
 SIYBlockMediator >> arena: anArena [
@@ -41,7 +50,7 @@ SIYBlockMediator >> generateQueueForDirection: aPoint [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
 }
 SIYBlockMediator >> generateQueueFromBottom [
 	"movement queue for moving up returns array of blocks, 
@@ -51,8 +60,8 @@ SIYBlockMediator >> generateQueueFromBottom [
 	
 	queue := OrderedCollection new.
 	
-	1 to: (arena arenaWidth) do: [:x |
-		(arena arenaHeight) to: 1 by: -1 do: [:y |
+	1 to: (self arena arenaWidth) do: [:x |
+		(self arena arenaHeight) to: 1 by: -1 do: [:y |
 			aSet := gameBoard at: x at: y.
 			aSet do: [:aBlock | queue add: aBlock]
 	]].
@@ -62,7 +71,7 @@ SIYBlockMediator >> generateQueueFromBottom [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
 }
 SIYBlockMediator >> generateQueueFromLeft [
 	"movement queue for moving left returns array of blocks, 
@@ -72,8 +81,8 @@ SIYBlockMediator >> generateQueueFromLeft [
 	
 	queue := OrderedCollection new.
 	
-	1 to: (arena arenaHeight) do: [:y |
-		1 to: (arena arenaWidth) do: [:x |
+	1 to: (self arena arenaHeight) do: [:y |
+		1 to: (self arena arenaWidth) do: [:x |
 			aSet := gameBoard at: x at: y.
 			aSet do: [:aBlock | queue add: aBlock]
 	]].
@@ -83,7 +92,7 @@ SIYBlockMediator >> generateQueueFromLeft [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
 }
 SIYBlockMediator >> generateQueueFromRight [
 	"movement queue for moving right: returns array of blocks, 
@@ -93,8 +102,8 @@ SIYBlockMediator >> generateQueueFromRight [
 	
 	queue := OrderedCollection new.
 	
-	1 to: (arena arenaHeight) do: [:y |
-		(arena arenaWidth) to: 1 by: -1 do: [:x |
+	1 to: (self arena arenaHeight) do: [:y |
+		(self arena arenaWidth) to: 1 by: -1 do: [:x |
 			aSet := gameBoard at: x at: y.
 			aSet do: [:aBlock | queue add: aBlock]
 	]].
@@ -104,7 +113,7 @@ SIYBlockMediator >> generateQueueFromRight [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:43'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
 }
 SIYBlockMediator >> generateQueueFromTop [
 	"movement queue for moving up returns array of blocks, 
@@ -114,8 +123,8 @@ SIYBlockMediator >> generateQueueFromTop [
 	
 	queue := OrderedCollection new.
 	
-	1 to: (arena arenaWidth) do: [:x |
-		1 to: (arena arenaHeight) do: [:y |
+	1 to: (self arena arenaWidth) do: [:x |
+		1 to: (self arena arenaHeight) do: [:y |
 			aSet := gameBoard at: x at: y.
 			aSet do: [:aBlock | queue add: aBlock]
 	]].
@@ -125,7 +134,7 @@ SIYBlockMediator >> generateQueueFromTop [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 12/31/2023 15:43'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
 }
 SIYBlockMediator >> getOperatorBlocks [
 
@@ -133,8 +142,8 @@ SIYBlockMediator >> getOperatorBlocks [
 
 	aSet := Set new.
 	
-	1 to: (arena arenaHeight) do: [:y |
-		1 to: (arena arenaWidth) do: [:x |
+	1 to: (self arena arenaHeight) do: [:y |
+		1 to: (self arena arenaWidth) do: [:x |
 			(self requestPos: x@y) do: 
 				[:aBlock | (aBlock isKindOf: SIYOperator)
 					ifTrue: [aSet add: aBlock]]]].
@@ -157,15 +166,15 @@ SIYBlockMediator >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/6/2023 21:06'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
 }
 SIYBlockMediator >> initializeGameBoard [
 
-	gameBoard := Matrix rows: (arena arenaWidth) columns: (arena arenaHeight).
+	gameBoard := Matrix rows: (self arena arenaWidth) columns: (self arena arenaHeight).
 	
 	"initialize with empty sets"
-	1 to: (arena arenaWidth ) do: [:x |
-		1 to: (arena arenaHeight ) do: [:y |
+	1 to: (self arena arenaWidth ) do: [:x |
+		1 to: (self arena arenaHeight ) do: [:y |
 			gameBoard at: x at: y put: Set new
 		]
 	]
@@ -227,13 +236,13 @@ SIYBlockMediator >> rememberBlock: sender withPos: coordinates [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 12/15/2023 13:45'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:40'
 }
 SIYBlockMediator >> requestPos: point [
 	"function that calls for the objects on a coordinate, returns nil if point is not on field."
 
 	| itemsOnField |
-	((point x < 1) or: (point y < 1) or: (point x > arena arenaWidth) or: (point y > arena arenaHeight))
+	((point x < 1) or: (point y < 1) or: (point x > self arena arenaWidth) or: (point y > self arena arenaHeight))
 		ifTrue: [^ nil].
 	itemsOnField := gameBoard at: point x at: point y.
 

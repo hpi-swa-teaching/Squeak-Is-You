@@ -2,9 +2,7 @@ Class {
 	#name : #SIYBlock,
 	#superclass : #ImageMorph,
 	#instVars : [
-		'arena',
-		'mediator',
-		'rules'
+		'arena'
 	],
 	#category : #'SIY-Squeak-Is-You'
 }
@@ -75,6 +73,15 @@ SIYBlock >> basicMove: aDirection [
 ]
 
 {
+	#category : #'game accessing',
+	#'squeak_changestamp' : 'LK 1/3/2024 22:31'
+}
+SIYBlock >> blockMediator [
+
+	^ self arena blockMediator
+]
+
+{
 	#category : #appearance,
 	#'squeak_changestamp' : 'LK 1/2/2024 12:54'
 }
@@ -121,17 +128,17 @@ SIYBlock >> blockTextureUp [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:03'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:37'
 }
 SIYBlock >> coordX [
 	"x coordinate within arena (rounded to nearest block)"
 	
-	^ (((self relativePosition x) / (arena pixelPerBlock)) rounded + 1) clampLow: 1 high: arena arenaWidth
+	^ (((self relativePosition x) / (self arena pixelPerBlock)) rounded + 1) clampLow: 1 high: self arena arenaWidth
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/21/2023 16:31'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -139,10 +146,10 @@ SIYBlock >> coordX: aNumber [
 	| newPos |
 	
 	newPos := Point new
-		setX: ((aNumber clampLow: 1 high: arena arenaWidth ) - 1) * arena pixelPerBlock
+		setX: ((aNumber clampLow: 1 high: self arena arenaWidth ) - 1) * self arena pixelPerBlock
 		setY: self relativePosition y.
 	
-	super position: arena position + newPos.
+	super position: self arena position + newPos.
 	
 	self informMediator.
 
@@ -150,19 +157,19 @@ SIYBlock >> coordX: aNumber [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/7/2023 21:02'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
 }
 SIYBlock >> coordY [
 	"y coordinate within arena (rounded to nearest block)"
 	
-	^ (((self relativePosition y) / (arena pixelPerBlock)) rounded + 1) clampLow: 1 high: arena arenaHeight
+	^ (((self relativePosition y) / (self arena pixelPerBlock)) rounded + 1) clampLow: 1 high: self arena arenaHeight
 
 	
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/7/2023 20:49'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -171,9 +178,9 @@ SIYBlock >> coordY: aNumber [
 	
 	newPos := Point new
 		setX: self relativePosition x
-		setY: ((aNumber clampLow: 1 high: arena arenaHeight) - 1) * arena pixelPerBlock.
+		setY: ((aNumber clampLow: 1 high: self arena arenaHeight) - 1) * self arena pixelPerBlock.
 	
-	super position: arena position + newPos.
+	super position: self arena position + newPos.
 	
 	self informMediator
 
@@ -201,24 +208,24 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/19/2023 00:08'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
 }
 SIYBlock >> delete [
 	
-	mediator rememberBlock: self withPos: nil.
+	self blockMediator rememberBlock: self withPos: nil.
 	
 	super delete.
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/12/2023 11:10'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
 }
 SIYBlock >> duplicateMorph: evt [
 	
 	| dup |
 	
-	dup := self class newInArena: arena at: self coords.
+	dup := self class newInArena: self arena at: self coords.
 
 	^ dup
 ]
@@ -239,26 +246,24 @@ SIYBlock >> getTextureForDirection: aPoint [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:44'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
 }
 SIYBlock >> informMediator [
 
-	^ (mediator notNil) ifTrue: [mediator rememberBlock: self withPos: self coords]
+	^ self blockMediator rememberBlock: self withPos: self coords
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 21:54'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
 }
 SIYBlock >> initialize [
 	
 	self updateTextureForDirection: 1@0.
 	
-	arena addMorph: self.
-	
-	rules := arena ruleManager.
-	mediator := arena blockMediator.
-	mediator rememberBlock: self withPos: self coords
+	self arena addMorph: self.
+
+	self informMediator
 	
 	
 	
@@ -267,7 +272,7 @@ SIYBlock >> initialize [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
 }
 SIYBlock >> isDefeat [
@@ -276,7 +281,7 @@ SIYBlock >> isDefeat [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
 }
 SIYBlock >> isPush [
@@ -285,7 +290,7 @@ SIYBlock >> isPush [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
 }
 SIYBlock >> isStop [
@@ -295,7 +300,7 @@ SIYBlock >> isStop [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
 }
 SIYBlock >> isWin [
@@ -304,7 +309,7 @@ SIYBlock >> isWin [
 ]
 
 {
-	#category : #'rule getting',
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
 }
 SIYBlock >> isYou [
@@ -315,13 +320,13 @@ SIYBlock >> isYou [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:14'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
 }
 SIYBlock >> move: aDirection [
 	
 	| neighbours |
 	
-	neighbours := mediator requestPos: (self coords + aDirection).
+	neighbours := self blockMediator requestPos: (self coords + aDirection).
 		
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
@@ -338,57 +343,57 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:22'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of neighbor blocks (objects) at coords above.
 	Return empty set if none. Return nil if out of arena."
 	
-	^ mediator requestPos: (-1)@0 + self coords
+	^ self blockMediator requestPos: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of neighbor blocks (objects) at coords below.
 	Return empty set if none. Return nil if out of arena."
 	
-	^ mediator requestPos: 1@0 + self coords
+	^ self blockMediator requestPos: 1@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/15/2023 19:51'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:35'
 }
 SIYBlock >> neighborsHere [
 	"Return set of neighbor blocks (objects) at coords where self is right now.
 	Return empty set if none. Return nil if out of arena."
 	
-	^ mediator requestPos: self coords
+	^ self blockMediator requestPos: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:35'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of neighbor blocks (objects) at coords to the left.
 	Return empty set if none. Return nil if out of arena."
 	
-	^ mediator requestPos: 0@(-1) + self coords
+	^ self blockMediator requestPos: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:23'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:35'
 }
 SIYBlock >> neighborsRight [
 	"Return set of neighbor blocks (objects) at coords to the right.
 	Return empty set if none. Return nil if out of arena."
 	
-	^ mediator requestPos: 0@1 + self coords
+	^ self blockMediator requestPos: 0@1 + self coords
 ]
 
 {
@@ -423,22 +428,22 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:51'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
 }
 SIYBlock >> preMoveRoutine: aDirection [
 
-	arena positionDictionary at: self put: self coords.
+	self arena positionDictionary at: self put: self coords.
 
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 16:51'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
 }
 SIYBlock >> relativePosition [
 	"returns position relative to Morph (measured in pixel)"
 
-	^ self position - arena position
+	^ self position - self arena position
 ]
 
 {
