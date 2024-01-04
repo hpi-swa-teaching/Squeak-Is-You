@@ -215,11 +215,11 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:05'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> delete [
 	
-	self blockMediator rememberBlock: self withPos: nil.
+	self blockMediator saveBlock: self at: nil.
 	super delete.
 ]
 
@@ -251,12 +251,12 @@ SIYBlock >> getTextureForDirection: aPoint [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> informMediator [
 	"notifies blockMediator of current position"
 
-	^ self blockMediator rememberBlock: self withPos: self coords
+	^ self blockMediator saveBlock: self at: self coords
 ]
 
 {
@@ -336,7 +336,7 @@ SIYBlock >> isYou [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:26'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> move: aDirection [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -345,7 +345,7 @@ SIYBlock >> move: aDirection [
 	
 	| neighbours |
 	
-	neighbours := self blockMediator requestPos: (self coords + aDirection).
+	neighbours := self blockMediator getBlocks: (self coords + aDirection).
 	
 	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].
@@ -364,57 +364,57 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:33'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of blocks at coords above.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: (-1)@0 + self coords
+	^ self blockMediator getBlocks: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of blocks at coords below.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: 1@0 + self coords
+	^ self blockMediator getBlocks: 1@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsHere [
 	"Return set of blocks at current coords.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: self coords
+	^ self blockMediator getBlocks: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of blocks at coords to the left.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: 0@(-1) + self coords
+	^ self blockMediator getBlocks: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsRight [
 	"Return set of blocks at coords to the right.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: 0@1 + self coords
+	^ self blockMediator getBlocks: 0@1 + self coords
 ]
 
 {

@@ -1,10 +1,18 @@
+"
+A SIYSnapshot contains changes in the arena. It's used for the undo functionality.
+
+Instance Variables
+	positionDictionary: <Dictionary>
+
+"
 Class {
 	#name : #SIYSnapshot,
 	#superclass : #Object,
 	#instVars : [
 		'positionDictionary'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:53'
 }
 
 {

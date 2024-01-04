@@ -1,29 +1,42 @@
+"
+A SIYRuleManager is an interface for checking and accessing current game rules.
+
+Instance Variables
+	currentRules: <Dictionary>
+
+
+"
 Class {
 	#name : #SIYRuleManager,
 	#superclass : #Object,
 	#instVars : [
 		'currentRules'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:39'
 }
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:48'
 }
 SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
+	
+	"set aNounBlock to the noun left for the given anOperatorBlock"
 	anOperatorBlock neighborsLeft isEmptyOrNil
 		ifFalse: [aNounBlock := anOperatorBlock neighborsLeft
 			detect: [:each | each isKindOf: SIYNoun]
 			ifNone: [nil]].
-			
+	
+	"set aPropertyBlock to the property right for the given anOperatorBlock"
 	anOperatorBlock neighborsRight isEmptyOrNil 
 		ifFalse: [aPropertyBlock := anOperatorBlock neighborsRight
 			detect: [:each | each isKindOf: SIYProperty]
 			ifNone: [nil]].
 	
+	"if there is a valid noun and property block detected, add them to the rule dictionary"
 	(aNounBlock notNil and: aPropertyBlock notNil)
 		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
 			aSet add: aNounBlock representsBlock.
@@ -35,21 +48,25 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:25'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:48'
 }
 SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 
 	| aNounBlock aPropertyBlock aSet |
+	
+	"set aNounBlock to the noun above for the given anOperatorBlock"
 	anOperatorBlock neighborsAbove isEmptyOrNil
 		ifFalse: [aNounBlock := anOperatorBlock neighborsAbove
 			detect: [:each | each isKindOf: SIYNoun]
 			ifNone: [nil]].
-
+	
+	"set aPropertyBlock to the property below for the given anOperatorBlock"
 	anOperatorBlock neighborsBelow isEmptyOrNil		
 		ifFalse: [aPropertyBlock := anOperatorBlock neighborsBelow
 			detect: [:each | each isKindOf: SIYProperty]
 			ifNone: [nil]].
 	
+	"if there is a valid noun and property block detected, add them to the rule dictionary"
 	(aNounBlock notNil and: aPropertyBlock notNil)
 		ifTrue: [aSet := aDictionary at: aPropertyBlock class ifAbsent: Set new.
 			aSet add: aNounBlock representsBlock.
@@ -71,9 +88,10 @@ SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:39'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
+	"check all rules for a given block"
 
 	| aTile |
 	
@@ -191,18 +209,18 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:49'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
+	"check for rule blocks in arena and update rule dictionary accordingly"
 
 	| aDictionary |
 	
 	aDictionary := Dictionary new.
 	
-	(anArena blockMediator getOperatorBlocks) do: [:aBlock |
-			aDictionary := self addHorizontalRulesFor: aBlock to: aDictionary.
-			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary
-		].
+	(anArena blockMediator getOperatorBlocks)
+		do: [:aBlock | aDictionary := self addHorizontalRulesFor: aBlock to: aDictionary.
+			aDictionary := self addVerticalRulesFor: aBlock to: aDictionary].
 	
 	self currentRules: aDictionary
 ]

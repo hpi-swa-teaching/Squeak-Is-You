@@ -1,10 +1,19 @@
+"
+A SIYUndoCaretaker is an interface for creating and restoring snapshots of the arena. It's used for  the undo functionality.
+
+Instance Variables
+	history: <Stack>
+
+
+"
 Class {
 	#name : #SIYUndoCaretaker,
 	#superclass : #Object,
 	#instVars : [
 		'history'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:52'
 }
 
 {

@@ -182,7 +182,7 @@ SIYArena >> initializeWithDimension: aDimension [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:40'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:22'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction. 
@@ -194,7 +194,7 @@ SIYArena >> moveBlocksDirection: aDirection [
 	
 	self resetPositionDictionary.
 	movementQueue do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
-	undoCaretaker createSnapshotOf: self
+	self undoCaretaker createSnapshotOf: self
 ]
 
 {
