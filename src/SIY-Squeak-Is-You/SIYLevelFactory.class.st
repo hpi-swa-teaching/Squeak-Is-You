@@ -16,6 +16,15 @@ Class {
 }
 
 {
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:10'
+}
+SIYLevelFactory class >> newWithScale: aFloat [
+
+	^ (self basicNew initializeWithScale: aFloat)
+]
+
+{
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
 }
@@ -26,11 +35,21 @@ SIYLevelFactory >> arena [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevelFactory >> arenaDimensions [
+SIYLevelFactory >> arenaExtent [
 
 	^ SubclassResponsibility
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:01'
+}
+SIYLevelFactory >> arenaMargin [
+	"arena margin measured in blocks"
+
+	^ 1
 ]
 
 {
@@ -43,12 +62,26 @@ SIYLevelFactory >> buildLevel [
 ]
 
 {
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:21'
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:01'
 }
-SIYLevelFactory >> createLevel [
+SIYLevelFactory >> calculateScale [
+
+	| aFloat |
 	
-	arena := SIYArena newWithDimension: self arenaDimensions.
+	aFloat := Display extent x / (self arenaExtent x + self arenaMargin).
+	aFloat := aFloat clampHigh: Display extent y / (self arenaExtent y + self arenaMargin).
+	
+	^ aFloat / 72
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:44'
+}
+SIYLevelFactory >> createLevelScaled: aFloat [
+	
+	arena := SIYArena newWithExtent: self arenaExtent scaled: aFloat.
 	
 	self buildLevel.
 	arena openInWorld.
@@ -56,12 +89,21 @@ SIYLevelFactory >> createLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:48'
 }
 SIYLevelFactory >> initialize [
 
+	self initializeWithScale: self calculateScale
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/4/2024 22:51'
+}
+SIYLevelFactory >> initializeWithScale: aFloat [
+	
 	super initialize.
-	self createLevel
+	self createLevelScaled: (aFloat ifNil: [self calculateScale])
 ]
 
 {
@@ -124,4 +166,13 @@ SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 	
 	(SIYNoun newInArena: self arena at: aPoint)
 		representsBlock: aBlockClass
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:21'
+}
+SIYLevelFactory >> previousLevel [
+
+	^ SubclassResponsibility
 ]

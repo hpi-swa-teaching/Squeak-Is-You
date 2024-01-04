@@ -6,44 +6,60 @@ Class {
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 11:28'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevel02 >> arenaDimensions [
+SIYLevel02 >> arenaExtent [
 
-	^ 20@12
+	^ 12@15
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:55'
+	#'squeak_changestamp' : 'KD 1/2/2024 22:49'
 }
 SIYLevel02 >> buildLevel [
 	
-	self placeBlocksHollow: SIYWall from: 1@1 to: self arenaDimensions.
-	self placeBlocks: SIYWall from: 11@2 to: 11@4.
-	self placeBlocks: SIYWall from: 11@7 to: 11@11.
+	self placeBlocks: SIYWall from: 5@1 to: 12@1.
+	self placeBlocks: SIYWall from: 1@5 to: 5@5.
+	self placeBlocks: SIYWall from: 1@9 to: 11@9.
+	self placeBlocks: SIYWall from: 5@15 to: 12@15. 
+	self placeBlocks: SIYWall from: 12@2 to: 12@14.
+	self placeBlocks: SIYWall from: 5@2 to: 5@4. 
+	self placeBlocks: SIYWall from: 1@6 to: 1@8.
+	self placeBlocks: SIYWall from: 5@10 to: 5@14. 
 	
-	self placeBlock: SIYRock at: 6@9.
-	self placeBlock: SIYRock at: 9@8.
-	self placeBlock: SIYRock at: 13@9.
-	self placeBlock: SIYRock at: 8@10.
 	
-	self placeBlock: SIYLava at: 15@3.
-	self placeBlock: SIYLava at: 15@4.
-	self placeBlock: SIYLava at: 16@3.
-	self placeBlock: SIYLava at: 16@4.
+	self placeBlock: SIYFlag at: 7@7.
 	
-	self placeBlock: SIYFlag at: 15@9.
+	self placeBlock: SIYSqueak at: 10@12.
 	
-	self placeBlock: SIYSqueak at: 5@5.
-
+	self placeNounFor: SIYSqueak at: 2@11.
+	self placeBlock: SIYIs at: 2@12.
+	self placeBlock: SIYYou at: 2@13.
+	
+	self placeNounFor: SIYWall at: 7@11.
+	self placeBlock: SIYIs at: 7@12.
+	self placeBlock: SIYStop at: 7@13.
+	
+	self placeNounFor: SIYFlag at: 3@7.
+	self placeBlock: SIYIs at: 7@3.
+	self placeBlock: SIYWin at: 10@5.
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:55'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:24'
 }
 SIYLevel02 >> nextLevel [
+
+	^ SIYLevel03
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:25'
+}
+SIYLevel02 >> previousLevel [
 
 	^ SIYLevel01
 ]

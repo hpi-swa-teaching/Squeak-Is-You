@@ -12,7 +12,8 @@ Class {
 	#instVars : [
 		'arena',
 		'level',
-		'scaleFactor'
+		'backgroundMorph',
+		'customScaleFactor'
 	],
 	#category : #'SIY-Squeak-Is-You',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:35'
@@ -29,7 +30,7 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:47'
+	#'squeak_changestamp' : 'LK 1/4/2024 21:45'
 }
 SIYGame class >> startWithScale: aScaleFactor [
 
@@ -55,23 +56,81 @@ SIYGame >> arena [
 ]
 
 {
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:27'
+}
+SIYGame >> backgroundColor [
+
+	^ Color veryVeryDarkGray
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:28'
+}
+SIYGame >> backgroundMorph [
+
+	^ backgroundMorph ifNil: [backgroundMorph := self createBackgroundMorph]
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:28'
+}
+SIYGame >> createBackgroundMorph [
+
+	^ Morph new
+		extent: World extent;
+		color: self backgroundColor;
+		openInWorld
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
+}
+SIYGame >> customScaleFactor [
+
+	^ customScaleFactor
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
+}
+SIYGame >> customScaleFactor: aFloat [
+	
+	customScaleFactor := aFloat
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
+}
+SIYGame >> enableBackground [
+
+	^ self customScaleFactor isNil
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/21/2023 16:40'
+	#'squeak_changestamp' : 'LK 1/4/2024 23:45'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	self startLevel: SIYLevel01
+	"start at world center with 0@25 offset for menubar"
+	self startLevel: SIYLevel00 atPosition: 0@25 + World center
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:44'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:50'
 }
-SIYGame >> initializeScaled: aScaleFactor [
+SIYGame >> initializeScaled: aFloat [
 	
-	self scaleFactor: aScaleFactor.
+	self customScaleFactor: aFloat.
 	self initialize
 ]
 
@@ -95,11 +154,20 @@ SIYGame >> level: aLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:48'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:31'
 }
 SIYGame >> nextLevel [
 
-	self replaceLevelWith: self level nextLevel
+	self level nextLevel ifNotNil: [self replaceLevelWith: self level nextLevel]
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:32'
+}
+SIYGame >> previousLevel [
+
+	self level previousLevel ifNotNil: [self replaceLevelWith: self level previousLevel]
 ]
 
 {
@@ -128,32 +196,17 @@ SIYGame >> restartLevel [
 ]
 
 {
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:43'
-}
-SIYGame >> scaleFactor [
-
-	^ scaleFactor ifNil: [scaleFactor := 1]
-]
-
-{
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:43'
-}
-SIYGame >> scaleFactor: aScaleFactor [
-
-	scaleFactor := aScaleFactor
-]
-
-{
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/4/2024 17:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 23:39'
 }
 SIYGame >> startLevel: aLevel [
 
-	self level: aLevel new.
+	self level: (aLevel newWithScale: self customScaleFactor).
 	self arena game: self.
-	self arena scale: self scaleFactor
+	
+	self enableBackground
+		ifTrue: [self backgroundMorph addMorph: self arena.
+				self arena setProperty: #indicateKeyboardFocus toValue: #never]
 	
 ]
 

@@ -5,52 +5,82 @@ Class {
 }
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'KD 1/2/2024 22:42'
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevel04 >> arenaDimensions [
+SIYLevel04 >> arenaExtent [
 
-	^ 12@15
+	^ 18@15
 ]
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'KD 1/2/2024 22:49'
+	#category : #'level design',
+	#'squeak_changestamp' : 'KD 1/4/2024 16:36'
 }
 SIYLevel04 >> buildLevel [
 	
-	self placeBlocks: SIYWall from: 5@1 to: 12@1.
-	self placeBlocks: SIYWall from: 1@5 to: 5@5.
-	self placeBlocks: SIYWall from: 1@9 to: 11@9.
-	self placeBlocks: SIYWall from: 5@15 to: 12@15. 
-	self placeBlocks: SIYWall from: 12@2 to: 12@14.
-	self placeBlocks: SIYWall from: 5@2 to: 5@4. 
-	self placeBlocks: SIYWall from: 1@6 to: 1@8.
-	self placeBlocks: SIYWall from: 5@10 to: 5@14. 
+	self placeBlocks: SIYWall from: 1@4 to: 3@4.
+	self placeBlocks: SIYWall from: 3@1 to: 3@3.
+	self placeBlocks: SIYWall from: 8@2 to: 15@2.
+	self placeBlocks: SIYWall from: 5@8 to: 8@8. 
+	self placeBlocks: SIYWall from: 12@8 to: 18@8.
+	self placeBlocks: SIYWall from: 5@15 to: 18@15. 
+	self placeBlocks: SIYWall from: 8@3 to: 8@7.
+	self placeBlocks: SIYWall from: 15@3 to: 15@7. 
+	self placeBlocks: SIYWall from: 5@9 to: 5@14.
+	self placeBlocks: SIYWall from: 18@9 to: 18@14. 
+	self placeBlocks: SIYWall from: 12@9 to: 12@11.
+	self placeBlocks: SIYWall from: 12@13 to: 12@14. 
 	
+	self placeBlocks: SIYWater from: 6@12 to: 8@12. 
+	self placeBlocks: SIYWater from: 6@13 to: 8@13.
+	self placeBlocks: SIYWater from: 7@14 to: 8@14.  
+	self placeBlocks: SIYWater from: 9@8 to: 11@8.
 	
-	self placeBlock: SIYFlag at: 7@7.
+	self placeNounFor: SIYWater at: 7@5.
+	self placeBlock: SIYIs at: 7@6.
+	self placeBlock: SIYSink at: 7@7.
 	
-	self placeBlock: SIYSqueak at: 10@12.
+	self placeBlock: SIYSqueak at: 10@4.
 	
-	self placeNounFor: SIYSqueak at: 2@11.
-	self placeBlock: SIYIs at: 2@12.
-	self placeBlock: SIYYou at: 2@13.
+	self placeBlock: SIYRock at: 13@4.
+	self placeBlock: SIYRock at: 13@6.
 	
-	self placeNounFor: SIYWall at: 7@11.
-	self placeBlock: SIYIs at: 7@12.
-	self placeBlock: SIYStop at: 7@13.
+	self placeNounFor: SIYRock at: 14@10.
+	self placeBlock: SIYIs at: 15@10.
+	self placeBlock: SIYPush at: 16@10.
 	
-	self placeNounFor: SIYFlag at: 3@7.
-	self placeBlock: SIYIs at: 7@3.
-	self placeBlock: SIYWin at: 10@5.
+	self placeBlock: SIYFlag at: 6@14.
+	
+	self placeBlock: SIYWall at: 10@12.
+	
+	self placeNounFor: SIYWall at: 2@1.
+	self placeBlock: SIYIs at: 2@2.
+	self placeBlock: SIYStop at: 2@3.
+	
+	self placeNounFor: SIYFlag at: 14@13.
+	self placeBlock: SIYIs at: 15@13.
+	self placeBlock: SIYWin at: 16@13.
+	
+	self placeNounFor: SIYSqueak at: 1@1.
+	self placeBlock: SIYIs at: 1@2.
+	self placeBlock: SIYYou at: 1@3.
 ]
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'KD 1/2/2024 22:56'
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:26'
 }
 SIYLevel04 >> nextLevel [
 
-	^ SIYLevel05
+	^ nil
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:25'
+}
+SIYLevel04 >> previousLevel [
+
+	^ SIYLevel03
 ]
