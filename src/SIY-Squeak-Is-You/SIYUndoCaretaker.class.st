@@ -1,5 +1,5 @@
 Class {
-	#name : #SIYSnapshotCaretaker,
+	#name : #SIYUndoCaretaker,
 	#superclass : #Object,
 	#instVars : [
 		'history'
@@ -9,29 +9,38 @@ Class {
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:03'
 }
-SIYSnapshotCaretaker >> createSnapshot: snapshot [
+SIYUndoCaretaker >> createSnapshotOf: anArena [
 
-	snapshot positionDictionary isEmpty
-		ifFalse: [self history push: snapshot].
-	
+	self pushSnapshot: (SIYSnapshot newWithDictionary: (anArena positionDictionary copy))
 ]
 
 {
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 23:18'
 }
-SIYSnapshotCaretaker >> history [
+SIYUndoCaretaker >> history [
 
 	^ history ifNil: [history := Stack new]
 ]
 
 {
 	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/4/2024 14:02'
+}
+SIYUndoCaretaker >> pushSnapshot: aSnapshot [
+
+	aSnapshot positionDictionary isEmpty
+		ifFalse: [self history push: aSnapshot]
+	
+]
+
+{
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/4/2024 00:35'
 }
-SIYSnapshotCaretaker >> restoreSnapshot [
+SIYUndoCaretaker >> restoreSnapshot [
 	
 	| snapshot |
 	
