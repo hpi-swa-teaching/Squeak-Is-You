@@ -1,10 +1,18 @@
+"
+A SIYBlock is one block visible in the arena.
+
+Instance Variables
+	arena:	<SIYArena>
+
+"
 Class {
 	#name : #SIYBlock,
 	#superclass : #ImageMorph,
 	#instVars : [
 		'arena'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 14:51'
 }
 
 {
@@ -57,14 +65,17 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:15'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:26'
 }
 SIYBlock >> basicMove: aDirection [
+	"Moves this block in specified direction, WITHOUT considering the rules that currently apply.
+	For example, calling this method won't push other blocks that are in the way."
 
 	self preMoveRoutine: aDirection.
 	self coords: self coords + aDirection.
 	self postMoveRoutine: aDirection.
 	
+	"we return true, because the block was successfully moved"
 	^ true
 
 ]
@@ -89,46 +100,50 @@ SIYBlock >> blockTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
 }
 SIYBlock >> blockTextureDown [
+	"block texture if block has been moved down, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
 }
 SIYBlock >> blockTextureLeft [
+	"block texture if block has been moved left, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
 }
 SIYBlock >> blockTextureRight [
+	"block texture if block has been moved right, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/2/2024 16:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
 }
 SIYBlock >> blockTextureUp [
+	"block texture if block has been moved up, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:08'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
 }
 SIYBlock >> coordX [
-	"x coordinate within arena (rounded to nearest block)"
+	"calculates and returns x coordinate within arena (rounded to nearest block)"
 	
 	^ 1 + (self relativePosition x / self arena pixelPerBlock) rounded
 			clampLow: 1
@@ -137,7 +152,7 @@ SIYBlock >> coordX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:15'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -153,10 +168,10 @@ SIYBlock >> coordX: aNumber [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:09'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
 }
 SIYBlock >> coordY [
-	"y coordinate within arena (rounded to nearest block)"
+	"calculates and returns y coordinate within arena (rounded to nearest block)"
 
 	^ 1 + (self relativePosition y / self arena pixelPerBlock) rounded
 		clampLow: 1
@@ -190,10 +205,9 @@ SIYBlock >> coords [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'Karl Duda 12/21/2023 11:59'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
 }
 SIYBlock >> coords: aPoint [
-	"place block at coordinates clamped within arena"
 
 	self coordX: aPoint x.
 	self coordY: aPoint y
@@ -201,29 +215,31 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:05'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> delete [
 	
-	self blockMediator rememberBlock: self withPos: nil.
+	self blockMediator saveBlock: self at: nil.
 	super delete.
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:06'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:46'
 }
 SIYBlock >> duplicateMorph: evt [
+	"makes block duplication with halo possible"
 	
-	^ self class newInArena: self arena at: self coords.
+	^ self class newInArena: self arena at: self coords
 
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:05'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:45'
 }
 SIYBlock >> getTextureForDirection: aPoint [
+	"returns block texture for specified direction"
 
 	aPoint caseOf: {
 		[1@0] -> [^ self blockTextureRight].
@@ -235,11 +251,12 @@ SIYBlock >> getTextureForDirection: aPoint [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> informMediator [
+	"notifies blockMediator of current position"
 
-	^ self blockMediator rememberBlock: self withPos: self coords
+	^ self blockMediator saveBlock: self at: self coords
 ]
 
 {
@@ -319,19 +336,24 @@ SIYBlock >> isYou [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> move: aDirection [
+	"Moves this block in specified direction, while considering the rules that currently apply.
+	For example, calling this method only has an effect, if the block is able to move. It might
+	also push other blocks."
 	
 	| neighbours |
 	
-	neighbours := self blockMediator requestPos: (self coords + aDirection).
-		
+	neighbours := self blockMediator getBlocks: (self coords + aDirection).
+	
+	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
 	(neighbours isNil) ifTrue: [^ false].
 	(neighbours anySatisfy: [:each | each isStop]) ifTrue: [^ false].
 	
+	"if there are any blocks in the way, try recursively moving them too"
 	(neighbours size = 0)
 		ifTrue: [^ self basicMove: aDirection]
 		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection])
@@ -342,57 +364,57 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsAbove [
-	"Return set of neighbor blocks (objects) at coords above.
-	Return empty set if none. Return nil if out of arena."
+	"Return set of blocks at coords above.
+	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: (-1)@0 + self coords
+	^ self blockMediator getBlocks: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsBelow [
-	"Return set of neighbor blocks (objects) at coords below.
-	Return empty set if none. Return nil if out of arena."
+	"Return set of blocks at coords below.
+	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: 1@0 + self coords
+	^ self blockMediator getBlocks: 1@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:35'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsHere [
-	"Return set of neighbor blocks (objects) at coords where self is right now.
-	Return empty set if none. Return nil if out of arena."
+	"Return set of blocks at current coords.
+	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: self coords
+	^ self blockMediator getBlocks: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:35'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsLeft [
-	"Return set of neighbor blocks (objects) at coords to the left.
-	Return empty set if none. Return nil if out of arena."
+	"Return set of blocks at coords to the left.
+	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: 0@(-1) + self coords
+	^ self blockMediator getBlocks: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:35'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
 }
 SIYBlock >> neighborsRight [
-	"Return set of neighbor blocks (objects) at coords to the right.
-	Return empty set if none. Return nil if out of arena."
+	"Return set of blocks at coords to the right.
+	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator requestPos: 0@1 + self coords
+	^ self blockMediator getBlocks: 0@1 + self coords
 ]
 
 {
@@ -406,10 +428,11 @@ SIYBlock >> nounTexture [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/21/2023 16:26'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:36'
 }
 SIYBlock >> position: aPoint [
-	"Overwritten position method forces blocks to stay aligned when moving with halo."
+	"overwritten position method forces blocks to stay aligned when moving
+	them with the halo"
 	
 	super position: aPoint.
 	self alignToGrid
@@ -417,9 +440,12 @@ SIYBlock >> position: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:30'
 }
 SIYBlock >> postMoveRoutine: aDirection [
+	"This routine gets triggered, after the block has been moved using basicMove,
+	for example through keyboard inputs. It will NOT get triggered, if the block has been
+	moved using the halo."
 
 	self setTextureForDirection: aDirection.
 	self ruleManager checkRulesFor: self
@@ -427,9 +453,11 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:16'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:32'
 }
 SIYBlock >> postPositionRoutine [
+	"This routine gets triggered, after the block changed its position, no matter how.
+	For example, this routine will also be triggered, if the block was moved through the halo."
 
 	self informMediator.
 	self ruleManager updateRulesInArena: self
@@ -437,9 +465,12 @@ SIYBlock >> postPositionRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:44'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:31'
 }
 SIYBlock >> preMoveRoutine: aDirection [
+	"This routine gets triggered, before the block will be moved using basicMove,
+	for example through keyboard inputs. It will NOT get triggered, if the block will be
+	moved using the halo."
 
 	self arena positionDictionary at: self put: self coords
 
@@ -447,19 +478,20 @@ SIYBlock >> preMoveRoutine: aDirection [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:36'
 }
 SIYBlock >> relativePosition [
-	"returns position relative to Morph (measured in pixel)"
+	"returns position relative to arena (measured in pixel)"
 
 	^ self position - self arena position
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/21/2023 22:16'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:47'
 }
 SIYBlock >> respawn [
+	"Makes a deleted block reappear."
 
 	self openInWorld.
 	self arena addMorph: self
@@ -476,7 +508,7 @@ SIYBlock >> ruleManager [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:46'
 }
 SIYBlock >> setDefaultTexture [
 

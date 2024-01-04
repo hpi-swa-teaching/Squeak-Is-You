@@ -1,12 +1,20 @@
+"
+A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level.
+
+Instance Variables
+	arena: <SIYArena>
+	level: <SIYLevel>
+
+"
 Class {
 	#name : #SIYGame,
 	#superclass : #Morph,
 	#instVars : [
 		'arena',
-		'rules',
 		'level'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:35'
 }
 
 {
@@ -28,7 +36,7 @@ SIYGame >> abortLevel [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:46'
 }
 SIYGame >> arena [
@@ -48,7 +56,7 @@ SIYGame >> initialize [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:42'
 }
 SIYGame >> level [ 
@@ -57,7 +65,7 @@ SIYGame >> level [
 ]
 
 {
-	#category : #'game accessing',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:49'
 }
 SIYGame >> level: aLevel [
@@ -76,9 +84,11 @@ SIYGame >> nextLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:48'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:36'
 }
 SIYGame >> replaceLevelWith: aLevelClass [
+	"stops current level and starts specified level at the same position on screen,
+	as the current one"
 	
 	| aPoint |
 	
@@ -109,10 +119,10 @@ SIYGame >> startLevel: aLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:36'
 }
 SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
-	self arena position: aPoint.
+	self arena position: aPoint
 ]

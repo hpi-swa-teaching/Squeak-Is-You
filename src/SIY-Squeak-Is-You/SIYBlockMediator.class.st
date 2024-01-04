@@ -1,3 +1,11 @@
+"
+The SIYBlockMediator is an interface for accessing other blocks in the same arena.
+
+Instance Variables
+	arena: <SIYArena>
+	gameBoard: <Matrix>
+
+"
 Class {
 	#name : #SIYBlockMediator,
 	#superclass : #Object,
@@ -5,7 +13,8 @@ Class {
 		'gameBoard',
 		'arena'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:33'
 }
 
 {
@@ -37,20 +46,18 @@ SIYBlockMediator >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:21'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:11'
 }
 SIYBlockMediator >> createGameBoard [
+	"returns a matrix with the size of the arena, initialized with empty sets"
 
 	| aMatrix |
 
 	aMatrix := Matrix rows: (self arena arenaWidth) columns: (self arena arenaHeight).
 	
-	"initialize with empty sets"
-	1 to: (self arena arenaWidth ) do: [:x |
-		1 to: (self arena arenaHeight ) do: [:y |
-			aMatrix at: x at: y put: Set new
-		]
-	].
+	1 to: (self arena arenaWidth) 
+		do: [:x | 1 to: (self arena arenaHeight)
+			do: [:y | aMatrix at: x at: y put: Set new]].
 	
 	^ aMatrix
 ]
@@ -66,9 +73,10 @@ SIYBlockMediator >> gameBoard [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:12'
 }
 SIYBlockMediator >> generateQueueForDirection: aPoint [
+	"returns movement queue for specified direction"
 
 	aPoint caseOf: {
 		[1@0] -> [^ self generateQueueFromRight].
@@ -81,102 +89,90 @@ SIYBlockMediator >> generateQueueForDirection: aPoint [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
 }
 SIYBlockMediator >> generateQueueFromBottom [
-	"movement queue for moving up returns array of blocks, 
-	ordered by y coordinate"
+	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
-	| aSet queue |
-	
-	queue := OrderedCollection new.
-	
-	1 to: (self arena arenaWidth) do: [:x |
-		(self arena arenaHeight) to: 1 by: -1 do: [:y |
-			aSet := self gameBoard at: x at: y.
-			aSet do: [:aBlock | queue add: aBlock]
-	]].
-
-	^ queue
+	^ self generateQueueFromTop reversed
 ]
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:18'
 }
 SIYBlockMediator >> generateQueueFromLeft [
-	"movement queue for moving left returns array of blocks, 
-	ordered by x coordinate"
+	"Returns array of blocks in arena, ordered by x coordinate"
 	
-	| aSet queue |
+	| aCollection |
 	
-	queue := OrderedCollection new.
+	aCollection := OrderedCollection new.
 	
-	1 to: (self arena arenaHeight) do: [:y |
-		1 to: (self arena arenaWidth) do: [:x |
-			aSet := self gameBoard at: x at: y.
-			aSet do: [:aBlock | queue add: aBlock]
-	]].
+	(1 to: self arena arenaHeight)
+		do: [:y | (1 to: self arena arenaWidth)
+			do: [:x | (self gameBoard at: x at: y)
+				do: [:aBlock | aCollection add: aBlock]]].
 
-	^ queue
+	^ aCollection
 ]
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
 }
 SIYBlockMediator >> generateQueueFromRight [
-	"movement queue for moving right: returns array of blocks, 
-	reverse ordered by x coordinate"
-	
-	| aSet queue |
-	
-	queue := OrderedCollection new.
-	
-	1 to: (self arena arenaHeight) do: [:y |
-		(self arena arenaWidth) to: 1 by: -1 do: [:x |
-			aSet := self gameBoard at: x at: y.
-			aSet do: [:aBlock | queue add: aBlock]
-	]].
+	"Returns array of blocks in arena, reverse ordered by x coordinate"
 
-	^ queue
+	^ self generateQueueFromLeft reversed
 ]
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:23'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:24'
 }
 SIYBlockMediator >> generateQueueFromTop [
-	"movement queue for moving up returns array of blocks, 
-	ordered by y coordinate"
+	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
-	| aSet queue |
+	| aCollection |
 	
-	queue := OrderedCollection new.
+	aCollection := OrderedCollection new.
 	
-	1 to: (self arena arenaWidth) do: [:x |
-		1 to: (self arena arenaHeight) do: [:y |
-			aSet := self gameBoard at: x at: y.
-			aSet do: [:aBlock | queue add: aBlock]
-	]].
+	(1 to: self arena arenaWidth)
+		do: [:x | (1 to: self arena arenaHeight)
+			do: [:y | (self gameBoard at: x at: y)
+				do: [:aBlock | aCollection add: aBlock]]].
 
-	^ queue
+	^ aCollection
+]
+
+{
+	#category : #'position storing',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:30'
+}
+SIYBlockMediator >> getBlocks: point [
+	"returns set of blocks at given coordinates"
+
+	((point x between: 1 and: self arena arenaWidth)
+		and: (point y between: 1 and: self arena arenaHeight))
+			ifTrue: [^ self gameBoard at: point x at: point y]
+			ifFalse: [^ nil]
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:39'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:32'
 }
 SIYBlockMediator >> getOperatorBlocks [
+	"returns set of all operator blocks in the arena"
 
 	| aSet |
 
 	aSet := Set new.
 	
-	1 to: (self arena arenaHeight) do: [:y |
-		1 to: (self arena arenaWidth) do: [:x |
-			(self requestPos: x@y) do: 
-				[:aBlock | (aBlock isKindOf: SIYOperator)
+	(1 to: self arena arenaHeight)
+		do: [:y | (1 to: self arena arenaWidth)
+			do: [:x | (self getBlocks: x@y)
+				do: [:aBlock | (aBlock isKindOf: SIYOperator)
 					ifTrue: [aSet add: aBlock]]]].
 
 	^ aSet
@@ -194,11 +190,10 @@ SIYBlockMediator >> privateAdd: aBlock to: aPoint [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:32'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:31'
 }
 SIYBlockMediator >> privateMove: aBlock fromTile: aTile to: aPoint [
 
-	
 	self privateRemove: aBlock fromTile: aTile.
 	self privateAdd: aBlock to: aPoint
 ]
@@ -216,32 +211,21 @@ SIYBlockMediator >> privateRemove: aBlock fromTile: aTile [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:24'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:30'
 }
-SIYBlockMediator >> rememberBlock: sender withPos: coordinates [
-	"function that causes init/move/delete of an object from the Board"
+SIYBlockMediator >> saveBlock: aBlock at: aPoint [
+	"saves/moves/deletes given block from gameBoard"
 
 	| currentTile |
-	currentTile := self gameBoard detect: [:each | each includes: sender] ifNone: [nil].
 	
-	coordinates 
- 		ifNil: [self privateRemove: sender fromTile: currentTile] 
-		ifNotNil: [currentTile 
-			ifNil: [self privateAdd: sender to: coordinates] 
-			ifNotNil: [self privateMove: sender fromTile: currentTile to: coordinates]]
+	currentTile := self gameBoard detect: [:each | each includes: aBlock] ifNone: [nil].
+	
+	aPoint
+ 		ifNil: [self privateRemove: aBlock fromTile: currentTile] 
+		ifNotNil: [currentTile
+			ifNil: [self privateAdd: aBlock to: aPoint] 
+			ifNotNil: [self privateMove: aBlock fromTile: currentTile to: aPoint]]
 
 	
 	
-]
-
-{
-	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:27'
-}
-SIYBlockMediator >> requestPos: point [
-	"function that calls for the objects on a coordinate, returns nil if point is not on field."
-
-	((point x between: 1 and: self arena arenaWidth) and: (point y between: 1 and: self arena arenaHeight))
-		ifTrue: [^ self gameBoard at: point x at: point y]
-		ifFalse: [^ nil]
 ]

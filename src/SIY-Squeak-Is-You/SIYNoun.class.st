@@ -21,16 +21,13 @@ SIYNoun >> blockTexture [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 23:17'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:03'
 }
 SIYNoun >> duplicateMorph: evt [
+	"if this Noun gets duplicated, it should represent the same block"
 	
-	| dup |
-	
-	dup := (SIYNoun newInArena: self arena at: self coords)
-				representsBlock: self representsBlock.
+	^ (SIYNoun newInArena: self arena at: self coords) representsBlock: self representsBlock
 
-	^ dup
 ]
 
 {
@@ -44,10 +41,10 @@ SIYNoun >> representsBlock [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:02'
 }
 SIYNoun >> representsBlock: aBlock [
 
 	representsBlock := aBlock.
-	self setTextureForDirection: 1@0.
+	self setDefaultTexture
 ]

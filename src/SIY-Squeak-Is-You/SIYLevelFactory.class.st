@@ -1,11 +1,18 @@
+"
+A SIYLevelFactory is a factory for creating diffrent levels.
+Each level can build and return an arena.
+
+Instance Variables
+	arena: <SIYArena>
+"
 Class {
 	#name : #SIYLevelFactory,
 	#superclass : #Object,
 	#instVars : [
-		'arena',
-		'mediator'
+		'arena'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:38'
 }
 
 {
