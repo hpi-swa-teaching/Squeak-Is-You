@@ -6,20 +6,20 @@ Class {
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 18:03'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevel00 >> arenaDimensions [
+SIYLevel00 >> arenaExtent [
 
 	^ 20@15
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 18:05'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
 SIYLevel00 >> buildLevel [
 	
-	self placeBlocksHollow: SIYWall from: 1@1 to: self arenaDimensions.
+	self placeBlocksHollow: SIYWall from: 1@1 to: self arenaExtent.
 	self placeBlocks: SIYWall from: 11@2 to: 11@4.
 	self placeBlocks: SIYWall from: 11@7 to: 11@14.
 	
@@ -96,13 +96,4 @@ SIYLevel00 >> nextLevel [
 SIYLevel00 >> previousLevel [
 
 	^ nil
-]
-
-{
-	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:32'
-}
-SIYLevel00 >> scaleLevel [
-
-	^ 1
 ]

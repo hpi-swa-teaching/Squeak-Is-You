@@ -35,11 +35,21 @@ SIYLevelFactory >> arena [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevelFactory >> arenaDimensions [
+SIYLevelFactory >> arenaExtent [
 
 	^ SubclassResponsibility
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:01'
+}
+SIYLevelFactory >> arenaMargin [
+	"arena margin measured in blocks"
+
+	^ 1
 ]
 
 {
@@ -52,12 +62,26 @@ SIYLevelFactory >> buildLevel [
 ]
 
 {
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 22:19'
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 23:01'
+}
+SIYLevelFactory >> calculateScale [
+
+	| aFloat |
+	
+	aFloat := Display extent x / (self arenaExtent x + self arenaMargin).
+	aFloat := aFloat clampHigh: Display extent y / (self arenaExtent y + self arenaMargin).
+	
+	^ aFloat / 72
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:44'
 }
 SIYLevelFactory >> createLevelScaled: aFloat [
 	
-	arena := SIYArena newWithExtent: self arenaDimensions scaled: aFloat * self scaleLevel.
+	arena := SIYArena newWithExtent: self arenaExtent scaled: aFloat.
 	
 	self buildLevel.
 	arena openInWorld.
@@ -65,21 +89,21 @@ SIYLevelFactory >> createLevelScaled: aFloat [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 22:06'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:48'
 }
 SIYLevelFactory >> initialize [
 
-	self initializeWithScale: 1
+	self initializeWithScale: self calculateScale
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 22:06'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:51'
 }
 SIYLevelFactory >> initializeWithScale: aFloat [
-
+	
 	super initialize.
-	self createLevelScaled: aFloat
+	self createLevelScaled: (aFloat ifNil: [self calculateScale])
 ]
 
 {
@@ -151,13 +175,4 @@ SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 SIYLevelFactory >> previousLevel [
 
 	^ SubclassResponsibility
-]
-
-{
-	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 21:57'
-}
-SIYLevelFactory >> scaleLevel [
-
-	^ 1
 ]

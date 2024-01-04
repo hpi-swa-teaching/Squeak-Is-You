@@ -179,7 +179,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 21:52'
+	#'squeak_changestamp' : 'LK 1/4/2024 23:39'
 }
 SIYArena >> initialize [
 

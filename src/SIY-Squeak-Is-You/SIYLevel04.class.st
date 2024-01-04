@@ -5,16 +5,16 @@ Class {
 }
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'KD 1/3/2024 12:47'
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevel04 >> arenaDimensions [
+SIYLevel04 >> arenaExtent [
 
 	^ 18@15
 ]
 
 {
-	#category : #'as yet unclassified',
+	#category : #'level design',
 	#'squeak_changestamp' : 'KD 1/4/2024 16:36'
 }
 SIYLevel04 >> buildLevel [
@@ -68,7 +68,7 @@ SIYLevel04 >> buildLevel [
 ]
 
 {
-	#category : #'as yet unclassified',
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:26'
 }
 SIYLevel04 >> nextLevel [
@@ -77,19 +77,10 @@ SIYLevel04 >> nextLevel [
 ]
 
 {
-	#category : #'as yet unclassified',
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:25'
 }
 SIYLevel04 >> previousLevel [
 
 	^ SIYLevel03
-]
-
-{
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:33'
-}
-SIYLevel04 >> scaleLevel [
-
-	^ 1.3
 ]
