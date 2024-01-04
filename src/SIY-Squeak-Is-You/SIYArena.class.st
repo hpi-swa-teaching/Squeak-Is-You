@@ -240,20 +240,19 @@ SIYArena >> initializeWithDimension: aDimension [
 ]
 
 {
-	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 18:10'
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/4/2024 18:47'
 }
 SIYArena >> moveBlocksDirection: aDirection [
-	"Informs all isYou blocks in arena to move in specified direction. 
-	Tells undoManager to create new snapshot after all blocks have been moved."
+	"Informs all isYou blocks in arena to move in specified direction"
 
 	| movementQueue |
 	
 	movementQueue := self blockMediator generateQueueForDirection: aDirection.
 	
-	self resetPositionDictionary.
+	self preMoveBlocksRoutine.
 	movementQueue do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
-	self undoCaretaker createSnapshotOf: self
+	self postMoveBlocksRoutine
 ]
 
 {
@@ -281,6 +280,34 @@ SIYArena >> positionDictionary [
 SIYArena >> positionDictionary: aDictionary [
 
 	positionDictionary := aDictionary
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/4/2024 18:49'
+}
+SIYArena >> postMoveBlocksRoutine [
+	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
+	This routine will NOT get triggered, if blocks are moved using the halo."
+
+	self undoCaretaker createSnapshotOf: self.
+	
+
+	
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/4/2024 18:50'
+}
+SIYArena >> preMoveBlocksRoutine [
+	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
+	This routine will NOT get triggered, if blocks are moved using the halo."
+
+	self resetPositionDictionary.
+	self ruleManager updateRulesInArena: self.
+
+	
 ]
 
 {
