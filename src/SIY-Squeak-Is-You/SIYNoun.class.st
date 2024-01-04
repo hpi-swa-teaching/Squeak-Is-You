@@ -21,6 +21,17 @@ SIYNoun >> blockTexture [
 
 {
 	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:03'
+}
+SIYNoun >> duplicateMorph: evt [
+	"if this Noun gets duplicated, it should represent the same block"
+	
+	^ (SIYNoun newInArena: self arena at: self coords) representsBlock: self representsBlock
+
+]
+
+{
+	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'LK 1/2/2024 12:52'
 }
 SIYNoun >> representsBlock [
@@ -30,10 +41,10 @@ SIYNoun >> representsBlock [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 17:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 15:02'
 }
 SIYNoun >> representsBlock: aBlock [
 
 	representsBlock := aBlock.
-	self updateTextureForDirection: 1@0.
+	self setDefaultTexture
 ]

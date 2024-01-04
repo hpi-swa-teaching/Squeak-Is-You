@@ -1,48 +1,54 @@
+"
+A SIYSnapshot contains changes in the arena. It's used for the undo functionality.
+
+Instance Variables
+	positionDictionary: <Dictionary>
+
+"
 Class {
 	#name : #SIYSnapshot,
 	#superclass : #Object,
 	#instVars : [
-		'blockPositionDict'
+		'positionDictionary'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:53'
 }
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 14:18'
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
 }
-SIYSnapshot class >> newWithDict: dict [
+SIYSnapshot class >> newWithDictionary: aDictionary [
 	
-	^ (self basicNew dict: dict) initialize;
-		yourself.
+	^ self basicNew initializeWithDictionary: aDictionary
 	
 ]
 
 {
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/17/2023 12:49'
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/4/2024 00:04'
 }
-SIYSnapshot >> dict [
+SIYSnapshot >> initializeWithDictionary: aDictionary [
 
-	^blockPositionDict.
-]
-
-{
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 13:50'
-}
-SIYSnapshot >> dict: dictionary [
-	
-	blockPositionDict := dictionary
-]
-
-{
-	#category : #private,
-	#'squeak_changestamp' : 'ivenschlegelmilch 12/15/2023 13:54'
-}
-SIYSnapshot >> initialize [
-	
 	super initialize.
+	self positionDictionary: aDictionary
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+}
+SIYSnapshot >> positionDictionary [
+
+	^ positionDictionary
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
+}
+SIYSnapshot >> positionDictionary: aDictionary [
 	
-	^self
+	positionDictionary := aDictionary
 ]

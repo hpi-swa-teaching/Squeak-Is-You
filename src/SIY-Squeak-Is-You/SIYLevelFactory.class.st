@@ -1,11 +1,18 @@
+"
+A SIYLevelFactory is a factory for creating diffrent levels.
+Each level can build and return an arena.
+
+Instance Variables
+	arena: <SIYArena>
+"
 Class {
 	#name : #SIYLevelFactory,
 	#superclass : #Object,
 	#instVars : [
-		'arena',
-		'mediator'
+		'arena'
 	],
-	#category : #'SIY-Squeak-Is-You'
+	#category : #'SIY-Squeak-Is-You',
+	#'squeak_changestamp' : 'LK 1/4/2024 15:38'
 }
 
 {
@@ -37,40 +44,33 @@ SIYLevelFactory >> buildLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/15/2023 13:40'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:21'
 }
 SIYLevelFactory >> createLevel [
-
+	
 	arena := SIYArena newWithDimension: self arenaDimensions.
 	
-	arena mediator: (SIYBlockMediator newForArena: arena).
-	arena ruleManager: (SIYRuleManager new).
-	
 	self buildLevel.
-	
 	arena openInWorld.
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 12/5/2023 11:51'
+	#'squeak_changestamp' : 'LK 1/3/2024 22:22'
 }
 SIYLevelFactory >> initialize [
 
 	super initialize.
-	
-	self createLevel.
-	
-	^ self
+	self createLevel
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/21/2023 16:34'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:33'
 }
-SIYLevelFactory >> nextlevel [
+SIYLevelFactory >> nextLevel [
 
-	^ nil
+	^ SubclassResponsibility
 ]
 
 {
@@ -95,7 +95,7 @@ SIYLevelFactory >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 12/7/2023 21:29'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:33'
 }
 SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
@@ -113,7 +113,7 @@ SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoi
 		
 	self placeBlocks: aBlockClass
 		from: (secondPoint x)@(firstPoint y) + (0@1)
-		to: secondPoint - (0@1).
+		to: secondPoint - (0@1)
 ]
 
 {
