@@ -188,7 +188,7 @@ SIYArena >> initializeWithDimension: aDimension [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 18:10'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction. 
