@@ -298,11 +298,29 @@ SIYBlock >> isDefeat [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'KD 1/4/2024 17:37'
+}
+SIYBlock >> isOpen [
+
+	^ self ruleManager isShut: self
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
 }
 SIYBlock >> isPush [
 
 	^ self ruleManager isPush: self
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'KD 1/4/2024 17:03'
+}
+SIYBlock >> isShut [
+
+	^ self ruleManager isShut: self
 ]
 
 {
@@ -345,7 +363,7 @@ SIYBlock >> isYou [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'KD 1/4/2024 17:56'
 }
 SIYBlock >> move: aDirection [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -360,7 +378,8 @@ SIYBlock >> move: aDirection [
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
 	(neighbours isNil) ifTrue: [^ false].
-	(neighbours anySatisfy: [:each | each isStop]) ifTrue: [^ false].
+	(neighbours anySatisfy: [:each | (each isStop) or: ((each isShut) and: (self isOpen)) not]) 
+		ifTrue: [^ false].
 	
 	"if there are any blocks in the way, try recursively moving them too"
 	(neighbours size = 0)

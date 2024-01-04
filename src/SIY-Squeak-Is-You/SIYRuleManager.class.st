@@ -88,7 +88,17 @@ SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:42'
+	#'squeak_changestamp' : 'KD 1/4/2024 17:32'
+}
+SIYRuleManager >> checkOpen: aTile [
+
+	((aTile anySatisfy: [:each | each isShut] ) and: (aTile anySatisfy: [:each | each isOpen]))
+		ifTrue: [self invokeOpen: aTile]
+]
+
+{
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'KD 1/4/2024 17:35'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
@@ -99,7 +109,8 @@ SIYRuleManager >> checkRulesFor: aBlock [
 	
 	self checkWin: aBlock onTile: aTile.
 	self checkDefeat: aBlock onTile: aTile.
-	self checkSink: aBlock onTile: aTile
+	self checkSink: aBlock onTile: aTile.
+	self checkOpen: aTile
 ]
 
 {
@@ -155,6 +166,19 @@ SIYRuleManager >> invokeDeath: aBlock [
 
 {
 	#category : #'rule invoking',
+	#'squeak_changestamp' : 'KD 1/4/2024 17:28'
+}
+SIYRuleManager >> invokeOpen: aTile [
+
+	aTile do: [:each | ((each isOpen) or: (each isShut)) ifTrue: [each delete]]
+
+	
+	
+
+]
+
+{
+	#category : #'rule invoking',
 	#'squeak_changestamp' : 'KD 1/4/2024 16:35'
 }
 SIYRuleManager >> invokeSink: aTile [
@@ -186,6 +210,15 @@ SIYRuleManager >> isDefeat: aBlock [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'KD 1/4/2024 17:36'
+}
+SIYRuleManager >> isOpen: aBlock [
+	
+	^ (currentRules at: SIYOpen ifAbsent: [^ false]) includes: aBlock class
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
 }
 SIYRuleManager >> isPush: aBlock [
@@ -194,6 +227,15 @@ SIYRuleManager >> isPush: aBlock [
 	
 	^ (currentRules at: SIYPush ifAbsent: [^ false]) includes: aBlock class
 
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'KD 1/4/2024 17:03'
+}
+SIYRuleManager >> isShut: aBlock [
+	
+	^ (currentRules at: SIYShut ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
