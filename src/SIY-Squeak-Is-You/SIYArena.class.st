@@ -11,6 +11,7 @@ Instance Variables
 	ruleManager: <SIYRuleManager>
 	snapshotCaretaker: <SIYSnapshotCaretaker>
 	stepTime: <Integer>
+	scaleFactor: <Float>
 
 "
 Class {
@@ -26,30 +27,29 @@ Class {
 		'positionDictionary',
 		'pressedKey',
 		'undoCaretaker',
-		'flexShell'
+		'flexShell',
+		'scaleFactor'
 	],
 	#category : #'SIY-Squeak-Is-You',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:51'
+	#'squeak_changestamp' : 'LK 1/4/2024 21:48'
 }
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:33'
+	#'squeak_changestamp' : 'LK 1/4/2024 21:51'
 }
-SIYArena class >> newWithDimension: aDimension [
+SIYArena class >> newWithExtent: aPoint [
 
-	^ SIYArena basicNew initializeWithDimension: aDimension
+	^ SIYArena basicNew initializeWithExtent: aPoint
 ]
 
 {
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:32'
+	#category : #'instance creation',
+	#'squeak_changestamp' : 'LK 1/4/2024 21:52'
 }
-SIYArena >> addFlexShell [
+SIYArena class >> newWithExtent: aPoint scaled: aFloat [
 
-	flexShell := super addFlexShell.
-	
-	^ self flexShell
+	^ SIYArena basicNew initializeWithExtent: aPoint scaled: aFloat
 ]
 
 {
@@ -109,30 +109,8 @@ SIYArena >> blockMediator [
 ]
 
 {
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:42'
-}
-SIYArena >> center [
-
-	self flexShell
-		ifNil: [^ super center]
-		ifNotNil: [^ self flexShell center]
-]
-
-{
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:40'
-}
-SIYArena >> center: aPoint [
-
-	self flexShell
-		ifNil: [super center: aPoint]
-		ifNotNil: [self flexShell center: aPoint]
-]
-
-{
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:12'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:31'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -142,30 +120,24 @@ SIYArena >> checkKeyboardInputs [
 	aKey ifNil: [self stepFaster] ifNotNil: [self stepSlower].
     
 	aKey caseOf: {
+		"restart & undo"
 		[$r] -> [self game restartLevel].
         	[$z] -> [self undoCaretaker restoreSnapshot].
+		"movement with arrow keys"
 		[Character arrowUp] -> [self moveBlocksDirection: 0@(-1)].
 		[Character arrowDown] -> [self moveBlocksDirection: 0@1].
 		[Character arrowRight] -> [self moveBlocksDirection: 1@0].
 		[Character arrowLeft] -> [self moveBlocksDirection: (-1)@0].
-            [$1] -> [self game replaceLevelWith: SIYLevel01].
-            [$2] -> [self game replaceLevelWith: SIYLevel02].
-		[$3] -> [self game replaceLevelWith: SIYLevel03].
-		[$4] -> [self game replaceLevelWith: SIYLevel04].
-		[$5] -> [self game replaceLevelWith: SIYLevel05].
-		[$6] -> [self game replaceLevelWith: SIYLevel06].
+		"movement with WASD"
+		[$w] -> [self moveBlocksDirection: 0@(-1)].
+		[$s] -> [self moveBlocksDirection: 0@1].
+		[$d] -> [self moveBlocksDirection: 1@0].
+		[$a] -> [self moveBlocksDirection: (-1)@0].
+		"level switching"
+            [$m] -> [self game nextLevel].
+            [$n] -> [self game previousLevel].
      } otherwise: ["do nothing"]
 	
-]
-
-{
-	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:33'
-}
-SIYArena >> delete [
-
-	self flexShell ifNotNil: [self flexShell delete].
-	super delete
 ]
 
 {
@@ -188,15 +160,6 @@ SIYArena >> fastStepTime [
 ]
 
 {
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:32'
-}
-SIYArena >> flexShell [
-
-	^ flexShell
-]
-
-{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/21/2023 16:37'
 }
@@ -216,26 +179,37 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:23'
+	#'squeak_changestamp' : 'LK 1/4/2024 21:52'
 }
 SIYArena >> initialize [
 
 	super initialize.
 	self color: self backgroundColor.
-	"self addFlexShell."
-	
-	self gmRegisterToKeyHandler.
+	self gmRegisterToKeyHandler
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:56'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:18'
 }
-SIYArena >> initializeWithDimension: aDimension [
+SIYArena >> initializeWithExtent: aPoint [
 
 	self initialize.
-	self arenaWidth: aDimension x.
-	self arenaHeight: aDimension y
+	self arenaWidth: aPoint x.
+	self arenaHeight: aPoint y
+	
+	
+	
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/4/2024 21:52'
+}
+SIYArena >> initializeWithExtent: aPoint scaled: aFloat [
+
+	self scaleFactor: aFloat.
+	self initializeWithExtent: aPoint
 	
 ]
 
@@ -257,11 +231,11 @@ SIYArena >> moveBlocksDirection: aDirection [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 1/2/2024 16:28'
+	#'squeak_changestamp' : 'LK 1/4/2024 21:53'
 }
 SIYArena >> pixelPerBlock [
 
-	^ 72
+	^ 72 * self scaleFactor
 ]
 
 {
@@ -344,13 +318,21 @@ SIYArena >> ruleManager [
 ]
 
 {
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:34'
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 1/4/2024 22:18'
 }
-SIYArena >> scale: aScaleFactor [
+SIYArena >> scaleFactor [
 
-	(aScaleFactor = 1)
-		ifFalse: [self addFlexShell scale: aScaleFactor]
+	^ scaleFactor ifNil: [scaleFactor := 1]
+]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 1/4/2024 21:48'
+}
+SIYArena >> scaleFactor: aScaleFactor [
+
+	scaleFactor := aScaleFactor
 ]
 
 {

@@ -16,6 +16,15 @@ Class {
 }
 
 {
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:10'
+}
+SIYLevelFactory class >> newWithScale: aFloat [
+
+	^ (self basicNew initializeWithScale: aFloat)
+]
+
+{
 	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
 }
@@ -44,11 +53,11 @@ SIYLevelFactory >> buildLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:21'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:19'
 }
-SIYLevelFactory >> createLevel [
+SIYLevelFactory >> createLevelScaled: aFloat [
 	
-	arena := SIYArena newWithDimension: self arenaDimensions.
+	arena := SIYArena newWithExtent: self arenaDimensions scaled: aFloat * self scaleLevel.
 	
 	self buildLevel.
 	arena openInWorld.
@@ -56,12 +65,21 @@ SIYLevelFactory >> createLevel [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:22'
+	#'squeak_changestamp' : 'LK 1/4/2024 22:06'
 }
 SIYLevelFactory >> initialize [
 
+	self initializeWithScale: 1
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/4/2024 22:06'
+}
+SIYLevelFactory >> initializeWithScale: aFloat [
+
 	super initialize.
-	self createLevel
+	self createLevelScaled: aFloat
 ]
 
 {
@@ -124,4 +142,22 @@ SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 	
 	(SIYNoun newInArena: self arena at: aPoint)
 		representsBlock: aBlockClass
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 22:21'
+}
+SIYLevelFactory >> previousLevel [
+
+	^ SubclassResponsibility
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/4/2024 21:57'
+}
+SIYLevelFactory >> scaleLevel [
+
+	^ 1
 ]
