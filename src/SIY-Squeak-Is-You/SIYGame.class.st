@@ -11,7 +11,8 @@ Class {
 	#superclass : #Morph,
 	#instVars : [
 		'arena',
-		'level'
+		'level',
+		'scaleFactor'
 	],
 	#category : #'SIY-Squeak-Is-You',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:35'
@@ -24,6 +25,15 @@ Class {
 SIYGame class >> start [
 
 	self new
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:47'
+}
+SIYGame class >> startWithScale: aScaleFactor [
+
+	^ self basicNew initializeScaled: aScaleFactor
 ]
 
 {
@@ -56,6 +66,16 @@ SIYGame >> initialize [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:44'
+}
+SIYGame >> initializeScaled: aScaleFactor [
+	
+	self scaleFactor: aScaleFactor.
+	self initialize
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:42'
 }
@@ -84,7 +104,7 @@ SIYGame >> nextLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 17:38'
 }
 SIYGame >> replaceLevelWith: aLevelClass [
 	"stops current level and starts specified level at the same position on screen,
@@ -92,7 +112,7 @@ SIYGame >> replaceLevelWith: aLevelClass [
 	
 	| aPoint |
 	
-	aPoint := self arena position.
+	aPoint := self arena center.
 	self level ifNotNil: [self abortLevel].
 	aLevelClass ifNotNil: [self startLevel: aLevelClass atPosition: aPoint]
 ]
@@ -108,21 +128,41 @@ SIYGame >> restartLevel [
 ]
 
 {
-	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/3/2024 22:50'
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:43'
 }
-SIYGame >> startLevel: aLevel [
+SIYGame >> scaleFactor [
 
-	self level: aLevel new.
-	self arena game: self
+	^ scaleFactor ifNil: [scaleFactor := 1]
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:43'
+}
+SIYGame >> scaleFactor: aScaleFactor [
+
+	scaleFactor := aScaleFactor
 ]
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 17:36'
+}
+SIYGame >> startLevel: aLevel [
+
+	self level: aLevel new.
+	self arena game: self.
+	self arena scale: self scaleFactor
+	
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/4/2024 17:38'
 }
 SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
-	self arena position: aPoint
+	self arena center: aPoint
 ]

@@ -25,7 +25,8 @@ Class {
 		'ruleManager',
 		'positionDictionary',
 		'pressedKey',
-		'undoCaretaker'
+		'undoCaretaker',
+		'flexShell'
 	],
 	#category : #'SIY-Squeak-Is-You',
 	#'squeak_changestamp' : 'LK 1/4/2024 14:51'
@@ -38,6 +39,17 @@ Class {
 SIYArena class >> newWithDimension: aDimension [
 
 	^ SIYArena basicNew initializeWithDimension: aDimension
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:32'
+}
+SIYArena >> addFlexShell [
+
+	flexShell := super addFlexShell.
+	
+	^ self flexShell
 ]
 
 {
@@ -97,6 +109,28 @@ SIYArena >> blockMediator [
 ]
 
 {
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:42'
+}
+SIYArena >> center [
+
+	self flexShell
+		ifNil: [^ super center]
+		ifNotNil: [^ self flexShell center]
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:40'
+}
+SIYArena >> center: aPoint [
+
+	self flexShell
+		ifNil: [super center: aPoint]
+		ifNotNil: [self flexShell center: aPoint]
+]
+
+{
 	#category : #'keyboard input',
 	#'squeak_changestamp' : 'KD 1/4/2024 16:12'
 }
@@ -125,7 +159,17 @@ SIYArena >> checkKeyboardInputs [
 ]
 
 {
-	#category : #'halo features',
+	#category : #deletion,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:33'
+}
+SIYArena >> delete [
+
+	self flexShell ifNotNil: [self flexShell delete].
+	super delete
+]
+
+{
+	#category : #dropping,
 	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
 }
 SIYArena >> dropEnabled [
@@ -141,6 +185,15 @@ SIYArena >> fastStepTime [
 	"faster step time for polling keyboard inputs, while no button is pressed"
 
 	^ 1
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:32'
+}
+SIYArena >> flexShell [
+
+	^ flexShell
 ]
 
 {
@@ -264,6 +317,16 @@ SIYArena >> ruleManager [
 ]
 
 {
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:34'
+}
+SIYArena >> scale: aScaleFactor [
+
+	(aScaleFactor = 1)
+		ifFalse: [self addFlexShell scale: aScaleFactor]
+]
+
+{
 	#category : #stepping,
 	#'squeak_changestamp' : 'LK 1/4/2024 14:43'
 }
@@ -340,7 +403,7 @@ SIYArena >> updateDimensions [
 ]
 
 {
-	#category : #'halo features',
+	#category : #dropping,
 	#'squeak_changestamp' : 'LK 12/15/2023 20:33'
 }
 SIYArena >> wantsDroppedMorph: aMorph event: evt [
