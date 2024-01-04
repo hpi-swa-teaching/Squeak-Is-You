@@ -6,22 +6,22 @@ Class {
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 12/5/2023 11:28'
+	#'squeak_changestamp' : 'LK 1/4/2024 18:03'
 }
 SIYLevel01 >> arenaDimensions [
 
-	^ 20@12
+	^ 20@15
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:46'
+	#'squeak_changestamp' : 'LK 1/4/2024 18:05'
 }
 SIYLevel01 >> buildLevel [
 	
 	self placeBlocksHollow: SIYWall from: 1@1 to: self arenaDimensions.
 	self placeBlocks: SIYWall from: 11@2 to: 11@4.
-	self placeBlocks: SIYWall from: 11@7 to: 11@11.
+	self placeBlocks: SIYWall from: 11@7 to: 11@14.
 	
 	self placeBlock: SIYRock at: 6@9.
 	self placeBlock: SIYRock at: 9@8.
@@ -35,7 +35,7 @@ SIYLevel01 >> buildLevel [
 	
 	self placeBlock: SIYFlag at: 15@9.
 	
-	self placeBlock: SIYSqueak at: 3@10.
+	self placeBlock: SIYSqueak at: 3@14.
 	
 	self placeNounFor: SIYSqueak at: 3@3.
 	self placeBlock: SIYIs at: 3@4.
@@ -56,6 +56,28 @@ SIYLevel01 >> buildLevel [
 	self placeNounFor: SIYLava at: 3@7.
 	self placeBlock: SIYIs at: 4@7.
 	self placeBlock: SIYDefeat at: 5@7.
+	
+	self placeNounFor: SIYKey at: 3@8.
+	self placeBlock: SIYIs at: 4@8.
+	self placeBlock: SIYOpen at: 5@8.
+	
+	self placeNounFor: SIYDoor at: 3@9.
+	self placeBlock: SIYIs at: 4@9.
+	self placeBlock: SIYShut at: 5@9.
+	
+	self placeNounFor: SIYDoor at: 3@10.
+	self placeBlock: SIYIs at: 4@10.
+	self placeBlock: SIYStop at: 5@10.
+	
+	self placeNounFor: SIYKey at: 3@11.
+	self placeBlock: SIYIs at: 4@11.
+	self placeBlock: SIYPush at: 5@11.
+	
+	self placeBlock: SIYKey at: 4@13. 
+	self placeBlock: SIYDoor at: 7@13.
+	
+	
+
 ]
 
 {

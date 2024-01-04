@@ -298,11 +298,11 @@ SIYBlock >> isDefeat [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:37'
+	#'squeak_changestamp' : 'LK 1/4/2024 18:20'
 }
 SIYBlock >> isOpen [
 
-	^ self ruleManager isShut: self
+	^ self ruleManager isOpen: self
 ]
 
 {
@@ -363,9 +363,19 @@ SIYBlock >> isYou [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'KD 1/4/2024 17:56'
+	#'squeak_changestamp' : 'LK 1/4/2024 18:11'
 }
 SIYBlock >> move: aDirection [
+	
+	self move: aDirection pushedBy: nil
+
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/4/2024 18:23'
+}
+SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
 	For example, calling this method only has an effect, if the block is able to move. It might
 	also push other blocks."
@@ -374,17 +384,20 @@ SIYBlock >> move: aDirection [
 	
 	neighbours := self blockMediator getBlocks: (self coords + aDirection).
 	
+	"check rules for isShut & isOpen"
+	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
+	
 	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
 	(neighbours isNil) ifTrue: [^ false].
-	(neighbours anySatisfy: [:each | (each isStop) or: ((each isShut) and: (self isOpen)) not]) 
+	(neighbours anySatisfy: [:each | each isStop and: (each isShut and: self isOpen) not])
 		ifTrue: [^ false].
 	
 	"if there are any blocks in the way, try recursively moving them too"
 	(neighbours size = 0)
 		ifTrue: [^ self basicMove: aDirection]
-		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection])
+		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 					ifTrue: [^ self basicMove: aDirection]
 					ifFalse: [^ false]]
 

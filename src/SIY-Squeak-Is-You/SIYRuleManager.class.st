@@ -166,7 +166,7 @@ SIYRuleManager >> invokeDeath: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:28'
+	#'squeak_changestamp' : 'LK 1/4/2024 18:23'
 }
 SIYRuleManager >> invokeOpen: aTile [
 
