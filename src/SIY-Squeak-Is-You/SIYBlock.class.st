@@ -307,6 +307,15 @@ SIYBlock >> isPush [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'KD 1/4/2024 16:31'
+}
+SIYBlock >> isSink [
+
+	^ self ruleManager isSink: self
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
 }
 SIYBlock >> isStop [
