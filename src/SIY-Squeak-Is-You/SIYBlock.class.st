@@ -215,12 +215,24 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'LK 1/4/2024 17:03'
 }
 SIYBlock >> delete [
 	
 	self blockMediator saveBlock: self at: nil.
 	super delete.
+]
+
+{
+	#category : #deletion,
+	#'squeak_changestamp' : 'LK 1/4/2024 17:07'
+}
+SIYBlock >> deleteAndRemember [
+	"use this method instead of self delete, when the block should get deleted without
+	being moved at the same time"
+	
+	self arena positionDictionary at: self put: self coords.
+	self delete
 ]
 
 {
@@ -303,6 +315,15 @@ SIYBlock >> isDefeat [
 SIYBlock >> isPush [
 
 	^ self ruleManager isPush: self
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'KD 1/4/2024 16:31'
+}
+SIYBlock >> isSink [
+
+	^ self ruleManager isSink: self
 ]
 
 {
