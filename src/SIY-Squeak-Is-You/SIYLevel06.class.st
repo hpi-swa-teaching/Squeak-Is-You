@@ -15,7 +15,7 @@ SIYLevel06 >> arenaDimensions [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'KD 1/3/2024 13:18'
+	#'squeak_changestamp' : 'KD 1/4/2024 16:36'
 }
 SIYLevel06 >> buildLevel [
 	
@@ -32,14 +32,14 @@ SIYLevel06 >> buildLevel [
 	self placeBlocks: SIYWall from: 12@9 to: 12@11.
 	self placeBlocks: SIYWall from: 12@13 to: 12@14. 
 	
-	self placeBlocks: SIYLava from: 6@12 to: 8@12. 
-	self placeBlocks: SIYLava from: 6@13 to: 8@13.
-	self placeBlocks: SIYLava from: 7@14 to: 8@14.  
-	self placeBlocks: SIYLava from: 9@8 to: 11@8.
+	self placeBlocks: SIYWater from: 6@12 to: 8@12. 
+	self placeBlocks: SIYWater from: 6@13 to: 8@13.
+	self placeBlocks: SIYWater from: 7@14 to: 8@14.  
+	self placeBlocks: SIYWater from: 9@8 to: 11@8.
 	
-	self placeNounFor: SIYLava at: 7@5.
+	self placeNounFor: SIYWater at: 7@5.
 	self placeBlock: SIYIs at: 7@6.
-	self placeBlock: SIYDefeat at: 7@7.
+	self placeBlock: SIYSink at: 7@7.
 	
 	self placeBlock: SIYSqueak at: 10@4.
 	

@@ -98,7 +98,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:15'
+	#'squeak_changestamp' : 'KD 1/4/2024 16:12'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -113,8 +113,14 @@ SIYArena >> checkKeyboardInputs [
 		[Character arrowUp] -> [self moveBlocksDirection: 0@(-1)].
 		[Character arrowDown] -> [self moveBlocksDirection: 0@1].
 		[Character arrowRight] -> [self moveBlocksDirection: 1@0].
-		[Character arrowLeft] -> [self moveBlocksDirection: (-1)@0]
-	} otherwise: ["do nothing"]
+		[Character arrowLeft] -> [self moveBlocksDirection: (-1)@0].
+            [$1] -> [self game replaceLevelWith: SIYLevel01].
+            [$2] -> [self game replaceLevelWith: SIYLevel02].
+		[$3] -> [self game replaceLevelWith: SIYLevel03].
+		[$4] -> [self game replaceLevelWith: SIYLevel04].
+		[$5] -> [self game replaceLevelWith: SIYLevel05].
+		[$6] -> [self game replaceLevelWith: SIYLevel06].
+     } otherwise: ["do nothing"]
 	
 ]
 
