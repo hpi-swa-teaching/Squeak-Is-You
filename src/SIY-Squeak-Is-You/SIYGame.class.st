@@ -114,14 +114,13 @@ SIYGame >> enableBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:45'
+	#'squeak_changestamp' : 'LK 1/4/2024 23:53'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	"start at world center with 0@25 offset for menubar"
-	self startLevel: SIYLevel00 atPosition: 0@25 + World center
+	self startLevel: SIYLevel00 atPosition: World clearArea center
 ]
 
 {
