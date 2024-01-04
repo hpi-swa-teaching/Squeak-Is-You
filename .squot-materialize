@@ -29,7 +29,28 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
+			'SIYSkull.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYDoor.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
 			'SIYPush.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYShut.png'
 		],
 		#encoding : @11
 	},
@@ -43,7 +64,42 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
+			'SIYWaterT.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYOpen.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
 			'SIYSqueak-FacingLeft.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYGrassT.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYRockT.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYSink.png'
 		],
 		#encoding : @11
 	},
@@ -57,7 +113,21 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
+			'SIYGrass.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
 			'SIYLavaT.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYKeyT.png'
 		],
 		#encoding : @11
 	},
@@ -113,7 +183,21 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
+			'SIYWater.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
 			'SIYDefeat.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYIs.png'
 		],
 		#encoding : @11
 	},
@@ -134,6 +218,20 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
+			'SIYSkullT.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYDoorT.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
 			'SIYRock.png'
 		],
 		#encoding : @11
@@ -141,21 +239,14 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
+			'SIYKey.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
 			'SIYFlagT.png'
-		],
-		#encoding : @11
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
-			'SIYRockT.png'
-		],
-		#encoding : @11
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
-			'SIYIs.png'
 		],
 		#encoding : @11
 	}
