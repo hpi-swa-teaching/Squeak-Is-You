@@ -88,37 +88,37 @@ SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:32'
+	#'squeak_changestamp' : 'LK 1/4/2024 19:14'
 }
-SIYRuleManager >> checkOpen: aTile [
+SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
-	((aTile anySatisfy: [:each | each isShut] ) and: (aTile anySatisfy: [:each | each isOpen]))
+	(aBlock isOpen and: (aTile anySatisfy: [:each | each isShut]))
 		ifTrue: [self invokeOpen: aTile]
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:35'
+	#'squeak_changestamp' : 'LK 1/4/2024 19:12'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| aTile |
 	
-	aTile := aBlock neighborsHere.
+	aTile := aBlock neighborsHere copy.
 	
 	self checkWin: aBlock onTile: aTile.
 	self checkDefeat: aBlock onTile: aTile.
 	self checkSink: aBlock onTile: aTile.
-	self checkOpen: aTile
+	self checkOpen: aBlock onTile: aTile
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 19:09'
 }
 SIYRuleManager >> checkSink: aBlock onTile: aTile [
-
+	
 	(aTile anySatisfy: [:each | each isSink])
 		ifTrue: [self invokeSink: aTile]
 ]
@@ -166,7 +166,7 @@ SIYRuleManager >> invokeDeath: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/4/2024 18:27'
+	#'squeak_changestamp' : 'LK 1/4/2024 19:06'
 }
 SIYRuleManager >> invokeOpen: aTile [
 
@@ -179,13 +179,13 @@ SIYRuleManager >> invokeOpen: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/4/2024 17:05'
+	#'squeak_changestamp' : 'LK 1/4/2024 19:10'
 }
 SIYRuleManager >> invokeSink: aTile [
-
+	
 	aTile do: [:each | (each isSink)
 		ifTrue: [each deleteAndRemember] 
-		ifFalse: [each delete]] 
+		ifFalse: [each delete]]
 
 ]
 
