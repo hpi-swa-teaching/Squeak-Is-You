@@ -437,11 +437,11 @@ SIYBlock >> postPositionRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:36'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:44'
 }
 SIYBlock >> preMoveRoutine: aDirection [
 
-	self arena positionDictionary at: self put: self coords.
+	self arena positionDictionary at: self put: self coords
 
 ]
 
@@ -485,9 +485,9 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
+	#'squeak_changestamp' : 'LK 1/4/2024 00:44'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 
-	self image: (SIYTextureManager new getTexture: (self getTextureForDirection: aPoint)).
+	self image: (SIYTextureManager new getTexture: (self getTextureForDirection: aPoint))
 ]
