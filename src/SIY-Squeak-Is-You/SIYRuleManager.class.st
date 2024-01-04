@@ -155,14 +155,13 @@ SIYRuleManager >> invokeDeath: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:35'
+	#'squeak_changestamp' : 'LK 1/4/2024 17:05'
 }
 SIYRuleManager >> invokeSink: aTile [
 
-	aTile do: [:each | each delete] 
-
-	
-	
+	aTile do: [:each | (each isSink)
+		ifTrue: [each deleteAndRemember] 
+		ifFalse: [each delete]] 
 
 ]
 
