@@ -15,7 +15,7 @@ SIYLevel04 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:36'
+	#'squeak_changestamp' : 'LK 1/5/2024 00:40'
 }
 SIYLevel04 >> buildLevel [
 	
@@ -32,8 +32,7 @@ SIYLevel04 >> buildLevel [
 	self placeBlocks: SIYWall from: 12@9 to: 12@11.
 	self placeBlocks: SIYWall from: 12@13 to: 12@14. 
 	
-	self placeBlocks: SIYWater from: 6@12 to: 8@12. 
-	self placeBlocks: SIYWater from: 6@13 to: 8@13.
+	self placeBlocks: SIYWater from: 6@12 to: 8@13. 
 	self placeBlocks: SIYWater from: 7@14 to: 8@14.  
 	self placeBlocks: SIYWater from: 9@8 to: 11@8.
 	
@@ -46,34 +45,25 @@ SIYLevel04 >> buildLevel [
 	self placeBlock: SIYRock at: 13@4.
 	self placeBlock: SIYRock at: 13@6.
 	
-	self placeNounFor: SIYRock at: 14@10.
-	self placeBlock: SIYIs at: 15@10.
-	self placeBlock: SIYPush at: 16@10.
-	
 	self placeBlock: SIYFlag at: 6@14.
 	
 	self placeBlock: SIYWall at: 10@12.
 	
-	self placeNounFor: SIYWall at: 2@1.
-	self placeBlock: SIYIs at: 2@2.
-	self placeBlock: SIYStop at: 2@3.
+	self placeHorizontalRule: SIYRock is: SIYPush at: 15@10.
+	self placeHorizontalRule: SIYFlag is: SIYWin at: 15@13.
 	
-	self placeNounFor: SIYFlag at: 14@13.
-	self placeBlock: SIYIs at: 15@13.
-	self placeBlock: SIYWin at: 16@13.
-	
-	self placeNounFor: SIYSqueak at: 1@1.
-	self placeBlock: SIYIs at: 1@2.
-	self placeBlock: SIYYou at: 1@3.
+	self placeVerticalRule: SIYWall is: SIYStop at: 2@2.
+	self placeVerticalRule: SIYSqueak is: SIYYou at: 1@2.
+
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:26'
+	#'squeak_changestamp' : 'LK 1/5/2024 00:47'
 }
 SIYLevel04 >> nextLevel [
 
-	^ nil
+	^ SIYLevel05
 ]
 
 {

@@ -160,12 +160,36 @@ SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoi
 
 {
 	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 00:30'
+}
+SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass at: aPoint [
+	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
+	
+	self placeNounFor: aBlockClass at: (-1)@0 + aPoint.
+	self placeBlock: SIYIs at: aPoint.
+	self placeBlock: aPropertyClass at: 1@0 + aPoint
+]
+
+{
+	#category : #'level building',
 	#'squeak_changestamp' : 'LK 1/2/2024 13:15'
 }
 SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 	
 	(SIYNoun newInArena: self arena at: aPoint)
 		representsBlock: aBlockClass
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 00:30'
+}
+SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass at: aPoint [
+	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
+	
+	self placeNounFor: aBlockClass at: 0@(-1) + aPoint.
+	self placeBlock: SIYIs at: aPoint.
+	self placeBlock: aPropertyClass at: 0@1 + aPoint
 ]
 
 {

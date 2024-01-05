@@ -15,7 +15,7 @@ SIYLevel03 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'KD 1/2/2024 22:55'
+	#'squeak_changestamp' : 'LK 1/5/2024 00:35'
 }
 SIYLevel03 >> buildLevel [
 	
@@ -33,13 +33,8 @@ SIYLevel03 >> buildLevel [
 	
 	self placeBlock: SIYWall at: 10@12.
 	
-	self placeNounFor: SIYWall at: 2@11.
-	self placeBlock: SIYIs at: 2@12.
-	self placeBlock: SIYYou at: 2@13.
-	
-	self placeNounFor: SIYFlag at: 7@11.
-	self placeBlock: SIYIs at: 7@12.
-	self placeBlock: SIYStop at: 7@13.
+	self placeVerticalRule: SIYWall is: SIYYou at: 2@12.
+	self placeVerticalRule: SIYFlag is: SIYStop at: 7@12.
 	
 	self placeNounFor: SIYSqueak at: 3@7.
 	self placeBlock: SIYIs at: 7@3.
