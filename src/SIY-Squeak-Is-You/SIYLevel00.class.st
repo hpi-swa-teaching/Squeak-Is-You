@@ -15,7 +15,7 @@ SIYLevel00 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:24'
+	#'squeak_changestamp' : 'LK 1/5/2024 15:51'
 }
 SIYLevel00 >> buildLevel [
 	
@@ -54,9 +54,11 @@ SIYLevel00 >> buildLevel [
 	
 	self placeBlock: SIYFlag at: 18@13.
 	
-	self placeBlocks: SIYGrass at: {3@12 . 7@13 . 8@7 . 9@4 . 13@5 . 15@8}.
-	self placeNounFor: SIYGrass at: 13@7
+	self placeBlocks: SIYGrass at: {7@13 . 9@4 . 13@5}.
+	self placeNounFor: SIYGrass at: 13@7.
 	
+	self placeBlocks: SIYFlower at: {3@12 . 7@8 .  15@8}.
+	self placeNounFor: SIYFlower at: 15@6
 	
 
 ]
