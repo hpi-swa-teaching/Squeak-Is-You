@@ -59,11 +59,11 @@ SIYLevel04 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:03'
+	#'squeak_changestamp' : 'LK 1/5/2024 00:47'
 }
 SIYLevel04 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYLevel05
 ]
 
 {

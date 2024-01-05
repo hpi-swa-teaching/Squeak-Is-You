@@ -78,11 +78,11 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:10'
+	#'squeak_changestamp' : 'LK 1/5/2024 00:59'
 }
 SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
-	(aTile anySatisfy: [:each | each isDefeat and: each isYou not])
+	(aBlock isYou and: (aTile anySatisfy: [:each | each isDefeat and: each isYou not]))
 		ifTrue: [self invokeDeath: aBlock]
 ]
 

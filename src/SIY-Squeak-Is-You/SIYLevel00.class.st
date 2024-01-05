@@ -63,9 +63,9 @@ SIYLevel00 >> nextLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:03'
+	#'squeak_changestamp' : 'LK 1/5/2024 00:47'
 }
 SIYLevel00 >> previousLevel [
 
-	^ SIYLevel04
+	^ SIYLevel05
 ]
