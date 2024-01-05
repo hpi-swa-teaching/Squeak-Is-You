@@ -225,13 +225,14 @@ SIYBlock >> delete [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:07'
+	#'squeak_changestamp' : 'LK 1/5/2024 12:28'
 }
 SIYBlock >> deleteAndRemember [
-	"use this method instead of self delete, when the block should get deleted without
-	being moved at the same time"
+	"deleting a block using this method, allows to undo the deletion"
 	
-	self arena positionDictionary at: self put: self coords.
+	(self arena positionDictionary includesKey: self)
+		ifFalse: [self arena positionDictionary at: self put: self coords].
+		
 	self delete
 ]
 
