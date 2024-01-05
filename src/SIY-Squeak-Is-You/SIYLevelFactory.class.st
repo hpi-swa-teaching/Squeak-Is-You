@@ -126,6 +126,15 @@ SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 12:51'
+}
+SIYLevelFactory >> placeBlocks: aBlockClass at: aCollection [
+
+	aCollection do: [:aPoint | self placeBlock: aBlockClass at: aPoint]
+]
+
+{
+	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 11:40'
 }
 SIYLevelFactory >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [

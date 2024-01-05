@@ -166,12 +166,11 @@ SIYRuleManager >> invokeDeath: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/4/2024 19:06'
+	#'squeak_changestamp' : 'LK 1/5/2024 12:29'
 }
 SIYRuleManager >> invokeOpen: aTile [
 
-	aTile do: [:each | (each isShut) ifTrue: [each deleteAndRemember]].
-	aTile do: [:each | (each isOpen) ifTrue: [each delete]]
+	aTile do: [:each | (each isShut or: each isOpen) ifTrue: [each deleteAndRemember]]
 	
 	
 
@@ -179,13 +178,11 @@ SIYRuleManager >> invokeOpen: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/4/2024 19:10'
+	#'squeak_changestamp' : 'LK 1/5/2024 12:29'
 }
 SIYRuleManager >> invokeSink: aTile [
 	
-	aTile do: [:each | (each isSink)
-		ifTrue: [each deleteAndRemember] 
-		ifFalse: [each delete]]
+	aTile do: [:each | each deleteAndRemember]
 
 ]
 

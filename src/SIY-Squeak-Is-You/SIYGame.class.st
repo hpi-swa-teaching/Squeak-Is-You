@@ -30,11 +30,11 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 21:45'
+	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
 }
 SIYGame class >> startWithScale: aScaleFactor [
 
-	^ self basicNew initializeScaled: aScaleFactor
+	^ self basicNew initializeWithScale: aScaleFactor
 ]
 
 {
@@ -125,9 +125,9 @@ SIYGame >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 22:50'
+	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
 }
-SIYGame >> initializeScaled: aFloat [
+SIYGame >> initializeWithScale: aFloat [
 	
 	self customScaleFactor: aFloat.
 	self initialize
