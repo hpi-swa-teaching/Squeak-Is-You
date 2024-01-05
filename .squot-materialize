@@ -290,5 +290,19 @@ OrderedCollection [
 			'KeyHints.png'
 		],
 		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTile.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTileT.png'
+		],
+		#encoding : @6
 	}
 ]
