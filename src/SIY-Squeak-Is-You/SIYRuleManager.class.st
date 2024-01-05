@@ -109,20 +109,20 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:24'
+	#'squeak_changestamp' : 'LK 1/5/2024 14:53'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| aTile |
 	
-	aTile := aBlock neighborsHere copy.
+	aTile := aBlock neighborsHere.
 	
-	self checkWin: aBlock onTile: aTile.
-	self checkDefeat: aBlock onTile: aTile.
-	self checkSink: aBlock onTile: aTile.
-	self checkOpen: aBlock onTile: aTile.
-	self checkMelt: aBlock onTile: aTile
+	self checkWin: aBlock onTile: aTile copy.
+	self checkDefeat: aBlock onTile: aTile copy.
+	self checkSink: aBlock onTile: aTile copy.
+	self checkOpen: aBlock onTile: aTile copy.
+	self checkMelt: aBlock onTile: aTile copy
 ]
 
 {
