@@ -182,7 +182,7 @@ SIYLevelFactory >> placeMultipleBlocks: aBlockClass from: firstPoint to: secondP
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:24'
+	#'squeak_changestamp' : 'LK 1/5/2024 16:36'
 }
 SIYLevelFactory >> placeMultipleBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
@@ -191,16 +191,16 @@ SIYLevelFactory >> placeMultipleBlocksHollow: aBlockClass from: firstPoint to: s
 		to: (firstPoint x)@(secondPoint y).
 		
 	self placeMultipleBlocks: aBlockClass
-		from: firstPoint + (1@0)
+		from: firstPoint
 		to: (secondPoint x)@(firstPoint y).
 		
 	self placeMultipleBlocks: aBlockClass
-		from: (firstPoint x)@(secondPoint y) + (1@0)
+		from: (firstPoint x)@(secondPoint y)
 		to: secondPoint.
 		
 	self placeMultipleBlocks: aBlockClass
-		from: (secondPoint x)@(firstPoint y) + (0@1)
-		to: secondPoint - (0@1)
+		from: (secondPoint x)@(firstPoint y)
+		to: secondPoint
 ]
 
 {
