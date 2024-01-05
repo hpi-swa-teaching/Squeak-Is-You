@@ -115,11 +115,11 @@ SIYRuleManager >> checkRulesFor: aBlock [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/4/2024 19:09'
+	#'squeak_changestamp' : 'LK 1/5/2024 01:26'
 }
 SIYRuleManager >> checkSink: aBlock onTile: aTile [
 	
-	(aTile anySatisfy: [:each | each isSink])
+	((aTile anySatisfy: [:each | each isSink]) and: (aTile size > 1))
 		ifTrue: [self invokeSink: aTile]
 ]
 
