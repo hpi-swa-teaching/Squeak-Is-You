@@ -591,7 +591,7 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/5/2024 19:29'
+	#'squeak_changestamp' : 'LK 1/5/2024 23:21'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 

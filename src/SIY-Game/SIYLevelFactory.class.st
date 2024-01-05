@@ -246,7 +246,7 @@ SIYLevelFactory >> previousLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:16'
+	#'squeak_changestamp' : 'LK 1/6/2024 00:28'
 }
 SIYLevelFactory >> removeBlockAt: aPoint [
 	"remove all blocks on specified tile"
