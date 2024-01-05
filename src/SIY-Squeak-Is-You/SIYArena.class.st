@@ -231,11 +231,11 @@ SIYArena >> moveBlocksDirection: aDirection [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 1/4/2024 21:53'
+	#'squeak_changestamp' : 'LK 1/5/2024 12:59'
 }
 SIYArena >> pixelPerBlock [
 
-	^ 72 * self scaleFactor
+	^ self textureSize * self scaleFactor
 ]
 
 {
@@ -389,6 +389,16 @@ SIYArena >> stepTime [
 SIYArena >> stepTime: aNumber [
 
 	stepTime := aNumber
+]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 1/5/2024 12:59'
+}
+SIYArena >> textureSize [
+	"size of block textures in pixel"
+	
+	^ 72
 ]
 
 {
