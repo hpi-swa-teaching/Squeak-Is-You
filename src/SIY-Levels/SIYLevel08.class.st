@@ -52,11 +52,11 @@ SIYLevel08 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:03'
+	#'squeak_changestamp' : 'LK 1/5/2024 22:50'
 }
 SIYLevel08 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYLevel09
 ]
 
 {
