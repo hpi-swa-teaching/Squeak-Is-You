@@ -46,6 +46,15 @@ SIYLevel03 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
+}
+SIYLevel03 >> description [
+
+	^ 'Level 3: Now What Is This?'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:24'
 }
 SIYLevel03 >> nextLevel [

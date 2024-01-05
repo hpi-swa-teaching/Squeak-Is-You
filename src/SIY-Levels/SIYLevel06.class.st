@@ -57,6 +57,15 @@ SIYLevel06 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:35'
+}
+SIYLevel06 >> description [
+
+	^ 'Level 6: Volcano'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 15:54'
 }
 SIYLevel06 >> nextLevel [

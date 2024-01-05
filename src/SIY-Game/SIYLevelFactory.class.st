@@ -44,12 +44,12 @@ SIYLevelFactory >> arenaExtent [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:26'
+	#'squeak_changestamp' : 'LK 1/5/2024 22:14'
 }
 SIYLevelFactory >> arenaMargin [
 	"arena margin measured in pixel"
 
-	^ SIYGame basicNew keyHintHeight
+	^ SIYGame basicNew keyHintHeight / 2 + 20 px
 ]
 
 {
@@ -96,6 +96,15 @@ SIYLevelFactory >> createLevelScaled: aFloat [
 	self arena color: self backgroundColor.
 	self arena openInWorld
 
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:17'
+}
+SIYLevelFactory >> description [
+
+	^ SubclassResponsibility
 ]
 
 {
@@ -205,10 +214,11 @@ SIYLevelFactory >> placeMultipleBlocksHollow: aBlockClass from: firstPoint to: s
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/2/2024 13:15'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:24'
 }
 SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 	
+	self removeBlockAt: aPoint.
 	(SIYNoun newInArena: self arena at: aPoint)
 		representsBlock: aBlockClass
 ]

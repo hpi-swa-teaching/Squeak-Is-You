@@ -4,6 +4,9 @@ A SIYGame is the main class of the game. It can start a new game and creates the
 Instance Variables
 	arena: <SIYArena>
 	level: <SIYLevel>
+	backgroundMorph: <Morph>
+	customScaleFactor: <Float>
+	levelDescription: <TextMorph>
 
 "
 Class {
@@ -13,10 +16,11 @@ Class {
 		'arena',
 		'level',
 		'backgroundMorph',
-		'customScaleFactor'
+		'customScaleFactor',
+		'levelDescription'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:35'
+	#'squeak_changestamp' : 'LK 1/5/2024 22:21'
 }
 
 {
@@ -157,11 +161,11 @@ SIYGame >> initializeWithScale: aFloat [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:24'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:57'
 }
 SIYGame >> keyHintHeight [
 
-	^ 100
+	^ 50 px
 ]
 
 {
@@ -198,6 +202,24 @@ SIYGame >> level [
 SIYGame >> level: aLevel [
 
 	level := aLevel
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 22:24'
+}
+SIYGame >> levelDescription [
+
+	^ levelDescription ifNil: [levelDescription := TextMorph new]
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 22:32'
+}
+SIYGame >> levelDescriptionOffset [
+
+	^ ((15 px)@(-15 px))
 ]
 
 {
@@ -245,7 +267,7 @@ SIYGame >> restartLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/4/2024 23:39'
+	#'squeak_changestamp' : 'LK 1/5/2024 22:27'
 }
 SIYGame >> startLevel: aLevel [
 
@@ -254,7 +276,8 @@ SIYGame >> startLevel: aLevel [
 	
 	self enableBackground
 		ifTrue: [self backgroundMorph addMorph: self arena.
-				self arena setProperty: #indicateKeyboardFocus toValue: #never]
+				self arena setProperty: #indicateKeyboardFocus toValue: #never.
+				self updateLevelDescription]
 	
 ]
 
@@ -266,4 +289,20 @@ SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
 	self arena center: aPoint
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 22:30'
+}
+SIYGame >> updateLevelDescription [
+
+	self levelDescription
+		contents: self level description;
+		lock;
+		color: Color white.
+
+	self backgroundMorph addMorph: self levelDescription.
+	self levelDescription
+		bottomLeft: self backgroundMorph bottomLeft + self levelDescriptionOffset
 ]

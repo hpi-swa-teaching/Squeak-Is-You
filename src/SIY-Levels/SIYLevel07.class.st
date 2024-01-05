@@ -63,6 +63,15 @@ SIYLevel07 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:35'
+}
+SIYLevel07 >> description [
+
+	^ 'Level 7: Off Limits'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 16:37'
 }
 SIYLevel07 >> nextLevel [
