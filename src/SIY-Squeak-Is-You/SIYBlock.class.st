@@ -527,13 +527,14 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:39'
+	#'squeak_changestamp' : 'LK 1/5/2024 18:12'
 }
 SIYBlock >> postPositionRoutine [
 	"This routine gets triggered, after the block changed its position, no matter how.
 	For example, this routine will also be triggered, if the block was moved through the halo."
 
-	self informMediator
+	self informMediator.
+	self comeToFront
 ]
 
 {
