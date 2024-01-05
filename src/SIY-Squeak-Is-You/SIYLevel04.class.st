@@ -15,26 +15,26 @@ SIYLevel04 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:40'
+	#'squeak_changestamp' : 'LK 1/5/2024 16:23'
 }
 SIYLevel04 >> buildLevel [
 	
-	self placeBlocks: SIYWall from: 1@4 to: 3@4.
-	self placeBlocks: SIYWall from: 3@1 to: 3@3.
-	self placeBlocks: SIYWall from: 8@2 to: 15@2.
-	self placeBlocks: SIYWall from: 5@8 to: 8@8. 
-	self placeBlocks: SIYWall from: 12@8 to: 18@8.
-	self placeBlocks: SIYWall from: 5@15 to: 18@15. 
-	self placeBlocks: SIYWall from: 8@3 to: 8@7.
-	self placeBlocks: SIYWall from: 15@3 to: 15@7. 
-	self placeBlocks: SIYWall from: 5@9 to: 5@14.
-	self placeBlocks: SIYWall from: 18@9 to: 18@14. 
-	self placeBlocks: SIYWall from: 12@9 to: 12@11.
-	self placeBlocks: SIYWall from: 12@13 to: 12@14. 
+	self placeMultipleBlocks: SIYWall from: 1@4 to: 3@4.
+	self placeMultipleBlocks: SIYWall from: 3@1 to: 3@3.
+	self placeMultipleBlocks: SIYWall from: 8@2 to: 15@2.
+	self placeMultipleBlocks: SIYWall from: 5@8 to: 8@8. 
+	self placeMultipleBlocks: SIYWall from: 12@8 to: 18@8.
+	self placeMultipleBlocks: SIYWall from: 5@15 to: 18@15. 
+	self placeMultipleBlocks: SIYWall from: 8@3 to: 8@7.
+	self placeMultipleBlocks: SIYWall from: 15@3 to: 15@7. 
+	self placeMultipleBlocks: SIYWall from: 5@9 to: 5@14.
+	self placeMultipleBlocks: SIYWall from: 18@9 to: 18@14. 
+	self placeMultipleBlocks: SIYWall from: 12@9 to: 12@11.
+	self placeMultipleBlocks: SIYWall from: 12@13 to: 12@14. 
 	
-	self placeBlocks: SIYWater from: 6@12 to: 8@13. 
-	self placeBlocks: SIYWater from: 7@14 to: 8@14.  
-	self placeBlocks: SIYWater from: 9@8 to: 11@8.
+	self placeMultipleBlocks: SIYWater from: 6@12 to: 8@13. 
+	self placeMultipleBlocks: SIYWater from: 7@14 to: 8@14.  
+	self placeMultipleBlocks: SIYWater from: 9@8 to: 11@8.
 	
 	self placeNounFor: SIYWater at: 7@5.
 	self placeBlock: SIYIs at: 7@6.

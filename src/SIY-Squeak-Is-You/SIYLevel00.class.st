@@ -15,21 +15,21 @@ SIYLevel00 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:24'
+	#'squeak_changestamp' : 'LK 1/5/2024 16:24'
 }
 SIYLevel00 >> buildLevel [
 	
-	self placeBlocksHollow: SIYWall from: 1@1 to: self arenaExtent.
+	self placeMultipleBlocksHollow: SIYWall from: 1@1 to: self arenaExtent.
 	
-	self placeBlocks: SIYWall from: 11@2 to: 11@5.
+	self placeMultipleBlocks: SIYWall from: 11@2 to: 11@5.
 	self placeBlock: SIYDoor at: 11@6.
-	self placeBlocks: SIYWall from: 11@7 to: 11@14.
+	self placeMultipleBlocks: SIYWall from: 11@7 to: 11@14.
 	
-	self placeBlocks: SIYRock at: {9@8 . 13@9 . 8@10}.
+	self placeMultipleBlocks: SIYRock at: {9@8 . 13@9 . 8@10}.
 	
 	self placeBlock: SIYSqueak at: 3@14.
 	
-	self placeBlocks: SIYSkull from: 9@13 to: 10@14.
+	self placeMultipleBlocks: SIYSkull from: 9@13 to: 10@14.
 	
 	self placeVerticalRule: SIYSqueak is: SIYYou at: 3@4.
 	self placeVerticalRule: SIYWall is: SIYStop at: 4@4.
@@ -48,15 +48,17 @@ SIYLevel00 >> buildLevel [
 
 	self placeBlock: SIYKey at: 4@13. 
 	
-	self placeBlocks: SIYLava from: 14@3 to: 15@4.
+	self placeMultipleBlocks: SIYLava from: 14@3 to: 15@4.
 	
-	self placeBlocks: SIYWater from: 12@11 to: 19@11.
+	self placeMultipleBlocks: SIYWater from: 12@11 to: 19@11.
 	
 	self placeBlock: SIYFlag at: 18@13.
 	
-	self placeBlocks: SIYGrass at: {3@12 . 7@13 . 8@7 . 9@4 . 13@5 . 15@8}.
-	self placeNounFor: SIYGrass at: 13@7
+	self placeMultipleBlocks: SIYGrass at: {7@13 . 9@4 . 13@5}.
+	self placeNounFor: SIYGrass at: 13@7.
 	
+	self placeMultipleBlocks: SIYFlower at: {3@12 . 7@8 .  15@8}.
+	self placeNounFor: SIYFlower at: 15@6
 	
 
 ]
@@ -72,9 +74,9 @@ SIYLevel00 >> nextLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:28'
+	#'squeak_changestamp' : 'LK 1/5/2024 16:37'
 }
 SIYLevel00 >> previousLevel [
 
-	^ SIYLevel06
+	^ SIYLevel08
 ]

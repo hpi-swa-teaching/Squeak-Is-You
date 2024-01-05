@@ -263,5 +263,19 @@ OrderedCollection [
 			'SIYHot.png'
 		],
 		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYFlower.png'
+		],
+		#encoding : @11
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYFlowerT.png'
+		],
+		#encoding : @11
 	}
 ]

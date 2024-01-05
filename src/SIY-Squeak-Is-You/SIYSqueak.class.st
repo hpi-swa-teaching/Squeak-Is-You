@@ -6,11 +6,11 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 16:53'
+	#'squeak_changestamp' : 'LK 1/5/2024 16:46'
 }
 SIYSqueak >> blockTexture [
 
-	^ self blockTextureRight
+	^ self blockTextureDown
 ]
 
 {

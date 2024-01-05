@@ -128,54 +128,13 @@ SIYLevelFactory >> nextLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 12/5/2023 11:33'
+	#'squeak_changestamp' : 'LK 1/5/2024 16:18'
 }
 SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
+	"place new block in arena, remove the block that was on the tile before"
 
+	self removeBlockAt: aPoint.
 	aBlockClass newInArena: self arena at: aPoint
-]
-
-{
-	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 12:51'
-}
-SIYLevelFactory >> placeBlocks: aBlockClass at: aCollection [
-
-	aCollection do: [:aPoint | self placeBlock: aBlockClass at: aPoint]
-]
-
-{
-	#category : #'level building',
-	#'squeak_changestamp' : 'LK 12/5/2023 11:40'
-}
-SIYLevelFactory >> placeBlocks: aBlockClass from: firstPoint to: secondPoint [
-
-	(firstPoint x) to: (secondPoint x) do: 
-		[:coordX | (firstPoint y) to: (secondPoint y) do: 
-			[:coordY | self placeBlock: aBlockClass at: coordX@coordY]]
-]
-
-{
-	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/4/2024 00:33'
-}
-SIYLevelFactory >> placeBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
-
-	self placeBlocks: aBlockClass
-		from: firstPoint
-		to: (firstPoint x)@(secondPoint y).
-		
-	self placeBlocks: aBlockClass
-		from: firstPoint + (1@0)
-		to: (secondPoint x)@(firstPoint y).
-		
-	self placeBlocks: aBlockClass
-		from: (firstPoint x)@(secondPoint y) + (1@0)
-		to: secondPoint.
-		
-	self placeBlocks: aBlockClass
-		from: (secondPoint x)@(firstPoint y) + (0@1)
-		to: secondPoint - (0@1)
 ]
 
 {
@@ -188,6 +147,60 @@ SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass at: aPoin
 	self placeNounFor: aBlockClass at: (-1)@0 + aPoint.
 	self placeBlock: SIYIs at: aPoint.
 	self placeBlock: aPropertyClass at: 1@0 + aPoint
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 16:23'
+}
+SIYLevelFactory >> placeMultipleBlocks: aBlockClass at: aCollection [
+
+	aCollection do: [:aPoint | self placeBlock: aBlockClass at: aPoint]
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 16:23'
+}
+SIYLevelFactory >> placeMultipleBlocks: aBlockClass from: firstPoint to: secondPoint [
+
+	| incrementX incrementY |
+	
+	(firstPoint x < secondPoint x)
+		ifTrue: [incrementX := 1]
+		ifFalse: [incrementX := -1].
+		
+	(firstPoint y < secondPoint y)
+		ifTrue: [incrementY := 1]
+		ifFalse: [incrementY := -1].
+
+	firstPoint x to: secondPoint x by: incrementX do: 
+		[:coordX | firstPoint y to: secondPoint y by: incrementY do: 
+			[:coordY | self placeBlock: aBlockClass at: coordX@coordY]].
+
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 16:36'
+}
+SIYLevelFactory >> placeMultipleBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
+
+	self placeMultipleBlocks: aBlockClass
+		from: firstPoint
+		to: (firstPoint x)@(secondPoint y).
+		
+	self placeMultipleBlocks: aBlockClass
+		from: firstPoint
+		to: (secondPoint x)@(firstPoint y).
+		
+	self placeMultipleBlocks: aBlockClass
+		from: (firstPoint x)@(secondPoint y)
+		to: secondPoint.
+		
+	self placeMultipleBlocks: aBlockClass
+		from: (secondPoint x)@(firstPoint y)
+		to: secondPoint
 ]
 
 {
@@ -219,4 +232,24 @@ SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass at: aPoint 
 SIYLevelFactory >> previousLevel [
 
 	^ SubclassResponsibility
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 16:16'
+}
+SIYLevelFactory >> removeBlockAt: aPoint [
+	"remove all blocks on specified tile"
+
+	(self arena blockMediator getBlocks: aPoint)
+		do: [:each | each delete]
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/5/2024 16:23'
+}
+SIYLevelFactory >> removeMultipleBlocksAt: aCollection [
+	
+	aCollection do: [:aPoint | self removeBlockAt: aPoint]
 ]
