@@ -43,6 +43,15 @@ SIYLevel08 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:35'
+}
+SIYLevel08 >> description [
+
+	^ 'Level 8: Grass Yard'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 00:03'
 }
 SIYLevel08 >> nextLevel [

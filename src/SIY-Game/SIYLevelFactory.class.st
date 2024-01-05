@@ -44,12 +44,12 @@ SIYLevelFactory >> arenaExtent [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/5/2024 21:58'
+	#'squeak_changestamp' : 'LK 1/5/2024 22:14'
 }
 SIYLevelFactory >> arenaMargin [
 	"arena margin measured in pixel"
 
-	^ SIYGame basicNew keyHintHeight / 2 + 15 px
+	^ SIYGame basicNew keyHintHeight / 2 + 20 px
 ]
 
 {
@@ -96,6 +96,15 @@ SIYLevelFactory >> createLevelScaled: aFloat [
 	self arena color: self backgroundColor.
 	self arena openInWorld
 
+]
+
+{
+	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:17'
+}
+SIYLevelFactory >> description [
+
+	^ SubclassResponsibility
 ]
 
 {

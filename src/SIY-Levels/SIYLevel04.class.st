@@ -63,6 +63,15 @@ SIYLevel04 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
+}
+SIYLevel04 >> description [
+
+	^ 'Level 4: Out Of Reach'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 00:47'
 }
 SIYLevel04 >> nextLevel [

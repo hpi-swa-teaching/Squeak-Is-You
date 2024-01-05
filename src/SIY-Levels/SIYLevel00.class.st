@@ -68,6 +68,15 @@ SIYLevel00 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
+}
+SIYLevel00 >> description [
+
+	^ 'Playground'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:26'
 }
 SIYLevel00 >> nextLevel [

@@ -38,6 +38,15 @@ SIYLevel01 >> buildLevel [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
+}
+SIYLevel01 >> description [
+
+	^ 'Level 1: Squeak Is You'
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:24'
 }
 SIYLevel01 >> nextLevel [
