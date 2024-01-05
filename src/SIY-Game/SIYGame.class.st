@@ -157,11 +157,11 @@ SIYGame >> initializeWithScale: aFloat [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:24'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:57'
 }
 SIYGame >> keyHintHeight [
 
-	^ 100
+	^ 50 px
 ]
 
 {
