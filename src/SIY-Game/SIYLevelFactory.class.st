@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'arena'
 	],
-	#category : #'SIY-Levels',
+	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:38'
 }
 
@@ -44,12 +44,12 @@ SIYLevelFactory >> arenaExtent [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:01'
+	#'squeak_changestamp' : 'LK 1/5/2024 20:26'
 }
 SIYLevelFactory >> arenaMargin [
-	"arena margin measured in blocks"
+	"arena margin measured in pixel"
 
-	^ 1
+	^ SIYGame basicNew keyHintHeight
 ]
 
 {
@@ -72,16 +72,16 @@ SIYLevelFactory >> buildLevel [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/5/2024 13:30'
+	#'squeak_changestamp' : 'LK 1/5/2024 20:21'
 }
 SIYLevelFactory >> calculateScale [
 
-	| aFloat |
+	| aNumber |
 	
-	aFloat := Display extent x / (self arenaExtent x + self arenaMargin).
-	aFloat := aFloat clampHigh: Display extent y / (self arenaExtent y + self arenaMargin).
+	aNumber := (World clearArea extent x - (2 * self arenaMargin) / self arenaExtent x)
+		min: (World clearArea extent y - (2 * self arenaMargin) / self arenaExtent y).
 	
-	^ aFloat / SIYArena basicNew textureSize
+	^ aNumber / SIYArena basicNew textureSize
 ]
 
 {

@@ -75,14 +75,36 @@ SIYGame >> backgroundMorph [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:28'
+	#'squeak_changestamp' : 'LK 1/5/2024 20:07'
 }
 SIYGame >> createBackgroundMorph [
 
-	^ Morph new
-		extent: World extent;
+	| aMorph anotherMorph |
+	
+	aMorph := Morph new
+		extent: World clearArea extent;
 		color: self backgroundColor;
-		openInWorld
+		openInWorld.
+
+	anotherMorph := self createKeyHintMorph.
+	aMorph addMorphCentered: anotherMorph.
+	anotherMorph bottom: aMorph bottom.
+	
+	^ aMorph
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 20:05'
+}
+SIYGame >> createKeyHintMorph [
+
+	| aMorph aForm |
+	
+	aForm := SIYTextureManager new getTexture: self keyHintTexture.
+	aMorph := (aForm scaledToHeight: self keyHintHeight) asMorph openInWorld.
+	
+	^ aMorph
 ]
 
 {
@@ -114,13 +136,13 @@ SIYGame >> enableBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:53'
+	#'squeak_changestamp' : 'LK 1/5/2024 20:23'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	self startLevel: SIYLevel00 atPosition: World clearArea center
+	self startLevel: SIYLevel00 atPosition: World clearArea center + self keyHintOffset
 ]
 
 {
@@ -131,6 +153,33 @@ SIYGame >> initializeWithScale: aFloat [
 	
 	self customScaleFactor: aFloat.
 	self initialize
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 20:24'
+}
+SIYGame >> keyHintHeight [
+
+	^ 100
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 20:22'
+}
+SIYGame >> keyHintOffset [
+
+	^ 0@(self keyHintHeight / 2 negated)
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/5/2024 19:59'
+}
+SIYGame >> keyHintTexture [
+
+	^ '/KeyHints.png'
 ]
 
 {

@@ -1,4 +1,4 @@
 Package {
-	#'squeak_changestamp' : true,
-	#name : #'SIY-Blocks'
+	#name : #'SIY-Blocks',
+	#'squeak_changestamp' : true
 }

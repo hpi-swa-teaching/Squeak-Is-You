@@ -283,5 +283,12 @@ OrderedCollection [
 			#name : 'SIY-Blocks'
 		},
 		#path : @81
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'KeyHints.png'
+		],
+		#encoding : @6
 	}
 ]

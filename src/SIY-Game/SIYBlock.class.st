@@ -11,7 +11,7 @@ Class {
 	#instVars : [
 		'arena'
 	],
-	#category : #'SIY-Blocks',
+	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 14:51'
 }
 
@@ -591,13 +591,13 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 21:36'
+	#'squeak_changestamp' : 'LK 1/5/2024 19:29'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 
-	| anImageMorph |
+	| aForm |
 	
-	anImageMorph := SIYTextureManager new getTexture: (self getTextureForDirection: aPoint).
+	aForm := SIYTextureManager new getTexture: (self getTextureForDirection: aPoint).
 	
-	self image: (anImageMorph scaledToSize: (self arena pixelPerBlock)@(self arena pixelPerBlock))
+	self image: (aForm scaledToSize: (self arena pixelPerBlock)@(self arena pixelPerBlock))
 ]

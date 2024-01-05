@@ -1,4 +1,4 @@
 Package {
-	#'squeak_changestamp' : true,
-	#name : #'SIY-Levels'
+	#name : #'SIY-Levels',
+	#'squeak_changestamp' : true
 }
