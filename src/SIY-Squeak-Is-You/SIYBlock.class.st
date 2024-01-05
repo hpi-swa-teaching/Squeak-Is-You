@@ -311,6 +311,26 @@ SIYBlock >> isDefeat [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/5/2024 14:19'
+}
+SIYBlock >> isHot [
+
+	^ self ruleManager isHot: self
+	
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/5/2024 14:19'
+}
+SIYBlock >> isMelt [
+
+	^ self ruleManager isMelt: self
+	
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/4/2024 18:20'
 }
 SIYBlock >> isOpen [

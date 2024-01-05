@@ -54,6 +54,15 @@ SIYLevelFactory >> arenaMargin [
 
 {
 	#category : #'level design',
+	#'squeak_changestamp' : 'LK 1/5/2024 13:30'
+}
+SIYLevelFactory >> backgroundColor [
+
+	^ Color black
+]
+
+{
+	#category : #'level design',
 	#'squeak_changestamp' : 'LK 12/5/2023 13:29'
 }
 SIYLevelFactory >> buildLevel [
@@ -63,7 +72,7 @@ SIYLevelFactory >> buildLevel [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:01'
+	#'squeak_changestamp' : 'LK 1/5/2024 13:30'
 }
 SIYLevelFactory >> calculateScale [
 
@@ -72,19 +81,21 @@ SIYLevelFactory >> calculateScale [
 	aFloat := Display extent x / (self arenaExtent x + self arenaMargin).
 	aFloat := aFloat clampHigh: Display extent y / (self arenaExtent y + self arenaMargin).
 	
-	^ aFloat / 72
+	^ aFloat / SIYArena basicNew textureSize
 ]
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:44'
+	#'squeak_changestamp' : 'LK 1/5/2024 13:31'
 }
 SIYLevelFactory >> createLevelScaled: aFloat [
 	
 	arena := SIYArena newWithExtent: self arenaExtent scaled: aFloat.
 	
 	self buildLevel.
-	arena openInWorld.
+	self arena color: self backgroundColor.
+	self arena openInWorld
+
 ]
 
 {

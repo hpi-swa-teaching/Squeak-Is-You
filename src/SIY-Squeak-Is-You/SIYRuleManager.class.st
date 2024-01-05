@@ -88,29 +88,41 @@ SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/4/2024 19:14'
+	#'squeak_changestamp' : 'LK 1/5/2024 14:26'
 }
-SIYRuleManager >> checkOpen: aBlock onTile: aTile [
+SIYRuleManager >> checkMelt: aBlock onTile: aTile [
 
-	(aBlock isOpen and: (aTile anySatisfy: [:each | each isShut]))
-		ifTrue: [self invokeOpen: aTile]
+	((aTile anySatisfy: [:each | each isMelt]) and: (aTile anySatisfy: [:each | each isHot]))
+		ifTrue: [self invokeMelt: aTile]
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/4/2024 19:12'
+	#'squeak_changestamp' : 'LK 1/5/2024 14:26'
+}
+SIYRuleManager >> checkOpen: aBlock onTile: aTile [
+
+	((aTile anySatisfy: [:each | each isOpen and: each isShut not])
+		and: (aTile anySatisfy: [:each | each isShut and: each isOpen not]))
+			ifTrue: [self invokeOpen: aTile]
+]
+
+{
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 1/5/2024 14:53'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| aTile |
 	
-	aTile := aBlock neighborsHere copy.
+	aTile := aBlock neighborsHere.
 	
-	self checkWin: aBlock onTile: aTile.
-	self checkDefeat: aBlock onTile: aTile.
-	self checkSink: aBlock onTile: aTile.
-	self checkOpen: aBlock onTile: aTile
+	self checkWin: aBlock onTile: aTile copy.
+	self checkDefeat: aBlock onTile: aTile copy.
+	self checkSink: aBlock onTile: aTile copy.
+	self checkOpen: aBlock onTile: aTile copy.
+	self checkMelt: aBlock onTile: aTile copy
 ]
 
 {
@@ -153,12 +165,24 @@ SIYRuleManager >> currentRules: aDictionary [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 12/31/2023 16:29'
+	#'squeak_changestamp' : 'LK 1/5/2024 14:22'
 }
 SIYRuleManager >> invokeDeath: aBlock [
 
 	aBlock delete
 
+	
+	
+
+]
+
+{
+	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/5/2024 14:20'
+}
+SIYRuleManager >> invokeMelt: aTile [
+
+	aTile do: [:each | (each isMelt) ifTrue: [each deleteAndRemember]]
 	
 	
 
@@ -188,7 +212,7 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:08'
+	#'squeak_changestamp' : 'LK 1/5/2024 14:21'
 }
 SIYRuleManager >> invokeWin: aBlock [
 	
@@ -202,6 +226,36 @@ SIYRuleManager >> invokeWin: aBlock [
 SIYRuleManager >> isDefeat: aBlock [
 	
 	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: aBlock class
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/5/2024 14:18'
+}
+SIYRuleManager >> isHot: aBlock [
+
+	^ (currentRules at: SIYHot ifAbsent: [^ false]) includes: aBlock class
+
+	
+	
+	
+	
+	
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/5/2024 14:18'
+}
+SIYRuleManager >> isMelt: aBlock [
+
+	^ (currentRules at: SIYMelt ifAbsent: [^ false]) includes: aBlock class
+
+	
+	
+	
+	
+	
 ]
 
 {
