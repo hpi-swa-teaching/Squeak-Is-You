@@ -15,7 +15,7 @@ SIYLevel03 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:23'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:16'
 }
 SIYLevel03 >> buildLevel [
 	
@@ -27,6 +27,9 @@ SIYLevel03 >> buildLevel [
 	self placeMultipleBlocks: SIYFlag from: 5@2 to: 5@4. 
 	self placeMultipleBlocks: SIYFlag from: 1@6 to: 1@8.
 	self placeMultipleBlocks: SIYFlag from: 5@10 to: 5@14. 
+	
+	self placeMultipleBlocks: SIYGrass from: 2@6 to: 5@8.
+	self placeMultipleBlocks: SIYTile at: {2@2 . 4@3 . 1@4 . 3@15 . 4@12}.
 	
 	
 	self placeBlock: SIYSqueak at: 7@7.
