@@ -15,7 +15,7 @@ SIYLevel00 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 12:55'
+	#'squeak_changestamp' : 'LK 1/5/2024 14:24'
 }
 SIYLevel00 >> buildLevel [
 	
@@ -42,11 +42,13 @@ SIYLevel00 >> buildLevel [
 	self placeHorizontalRule: SIYDoor is: SIYShut at: 4@9.
 	self placeHorizontalRule: SIYDoor is: SIYStop at: 4@10.
 	
-	self placeVerticalRule: SIYWater is: SIYSink at: 18@7.
+	self placeVerticalRule: SIYWater is: SIYSink at: 18@8.
+	self placeVerticalRule: SIYLava is: SIYHot at: 17@4.
+	self placeVerticalRule: SIYSqueak is: SIYMelt at: 18@4.
 
 	self placeBlock: SIYKey at: 4@13. 
 	
-	self placeBlocks: SIYLava from: 15@3 to: 16@4.
+	self placeBlocks: SIYLava from: 14@3 to: 15@4.
 	
 	self placeBlocks: SIYWater from: 12@11 to: 19@11.
 	

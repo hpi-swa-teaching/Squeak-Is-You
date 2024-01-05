@@ -57,7 +57,7 @@ SIYGame >> arena [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:27'
+	#'squeak_changestamp' : 'LK 1/5/2024 13:36'
 }
 SIYGame >> backgroundColor [
 
