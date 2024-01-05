@@ -15,7 +15,7 @@ SIYLevel07 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:31'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:22'
 }
 SIYLevel07 >> buildLevel [
 	
@@ -31,6 +31,9 @@ SIYLevel07 >> buildLevel [
 	self placeMultipleBlocksHollow: SIYWall from: 16@2 to: 20@6.
 	self placeMultipleBlocks: SIYWall at: {14@7 . 15@7}.
 	self removeMultipleBlocksAt: {11@7 . 16@4}.
+	
+	self placeMultipleBlocks: SIYTile from: 8@6 to: 10@8.
+	self placeMultipleBlocks: SIYTile from: 17@3 to: 19@5.
 	
 	self placeMultipleBlocks: SIYSkull from: 13@1 to: 13@8.
 	self placeMultipleBlocks: SIYSkull from: 13@8 to: 24@8.

@@ -15,7 +15,7 @@ SIYLevel04 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:23'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:20'
 }
 SIYLevel04 >> buildLevel [
 	
@@ -31,6 +31,10 @@ SIYLevel04 >> buildLevel [
 	self placeMultipleBlocks: SIYWall from: 18@9 to: 18@14. 
 	self placeMultipleBlocks: SIYWall from: 12@9 to: 12@11.
 	self placeMultipleBlocks: SIYWall from: 12@13 to: 12@14. 
+	
+	self placeMultipleBlocks: SIYTile from: 9@3 to: 14@7.
+	self placeMultipleBlocks: SIYGrass at: {5@2 . 6@4 . 5@6 . 4@6 . 1@8 . 2@9 . 17@1 . 18@3 . 16@6 . 17@7}.
+	self placeMultipleBlocks: SIYGrass from: 2@12 to: 3@13.
 	
 	self placeMultipleBlocks: SIYWater from: 6@12 to: 8@13. 
 	self placeMultipleBlocks: SIYWater from: 7@14 to: 8@14.  
