@@ -205,10 +205,11 @@ SIYLevelFactory >> placeMultipleBlocksHollow: aBlockClass from: firstPoint to: s
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/2/2024 13:15'
+	#'squeak_changestamp' : 'LK 1/5/2024 21:24'
 }
 SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 	
+	self removeBlockAt: aPoint.
 	(SIYNoun newInArena: self arena at: aPoint)
 		representsBlock: aBlockClass
 ]
