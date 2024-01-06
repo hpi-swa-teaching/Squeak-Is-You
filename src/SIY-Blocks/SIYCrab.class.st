@@ -15,9 +15,9 @@ SIYCrab >> blockTexture [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:35'
+	#'squeak_changestamp' : 'LK 1/6/2024 17:47'
 }
 SIYCrab >> nounTexture [
 
-	^ '/SIYCrab.png' 
+	^ '/SIYCrabT.png' 
 ]
