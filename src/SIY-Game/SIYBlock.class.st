@@ -406,7 +406,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:23'
+	#'squeak_changestamp' : 'LK 1/6/2024 21:31'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -421,11 +421,12 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
 	
 	"check for rules, which would prevent this block from moving"
-	(self isStop) ifTrue: [^ false].
+	(self isStop and: self isPush not) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
 	(neighbours isNil) ifTrue: [^ false].
-	(neighbours anySatisfy: [:each | each isStop and: (each isShut and: self isOpen) not])
-		ifTrue: [^ false].
+	(neighbours anySatisfy: [:each | (each isStop and: each isPush not) 
+		and: (each isShut and: self isOpen) not])
+			ifTrue: [^ false].
 	
 	"if there are any blocks in the way, try recursively moving them too"
 	(neighbours size = 0)
