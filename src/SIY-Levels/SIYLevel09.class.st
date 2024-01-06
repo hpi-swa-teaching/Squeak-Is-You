@@ -15,7 +15,7 @@ SIYLevel09 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 23:34'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/6/2024 15:04'
 }
 SIYLevel09 >> backgroundColor [
 
@@ -90,11 +90,11 @@ SIYLevel09 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:03'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/6/2024 14:59'
 }
 SIYLevel09 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYLevel10
 ]
 
 {
