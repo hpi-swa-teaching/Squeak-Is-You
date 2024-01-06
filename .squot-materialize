@@ -339,5 +339,47 @@ OrderedCollection [
 			'SIYAnd.png'
 		],
 		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYAlgae.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYAlgaeT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYCrab.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYCrabT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYStar.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYStarT.png'
+		],
+		#encoding : @6
 	}
 ]
