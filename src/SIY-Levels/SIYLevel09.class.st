@@ -24,7 +24,7 @@ SIYLevel09 >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 00:39'
+	#'squeak_changestamp' : 'LK 1/6/2024 01:24'
 }
 SIYLevel09 >> buildLevel [
 	
@@ -47,7 +47,7 @@ SIYLevel09 >> buildLevel [
 	self placeMultipleBlocks: SIYWall at: {6@12 . 14@12}.
 	
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 10@12.
-	"self placeBlock: SIYAnd at: 12@12."
+	self placeBlock: SIYAnd at: 12@12.
 	self placeBlock: SIYSink at: 13@12.
 	
 	self placeHorizontalRule: SIYJelly is: SIYSink at: 27@1.

@@ -438,24 +438,24 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of blocks at coords above.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: (-1)@0 + self coords
+	^ self blockMediator getBlocks: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of blocks at coords below.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: 1@0 + self coords
+	^ self blockMediator getBlocks: 0@1 + self coords
 ]
 
 {
@@ -471,24 +471,24 @@ SIYBlock >> neighborsHere [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of blocks at coords to the left.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: 0@(-1) + self coords
+	^ self blockMediator getBlocks: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
 }
 SIYBlock >> neighborsRight [
 	"Return set of blocks at coords to the right.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: 0@1 + self coords
+	^ self blockMediator getBlocks: 1@0 + self coords
 ]
 
 {
