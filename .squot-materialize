@@ -409,5 +409,19 @@ OrderedCollection [
 			'SIYPillar.png'
 		],
 		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYBubble.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYBubbleT.png'
+		],
+		#encoding : @6
 	}
 ]
