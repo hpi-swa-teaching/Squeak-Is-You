@@ -539,7 +539,7 @@ SIYBlock >> postPositionRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:31'
+	#'squeak_changestamp' : 'LK 1/6/2024 18:17'
 }
 SIYBlock >> preMoveRoutine: aDirection [
 	"This routine gets triggered, before the block will be moved using basicMove,
