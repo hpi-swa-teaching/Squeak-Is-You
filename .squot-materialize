@@ -1,23 +1,9 @@
 OrderedCollection [
-	SquotTonelMapper {
-		#package : MCPackage {
-			#name : 'SWAGroup16'
-		},
-		#path : FSAbsolutePath [
-			'src'
-		]
-	},
 	SquotPlaintextMapper {
 		#path : FSAbsolutePath [
 			'README.md'
 		],
 		#encoding : 'TXT'
-	},
-	SquotTonelMapper {
-		#package : MCPackage {
-			#name : 'SIY-Squeak-Is-You'
-		},
-		#path : @4
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
@@ -29,225 +15,329 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
-			'SIYSkull.png'
-		],
-		#encoding : @11
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
 			'SIYDoor.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYPush.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYShut.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYWall.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYWaterT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYOpen.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYSqueak-FacingLeft.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYGrassT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYRockT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYSink.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYWallT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYGrass.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYLavaT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYKeyT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYLava.png'
 		],
-		#encoding : @11
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
-			'SIYSqueak-FacingUp.png'
-		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYWin.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYUnknown.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYSqueakT.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYFlag.png'
 		],
-		#encoding : @11
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
-			'SIYStop.png'
-		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYWater.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYDefeat.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYIs.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYSqueak-FacingDown.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYYou.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYSkullT.png'
 		],
-		#encoding : @11
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
-			'SIYDoorT.png'
-		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYRock.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYKey.png'
 		],
-		#encoding : @11
+		#encoding : @6
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYFlagT.png'
 		],
-		#encoding : @11
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYDoorT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYSkull.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYSqueak-FacingUp.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYMelt.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYHot.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYFlower.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYFlowerT.png'
+		],
+		#encoding : @6
+	},
+	SquotTonelMapper {
+		#package : MCPackage {
+			#name : 'SIY-Game'
+		},
+		#path : FSAbsolutePath [
+			'src'
+		]
+	},
+	SquotTonelMapper {
+		#package : MCPackage {
+			#name : 'SIY-Levels'
+		},
+		#path : @79
+	},
+	SquotTonelMapper {
+		#package : MCPackage {
+			#name : 'SIY-Blocks'
+		},
+		#path : @79
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'KeyHints.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTileT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTile.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYIceT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYJellyT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYIce.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYJelly.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYStop.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYAnd.png'
+		],
+		#encoding : @6
 	}
 ]
