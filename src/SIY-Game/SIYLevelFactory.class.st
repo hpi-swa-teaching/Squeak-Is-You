@@ -148,6 +148,32 @@ SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/6/2024 11:35'
+}
+SIYLevelFactory >> placeHorizontalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
+	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
+	
+	self placeBlock: aBlockClass at: (-3)@0 + aPoint.
+	self placeBlock: SIYAnd at: (-2)@0 + aPoint.
+	self placeHorizontalRule: anotherBlockClass is: aPropertyClass at: aPoint
+	
+	
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/6/2024 11:34'
+}
+SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass and: anotherPropertyClass at: aPoint [
+	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
+	
+	self placeHorizontalRule: aBlockClass is: aPropertyClass at: aPoint.
+	self placeBlock: SIYAnd at: 2@0 + aPoint.
+	self placeBlock: anotherPropertyClass at: 3@0 + aPoint
+]
+
+{
+	#category : #'level building',
 	#'squeak_changestamp' : 'LK 1/5/2024 00:30'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass at: aPoint [
@@ -225,6 +251,32 @@ SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/6/2024 11:35'
+}
+SIYLevelFactory >> placeVerticalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
+	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
+	
+	self placeBlock: aBlockClass at: 0@(-3) + aPoint.
+	self placeBlock: SIYAnd at: 0@(-2) + aPoint.
+	self placeVerticalRule: anotherBlockClass is: aPropertyClass at: aPoint
+	
+	
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/6/2024 11:35'
+}
+SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass and: anotherPropertyClass at: aPoint [
+	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
+	
+	self placeVerticalRule: aBlockClass is: aPropertyClass at: aPoint.
+	self placeBlock: SIYAnd at: 0@2 + aPoint.
+	self placeBlock: anotherPropertyClass at: 0@3 + aPoint
+]
+
+{
+	#category : #'level building',
 	#'squeak_changestamp' : 'LK 1/5/2024 00:30'
 }
 SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass at: aPoint [
@@ -246,7 +298,7 @@ SIYLevelFactory >> previousLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:16'
+	#'squeak_changestamp' : 'LK 1/6/2024 00:28'
 }
 SIYLevelFactory >> removeBlockAt: aPoint [
 	"remove all blocks on specified tile"

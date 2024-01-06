@@ -148,13 +148,6 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
-			'SIYStop.png'
-		],
-		#encoding : @6
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
 			'SIYWater.png'
 		],
 		#encoding : @6
@@ -276,18 +269,25 @@ OrderedCollection [
 		#package : MCPackage {
 			#name : 'SIY-Levels'
 		},
-		#path : @81
+		#path : @79
 	},
 	SquotTonelMapper {
 		#package : MCPackage {
 			#name : 'SIY-Blocks'
 		},
-		#path : @81
+		#path : @79
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
 			'KeyHints.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTileT.png'
 		],
 		#encoding : @6
 	},
@@ -301,7 +301,42 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
-			'SIYTileT.png'
+			'SIYIceT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYJellyT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYIce.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYJelly.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYStop.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYAnd.png'
 		],
 		#encoding : @6
 	}

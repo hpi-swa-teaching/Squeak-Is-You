@@ -147,23 +147,23 @@ SIYBlockMediator >> generateQueueFromTop [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:30'
+	#'squeak_changestamp' : 'LK 1/6/2024 11:17'
 }
-SIYBlockMediator >> getBlocks: point [
+SIYBlockMediator >> getBlocks: aPoint [
 	"returns set of blocks at given coordinates"
 
-	((point x between: 1 and: self arena arenaWidth)
-		and: (point y between: 1 and: self arena arenaHeight))
-			ifTrue: [^ self gameBoard at: point x at: point y]
+	((aPoint x between: 1 and: self arena arenaWidth)
+		and: (aPoint y between: 1 and: self arena arenaHeight))
+			ifTrue: [^ self gameBoard at: aPoint x at: aPoint y]
 			ifFalse: [^ nil]
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:32'
+	#'squeak_changestamp' : 'LK 1/6/2024 11:12'
 }
-SIYBlockMediator >> getOperatorBlocks [
-	"returns set of all operator blocks in the arena"
+SIYBlockMediator >> getIsBlocks [
+	"returns set of all SIYIs blocks in the arena"
 
 	| aSet |
 
