@@ -61,12 +61,13 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:59'
+	#'squeak_changestamp' : 'LK 1/6/2024 18:14'
 }
 SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
-	(aBlock isYou and: (aTile anySatisfy: [:each | each isDefeat and: each isYou not]))
-		ifTrue: [self invokeDeath: aBlock]
+	((aTile anySatisfy: [:each | each isYou]) 
+		and: (aTile anySatisfy: [:each | each isDefeat and: each isYou not]))
+			ifTrue: [self invokeDeath: aTile]
 ]
 
 {
@@ -120,11 +121,11 @@ SIYRuleManager >> checkSink: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:01'
+	#'squeak_changestamp' : 'LK 1/6/2024 18:15'
 }
 SIYRuleManager >> checkWin: aBlock onTile: aTile [
 
-	(aBlock isYou and: (aTile anySatisfy: [:each | each isWin]))
+	((aTile anySatisfy: [:each | each isYou]) and: (aTile anySatisfy: [:each | each isWin]))
 		ifTrue: [self invokeWin: aBlock]
 ]
 
@@ -233,11 +234,11 @@ SIYRuleManager >> currentRules: aDictionary [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:22'
+	#'squeak_changestamp' : 'LK 1/6/2024 18:15'
 }
-SIYRuleManager >> invokeDeath: aBlock [
+SIYRuleManager >> invokeDeath: aTile [
 
-	aBlock delete
+	aTile do: [:each | (each isYou) ifTrue: [each deleteAndRemember]]
 
 	
 	
