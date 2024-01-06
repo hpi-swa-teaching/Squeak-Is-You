@@ -24,14 +24,11 @@ SIYLevel10 >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/6/2024 15:37'
+	#'squeak_changestamp' : 'LK 1/6/2024 16:59'
 }
 SIYLevel10 >> buildLevel [
 	
-	self placeMultipleBlocks: SIYWall from: 17@5 to: 21@5.
-	self placeMultipleBlocks: SIYWall from: 17@10 to: 21@10.
-	self placeMultipleBlocks: SIYWall from: 17@6 to: 17@9.
-	self placeMultipleBlocks: SIYWall from: 21@6 to: 21@9.
+	self placeMultipleBlocksHollow: SIYWall from: 17@5 to: 21@10.
 	self placeBlock: SIYFlag at: 19@7.
 	self placeHorizontalRule: SIYWall is: SIYStop at: 2@16.
 	
@@ -46,7 +43,7 @@ SIYLevel10 >> buildLevel [
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 8@8.
 	
 	self placeMultipleBlocks: SIYJelly at: {1@14 . 7@16 . 12@16 . 10@10 . 24@11 . 24@4 . 3@2 . 22@10 . 16@8}.
-	self placeMultipleBlocks: SIYFlower at: {15@13 . 14@8 . 12@15 . 19@3 . 21@15 . 23@7 . 4@1 . 20@12 . 11@15 . 											 											    4@8 . 8@3 . 13@4}.
+	self placeMultipleBlocks: SIYFlower at: {15@13 . 14@8 . 12@15 . 19@3 . 21@15 . 23@7 . 4@1 . 20@12 . 11@15 . 4@8 . 8@3 . 13@4}.
 																							
 	self placeBlock: SIYSqueak at: 14@5.
 	
@@ -57,20 +54,20 @@ SIYLevel10 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/6/2024 15:10'
+	#'squeak_changestamp' : 'LK 1/6/2024 17:14'
 }
 SIYLevel10 >> description [
 
-	^ 'Level 10: What to push?'
+	^ 'Level 10: What To Push?'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:03'
+	#'squeak_changestamp' : 'LK 1/6/2024 17:36'
 }
 SIYLevel10 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYLevel11
 ]
 
 {
