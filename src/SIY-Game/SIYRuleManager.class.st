@@ -371,9 +371,12 @@ SIYRuleManager >> isSink: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+	#'squeak_changestamp' : 'LK 1/6/2024 22:22'
 }
 SIYRuleManager >> isStop: aBlock [
+	
+	"blocks that can override this rule"
+	(aBlock isYou or: aBlock isPush) ifTrue: [^ false].
 	
 	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: aBlock class
 
