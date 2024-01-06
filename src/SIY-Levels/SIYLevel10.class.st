@@ -6,11 +6,11 @@ Class {
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:49'
+	#'squeak_changestamp' : 'LK 1/6/2024 19:09'
 }
 SIYLevel10 >> arenaExtent [
 
-	^ 28@16
+	^ 25@16
 ]
 
 {
@@ -63,7 +63,7 @@ SIYLevel10 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:36'
+	#'squeak_changestamp' : 'LK 1/6/2024 19:07'
 }
 SIYLevel10 >> nextLevel [
 

@@ -281,11 +281,14 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:21'
+	#'squeak_changestamp' : 'LK 1/6/2024 19:27'
 }
 SIYRuleManager >> invokeWin: aBlock [
 	
-	aBlock arena game nextLevel
+	aBlock arena game nextLevel.
+
+	"delete block, to prevent it from invoking win multiple times"
+	aBlock delete.
 ]
 
 {

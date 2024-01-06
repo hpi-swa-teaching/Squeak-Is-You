@@ -258,19 +258,20 @@ SIYArena >> positionDictionary: aDictionary [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/6/2024 18:20'
+	#'squeak_changestamp' : 'LK 1/6/2024 19:28'
 }
 SIYArena >> postMoveBlocksRoutine [
 	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
-	self undoCaretaker createSnapshotOf: self.
 	self ruleManager updateRulesInArena: self.
 	
 	"check rules for all SIYYou blocks again (sometimes necessary),
 	direction for queue generation doesn't matter"
 	(self blockMediator generateQueueForDirection: 1@0)
 		do: [:aBlock | self ruleManager checkRulesFor: aBlock].	
+			
+	self undoCaretaker createSnapshotOf: self.
 	
 
 	
