@@ -458,5 +458,12 @@ OrderedCollection [
 			'SIYFloat.png'
 		],
 		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTextT.png'
+		],
+		#encoding : @6
 	}
 ]
