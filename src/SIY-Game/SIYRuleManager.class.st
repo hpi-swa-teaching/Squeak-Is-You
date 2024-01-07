@@ -93,7 +93,7 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:53'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 20:53'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
@@ -298,6 +298,15 @@ SIYRuleManager >> invokeWin: aBlock [
 SIYRuleManager >> isDefeat: aBlock [
 	
 	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: aBlock class
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 20:02'
+}
+SIYRuleManager >> isFloat: aBlock [
+
+	^ (currentRules at: SIYFloat ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
