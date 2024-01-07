@@ -451,5 +451,12 @@ OrderedCollection [
 			'WinAnimation-2.png'
 		],
 		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYFloat.png'
+		],
+		#encoding : @6
 	}
 ]
