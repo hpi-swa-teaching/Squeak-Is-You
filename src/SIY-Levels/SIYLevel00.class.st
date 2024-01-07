@@ -15,7 +15,7 @@ SIYLevel00 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:38'
+	#'squeak_changestamp' : 'LK 1/6/2024 23:06'
 }
 SIYLevel00 >> buildLevel [
 	

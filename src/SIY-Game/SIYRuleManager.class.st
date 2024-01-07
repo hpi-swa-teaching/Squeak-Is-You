@@ -93,12 +93,15 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:53'
+	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| aTile |
+	
+	"don't check rules if game is locked"
+	aBlock arena isGameLocked ifTrue: [^ nil].
 	
 	aTile := aBlock neighborsHere.
 	
@@ -281,14 +284,15 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:27'
+	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
 }
 SIYRuleManager >> invokeWin: aBlock [
 	
-	aBlock arena game nextLevel.
-
-	"delete block, to prevent it from invoking win multiple times"
-	aBlock delete.
+	"lock game to prevent player movement while win animation plays"
+	aBlock arena lockGame.
+	
+	"don't switch levels here, SIYWinAnimation will do that if it has finished playing"
+	SIYWinAnimation playFor: aBlock
 ]
 
 {
