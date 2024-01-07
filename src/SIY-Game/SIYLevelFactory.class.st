@@ -148,12 +148,12 @@ SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:35'
+	#'squeak_changestamp' : 'LK 1/6/2024 22:15'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
 	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
 	
-	self placeBlock: aBlockClass at: (-3)@0 + aPoint.
+	self placeNounFor: aBlockClass at: (-3)@0 + aPoint.
 	self placeBlock: SIYAnd at: (-2)@0 + aPoint.
 	self placeHorizontalRule: anotherBlockClass is: aPropertyClass at: aPoint
 	
@@ -251,12 +251,12 @@ SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:35'
+	#'squeak_changestamp' : 'LK 1/6/2024 22:15'
 }
 SIYLevelFactory >> placeVerticalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
 	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
 	
-	self placeBlock: aBlockClass at: 0@(-3) + aPoint.
+	self placeNounFor: aBlockClass at: 0@(-3) + aPoint.
 	self placeBlock: SIYAnd at: 0@(-2) + aPoint.
 	self placeVerticalRule: anotherBlockClass is: aPropertyClass at: aPoint
 	

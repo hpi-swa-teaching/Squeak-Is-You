@@ -406,7 +406,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:23'
+	#'squeak_changestamp' : 'LK 1/6/2024 22:23'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -424,7 +424,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
 	(neighbours isNil) ifTrue: [^ false].
-	(neighbours anySatisfy: [:each | each isStop and: (each isShut and: self isOpen) not])
+	(neighbours anySatisfy: [:each | (each isStop) and: (each isShut and: self isOpen) not])
 		ifTrue: [^ false].
 	
 	"if there are any blocks in the way, try recursively moving them too"
@@ -539,7 +539,7 @@ SIYBlock >> postPositionRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:31'
+	#'squeak_changestamp' : 'LK 1/6/2024 18:17'
 }
 SIYBlock >> preMoveRoutine: aDirection [
 	"This routine gets triggered, before the block will be moved using basicMove,

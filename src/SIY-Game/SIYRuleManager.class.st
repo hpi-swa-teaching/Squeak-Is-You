@@ -61,12 +61,13 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:59'
+	#'squeak_changestamp' : 'LK 1/6/2024 21:24'
 }
 SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 
-	(aBlock isYou and: (aTile anySatisfy: [:each | each isDefeat and: each isYou not]))
-		ifTrue: [self invokeDeath: aBlock]
+	((aTile anySatisfy: [:each | each isYou]) 
+		and: (aTile anySatisfy: [:each | each isDefeat]))
+			ifTrue: [self invokeDefeat: aTile]
 ]
 
 {
@@ -81,12 +82,12 @@ SIYRuleManager >> checkMelt: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:26'
+	#'squeak_changestamp' : 'LK 1/6/2024 21:15'
 }
 SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
-	((aTile anySatisfy: [:each | each isOpen and: each isShut not])
-		and: (aTile anySatisfy: [:each | each isShut and: each isOpen not]))
+	((aTile anySatisfy: [:each | each isOpen])
+		and: (aTile anySatisfy: [:each | each isShut]))
 			ifTrue: [self invokeOpen: aTile]
 ]
 
@@ -120,11 +121,11 @@ SIYRuleManager >> checkSink: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/3/2024 20:01'
+	#'squeak_changestamp' : 'LK 1/6/2024 18:15'
 }
 SIYRuleManager >> checkWin: aBlock onTile: aTile [
 
-	(aBlock isYou and: (aTile anySatisfy: [:each | each isWin]))
+	((aTile anySatisfy: [:each | each isYou]) and: (aTile anySatisfy: [:each | each isWin]))
 		ifTrue: [self invokeWin: aBlock]
 ]
 
@@ -233,11 +234,11 @@ SIYRuleManager >> currentRules: aDictionary [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:22'
+	#'squeak_changestamp' : 'LK 1/6/2024 21:22'
 }
-SIYRuleManager >> invokeDeath: aBlock [
+SIYRuleManager >> invokeDefeat: aTile [
 
-	aBlock delete
+	aTile do: [:each | (each isYou) ifTrue: [each deleteAndRemember]]
 
 	
 	
@@ -280,11 +281,14 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:21'
+	#'squeak_changestamp' : 'LK 1/6/2024 19:27'
 }
 SIYRuleManager >> invokeWin: aBlock [
 	
-	aBlock arena game nextLevel
+	aBlock arena game nextLevel.
+
+	"delete block, to prevent it from invoking win multiple times"
+	aBlock delete.
 ]
 
 {
@@ -367,9 +371,12 @@ SIYRuleManager >> isSink: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+	#'squeak_changestamp' : 'LK 1/6/2024 22:22'
 }
 SIYRuleManager >> isStop: aBlock [
+	
+	"blocks that can override this rule"
+	(aBlock isYou or: aBlock isPush) ifTrue: [^ false].
 	
 	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: aBlock class
 
