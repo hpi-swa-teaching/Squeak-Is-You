@@ -114,7 +114,7 @@ SIYWinAnimation >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:54'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:07'
 }
 SIYWinAnimation >> initializeFor: aBlock [
 
@@ -123,7 +123,7 @@ SIYWinAnimation >> initializeFor: aBlock [
 	self initialize.
 	
 	self arena addMorph: self.
-	self center: aBlock center.
+	self center: aBlock center
 ]
 
 {
