@@ -311,6 +311,15 @@ SIYBlock >> isDefeat [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 19:58'
+}
+SIYBlock >> isFloat [
+
+	^ self ruleManager isFloat self
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/5/2024 14:19'
 }
 SIYBlock >> isHot [

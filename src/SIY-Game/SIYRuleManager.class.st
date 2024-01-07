@@ -306,6 +306,15 @@ SIYRuleManager >> isDefeat: aBlock [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 20:02'
+}
+SIYRuleManager >> isFloat: aBlock [
+
+	^ (currentRules at: SIYFloat ifAbsent: [^ false]) includes: aBlock class
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/5/2024 14:18'
 }
 SIYRuleManager >> isHot: aBlock [
