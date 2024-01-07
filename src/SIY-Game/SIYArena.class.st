@@ -28,7 +28,8 @@ Class {
 		'pressedKey',
 		'undoCaretaker',
 		'flexShell',
-		'scaleFactor'
+		'scaleFactor',
+		'gameLock'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 21:48'
@@ -110,7 +111,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:31'
+	#'squeak_changestamp' : 'LK 1/7/2024 19:05'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -118,7 +119,7 @@ SIYArena >> checkKeyboardInputs [
 	
 	aKey := self pressedKey.
 	aKey ifNil: [self stepFaster] ifNotNil: [self stepSlower].
-    
+	
 	aKey caseOf: {
 		"restart & undo"
 		[$r] -> [self game restartLevel].
@@ -211,6 +212,24 @@ SIYArena >> initializeWithExtent: aPoint scaled: aFloat [
 	self scaleFactor: aFloat.
 	self initializeWithExtent: aPoint
 	
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/7/2024 18:58'
+}
+SIYArena >> isGameLocked [
+
+	^ gameLock ifNil: [gameLock := false]
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/7/2024 19:06'
+}
+SIYArena >> lockGame [
+
+	gameLock := true
 ]
 
 {
@@ -355,11 +374,13 @@ SIYArena >> slowStepTime [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:08'
+	#'squeak_changestamp' : 'LK 1/7/2024 19:05'
 }
 SIYArena >> step [
+	
+	self isGameLocked 
+		ifFalse: [self checkKeyboardInputs]
 
-	self checkKeyboardInputs
 ]
 
 {
@@ -415,6 +436,15 @@ SIYArena >> textureSize [
 SIYArena >> undoCaretaker [
 
 	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker new]
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/7/2024 19:06'
+}
+SIYArena >> unlockGame [
+
+	gameLock := false
 ]
 
 {
