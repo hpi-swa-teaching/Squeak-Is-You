@@ -111,7 +111,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/7/2024 19:05'
+	#'squeak_changestamp' : 'KD 1/8/2024 22:21'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -152,12 +152,12 @@ SIYArena >> dropEnabled [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:42'
+	#'squeak_changestamp' : 'KD 1/8/2024 15:10'
 }
 SIYArena >> fastStepTime [
 	"faster step time for polling keyboard inputs, while no button is pressed"
 
-	^ 1
+	^ 0.5
 ]
 
 {
@@ -363,13 +363,13 @@ SIYArena >> scaleFactor: aScaleFactor [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:43'
+	#'squeak_changestamp' : 'KD 1/8/2024 15:10'
 }
 SIYArena >> slowStepTime [
 	"slower step time affects the delay between block movements, while a keyboard
 	button is held down"
 
-	^ 185
+	^ 180
 ]
 
 {
