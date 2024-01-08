@@ -430,12 +430,12 @@ SIYRuleManager >> isStop: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:58'
 }
 SIYRuleManager >> isWin: aBlock [
 	
 	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
+	(aBlock isFloat and: (aBlock isYou not)) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYWin forBlock: aBlock
 

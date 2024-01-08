@@ -15,7 +15,7 @@ SIYLevel03 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 21:16'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
 SIYLevel03 >> buildLevel [
 	
@@ -41,7 +41,7 @@ SIYLevel03 >> buildLevel [
 	
 	self placeNounFor: SIYSqueak at: 3@7.
 	self placeBlock: SIYIs at: 7@3.
-	self placeBlock: SIYWin at: 10@5.
+	self placeBlock: SIYWin at: 10@5
 ]
 
 {

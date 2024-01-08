@@ -86,9 +86,9 @@ SIYLevel00 >> nextLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:22'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:58'
 }
 SIYLevel00 >> previousLevel [
 
-	^ SIYLevel18
+	^ SIYLevel21
 ]

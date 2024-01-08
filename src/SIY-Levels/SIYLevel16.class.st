@@ -24,7 +24,7 @@ SIYLevel16 >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 22:19'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:25'
 }
 SIYLevel16 >> buildLevel [
 	
@@ -52,7 +52,7 @@ SIYLevel16 >> buildLevel [
 	self placeBlock: SIYDoor at: 17@7.
 	
 	self placeMultipleBlocks: SIYAlgae at: {2@2 . 2@14 . 4@15 . 22@15 . 26@14 . 27@13 . 26@10 . 26@2 . 27@4}.
-	self placeBlock: SIYStar at: 19@14.
+	self placeBlock: SIYStar at: 19@14
 ]
 
 {

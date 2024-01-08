@@ -15,7 +15,7 @@ SIYLevel01 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 21:09'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:40'
 }
 SIYLevel01 >> buildLevel [
 	
@@ -32,7 +32,7 @@ SIYLevel01 >> buildLevel [
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 2@1.
 	self placeHorizontalRule: SIYWall is: SIYStop at: 2@9.
 	self placeHorizontalRule: SIYFlag is: SIYWin at: 10@1.
-	self placeHorizontalRule: SIYRock is: SIYPush at: 10@9.
+	self placeHorizontalRule: SIYRock is: SIYPush at: 10@9
 	
 ]
 
