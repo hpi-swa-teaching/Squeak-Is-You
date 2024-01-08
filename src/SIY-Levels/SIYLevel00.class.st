@@ -15,7 +15,7 @@ SIYLevel00 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:03'
 }
 SIYLevel00 >> buildLevel [
 	
@@ -60,6 +60,8 @@ SIYLevel00 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYFlower at: {3@12 . 6@10 .  15@8}.
 	self placeNounFor: SIYFlower at: 15@6.
+	
+	self placeBlock: SIYFloat at: 2@2
 	
 
 ]
