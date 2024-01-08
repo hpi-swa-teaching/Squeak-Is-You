@@ -18,14 +18,15 @@ Class {
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:05'
+	#'squeak_changestamp' : 'LK 1/9/2024 00:06'
 }
-SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
+SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
-	| nounBlocks propertyBlocks aSet |
+	| nounBlocks propertyBlocks replacementNoun aSet |
 	
-	nounBlocks := self collectNounsLeftOf: anOperatorBlock.
-	propertyBlocks := self collectPropertiesRightOf: anOperatorBlock.
+	nounBlocks := self collectNounsLeftOf: anIsBlock.
+	propertyBlocks := self collectPropertiesRightOf: anIsBlock.
+	replacementNoun := self collectNounRightOf: anIsBlock.
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
@@ -33,6 +34,12 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
 			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
+	
+	"check for any horizontal replacement rules"
+	(nounBlocks notEmpty and: replacementNoun notNil)
+		ifTrue: [nounBlocks
+			do: [:aNoun | aNoun arena 
+				replaceBlocks: aNoun representsBlock with: replacementNoun representsBlock]].
 	
 	^ aDictionary
 
@@ -40,14 +47,15 @@ SIYRuleManager >> addHorizontalRulesFor: anOperatorBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:27'
+	#'squeak_changestamp' : 'LK 1/9/2024 00:06'
 }
-SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
+SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
-	| nounBlocks propertyBlocks aSet |
+	| nounBlocks propertyBlocks replacementNoun aSet |
 	
-	nounBlocks := self collectNounsAbove: anOperatorBlock.
-	propertyBlocks := self collectPropertiesBelow: anOperatorBlock.
+	nounBlocks := self collectNounsAbove: anIsBlock.
+	propertyBlocks := self collectPropertiesBelow: anIsBlock.
+	replacementNoun := self collectNounBelow: anIsBlock.
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
@@ -55,6 +63,12 @@ SIYRuleManager >> addVerticalRulesFor: anOperatorBlock to: aDictionary [
 			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
+	
+	"check for any vertical replacement rules"
+	(nounBlocks notEmpty and: replacementNoun notNil)
+		ifTrue: [nounBlocks
+			do: [:aNoun | aNoun arena
+				replaceBlocks: aNoun representsBlock with: replacementNoun representsBlock]].
 	
 	^ aDictionary
 ]
@@ -132,6 +146,44 @@ SIYRuleManager >> checkWin: aBlock onTile: aTile [
 	((aTile anySatisfy: [:each | each isYou and: each isFloat not]) 
 		and: (aTile anySatisfy: [:each | each isWin]))
 			ifTrue: [self invokeWin: aBlock]
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/8/2024 23:56'
+}
+SIYRuleManager >> collectNounBelow: anOperatorBlock [
+	"recursively collect the first noun below this operator block (if conjoined with SIYAnd)"
+	
+	anOperatorBlock neighborsBelow ifNotNil: [anOperatorBlock neighborsBelow
+		do: [:aTextBlock | (aTextBlock isKindOf: SIYNoun) ifTrue: [^ aTextBlock].
+			(aTextBlock isKindOf: SIYProperty) ifTrue: [aTextBlock neighborsBelow
+				ifNotNil: [aTextBlock neighborsBelow do: [:anAnd | (anAnd isKindOf: SIYAnd)
+					ifTrue: [^ self collectNounBelow: anAnd]]]]]].
+	
+	"return nil, if no noun was found"
+	^ nil
+		
+
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/8/2024 23:56'
+}
+SIYRuleManager >> collectNounRightOf: anOperatorBlock [
+	"recursively collect the first noun right of this operator block (if conjoined with SIYAnd)"
+	
+	anOperatorBlock neighborsRight ifNotNil: [anOperatorBlock neighborsRight
+		do: [:aTextBlock | (aTextBlock isKindOf: SIYNoun) ifTrue: [^ aTextBlock].
+			(aTextBlock isKindOf: SIYProperty) ifTrue: [aTextBlock neighborsRight
+				ifNotNil: [aTextBlock neighborsRight do: [:anAnd | (anAnd isKindOf: SIYAnd)
+					ifTrue: [^ self collectNounRightOf: anAnd]]]]]].
+	
+	"return nil, if no noun was found"
+	^ nil
+		
+
 ]
 
 {
