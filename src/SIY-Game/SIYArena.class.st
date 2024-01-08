@@ -336,11 +336,11 @@ SIYArena >> resetPositionDictionary [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:16'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 12:50'
 }
 SIYArena >> ruleManager [
 
-	^ ruleManager ifNil: [ruleManager := SIYRuleManager new.]
+	^ ruleManager ifNil: [ruleManager := SIYRuleManager new]
 ]
 
 {

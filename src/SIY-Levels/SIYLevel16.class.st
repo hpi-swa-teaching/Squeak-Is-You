@@ -66,7 +66,7 @@ SIYLevel16 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'KD 1/8/2024 13:53'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:21'
 }
 SIYLevel16 >> nextLevel [
 
