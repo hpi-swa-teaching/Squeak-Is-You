@@ -60,11 +60,11 @@ SIYLevel20 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:00'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:23'
 }
 SIYLevel20 >> description [
 
-	^ 'Level 18: Float'
+	^ 'Level 20: Bridge Building'
 ]
 
 {
