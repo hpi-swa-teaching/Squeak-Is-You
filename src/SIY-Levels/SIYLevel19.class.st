@@ -45,11 +45,11 @@ SIYLevel19 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:16'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:23'
 }
 SIYLevel19 >> description [
 
-	^ 'Level 18: Warm River'
+	^ 'Level 19: Warm River'
 ]
 
 {
