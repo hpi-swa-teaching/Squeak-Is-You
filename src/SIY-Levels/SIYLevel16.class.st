@@ -66,11 +66,11 @@ SIYLevel16 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:36'
+	#'squeak_changestamp' : 'KD 1/8/2024 13:53'
 }
 SIYLevel16 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYLevel17
 ]
 
 {
