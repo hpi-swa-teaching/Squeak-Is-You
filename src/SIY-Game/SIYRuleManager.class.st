@@ -93,12 +93,15 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 20:53'
+	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| aTile |
+	
+	"don't check rules if game is locked"
+	aBlock arena isGameLocked ifTrue: [^ nil].
 	
 	aTile := aBlock neighborsHere.
 	
@@ -281,39 +284,52 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:27'
+	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
 }
 SIYRuleManager >> invokeWin: aBlock [
 	
-	aBlock arena game nextLevel.
-
-	"delete block, to prevent it from invoking win multiple times"
-	aBlock delete.
+	"lock game to prevent player movement while win animation plays"
+	aBlock arena lockGame.
+	
+	"don't switch levels here, SIYWinAnimation will do that if it has finished playing"
+	SIYWinAnimation playFor: aBlock
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isDefeat: aBlock [
+	
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isDefeat: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYDefeat ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 20:02'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isFloat: aBlock [
 
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isFloat: (SIYText basicNew)].
+	
 	^ (currentRules at: SIYFloat ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:18'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isHot: aBlock [
+
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isHot: (SIYText basicNew)].
 
 	^ (currentRules at: SIYHot ifAbsent: [^ false]) includes: aBlock class
 
@@ -326,10 +342,14 @@ SIYRuleManager >> isHot: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:18'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isMelt: aBlock [
 
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isMelt: (SIYText basicNew)].
+	
 	^ (currentRules at: SIYMelt ifAbsent: [^ false]) includes: aBlock class
 
 	
@@ -341,20 +361,29 @@ SIYRuleManager >> isMelt: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:36'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isOpen: aBlock [
+	
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isOpen: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYOpen ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isPush: aBlock [
 	
+	"text blocks are always isPush"
 	(aBlock isKindOf: SIYText) ifTrue: [^ true].
+	
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isPush: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYPush ifAbsent: [^ false]) includes: aBlock class
 
@@ -362,30 +391,42 @@ SIYRuleManager >> isPush: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:03'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isShut: aBlock [
+	
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isShut: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYShut ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:30'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isSink: aBlock [
+
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isSink: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYSink ifAbsent: [^ false]) includes: aBlock class
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/6/2024 22:22'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYRuleManager >> isStop: aBlock [
 	
-	"blocks that can override this rule"
+	"isYou and isPush can override this rule"
 	(aBlock isYou or: aBlock isPush) ifTrue: [^ false].
+	
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isStop: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYStop ifAbsent: [^ false]) includes: aBlock class
 
@@ -393,9 +434,13 @@ SIYRuleManager >> isStop: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:42'
 }
 SIYRuleManager >> isWin: aBlock [
+	
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isWin: (SIYText basicNew)].
 	
 	^ (currentRules at: SIYWin ifAbsent: [^ false]) includes: aBlock class
 
@@ -403,9 +448,13 @@ SIYRuleManager >> isWin: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 23:04'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:42'
 }
 SIYRuleManager >> isYou: aBlock [
+
+	"if block is a text block, check rules for general text block"
+	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+		ifTrue: [^ self isYou: (SIYText basicNew)].
 
 	^ (currentRules at: SIYYou ifAbsent: [^ false]) includes: aBlock class
 

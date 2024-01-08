@@ -536,14 +536,18 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/5/2024 18:12'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:08'
 }
 SIYBlock >> postPositionRoutine [
 	"This routine gets triggered, after the block changed its position, no matter how.
 	For example, this routine will also be triggered, if the block was moved through the halo."
 
 	self informMediator.
-	self comeToFront
+	
+	"only come to front if game is unlocked, to prevent the block from overlapping
+	the win animation"
+	self arena isGameLocked ifFalse: [self comeToFront]
+	
 ]
 
 {

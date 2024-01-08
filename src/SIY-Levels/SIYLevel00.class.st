@@ -15,7 +15,7 @@ SIYLevel00 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:38'
+	#'squeak_changestamp' : 'LK 1/7/2024 22:41'
 }
 SIYLevel00 >> buildLevel [
 	
@@ -45,7 +45,7 @@ SIYLevel00 >> buildLevel [
 	
 	self placeVerticalRule: SIYWater is: SIYSink at: 18@8.
 	self placeVerticalRule: SIYLava is: SIYHot at: 17@4.
-	self placeVerticalRule: SIYSqueak is: SIYMelt at: 18@4.
+	self placeVerticalRule: SIYText is: SIYMelt at: 18@4.
 
 	self placeBlock: SIYKey at: 4@13. 
 	
