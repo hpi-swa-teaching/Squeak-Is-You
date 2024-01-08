@@ -24,7 +24,7 @@ SIYLevel12 >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:21'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
 SIYLevel12 >> buildLevel [
 	
@@ -49,7 +49,7 @@ SIYLevel12 >> buildLevel [
 	self placeHorizontalRule: SIYStar is: SIYDefeat at: 23@14.
 	
 	self placeMultipleBlocks: SIYPillar at: {11@3 . 13@4 . 20@2 . 19@13 . 13@12}.
-	self placeMultipleBlocks: SIYAlgae at: {11@9 . 2@12 . 17@13 . 16@14 . 21@13 . 22@10 . 23@3 . 21@4 . 18@3 . 17@2 . 2@2}.
+	self placeMultipleBlocks: SIYAlgae at: {11@9 . 2@12 . 17@13 . 16@14 . 21@13 . 22@10 . 23@3 . 21@4 . 18@3 . 17@2 . 2@2}
 	
 ]
 

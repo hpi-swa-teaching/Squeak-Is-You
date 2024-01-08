@@ -24,7 +24,7 @@ SIYLevel10 >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 19:43'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
 SIYLevel10 >> buildLevel [
 	
@@ -46,7 +46,7 @@ SIYLevel10 >> buildLevel [
 	self placeMultipleBlocks: SIYCrab at: {15@13 . 14@8 . 12@15 . 19@3 . 21@15 . 23@7 . 4@1 . 20@12 . 5@12 . 4@8 . 8@3 . 13@4}.
 	self placeMultipleBlocks: SIYBubble at: {2@3 . 4@7 . 14@2 . 20@8 . 21@14}.
 																							
-	self placeBlock: SIYSqueak at: 14@5.
+	self placeBlock: SIYSqueak at: 14@5
 	
 	
 	
