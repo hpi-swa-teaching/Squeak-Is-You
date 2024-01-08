@@ -1,12 +1,15 @@
 "
 The SIYArena is the visible part of the game and contains all SIYBlocks.
 
+If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SYIGame startWithScale: 1.0`.
+
 Instance Variables
 	arenaHeight: <Integer>
 	arenaWidth: <Integer>
-	blockMediator:	 <SIYBlockMediator>
-	game:	<SIYGame>
+	blockMediator: <SIYBlockMediator>
+	game: <SIYGame>
 	positionDictionary: <Dictionary>
+	replacementSet: <Set>
 	pressedKey: <Character>
 	ruleManager: <SIYRuleManager>
 	snapshotCaretaker: <SIYSnapshotCaretaker>
@@ -25,6 +28,7 @@ Class {
 		'blockMediator',
 		'ruleManager',
 		'positionDictionary',
+		'replacementSet',
 		'pressedKey',
 		'undoCaretaker',
 		'flexShell',
@@ -32,7 +36,7 @@ Class {
 		'gameLock'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 21:48'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:17'
 }
 
 {
@@ -111,7 +115,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 1/8/2024 22:21'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:34'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -123,7 +127,7 @@ SIYArena >> checkKeyboardInputs [
 	aKey caseOf: {
 		"restart & undo"
 		[$r] -> [self game restartLevel].
-        	[$z] -> [self undoCaretaker restoreSnapshot].
+        	[$z] -> [self undoCaretaker undo].
 		"movement with arrow keys"
 		[Character arrowUp] -> [self moveBlocksDirection: 0@(-1)].
 		[Character arrowDown] -> [self moveBlocksDirection: 0@1].
@@ -267,15 +271,6 @@ SIYArena >> positionDictionary [
 ]
 
 {
-	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:52'
-}
-SIYArena >> positionDictionary: aDictionary [
-
-	positionDictionary := aDictionary
-]
-
-{
 	#category : #movement,
 	#'squeak_changestamp' : 'LK 1/6/2024 19:28'
 }
@@ -298,13 +293,13 @@ SIYArena >> postMoveBlocksRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:50'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:19'
 }
 SIYArena >> preMoveBlocksRoutine [
 	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
-	self resetPositionDictionary.
+	self resetDictionaryAndSet.
 	self ruleManager updateRulesInArena: self.
 
 	
@@ -326,12 +321,32 @@ SIYArena >> pressedKey [
 ]
 
 {
-	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/3/2024 20:52'
+	#category : #'replacing blocks',
+	#'squeak_changestamp' : 'LK 1/8/2024 23:32'
 }
-SIYArena >> resetPositionDictionary [
+SIYArena >> replaceBlocks: aBlockClass with: anotherBlockClass [
 
-	^ self positionDictionary removeAll
+	(self blockMediator getBlocksOfType: aBlockClass)
+		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/8/2024 23:18'
+}
+SIYArena >> replacementSet [
+
+	^ replacementSet ifNil: [replacementSet := Set new]
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 1/8/2024 23:19'
+}
+SIYArena >> resetDictionaryAndSet [
+
+	self positionDictionary removeAll.
+	self replacementSet removeAll
 ]
 
 {

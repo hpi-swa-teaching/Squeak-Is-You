@@ -458,7 +458,7 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:13'
+	#'squeak_changestamp' : 'LK 1/8/2024 22:59'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
@@ -467,7 +467,7 @@ SIYRuleManager >> updateRulesInArena: anArena [
 	
 	aDictionary := Dictionary new.
 	
-	(anArena blockMediator getIsBlocks)
+	(anArena blockMediator getBlocksOfType: SIYIs)
 		do: [:anIsBlock | aDictionary := self addHorizontalRulesFor: anIsBlock to: aDictionary.
 			aDictionary := self addVerticalRulesFor: anIsBlock to: aDictionary].
 	
