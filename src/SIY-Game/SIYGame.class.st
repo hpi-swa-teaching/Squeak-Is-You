@@ -142,13 +142,13 @@ SIYGame >> enableBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:18'
+	#'squeak_changestamp' : 'LK 1/9/2024 17:30'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	self startLevel: SIYLevel01 atPosition: World clearArea center + self keyHintOffset
+	self startLevel: SIYIntro01 atPosition: World clearArea center + self keyHintOffset
 ]
 
 {
