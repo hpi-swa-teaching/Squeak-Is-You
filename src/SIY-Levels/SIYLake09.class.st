@@ -66,11 +66,11 @@ SIYLake09 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 15:52'
+	#'squeak_changestamp' : 'LK 1/10/2024 00:08'
 }
 SIYLake09 >> nextLevel [
 
-	^ SIYIsland01
+	^ SIYLake10
 ]
 
 {

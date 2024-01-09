@@ -64,9 +64,9 @@ SIYIsland01 >> nextLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 15:52'
+	#'squeak_changestamp' : 'LK 1/10/2024 00:09'
 }
 SIYIsland01 >> previousLevel [
 
-	^ SIYLake09
+	^ SIYLake10
 ]
