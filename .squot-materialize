@@ -465,5 +465,11 @@ OrderedCollection [
 			'SIYTextT.png'
 		],
 		#encoding : @6
+	},
+	SquotSoundMapper {
+		#path : FSAbsolutePath [
+			'audio',
+			'SIYmoveSound.wav'
+		]
 	}
 ]

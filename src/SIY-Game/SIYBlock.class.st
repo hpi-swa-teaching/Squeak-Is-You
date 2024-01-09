@@ -553,13 +553,14 @@ SIYBlock >> postPositionRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/6/2024 18:17'
+	#'squeak_changestamp' : 'KD 1/9/2024 13:55'
 }
 SIYBlock >> preMoveRoutine: aDirection [
 	"This routine gets triggered, before the block will be moved using basicMove,
 	for example through keyboard inputs. It will NOT get triggered, if the block will be
 	moved using the halo."
 
+	self arena audioPlayer playSound: ((SIYAudioManager new) getSound: 'SIYmoveSound.wav').
 	self arena positionDictionary at: self put: self coords
 
 ]
