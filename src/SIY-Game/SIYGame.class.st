@@ -81,7 +81,7 @@ SIYGame >> backgroundMorph [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/9/2024 20:16'
+	#'squeak_changestamp' : 'LK 1/9/2024 20:54'
 }
 SIYGame >> createBackgroundMorph [
 
