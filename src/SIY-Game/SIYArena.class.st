@@ -237,17 +237,14 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:47'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:52'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction"
-
-	| movementQueue |
-	
-	movementQueue := self blockMediator generateQueueForDirection: aDirection.
 	
 	self preMoveBlocksRoutine.
-	movementQueue do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
+	(self blockMediator generateQueueForDirection: aDirection)
+		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
 ]
 

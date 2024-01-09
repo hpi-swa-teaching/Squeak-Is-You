@@ -3,6 +3,7 @@ A SIYRuleManager is an interface for checking and accessing current game rules.
 
 Instance Variables
 	currentRules: <Dictionary>
+	replacementRules: <Dictionary>
 
 
 "
@@ -13,20 +14,40 @@ Class {
 		'currentRules'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:39'
+	#'squeak_changestamp' : 'LK 1/9/2024 11:39'
 }
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:25'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:01'
+}
+SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
+
+	| nounBlocks replacementNoun |
+	
+	nounBlocks := self collectNounsLeftOf: anIsBlock.
+	replacementNoun := self collectNounRightOf: anIsBlock.
+
+	"check for any horizontal replacement rules"
+	(nounBlocks notEmpty and: replacementNoun notNil)
+		ifTrue: [nounBlocks
+			do: [:aNoun | aDictionary at: aNoun representsBlock
+				put: replacementNoun representsBlock]].
+		
+	^ aDictionary
+
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/9/2024 11:53'
 }
 SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
-	| nounBlocks propertyBlocks replacementNoun aSet |
+	| nounBlocks propertyBlocks aSet |
 	
 	nounBlocks := self collectNounsLeftOf: anIsBlock.
 	propertyBlocks := self collectPropertiesRightOf: anIsBlock.
-	replacementNoun := self collectNounRightOf: anIsBlock.
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
@@ -34,14 +55,6 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
-	
-	"check for any horizontal replacement rules"
-	(nounBlocks notEmpty and: replacementNoun notNil)
-		ifTrue: [nounBlocks
-			do: [:aNoun | self
-				replaceBlocks: aNoun representsBlock
-				with: replacementNoun representsBlock
-				in: aNoun arena]].
 	
 	^ aDictionary
 
@@ -49,15 +62,35 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:25'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:10'
+}
+SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
+
+	| nounBlocks replacementNoun |
+	
+	nounBlocks := self collectNounsAbove: anIsBlock.
+	replacementNoun := self collectNounBelow: anIsBlock.
+
+	"check for any horizontal replacement rules"
+	(nounBlocks notEmpty and: replacementNoun notNil)
+		ifTrue: [nounBlocks
+			do: [:aNoun | aDictionary at: aNoun representsBlock
+				put: replacementNoun representsBlock]].
+		
+	^ aDictionary
+
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/9/2024 11:53'
 }
 SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
-	| nounBlocks propertyBlocks replacementNoun aSet |
+	| nounBlocks propertyBlocks aSet |
 	
 	nounBlocks := self collectNounsAbove: anIsBlock.
 	propertyBlocks := self collectPropertiesBelow: anIsBlock.
-	replacementNoun := self collectNounBelow: anIsBlock.
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
@@ -65,14 +98,6 @@ SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
-	
-	"check for any vertical replacement rules"
-	(nounBlocks notEmpty and: replacementNoun notNil)
-		ifTrue: [nounBlocks
-			do: [:aNoun | self
-				replaceBlocks: aNoun representsBlock
-				with: replacementNoun representsBlock
-				in: aNoun arena]].
 	
 	^ aDictionary
 ]
@@ -332,6 +357,17 @@ SIYRuleManager >> invokeOpen: aTile [
 
 {
 	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/9/2024 12:56'
+}
+SIYRuleManager >> invokeReplacementRules: aDictionary in: anArena [
+
+	aDictionary
+		keysAndValuesDo: [:aBlockClass :replacementBlock | 
+			self replaceBlocks: aBlockClass with: replacementBlock in: anArena]
+]
+
+{
+	#category : #'rule invoking',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:06'
 }
 SIYRuleManager >> invokeSink: aTile [
@@ -493,32 +529,43 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/9/2024 11:30'
+	#'squeak_changestamp' : 'LK 1/9/2024 11:38'
 }
 SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
 	"blocks can't be replaced with textblocks"
 	(anotherBlockClass = SIYText) ifTrue: [^ nil "do nothing"].
 	
-	(anArena replacementSet includes: aBlockClass)
-		ifFalse: [(anArena blockMediator getBlocksOfType: aBlockClass)
-			do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]]
+	(anArena blockMediator getBlocksOfType: aBlockClass)
+		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
 ]
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/8/2024 22:59'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:11'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
 
-	| aDictionary |
+	| ruleDictionary replacementDictionary|
 	
-	aDictionary := Dictionary new.
+	ruleDictionary := Dictionary new.
+	replacementDictionary := Dictionary new.
 	
 	(anArena blockMediator getBlocksOfType: SIYIs)
-		do: [:anIsBlock | aDictionary := self addHorizontalRulesFor: anIsBlock to: aDictionary.
-			aDictionary := self addVerticalRulesFor: anIsBlock to: aDictionary].
+		do: [:anIsBlock | 
+			"collect noun-is-property rules"
+			ruleDictionary := self addHorizontalRulesFor: anIsBlock 
+				to: ruleDictionary.
+			ruleDictionary := self addVerticalRulesFor: anIsBlock
+				 to: ruleDictionary.
+				
+			"collect noun-is-noun rules"
+			replacementDictionary := self addHorizontalReplacementRulesFor: anIsBlock 
+				to: replacementDictionary.
+			replacementDictionary := self addVerticalReplacementRulesFor: anIsBlock
+				 to: replacementDictionary].
 	
-	self currentRules: aDictionary
+	self invokeReplacementRules: replacementDictionary in: anArena.
+	self currentRules: ruleDictionary
 ]
