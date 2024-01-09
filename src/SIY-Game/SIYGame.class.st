@@ -81,7 +81,7 @@ SIYGame >> backgroundMorph [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:07'
+	#'squeak_changestamp' : 'LK 1/9/2024 20:54'
 }
 SIYGame >> createBackgroundMorph [
 
@@ -90,6 +90,7 @@ SIYGame >> createBackgroundMorph [
 	aMorph := Morph new
 		extent: World clearArea extent;
 		color: self backgroundColor;
+		beSticky;
 		openInWorld.
 
 	anotherMorph := self createKeyHintMorph.
@@ -138,6 +139,15 @@ SIYGame >> customScaleFactor: aFloat [
 SIYGame >> enableBackground [
 
 	^ self customScaleFactor isNil
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/9/2024 19:41'
+}
+SIYGame >> handlesMouseDown: anEvent [
+
+	^ true
 ]
 
 {
