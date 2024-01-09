@@ -415,7 +415,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:30'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -428,6 +428,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	
 	"check rules for isShut & isOpen"
 	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
+	aBlock ifNotNil: [(self isOpen and: aBlock isShut) ifTrue: [^ true]].
 	
 	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].

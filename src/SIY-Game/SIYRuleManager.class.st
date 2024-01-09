@@ -18,7 +18,7 @@ Class {
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 00:06'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:25'
 }
 SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
@@ -38,8 +38,10 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 	"check for any horizontal replacement rules"
 	(nounBlocks notEmpty and: replacementNoun notNil)
 		ifTrue: [nounBlocks
-			do: [:aNoun | aNoun arena 
-				replaceBlocks: aNoun representsBlock with: replacementNoun representsBlock]].
+			do: [:aNoun | self
+				replaceBlocks: aNoun representsBlock
+				with: replacementNoun representsBlock
+				in: aNoun arena]].
 	
 	^ aDictionary
 
@@ -47,7 +49,7 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 00:06'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:25'
 }
 SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
@@ -67,8 +69,10 @@ SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 	"check for any vertical replacement rules"
 	(nounBlocks notEmpty and: replacementNoun notNil)
 		ifTrue: [nounBlocks
-			do: [:aNoun | aNoun arena
-				replaceBlocks: aNoun representsBlock with: replacementNoun representsBlock]].
+			do: [:aNoun | self
+				replaceBlocks: aNoun representsBlock
+				with: replacementNoun representsBlock
+				in: aNoun arena]].
 	
 	^ aDictionary
 ]
@@ -506,6 +510,16 @@ SIYRuleManager >> isYou: aBlock [
 	
 	
 	
+]
+
+{
+	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/9/2024 09:24'
+}
+SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
+
+	(anArena blockMediator getBlocksOfType: aBlockClass)
+		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
 ]
 
 {

@@ -321,17 +321,7 @@ SIYArena >> pressedKey [
 ]
 
 {
-	#category : #'replacing blocks',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:32'
-}
-SIYArena >> replaceBlocks: aBlockClass with: anotherBlockClass [
-
-	(self blockMediator getBlocksOfType: aBlockClass)
-		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
-]
-
-{
-	#category : #undo,
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/8/2024 23:18'
 }
 SIYArena >> replacementSet [
