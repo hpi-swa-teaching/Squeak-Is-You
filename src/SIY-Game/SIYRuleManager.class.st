@@ -3,6 +3,7 @@ A SIYRuleManager is an interface for checking and accessing current game rules.
 
 Instance Variables
 	currentRules: <Dictionary>
+	replacementRules: <Dictionary>
 
 
 "
@@ -13,20 +14,40 @@ Class {
 		'currentRules'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:39'
+	#'squeak_changestamp' : 'LK 1/9/2024 11:39'
 }
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:25'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:01'
+}
+SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
+
+	| nounBlocks replacementNoun |
+	
+	nounBlocks := self collectNounsLeftOf: anIsBlock.
+	replacementNoun := self collectNounRightOf: anIsBlock.
+
+	"check for any horizontal replacement rules"
+	(nounBlocks notEmpty and: replacementNoun notNil)
+		ifTrue: [nounBlocks
+			do: [:aNoun | aDictionary at: aNoun representsBlock
+				put: replacementNoun representsBlock]].
+		
+	^ aDictionary
+
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/9/2024 11:53'
 }
 SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
-	| nounBlocks propertyBlocks replacementNoun aSet |
+	| nounBlocks propertyBlocks aSet |
 	
 	nounBlocks := self collectNounsLeftOf: anIsBlock.
 	propertyBlocks := self collectPropertiesRightOf: anIsBlock.
-	replacementNoun := self collectNounRightOf: anIsBlock.
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
@@ -34,14 +55,6 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
-	
-	"check for any horizontal replacement rules"
-	(nounBlocks notEmpty and: replacementNoun notNil)
-		ifTrue: [nounBlocks
-			do: [:aNoun | self
-				replaceBlocks: aNoun representsBlock
-				with: replacementNoun representsBlock
-				in: aNoun arena]].
 	
 	^ aDictionary
 
@@ -49,15 +62,35 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:25'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:10'
+}
+SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
+
+	| nounBlocks replacementNoun |
+	
+	nounBlocks := self collectNounsAbove: anIsBlock.
+	replacementNoun := self collectNounBelow: anIsBlock.
+
+	"check for any horizontal replacement rules"
+	(nounBlocks notEmpty and: replacementNoun notNil)
+		ifTrue: [nounBlocks
+			do: [:aNoun | aDictionary at: aNoun representsBlock
+				put: replacementNoun representsBlock]].
+		
+	^ aDictionary
+
+]
+
+{
+	#category : #'rule updating',
+	#'squeak_changestamp' : 'LK 1/9/2024 11:53'
 }
 SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
-	| nounBlocks propertyBlocks replacementNoun aSet |
+	| nounBlocks propertyBlocks aSet |
 	
 	nounBlocks := self collectNounsAbove: anIsBlock.
 	propertyBlocks := self collectPropertiesBelow: anIsBlock.
-	replacementNoun := self collectNounBelow: anIsBlock.
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
@@ -65,25 +98,17 @@ SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
-	
-	"check for any vertical replacement rules"
-	(nounBlocks notEmpty and: replacementNoun notNil)
-		ifTrue: [nounBlocks
-			do: [:aNoun | self
-				replaceBlocks: aNoun representsBlock
-				with: replacementNoun representsBlock
-				in: aNoun arena]].
 	
 	^ aDictionary
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:13'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:18'
 }
 SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
-
-	((aTile anySatisfy: [:each | each isYou and: each isFloat not]) 
+	
+	((aTile anySatisfy: [:each | each isYou]) 
 		and: (aTile anySatisfy: [:each | each isDefeat]))
 			ifTrue: [self invokeDefeat: aTile]
 ]
@@ -111,43 +136,47 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
-	| aTile |
+	| groundTile floatingTile |
 	
 	"don't check rules if game is locked"
 	aBlock arena isGameLocked ifTrue: [^ nil].
 	
-	aTile := aBlock neighborsHere.
+	"all rules need to be checked twice: for blocks that are float and 
+	for blocks that are not float"
+	groundTile := aBlock neighborsHere select: [:each | each isFloat not].
+	floatingTile := aBlock neighborsHere select: [:each | each isFloat].
 	
-	self checkWin: aBlock onTile: aTile copy.
-	self checkDefeat: aBlock onTile: aTile copy.
-	self checkSink: aBlock onTile: aTile copy.
-	self checkOpen: aBlock onTile: aTile copy.
-	self checkMelt: aBlock onTile: aTile copy
+	{groundTile . floatingTile} 
+		do: [:aTile | aTile 
+			ifNotEmpty: [self checkWin: aBlock onTile: aTile copy.
+				self checkDefeat: aBlock onTile: aTile copy.
+				self checkSink: aBlock onTile: aTile copy.
+				self checkOpen: aBlock onTile: aTile copy.
+				self checkMelt: aBlock onTile: aTile copy]]
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:11'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
 SIYRuleManager >> checkSink: aBlock onTile: aTile [
 	
-	((aTile anySatisfy: [:each | each isSink]) 
-		and: (aTile count: [:each | each isFloat not]) > 1)
+	((aTile anySatisfy: [:each | each isSink]) and: aTile size > 1)
 			ifTrue: [self invokeSink: aTile]
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:14'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
 SIYRuleManager >> checkWin: aBlock onTile: aTile [
 
-	((aTile anySatisfy: [:each | each isYou and: each isFloat not]) 
+	((aTile anySatisfy: [:each | each isYou]) 
 		and: (aTile anySatisfy: [:each | each isWin]))
 			ifTrue: [self invokeWin: aBlock]
 ]
@@ -295,15 +324,11 @@ SIYRuleManager >> currentRules: aDictionary [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/6/2024 21:22'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:03'
 }
 SIYRuleManager >> invokeDefeat: aTile [
 
 	aTile do: [:each | (each isYou) ifTrue: [each deleteAndRemember]]
-
-	
-	
-
 ]
 
 {
@@ -332,6 +357,17 @@ SIYRuleManager >> invokeOpen: aTile [
 
 {
 	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/9/2024 12:56'
+}
+SIYRuleManager >> invokeReplacementRules: aDictionary in: anArena [
+
+	aDictionary
+		keysAndValuesDo: [:aBlockClass :replacementBlock | 
+			self replaceBlocks: aBlockClass with: replacementBlock in: anArena]
+]
+
+{
+	#category : #'rule invoking',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:06'
 }
 SIYRuleManager >> invokeSink: aTile [
@@ -355,12 +391,9 @@ SIYRuleManager >> invokeWin: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:16'
 }
 SIYRuleManager >> isDefeat: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYDefeat forBlock: aBlock
 ]
@@ -376,12 +409,9 @@ SIYRuleManager >> isFloat: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isHot: aBlock [
-
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 
 	^ self isRuleInDictionary: SIYHot forBlock: aBlock
 
@@ -394,12 +424,9 @@ SIYRuleManager >> isHot: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isMelt: aBlock [
-
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 
 	^ self isRuleInDictionary: SIYMelt forBlock: aBlock
 
@@ -412,12 +439,9 @@ SIYRuleManager >> isMelt: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isOpen: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYOpen forBlock: aBlock
 ]
@@ -449,24 +473,18 @@ SIYRuleManager >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isShut: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYShut forBlock: aBlock
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isSink: aBlock [
-
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 
 	^ self isRuleInDictionary: SIYSink forBlock: aBlock
 ]
@@ -486,12 +504,9 @@ SIYRuleManager >> isStop: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:58'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isWin: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat and: (aBlock isYou not)) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYWin forBlock: aBlock
 
@@ -514,28 +529,43 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:24'
+	#'squeak_changestamp' : 'LK 1/9/2024 11:38'
 }
 SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
+	"blocks can't be replaced with textblocks"
+	(anotherBlockClass = SIYText) ifTrue: [^ nil "do nothing"].
+	
 	(anArena blockMediator getBlocksOfType: aBlockClass)
 		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
 ]
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/8/2024 22:59'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:11'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
 
-	| aDictionary |
+	| ruleDictionary replacementDictionary|
 	
-	aDictionary := Dictionary new.
+	ruleDictionary := Dictionary new.
+	replacementDictionary := Dictionary new.
 	
 	(anArena blockMediator getBlocksOfType: SIYIs)
-		do: [:anIsBlock | aDictionary := self addHorizontalRulesFor: anIsBlock to: aDictionary.
-			aDictionary := self addVerticalRulesFor: anIsBlock to: aDictionary].
+		do: [:anIsBlock | 
+			"collect noun-is-property rules"
+			ruleDictionary := self addHorizontalRulesFor: anIsBlock 
+				to: ruleDictionary.
+			ruleDictionary := self addVerticalRulesFor: anIsBlock
+				 to: ruleDictionary.
+				
+			"collect noun-is-noun rules"
+			replacementDictionary := self addHorizontalReplacementRulesFor: anIsBlock 
+				to: replacementDictionary.
+			replacementDictionary := self addVerticalReplacementRulesFor: anIsBlock
+				 to: replacementDictionary].
 	
-	self currentRules: aDictionary
+	self invokeReplacementRules: replacementDictionary in: anArena.
+	self currentRules: ruleDictionary
 ]

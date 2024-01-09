@@ -1,7 +1,7 @@
 "
 The SIYArena is the visible part of the game and contains all SIYBlocks.
 
-If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SYIGame startWithScale: 1.0`.
+If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
 
 Instance Variables
 	arenaHeight: <Integer>
@@ -31,12 +31,11 @@ Class {
 		'replacementSet',
 		'pressedKey',
 		'undoCaretaker',
-		'flexShell',
 		'scaleFactor',
 		'gameLock'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:17'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
 }
 
 {
@@ -238,17 +237,14 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:47'
+	#'squeak_changestamp' : 'LK 1/9/2024 12:52'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction"
-
-	| movementQueue |
-	
-	movementQueue := self blockMediator generateQueueForDirection: aDirection.
 	
 	self preMoveBlocksRoutine.
-	movementQueue do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
+	(self blockMediator generateQueueForDirection: aDirection)
+		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
 ]
 
