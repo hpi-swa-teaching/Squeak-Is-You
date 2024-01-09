@@ -6,9 +6,9 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/9/2024 15:28'
+	#'squeak_changestamp' : 'LK 1/9/2024 16:21'
 }
 SIYWorld1 >> backgroundColor [
 
-	^ Color black
+	^ Color fromString: '#0d0d0d'
 ]
