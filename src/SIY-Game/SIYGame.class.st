@@ -1,6 +1,8 @@
 "
 A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level.
 
+If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
+
 Instance Variables
 	arena: <SIYArena>
 	level: <SIYLevel>
@@ -20,7 +22,7 @@ Class {
 		'levelDescription'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:21'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
 }
 
 {

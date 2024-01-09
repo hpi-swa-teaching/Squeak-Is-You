@@ -1,7 +1,7 @@
 "
 The SIYArena is the visible part of the game and contains all SIYBlocks.
 
-If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SYIGame startWithScale: 1.0`.
+If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
 
 Instance Variables
 	arenaHeight: <Integer>
@@ -36,7 +36,7 @@ Class {
 		'gameLock'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:17'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
 }
 
 {
