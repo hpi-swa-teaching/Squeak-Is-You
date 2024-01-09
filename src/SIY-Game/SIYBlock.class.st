@@ -311,11 +311,11 @@ SIYBlock >> isDefeat [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/7/2024 19:58'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 12:13'
 }
 SIYBlock >> isFloat [
 
-	^ self ruleManager isFloat self
+	^ self ruleManager isFloat: self
 ]
 
 {
@@ -415,7 +415,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/6/2024 22:23'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:30'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -424,10 +424,11 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	
 	| neighbours |
 	
-	neighbours := self blockMediator getBlocks: (self coords + aDirection).
+	neighbours := self blockMediator getBlocksOnTile: (self coords + aDirection).
 	
 	"check rules for isShut & isOpen"
 	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
+	aBlock ifNotNil: [(self isOpen and: aBlock isShut) ifTrue: [^ true]].
 	
 	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].
@@ -447,57 +448,57 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of blocks at coords above.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: 0@(-1) + self coords
+	^ self blockMediator getBlocksOnTile: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of blocks at coords below.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: 0@1 + self coords
+	^ self blockMediator getBlocksOnTile: 0@1 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
 }
 SIYBlock >> neighborsHere [
 	"Return set of blocks at current coords.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: self coords
+	^ self blockMediator getBlocksOnTile: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of blocks at coords to the left.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: (-1)@0 + self coords
+	^ self blockMediator getBlocksOnTile: (-1)@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:24'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
 }
 SIYBlock >> neighborsRight [
 	"Return set of blocks at coords to the right.
 	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocks: 1@0 + self coords
+	^ self blockMediator getBlocksOnTile: 1@0 + self coords
 ]
 
 {
@@ -572,6 +573,20 @@ SIYBlock >> relativePosition [
 	"returns position relative to arena (measured in pixel)"
 
 	^ self position - self arena position
+]
+
+{
+	#category : #deletion,
+	#'squeak_changestamp' : 'LK 1/8/2024 23:24'
+}
+SIYBlock >> replaceWithAndRemember: aBlockClass [
+
+	| aBlock |
+
+	aBlock := aBlockClass newInArena: self arena at: self coords.
+	self arena replacementSet add: aBlock.
+	
+	self deleteAndRemember
 ]
 
 {

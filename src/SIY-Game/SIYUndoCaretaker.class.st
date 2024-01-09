@@ -18,11 +18,13 @@ Class {
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:03'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:29'
 }
 SIYUndoCaretaker >> createSnapshotOf: anArena [
 
-	self pushSnapshot: (SIYSnapshot newWithDictionary: (anArena positionDictionary copy))
+	self pushSnapshot: (SIYSnapshot 
+		newWithDictionary: (anArena positionDictionary copy)
+		andSet: (anArena replacementSet copy))
 ]
 
 {
@@ -47,17 +49,11 @@ SIYUndoCaretaker >> pushSnapshot: aSnapshot [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:35'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:37'
 }
-SIYUndoCaretaker >> restoreSnapshot [
+SIYUndoCaretaker >> undo [
+	"restore arena state to snapshot on top of stack"
 	
-	| snapshot |
-	
-	self history isEmpty 
-		ifFalse: [snapshot := self history pop.
-				 snapshot positionDictionary keysAndValuesDo: [:key :value | 
-					key owner ifNil: key respawn.
-					key setTextureForDirection: key coords - value.
-					key coords: value]]
+	self history isEmpty ifFalse: [self history pop restore]
 
 ]

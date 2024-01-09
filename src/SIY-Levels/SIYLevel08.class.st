@@ -15,7 +15,7 @@ SIYLevel08 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:46'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
 SIYLevel08 >> buildLevel [
 	
@@ -32,7 +32,7 @@ SIYLevel08 >> buildLevel [
 	self placeMultipleBlocks: SIYGrass at: {7@6 . 11@4 . 7@9 . 8@10 . 11@11 . 14@11 . 16@10 . 16@8 . 17@7 . 18@8 . 15@7 . 14@6}.
 	self placeMultipleBlocks: SIYGrass from: 13@10 to: 13@8.
 	
-	self placeBlock: SIYSqueak at: 11@8.
+	self placeBlock: SIYSqueak at: 11@8
 	
 	
 	

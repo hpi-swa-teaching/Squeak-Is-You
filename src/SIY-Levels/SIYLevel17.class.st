@@ -75,11 +75,11 @@ SIYLevel17 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:36'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:30'
 }
 SIYLevel17 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYLevel18
 ]
 
 {

@@ -147,23 +147,10 @@ SIYBlockMediator >> generateQueueFromTop [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:17'
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
 }
-SIYBlockMediator >> getBlocks: aPoint [
-	"returns set of blocks at given coordinates"
-
-	((aPoint x between: 1 and: self arena arenaWidth)
-		and: (aPoint y between: 1 and: self arena arenaHeight))
-			ifTrue: [^ self gameBoard at: aPoint x at: aPoint y]
-			ifFalse: [^ nil]
-]
-
-{
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:12'
-}
-SIYBlockMediator >> getIsBlocks [
-	"returns set of all SIYIs blocks in the arena"
+SIYBlockMediator >> getBlocksOfType: aBlockClass [
+	"returns set of all blocks of specified block type in the arena"
 
 	| aSet |
 
@@ -171,11 +158,24 @@ SIYBlockMediator >> getIsBlocks [
 	
 	(1 to: self arena arenaHeight)
 		do: [:y | (1 to: self arena arenaWidth)
-			do: [:x | (self getBlocks: x@y)
-				do: [:aBlock | (aBlock isKindOf: SIYOperator)
+			do: [:x | (self getBlocksOnTile: x@y)
+				do: [:aBlock | (aBlock isKindOf: aBlockClass)
 					ifTrue: [aSet add: aBlock]]]].
 
 	^ aSet
+]
+
+{
+	#category : #'position storing',
+	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+}
+SIYBlockMediator >> getBlocksOnTile: aPoint [
+	"returns set of blocks at given coordinates, returns nil if aPoint is out of arena"
+
+	((aPoint x between: 1 and: self arena arenaWidth)
+		and: (aPoint y between: 1 and: self arena arenaHeight))
+			ifTrue: [^ self gameBoard at: aPoint x at: aPoint y]
+			ifFalse: [^ nil]	
 ]
 
 {
