@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel19,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIsland03,
+	#superclass : #SIYWorld3,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:16'
 }
-SIYLevel19 >> arenaExtent [
+SIYIsland03 >> arenaExtent [
 
 	^ 15@8
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:16'
-}
-SIYLevel19 >> backgroundColor [
-
-	^ (Color fromString: '#3d0905') darker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:25'
 }
-SIYLevel19 >> buildLevel [
+SIYIsland03 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYWater from: 9@1 to: 9@8.
 	self placeMultipleBlocks: SIYSkull from: 12@1 to: 12@3.
@@ -45,27 +36,27 @@ SIYLevel19 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:23'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel19 >> description [
+SIYIsland03 >> description [
 
-	^ 'Level 19: Warm River'
+	^ 'Level 3.3: Warm River'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:32'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel19 >> nextLevel [
+SIYIsland03 >> nextLevel [
 
-	^ SIYLevel20
+	^ SIYIsland04
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:10'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:54'
 }
-SIYLevel19 >> previousLevel [
+SIYIsland03 >> previousLevel [
 
-	^ SIYLevel18
+	^ SIYIsland02
 ]

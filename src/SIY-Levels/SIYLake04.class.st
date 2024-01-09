@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel13,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake04,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:30'
 }
-SIYLevel13 >> arenaExtent [
+SIYLake04 >> arenaExtent [
 
 	^ 15@8
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:54'
-}
-SIYLevel13 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:34'
 }
-SIYLevel13 >> buildLevel [
+SIYLake04 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYTile from: 4@2 to: 8@7.
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 6@3.
@@ -46,27 +37,27 @@ SIYLevel13 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:30'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:38'
 }
-SIYLevel13 >> description [
+SIYLake04 >> description [
 
-	^ 'Level 13: Brick Wall'
+	^ 'Level 2.4: Brick Wall'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:44'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:39'
 }
-SIYLevel13 >> nextLevel [
+SIYLake04 >> nextLevel [
 
-	^ SIYLevel14
+	^ SIYLake05
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:29'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:37'
 }
-SIYLevel13 >> previousLevel [
+SIYLake04 >> previousLevel [
 
-	^ SIYLevel12
+	^ SIYLake03
 ]

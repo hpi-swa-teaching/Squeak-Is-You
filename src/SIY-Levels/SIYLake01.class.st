@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel09,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake01,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 22:49'
 }
-SIYLevel09 >> arenaExtent [
+SIYLake01 >> arenaExtent [
 
 	^ 28@16
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/6/2024 15:04'
-}
-SIYLevel09 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 01:24'
 }
-SIYLevel09 >> buildLevel [
+SIYLake01 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYIce from: 1@1 to: 6@1.
 	self placeMultipleBlocks: SIYIce from: 1@2 to: 4@2.
@@ -81,27 +72,27 @@ SIYLevel09 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:50'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:21'
 }
-SIYLevel09 >> description [
+SIYLake01 >> description [
 
-	^ 'Level 9: Icy Waters'
+	^ 'Level 2.1: Icy Waters'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/6/2024 14:59'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:47'
 }
-SIYLevel09 >> nextLevel [
+SIYLake01 >> nextLevel [
 
-	^ SIYLevel10
+	^ SIYLake02
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:50'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:33'
 }
-SIYLevel09 >> previousLevel [
+SIYLake01 >> previousLevel [
 
-	^ SIYLevel08
+	^ SIYIntro08
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel21,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIsland04,
+	#superclass : #SIYWorld3,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:34'
 }
-SIYLevel21 >> arenaExtent [
+SIYIsland04 >> arenaExtent [
 
 	^ 24@18
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:34'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:58'
 }
-SIYLevel21 >> backgroundColor [
-
-	^ (Color fromString: '#1e2c5c') muchDarker
-]
-
-{
-	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:02'
-}
-SIYLevel21 >> buildLevel [
+SIYIsland04 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYHedge from: 10@3 to: 19@3.
 	self placeMultipleBlocks: SIYHedge from: 9@4 to: 9@7.
@@ -49,7 +40,7 @@ SIYLevel21 >> buildLevel [
 	self placeBlock: SIYSqueak at: 8@9.
 	self placeMultipleBlocks: SIYRock at: {10@5 . 10@10}.
 	
-	self placeVerticalRule: SIYRock is: SIYFloat at: 6@3.
+	self placeHorizontalRule: SIYText is: SIYFloat at: 5@4.
 	self placeHorizontalRule: SIYRock is: SIYPush at: 9@12.
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 7@14.
 	self placeHorizontalRule: SIYWater is: SIYSink at: 17@14.
@@ -60,27 +51,27 @@ SIYLevel21 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:23'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel21 >> description [
+SIYIsland04 >> description [
 
-	^ 'Level 21: Bridge Building?'
+	^ 'Level 3.4: Bridge Building'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 10:27'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel21 >> nextLevel [
+SIYIsland04 >> nextLevel [
 
-	^ SIYLevel22
+	^ SIYIsland05
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:59'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:54'
 }
-SIYLevel21 >> previousLevel [
+SIYIsland04 >> previousLevel [
 
-	^ SIYLevel20
+	^ SIYIsland03
 ]

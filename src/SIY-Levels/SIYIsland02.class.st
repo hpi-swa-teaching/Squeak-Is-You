@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel18,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIsland02,
+	#superclass : #SIYWorld3,
 	#category : #'SIY-Levels'
 }
 
@@ -8,28 +8,19 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:04'
 }
-SIYLevel18 >> arenaExtent [
+SIYIsland02 >> arenaExtent [
 
 	^ 23@15
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:33'
+	#'squeak_changestamp' : 'LK 1/9/2024 16:04'
 }
-SIYLevel18 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:06'
-}
-SIYLevel18 >> buildLevel [
+SIYIsland02 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYWall from: 8@6 to: 16@6.
-	self placeMultipleBlocks: SIYTile from: 8@7 to: 16@9.
+	self placeMultipleBlocks: SIYBrick from: 8@7 to: 16@9.
 	self placeMultipleBlocks: SIYWall from: 8@10 to: 16@10.
 	
 	self placeMultipleBlocks: SIYRock from: 12@7 to: 12@9.
@@ -48,27 +39,27 @@ SIYLevel18 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel18 >> description [
+SIYIsland02 >> description [
 
-	^ 'Level 18: Float'
+	^ 'Level 3.2: Float'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:09'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:54'
 }
-SIYLevel18 >> nextLevel [
+SIYIsland02 >> nextLevel [
 
-	^ SIYLevel19
+	^ SIYIsland03
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:31'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:58'
 }
-SIYLevel18 >> previousLevel [
+SIYIsland02 >> previousLevel [
 
-	^ SIYLevel17
+	^ SIYIsland01
 ]

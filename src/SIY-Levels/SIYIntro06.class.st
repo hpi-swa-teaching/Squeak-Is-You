@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel06,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIntro06,
+	#superclass : #SIYWorld1,
 	#category : #'SIY-Levels'
 }
 
@@ -8,7 +8,7 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 14:32'
 }
-SIYLevel06 >> arenaExtent [
+SIYIntro06 >> arenaExtent [
 
 	^ 26@16
 ]
@@ -17,7 +17,7 @@ SIYLevel06 >> arenaExtent [
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 16:24'
 }
-SIYLevel06 >> buildLevel [
+SIYIntro06 >> buildLevel [
 	
 	self placeHorizontalRule: SIYWall is: SIYStop at: 2@1.
 	self placeMultipleBlocks: SIYLava from: 1@2 to: 4@2.
@@ -57,27 +57,27 @@ SIYLevel06 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:35'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:20'
 }
-SIYLevel06 >> description [
+SIYIntro06 >> description [
 
-	^ 'Level 6: Volcano'
+	^ 'Level 1.6: Volcano'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 15:54'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel06 >> nextLevel [
+SIYIntro06 >> nextLevel [
 
-	^ SIYLevel07
+	^ SIYIntro07
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:50'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel06 >> previousLevel [
+SIYIntro06 >> previousLevel [
 
-	^ SIYLevel05
+	^ SIYIntro05
 ]

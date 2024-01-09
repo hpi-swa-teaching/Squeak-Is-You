@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel17,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake09,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:44'
 }
-SIYLevel17 >> arenaExtent [
+SIYLake09 >> arenaExtent [
 
 	^ 28@16
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:54'
-}
-SIYLevel17 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'KD 1/8/2024 14:57'
 }
-SIYLevel17 >> buildLevel [
+SIYLake09 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYWall from: 1@1 to: 4@4.
 	self placeMultipleBlocks: SIYWall from: 23@1 to: 25@3.
@@ -66,27 +57,27 @@ SIYLevel17 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'KD 1/8/2024 13:52'
+	#'squeak_changestamp' : 'LK 1/9/2024 16:00'
 }
-SIYLevel17 >> description [
+SIYLake09 >> description [
 
-	^ 'Level 17: Burglary'
+	^ 'Level 2.9: Burglary'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:30'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:52'
 }
-SIYLevel17 >> nextLevel [
+SIYLake09 >> nextLevel [
 
-	^ SIYLevel18
+	^ SIYIsland01
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'KD 1/8/2024 13:53'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:42'
 }
-SIYLevel17 >> previousLevel [
+SIYLake09 >> previousLevel [
 
-	^ SIYLevel16
+	^ SIYLake08
 ]

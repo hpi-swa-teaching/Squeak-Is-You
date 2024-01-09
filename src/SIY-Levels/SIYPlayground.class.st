@@ -1,5 +1,5 @@
 Class {
-	#name : #SIYLevel00,
+	#name : #SIYPlayground,
 	#superclass : #SIYLevelFactory,
 	#category : #'SIY-Levels'
 }
@@ -8,7 +8,7 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevel00 >> arenaExtent [
+SIYPlayground >> arenaExtent [
 
 	^ 20@15
 ]
@@ -17,7 +17,7 @@ SIYLevel00 >> arenaExtent [
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:03'
 }
-SIYLevel00 >> buildLevel [
+SIYPlayground >> buildLevel [
 	
 	self placeMultipleBlocksHollow: SIYWall from: 1@1 to: self arenaExtent.
 	
@@ -70,25 +70,25 @@ SIYLevel00 >> buildLevel [
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
 }
-SIYLevel00 >> description [
+SIYPlayground >> description [
 
 	^ 'Playground'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:26'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:33'
 }
-SIYLevel00 >> nextLevel [
+SIYPlayground >> nextLevel [
 
-	^ SIYLevel01
+	^ SIYIntro01
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 11:15'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel00 >> previousLevel [
+SIYPlayground >> previousLevel [
 
-	^ SIYLevel22
+	^ SIYIsland06
 ]

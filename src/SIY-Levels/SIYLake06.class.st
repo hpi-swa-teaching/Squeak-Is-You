@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel15,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake06,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:44'
 }
-SIYLevel15 >> arenaExtent [
+SIYLake06 >> arenaExtent [
 
 	^ 28@16
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:54'
-}
-SIYLevel15 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:25'
 }
-SIYLevel15 >> buildLevel [
+SIYLake06 >> buildLevel [
 	
 	self placeMultipleBlocksHollow: SIYWall from: 7@1 to: 13@14.
 	self placeMultipleBlocksHollow: SIYWall from: 7@4 to: 22@12.
@@ -61,27 +52,27 @@ SIYLevel15 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 21:34'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:39'
 }
-SIYLevel15 >> description [
+SIYLake06 >> description [
 
-	^ 'Level 15: Novice Locksmith'
+	^ 'Level 2.6: Novice Locksmith'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 22:03'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:42'
 }
-SIYLevel15 >> nextLevel [
+SIYLake06 >> nextLevel [
 
-	^ SIYLevel16
+	^ SIYLake07
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 21:34'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:39'
 }
-SIYLevel15 >> previousLevel [
+SIYLake06 >> previousLevel [
 
-	^ SIYLevel14
+	^ SIYLake05
 ]
