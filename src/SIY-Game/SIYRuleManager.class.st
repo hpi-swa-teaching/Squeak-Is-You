@@ -79,11 +79,11 @@ SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:13'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:18'
 }
 SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
-
-	((aTile anySatisfy: [:each | each isYou and: each isFloat not]) 
+	
+	((aTile anySatisfy: [:each | each isYou]) 
 		and: (aTile anySatisfy: [:each | each isDefeat]))
 			ifTrue: [self invokeDefeat: aTile]
 ]
@@ -111,43 +111,47 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
-	| aTile |
+	| groundTile floatingTile |
 	
 	"don't check rules if game is locked"
 	aBlock arena isGameLocked ifTrue: [^ nil].
 	
-	aTile := aBlock neighborsHere.
+	"all rules need to be checked twice: for blocks that are float and 
+	for blocks that are not float"
+	groundTile := aBlock neighborsHere select: [:each | each isFloat not].
+	floatingTile := aBlock neighborsHere select: [:each | each isFloat].
 	
-	self checkWin: aBlock onTile: aTile copy.
-	self checkDefeat: aBlock onTile: aTile copy.
-	self checkSink: aBlock onTile: aTile copy.
-	self checkOpen: aBlock onTile: aTile copy.
-	self checkMelt: aBlock onTile: aTile copy
+	{groundTile . floatingTile} 
+		do: [:aTile | aTile 
+			ifNotEmpty: [self checkWin: aBlock onTile: aTile copy.
+				self checkDefeat: aBlock onTile: aTile copy.
+				self checkSink: aBlock onTile: aTile copy.
+				self checkOpen: aBlock onTile: aTile copy.
+				self checkMelt: aBlock onTile: aTile copy]]
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:11'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
 SIYRuleManager >> checkSink: aBlock onTile: aTile [
 	
-	((aTile anySatisfy: [:each | each isSink]) 
-		and: (aTile count: [:each | each isFloat not]) > 1)
+	((aTile anySatisfy: [:each | each isSink]) and: aTile size > 1)
 			ifTrue: [self invokeSink: aTile]
 ]
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:14'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
 SIYRuleManager >> checkWin: aBlock onTile: aTile [
 
-	((aTile anySatisfy: [:each | each isYou and: each isFloat not]) 
+	((aTile anySatisfy: [:each | each isYou]) 
 		and: (aTile anySatisfy: [:each | each isWin]))
 			ifTrue: [self invokeWin: aBlock]
 ]
@@ -295,15 +299,11 @@ SIYRuleManager >> currentRules: aDictionary [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/6/2024 21:22'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:03'
 }
 SIYRuleManager >> invokeDefeat: aTile [
 
 	aTile do: [:each | (each isYou) ifTrue: [each deleteAndRemember]]
-
-	
-	
-
 ]
 
 {
@@ -355,12 +355,9 @@ SIYRuleManager >> invokeWin: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:16'
 }
 SIYRuleManager >> isDefeat: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYDefeat forBlock: aBlock
 ]
@@ -376,12 +373,9 @@ SIYRuleManager >> isFloat: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isHot: aBlock [
-
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 
 	^ self isRuleInDictionary: SIYHot forBlock: aBlock
 
@@ -394,12 +388,9 @@ SIYRuleManager >> isHot: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isMelt: aBlock [
-
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 
 	^ self isRuleInDictionary: SIYMelt forBlock: aBlock
 
@@ -412,12 +403,9 @@ SIYRuleManager >> isMelt: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isOpen: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYOpen forBlock: aBlock
 ]
@@ -449,24 +437,18 @@ SIYRuleManager >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isShut: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYShut forBlock: aBlock
 ]
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isSink: aBlock [
-
-	"isFloat can override this rule"
-	(aBlock isFloat) ifTrue: [^ false].
 
 	^ self isRuleInDictionary: SIYSink forBlock: aBlock
 ]
@@ -486,12 +468,9 @@ SIYRuleManager >> isStop: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:58'
+	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
 SIYRuleManager >> isWin: aBlock [
-	
-	"isFloat can override this rule"
-	(aBlock isFloat and: (aBlock isYou not)) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYWin forBlock: aBlock
 
