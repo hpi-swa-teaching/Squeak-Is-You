@@ -31,7 +31,6 @@ Class {
 		'replacementSet',
 		'pressedKey',
 		'undoCaretaker',
-		'flexShell',
 		'scaleFactor',
 		'gameLock'
 	],
