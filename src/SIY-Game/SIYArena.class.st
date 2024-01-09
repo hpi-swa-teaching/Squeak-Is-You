@@ -29,7 +29,8 @@ Class {
 		'undoCaretaker',
 		'flexShell',
 		'scaleFactor',
-		'gameLock'
+		'gameLock',
+		'soundPlayer'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 21:48'
@@ -89,6 +90,24 @@ SIYArena >> arenaWidth: val [
 	
 	arenaWidth := val.
 	self updateDimensions
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'KD 1/9/2024 13:54'
+}
+SIYArena >> audioPlayer [
+
+	^soundPlayer
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'KD 1/9/2024 13:53'
+}
+SIYArena >> audioPlayer: aSoundPlayer [
+
+	soundPlayer := aSoundPlayer
 ]
 
 {

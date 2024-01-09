@@ -17,7 +17,8 @@ Class {
 		'level',
 		'backgroundMorph',
 		'customScaleFactor',
-		'levelDescription'
+		'levelDescription',
+		'soundPlayer'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/5/2024 22:21'
@@ -140,12 +141,12 @@ SIYGame >> enableBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:23'
+	#'squeak_changestamp' : 'KD 1/9/2024 13:45'
 }
 SIYGame >> initialize [
 
 	super initialize.
-	
+	soundPlayer := SoundPlayer startUp.
 	self startLevel: SIYLevel00 atPosition: World clearArea center + self keyHintOffset
 ]
 
@@ -267,12 +268,13 @@ SIYGame >> restartLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:27'
+	#'squeak_changestamp' : 'KD 1/9/2024 13:53'
 }
 SIYGame >> startLevel: aLevel [
 
 	self level: (aLevel newWithScale: self customScaleFactor).
 	self arena game: self.
+	self arena audioPlayer: soundPlayer.
 	
 	self enableBackground
 		ifTrue: [self backgroundMorph addMorph: self arena.
