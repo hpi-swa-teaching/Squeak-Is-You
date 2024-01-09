@@ -143,14 +143,13 @@ SIYGame >> enableBackground [
 
 {
 	#category : #initialization,
-
-	#'squeak_changestamp' : 'KD 1/9/2024 13:45'
+	#'squeak_changestamp' : 'KD 1/9/2024 14:39'
 }
 SIYGame >> initialize [
 
 	super initialize.
   
-  soundPlayer := SoundPlayer startUp.
+  	soundPlayer := SoundPlayer startUp.
 	self startLevel: SIYLevel01 atPosition: World clearArea center + self keyHintOffset
 	
 ]

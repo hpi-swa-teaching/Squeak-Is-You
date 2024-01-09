@@ -9,6 +9,9 @@ Instance Variables
 Class {
 	#name : #SIYAudioManager,
 	#superclass : #SIYAssetManager,
+	#instVars : [
+		'moveSound'
+	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : '<historical>'
 }
@@ -30,4 +33,23 @@ SIYAudioManager >> getSound: aFilename [
 	"you need to upload .wav files with 20050 Hz and 16 Bitresolution"
 
 	^ self assetLoader loadSound: aFilename
+]
+
+{
+	#category : #configuration,
+	#'squeak_changestamp' : 'KD 1/9/2024 14:29'
+}
+SIYAudioManager >> initialize [ 
+
+	super initialize.
+	moveSound :=  self getSound: 'SIYmoveSound.wav'.
+]
+
+{
+	#category : #configuration,
+	#'squeak_changestamp' : 'KD 1/9/2024 14:23'
+}
+SIYAudioManager >> move [ 
+
+	^moveSound
 ]

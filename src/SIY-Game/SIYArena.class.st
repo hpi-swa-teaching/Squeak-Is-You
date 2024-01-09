@@ -33,7 +33,8 @@ Class {
 		'undoCaretaker',
 		'scaleFactor',
 		'gameLock',
-		'soundPlayer'
+		'soundPlayer',
+		'audioManager'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
@@ -93,6 +94,15 @@ SIYArena >> arenaWidth: val [
 	
 	arenaWidth := val.
 	self updateDimensions
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'KD 1/9/2024 14:26'
+}
+SIYArena >> audioManager [
+
+	^audioManager
 ]
 
 {
@@ -202,13 +212,14 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:39'
+	#'squeak_changestamp' : 'KD 1/9/2024 14:22'
 }
 SIYArena >> initialize [
 
 	super initialize.
 	self color: self backgroundColor.
-	self gmRegisterToKeyHandler
+	self gmRegisterToKeyHandler.
+	audioManager := SIYAudioManager new
 ]
 
 {
