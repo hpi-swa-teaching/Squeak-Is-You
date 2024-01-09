@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel12,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake03,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:07'
 }
-SIYLevel12 >> arenaExtent [
+SIYLake03 >> arenaExtent [
 
 	^ 24@14
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:54'
-}
-SIYLevel12 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
-SIYLevel12 >> buildLevel [
+SIYLake03 >> buildLevel [
 	
 	self placeMultipleBlocksHollow: SIYWall from: 5@6 to: 9@10.
 	self placeMultipleBlocksHollow: SIYTile from: 6@7 to: 8@9.
@@ -55,27 +46,27 @@ SIYLevel12 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:07'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:37'
 }
-SIYLevel12 >> description [
+SIYLake03 >> description [
 
-	^ 'Level 12: Pillar Yard'
+	^ 'Level 2.3: Pillar Yard'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:29'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:38'
 }
-SIYLevel12 >> nextLevel [
+SIYLake03 >> nextLevel [
 
-	^ SIYLevel13
+	^ SIYLake04
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:07'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:37'
 }
-SIYLevel12 >> previousLevel [
+SIYLake03 >> previousLevel [
 
-	^ SIYLevel11
+	^ SIYLake02
 ]

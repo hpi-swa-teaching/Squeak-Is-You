@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel03,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIntro03,
+	#superclass : #SIYWorld1,
 	#category : #'SIY-Levels'
 }
 
@@ -8,7 +8,7 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:43'
 }
-SIYLevel03 >> arenaExtent [
+SIYIntro03 >> arenaExtent [
 
 	^ 12@15
 ]
@@ -17,7 +17,7 @@ SIYLevel03 >> arenaExtent [
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
-SIYLevel03 >> buildLevel [
+SIYIntro03 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYFlag from: 5@1 to: 12@1.
 	self placeMultipleBlocks: SIYFlag from: 1@5 to: 5@5.
@@ -46,27 +46,27 @@ SIYLevel03 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:18'
 }
-SIYLevel03 >> description [
+SIYIntro03 >> description [
 
-	^ 'Level 3: Now What Is This?'
+	^ 'Level 1.3: Now What Is This?'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:24'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel03 >> nextLevel [
+SIYIntro03 >> nextLevel [
 
-	^ SIYLevel04
+	^ SIYIntro04
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/4/2024 22:25'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:33'
 }
-SIYLevel03 >> previousLevel [
+SIYIntro03 >> previousLevel [
 
-	^ SIYLevel02
+	^ SIYIntro02
 ]

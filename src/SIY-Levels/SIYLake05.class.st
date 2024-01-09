@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel14,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake05,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:44'
 }
-SIYLevel14 >> arenaExtent [
+SIYLake05 >> arenaExtent [
 
 	^ 28@16
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:54'
-}
-SIYLevel14 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 20:03'
 }
-SIYLevel14 >> buildLevel [
+SIYLake05 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYWall from: 6@2 to: 10@5.
 	self placeMultipleBlocks: SIYWall from: 6@6 to: 12@10.
@@ -75,27 +66,27 @@ SIYLevel14 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:45'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:38'
 }
-SIYLevel14 >> description [
+SIYLake05 >> description [
 
-	^ 'Level 14: Lock'
+	^ 'Level 2.5: Lock'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 21:34'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:40'
 }
-SIYLevel14 >> nextLevel [
+SIYLake05 >> nextLevel [
 
-	^ SIYLevel15
+	^ SIYLake06
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 19:44'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:38'
 }
-SIYLevel14 >> previousLevel [
+SIYLake05 >> previousLevel [
 
-	^ SIYLevel13
+	^ SIYLake04
 ]

@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel08,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIntro08,
+	#superclass : #SIYWorld1,
 	#category : #'SIY-Levels'
 }
 
@@ -8,7 +8,7 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 16:39'
 }
-SIYLevel08 >> arenaExtent [
+SIYIntro08 >> arenaExtent [
 
 	^ 24@14
 ]
@@ -17,7 +17,7 @@ SIYLevel08 >> arenaExtent [
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:26'
 }
-SIYLevel08 >> buildLevel [
+SIYIntro08 >> buildLevel [
 	
 	self placeMultipleBlocksHollow: SIYWall from: 6@3 to: 19@12.
 	
@@ -43,27 +43,27 @@ SIYLevel08 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:35'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:20'
 }
-SIYLevel08 >> description [
+SIYIntro08 >> description [
 
-	^ 'Level 8: Grass Yard'
+	^ 'Level 1.8: Grass Yard'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:50'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:37'
 }
-SIYLevel08 >> nextLevel [
+SIYIntro08 >> nextLevel [
 
-	^ SIYLevel09
+	^ SIYLake01
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:37'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel08 >> previousLevel [
+SIYIntro08 >> previousLevel [
 
-	^ SIYLevel07
+	^ SIYIntro07
 ]

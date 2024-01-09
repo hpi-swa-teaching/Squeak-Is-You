@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel22,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIsland05,
+	#superclass : #SIYWorld3,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:34'
 }
-SIYLevel22 >> arenaExtent [
+SIYIsland05 >> arenaExtent [
 
 	^ 24@18
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:34'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:02'
 }
-SIYLevel22 >> backgroundColor [
-
-	^ (Color fromString: '#1e2c5c') muchDarker
-]
-
-{
-	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 10:31'
-}
-SIYLevel22 >> buildLevel [
+SIYIsland05 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYHedge from: 10@3 to: 19@3.
 	self placeMultipleBlocks: SIYHedge from: 9@4 to: 9@7.
@@ -50,8 +41,6 @@ SIYLevel22 >> buildLevel [
 	self placeMultipleBlocks: SIYRock at: {10@5 . 10@10}.
 	
 	self placeVerticalRule: SIYRock is: SIYFloat at: 6@3.
-	self placeNounFor: SIYText at: 4@4.
-	self placeBlock: SIYIs at: 5@4.
 	self placeHorizontalRule: SIYRock is: SIYPush at: 9@12.
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 7@14.
 	self placeHorizontalRule: SIYWater is: SIYSink at: 17@14.
@@ -62,27 +51,27 @@ SIYLevel22 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 10:28'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel22 >> description [
+SIYIsland05 >> description [
 
-	^ 'Level 21: ...Bridges?'
+	^ 'Level 3.5: Bridge Building?'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 11:15'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel22 >> nextLevel [
+SIYIsland05 >> nextLevel [
 
-	^ SIYLevel00
+	^ SIYIsland06
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 10:28'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel22 >> previousLevel [
+SIYIsland05 >> previousLevel [
 
-	^ SIYLevel21
+	^ SIYIsland04
 ]
