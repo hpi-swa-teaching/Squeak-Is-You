@@ -77,13 +77,13 @@ SIYWinAnimation >> checkIfAnimationDone [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:49'
+	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
 }
 SIYWinAnimation >> getFormForTexture: aNumber [
 
 	| aForm |
 	
-	aForm := SIYTextureManager new getTexture: (self winAnimationTexture: aNumber).
+	aForm := SIYTextureLoader new getTexture: (self winAnimationTexture: aNumber).
 	
 	^ (aForm scaledToHeight: self winAnimationTextureSize)
 ]

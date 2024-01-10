@@ -632,13 +632,13 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/5/2024 23:21'
+	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 
 	| aForm |
 	
-	aForm := SIYTextureManager new getTexture: (self getTextureForDirection: aPoint).
+	aForm := SIYTextureLoader new getTexture: (self getTextureForDirection: aPoint).
 	
 	self image: (aForm scaledToSize: (self arena pixelPerBlock)@(self arena pixelPerBlock))
 ]
