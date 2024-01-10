@@ -13,7 +13,7 @@ Instance Variables
 "
 Class {
 	#name : #SIYGame,
-	#superclass : #Morph,
+	#superclass : #Object,
 	#instVars : [
 		'arena',
 		'level',
