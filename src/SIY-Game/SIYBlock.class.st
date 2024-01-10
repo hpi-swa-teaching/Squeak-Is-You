@@ -139,19 +139,16 @@ SIYBlock >> blockTextureUp [
 ]
 
 {
-	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/10/2024 20:14'
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/10/2024 20:11'
 }
 SIYBlock >> comeToFrontIfFloat [
 	
 	"move to front if isFloat"
 	self isFloat ifTrue: [^ self comeToFront].
 	
-	"move to background if another block on this tile isFloat"
 	(self neighborsHere anySatisfy: [:aBlock | aBlock isFloat])
-		ifTrue: [^ self goBehind].
-	
-	self comeToFront
+		ifTrue: [^ self goBack]
 ]
 
 {
@@ -540,7 +537,7 @@ SIYBlock >> position: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/10/2024 20:11'
+	#'squeak_changestamp' : 'LK 1/4/2024 14:30'
 }
 SIYBlock >> postMoveRoutine: aDirection [
 	"This routine gets triggered, after the block has been moved using basicMove,
@@ -548,11 +545,7 @@ SIYBlock >> postMoveRoutine: aDirection [
 	moved using the halo."
 
 	self setTextureForDirection: aDirection.
-	self ruleManager checkRulesFor: self.
-	
-	"only come to front if game is unlocked, to prevent the block from overlapping
-	the win animation"
-	self arena isGameLocked ifFalse: [self comeToFrontIfFloat]
+	self ruleManager checkRulesFor: self
 ]
 
 {
@@ -564,7 +557,10 @@ SIYBlock >> postPositionRoutine [
 	For example, this routine will also be triggered, if the block was moved through the halo."
 
 	self informMediator.
-
+	
+	"only come to front if game is unlocked, to prevent the block from overlapping
+	the win animation"
+	self arena isGameLocked ifFalse: [self comeToFrontIfFloat]
 	
 ]
 
