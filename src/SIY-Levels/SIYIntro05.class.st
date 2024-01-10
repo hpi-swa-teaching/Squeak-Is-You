@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel05,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIntro05,
+	#superclass : #SIYWorld1,
 	#category : #'SIY-Levels'
 }
 
@@ -8,7 +8,7 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 00:48'
 }
-SIYLevel05 >> arenaExtent [
+SIYIntro05 >> arenaExtent [
 
 	^ 24@14
 ]
@@ -17,7 +17,7 @@ SIYLevel05 >> arenaExtent [
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 16:24'
 }
-SIYLevel05 >> buildLevel [
+SIYIntro05 >> buildLevel [
 	
 	self placeHorizontalRule: SIYFlag is: SIYWin at: 2@1.
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 2@2.
@@ -40,27 +40,27 @@ SIYLevel05 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:34'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:19'
 }
-SIYLevel05 >> description [
+SIYIntro05 >> description [
 
-	^ 'Level 5: Still Out Of Reach'
+	^ 'Level 1.5: Still Out Of Reach'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:28'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel05 >> nextLevel [
+SIYIntro05 >> nextLevel [
 
-	^ SIYLevel06
+	^ SIYIntro06
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 00:47'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel05 >> previousLevel [
+SIYIntro05 >> previousLevel [
 
-	^ SIYLevel04
+	^ SIYIntro04
 ]

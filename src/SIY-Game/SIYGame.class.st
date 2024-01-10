@@ -1,6 +1,8 @@
 "
 A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level.
 
+If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
+
 Instance Variables
 	arena: <SIYArena>
 	level: <SIYLevel>
@@ -20,7 +22,7 @@ Class {
 		'levelDescription'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:21'
+	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
 }
 
 {
@@ -79,7 +81,7 @@ SIYGame >> backgroundMorph [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:07'
+	#'squeak_changestamp' : 'LK 1/9/2024 20:54'
 }
 SIYGame >> createBackgroundMorph [
 
@@ -88,6 +90,7 @@ SIYGame >> createBackgroundMorph [
 	aMorph := Morph new
 		extent: World clearArea extent;
 		color: self backgroundColor;
+		beSticky;
 		openInWorld.
 
 	anotherMorph := self createKeyHintMorph.
@@ -139,14 +142,23 @@ SIYGame >> enableBackground [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/9/2024 19:41'
+}
+SIYGame >> handlesMouseDown: anEvent [
+
+	^ true
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:18'
+	#'squeak_changestamp' : 'LK 1/9/2024 17:30'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	self startLevel: SIYLevel01 atPosition: World clearArea center + self keyHintOffset
+	self startLevel: SIYIntro01 atPosition: World clearArea center + self keyHintOffset
 ]
 
 {

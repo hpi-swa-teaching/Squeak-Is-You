@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel07,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIntro07,
+	#superclass : #SIYWorld1,
 	#category : #'SIY-Levels'
 }
 
@@ -8,7 +8,7 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 15:55'
 }
-SIYLevel07 >> arenaExtent [
+SIYIntro07 >> arenaExtent [
 
 	^ 24@14
 ]
@@ -17,7 +17,7 @@ SIYLevel07 >> arenaExtent [
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/5/2024 21:22'
 }
-SIYLevel07 >> buildLevel [
+SIYIntro07 >> buildLevel [
 	
 	self placeHorizontalRule: SIYRock is: SIYStop at: 2@1.
 	self placeHorizontalRule: SIYSkull is: SIYDefeat at: 2@3.
@@ -63,27 +63,27 @@ SIYLevel07 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:35'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:20'
 }
-SIYLevel07 >> description [
+SIYIntro07 >> description [
 
-	^ 'Level 7: Off Limits'
+	^ 'Level 1.7: Off Limits'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:37'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:33'
 }
-SIYLevel07 >> nextLevel [
+SIYIntro07 >> nextLevel [
 
-	^ SIYLevel08
+	^ SIYIntro08
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/5/2024 15:54'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:34'
 }
-SIYLevel07 >> previousLevel [
+SIYIntro07 >> previousLevel [
 
-	^ SIYLevel06
+	^ SIYIntro06
 ]

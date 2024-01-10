@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel20,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYIsland06,
+	#superclass : #SIYWorld3,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:34'
 }
-SIYLevel20 >> arenaExtent [
+SIYIsland06 >> arenaExtent [
 
 	^ 24@18
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:34'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 10:31'
 }
-SIYLevel20 >> backgroundColor [
-
-	^ (Color fromString: '#1e2c5c') muchDarker
-]
-
-{
-	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:58'
-}
-SIYLevel20 >> buildLevel [
+SIYIsland06 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYHedge from: 10@3 to: 19@3.
 	self placeMultipleBlocks: SIYHedge from: 9@4 to: 9@7.
@@ -49,7 +40,9 @@ SIYLevel20 >> buildLevel [
 	self placeBlock: SIYSqueak at: 8@9.
 	self placeMultipleBlocks: SIYRock at: {10@5 . 10@10}.
 	
-	self placeHorizontalRule: SIYText is: SIYFloat at: 5@4.
+	self placeVerticalRule: SIYRock is: SIYFloat at: 6@3.
+	self placeNounFor: SIYText at: 4@4.
+	self placeBlock: SIYIs at: 5@4.
 	self placeHorizontalRule: SIYRock is: SIYPush at: 9@12.
 	self placeHorizontalRule: SIYSqueak is: SIYYou at: 7@14.
 	self placeHorizontalRule: SIYWater is: SIYSink at: 17@14.
@@ -60,27 +53,27 @@ SIYLevel20 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/9/2024 00:23'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel20 >> description [
+SIYIsland06 >> description [
 
-	^ 'Level 20: Bridge Building'
+	^ 'Level 3.6: ...Bridges?'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:58'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:13'
 }
-SIYLevel20 >> nextLevel [
+SIYIsland06 >> nextLevel [
 
-	^ SIYLevel21
+	^ SIYPlayground
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:32'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:55'
 }
-SIYLevel20 >> previousLevel [
+SIYIsland06 >> previousLevel [
 
-	^ SIYLevel19
+	^ SIYIsland05
 ]

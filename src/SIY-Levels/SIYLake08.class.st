@@ -1,6 +1,6 @@
 Class {
-	#name : #SIYLevel16,
-	#superclass : #SIYLevelFactory,
+	#name : #SIYLake08,
+	#superclass : #SIYWorld2,
 	#category : #'SIY-Levels'
 }
 
@@ -8,25 +8,16 @@ Class {
 	#category : #'level design',
 	#'squeak_changestamp' : 'LK 1/6/2024 19:44'
 }
-SIYLevel16 >> arenaExtent [
+SIYLake08 >> arenaExtent [
 
 	^ 28@16
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 17:54'
-}
-SIYLevel16 >> backgroundColor [
-
-	^ (Color fromString: '#0C1020') slightlyDarker
-]
-
-{
-	#category : #'level design',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 23:25'
 }
-SIYLevel16 >> buildLevel [
+SIYLake08 >> buildLevel [
 	
 	self placeMultipleBlocks: SIYHedge from: 5@4 to: 5@10.
 	self placeMultipleBlocks: SIYHedge at: {6@4 . 7@4 . 6@10 . 7@8 . 8@6}.
@@ -57,27 +48,27 @@ SIYLevel16 >> buildLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 22:04'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:42'
 }
-SIYLevel16 >> description [
+SIYLake08 >> description [
 
-	^ 'Level 16: Two Doors'
+	^ 'Level 2.8: Two Doors'
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 22:21'
+	#'squeak_changestamp' : 'LK 1/9/2024 16:00'
 }
-SIYLevel16 >> nextLevel [
+SIYLake08 >> nextLevel [
 
-	^ SIYLevel17
+	^ SIYLake09
 ]
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/6/2024 22:03'
+	#'squeak_changestamp' : 'LK 1/9/2024 15:42'
 }
-SIYLevel16 >> previousLevel [
+SIYLake08 >> previousLevel [
 
-	^ SIYLevel15
+	^ SIYLake07
 ]
