@@ -319,14 +319,18 @@ SIYArena >> postMoveBlocksRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:19'
+	#'squeak_changestamp' : 'KD 1/10/2024 16:08'
 }
 SIYArena >> preMoveBlocksRoutine [
 	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
-
+	
+	| squeak |
 	self resetDictionaryAndSet.
 	self ruleManager updateRulesInArena: self.
+	
+	squeak := self audioManager move.
+	[squeak reset; play] fork.
 
 	
 ]

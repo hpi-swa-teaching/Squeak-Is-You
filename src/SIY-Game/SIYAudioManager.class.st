@@ -37,12 +37,13 @@ SIYAudioManager >> getSound: aFilename [
 
 {
 	#category : #configuration,
-	#'squeak_changestamp' : 'KD 1/9/2024 14:29'
+	#'squeak_changestamp' : 'KD 1/9/2024 21:22'
 }
 SIYAudioManager >> initialize [ 
 
 	super initialize.
 	moveSound :=  self getSound: 'SIYmoveSound.wav'.
+	(RepeatingSound repeatForever: (RestSound dur: 1)) play.
 ]
 
 {
