@@ -13,7 +13,7 @@ Instance Variables
 "
 Class {
 	#name : #SIYGame,
-	#superclass : #Morph,
+	#superclass : #Object,
 	#instVars : [
 		'arena',
 		'level',
@@ -102,13 +102,13 @@ SIYGame >> createBackgroundMorph [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:05'
+	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
 }
 SIYGame >> createKeyHintMorph [
 
 	| aMorph aForm |
 	
-	aForm := SIYTextureManager new getTexture: self keyHintTexture.
+	aForm := SIYTextureLoader new getTexture: self keyHintTexture.
 	aMorph := (aForm scaledToHeight: self keyHintHeight) asMorph openInWorld.
 	
 	^ aMorph

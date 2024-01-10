@@ -461,14 +461,16 @@ SIYRuleManager >> isPush: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
+	#'squeak_changestamp' : 'LK 1/10/2024 22:51'
 }
 SIYRuleManager >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
 	
 	"if block is of type text, check for SIYText instead of aBlock class"
 	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
-		ifTrue: [^ (currentRules at: aPropertyClass ifAbsent: [^ false]) includes: SIYText]
-		ifFalse: [^ (currentRules at: aPropertyClass ifAbsent: [^ false]) includes: aBlock class]
+		ifTrue: [^ (self currentRules at: aPropertyClass ifAbsent: [^ false])
+			includes: SIYText]
+		ifFalse: [^ (self currentRules at: aPropertyClass ifAbsent: [^ false])
+			includes: aBlock class]
 ]
 
 {

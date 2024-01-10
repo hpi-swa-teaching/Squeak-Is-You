@@ -7,7 +7,7 @@ Instance Variables
 
 "
 Class {
-	#name : #SIYTextureManager,
+	#name : #SIYTextureLoader,
 	#superclass : #Object,
 	#instVars : [
 		'assetLoader'
@@ -20,7 +20,7 @@ Class {
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/4/2024 15:49'
 }
-SIYTextureManager >> assetLoader [
+SIYTextureLoader >> assetLoader [
 
 	^ assetLoader ifNil: [assetLoader := GitAssetLoader for: self repositoryName basePath: self basePath.]
 ]
@@ -29,7 +29,7 @@ SIYTextureManager >> assetLoader [
 	#category : #configuration,
 	#'squeak_changestamp' : 'LK 1/4/2024 00:37'
 }
-SIYTextureManager >> basePath [
+SIYTextureLoader >> basePath [
 
 	^  'textures'
 ]
@@ -38,7 +38,7 @@ SIYTextureManager >> basePath [
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/4/2024 00:37'
 }
-SIYTextureManager >> getTexture: aFilename [
+SIYTextureLoader >> getTexture: aFilename [
 
 	^ self assetLoader loadForm: aFilename
 ]
@@ -47,7 +47,7 @@ SIYTextureManager >> getTexture: aFilename [
 	#category : #configuration,
 	#'squeak_changestamp' : 'LK 1/4/2024 00:38'
 }
-SIYTextureManager >> repositoryName [
+SIYTextureLoader >> repositoryName [
 
 	^ 'swa23-24-group16'
 ]

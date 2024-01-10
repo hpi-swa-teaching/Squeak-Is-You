@@ -139,6 +139,19 @@ SIYBlock >> blockTextureUp [
 ]
 
 {
+	#category : #appearance,
+	#'squeak_changestamp' : 'LK 1/10/2024 20:11'
+}
+SIYBlock >> comeToFrontIfFloat [
+	
+	"move to front if isFloat"
+	self isFloat ifTrue: [^ self comeToFront].
+	
+	(self neighborsHere anySatisfy: [:aBlock | aBlock isFloat])
+		ifTrue: [^ self goBack]
+]
+
+{
 	#category : #positioning,
 	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
 }
@@ -537,7 +550,7 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/7/2024 22:08'
+	#'squeak_changestamp' : 'LK 1/10/2024 20:11'
 }
 SIYBlock >> postPositionRoutine [
 	"This routine gets triggered, after the block changed its position, no matter how.
@@ -547,7 +560,7 @@ SIYBlock >> postPositionRoutine [
 	
 	"only come to front if game is unlocked, to prevent the block from overlapping
 	the win animation"
-	self arena isGameLocked ifFalse: [self comeToFront]
+	self arena isGameLocked ifFalse: [self comeToFrontIfFloat]
 	
 ]
 
@@ -619,13 +632,13 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/5/2024 23:21'
+	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 
 	| aForm |
 	
-	aForm := SIYTextureManager new getTexture: (self getTextureForDirection: aPoint).
+	aForm := SIYTextureLoader new getTexture: (self getTextureForDirection: aPoint).
 	
 	self image: (aForm scaledToSize: (self arena pixelPerBlock)@(self arena pixelPerBlock))
 ]
