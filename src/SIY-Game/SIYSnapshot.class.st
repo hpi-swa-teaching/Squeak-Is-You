@@ -48,7 +48,7 @@ SIYSnapshot >> positionDictionary [
 ]
 
 {
-	#category : #accessing,
+	#category : #private,
 	#'squeak_changestamp' : 'LK 1/3/2024 23:52'
 }
 SIYSnapshot >> positionDictionary: aDictionary [
@@ -66,7 +66,7 @@ SIYSnapshot >> replacementSet [
 ]
 
 {
-	#category : #accessing,
+	#category : #private,
 	#'squeak_changestamp' : 'LK 1/8/2024 23:21'
 }
 SIYSnapshot >> replacementSet: aSet [
