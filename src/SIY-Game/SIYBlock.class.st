@@ -288,11 +288,9 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:31'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:38'
 }
 SIYBlock >> initialize [
-	
-	super initialize.
 	
 	self setDefaultTexture.
 	self arena addMorph: self.
