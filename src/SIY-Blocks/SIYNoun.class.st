@@ -21,12 +21,13 @@ SIYNoun >> blockTexture [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:03'
+	#'squeak_changestamp' : 'LK 1/10/2024 17:53'
 }
 SIYNoun >> duplicateMorph: evt [
-	"if this Noun gets duplicated, it should represent the same block"
+	"if this noun gets duplicated, it should represent the same block"
 	
-	^ (SIYNoun newInArena: self arena at: self coords) representsBlock: self representsBlock
+	^ (SIYNoun newInArena: self arena at: self coords)
+		representsBlock: self representsBlock
 
 ]
 
