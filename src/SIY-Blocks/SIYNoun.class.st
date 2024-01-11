@@ -9,24 +9,24 @@ Class {
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/2/2024 17:35'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:14'
 }
 SIYNoun >> blockTexture [
 
-	representsBlock isNil
+	self representsBlock isNil
 		ifTrue: [^ 'SIYUnknown.png']
-		ifFalse: [^ representsBlock basicNew nounTexture]
+		ifFalse: [^ self representsBlock basicNew nounTexture]
 	
 ]
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/10/2024 17:53'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
 }
 SIYNoun >> duplicateMorph: evt [
 	"if this noun gets duplicated, it should represent the same block"
 	
-	^ (SIYNoun newInArena: self arena at: self coords)
+	^ (self class newInArena: self arena at: self coords)
 		representsBlock: self representsBlock
 
 ]

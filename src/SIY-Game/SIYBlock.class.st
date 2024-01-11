@@ -140,11 +140,10 @@ SIYBlock >> blockTextureUp [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/11/2024 21:15'
+	#'squeak_changestamp' : 'LK 1/11/2024 21:19'
 }
 SIYBlock >> comeToFrontIfFloat [
 	
-	"move to front if isFloat"
 	self isFloat ifTrue: [^ self comeToFront].
 	
 	(self neighborsHere anySatisfy: [:aBlock | aBlock isFloat])
@@ -289,7 +288,7 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:38'
 }
 SIYBlock >> initialize [
 	
@@ -430,7 +429,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/9/2024 09:30'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:24'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -453,7 +452,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 		ifTrue: [^ false].
 	
 	"if there are any blocks in the way, try recursively moving them too"
-	(neighbours size = 0)
+	neighbours isEmpty
 		ifTrue: [^ self basicMove: aDirection]
 		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 					ifTrue: [^ self basicMove: aDirection]
