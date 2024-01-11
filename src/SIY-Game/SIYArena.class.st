@@ -450,12 +450,14 @@ SIYArena >> unlockGame [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:16'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:15'
 }
 SIYArena >> updateDimensions [
 
-	arenaWidth ifNotNil: [self width: self pixelPerBlock * arenaWidth].
-	arenaHeight ifNotNil: [self height: self pixelPerBlock * arenaHeight]
+	self arenaWidth 
+		ifNotNil: [self width: self pixelPerBlock * self arenaWidth].
+	self arenaHeight 
+		ifNotNil: [self height: self pixelPerBlock * self arenaHeight]
 
 ]
 

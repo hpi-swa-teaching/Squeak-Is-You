@@ -29,11 +29,12 @@ SIYSnapshot class >> newWithDictionary: aDictionary andSet: aSet [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:22'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
 }
 SIYSnapshot >> initializeWithDictionary: aDictionary andSet: aSet [
 
 	super initialize.
+	
 	self positionDictionary: aDictionary.
 	self replacementSet: aSet
 ]

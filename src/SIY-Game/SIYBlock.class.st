@@ -288,9 +288,11 @@ SIYBlock >> informMediator [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:02'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:31'
 }
 SIYBlock >> initialize [
+	
+	super initialize.
 	
 	self setDefaultTexture.
 	self arena addMorph: self.
@@ -429,7 +431,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/9/2024 09:30'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:24'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -452,7 +454,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 		ifTrue: [^ false].
 	
 	"if there are any blocks in the way, try recursively moving them too"
-	(neighbours size = 0)
+	neighbours isEmpty
 		ifTrue: [^ self basicMove: aDirection]
 		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 					ifTrue: [^ self basicMove: aDirection]
