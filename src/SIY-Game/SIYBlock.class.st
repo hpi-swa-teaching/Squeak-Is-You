@@ -140,7 +140,7 @@ SIYBlock >> blockTextureUp [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/10/2024 20:11'
+	#'squeak_changestamp' : 'LK 1/11/2024 21:15'
 }
 SIYBlock >> comeToFrontIfFloat [
 	
@@ -148,7 +148,9 @@ SIYBlock >> comeToFrontIfFloat [
 	self isFloat ifTrue: [^ self comeToFront].
 	
 	(self neighborsHere anySatisfy: [:aBlock | aBlock isFloat])
-		ifTrue: [^ self goBack]
+		ifTrue: [^ self goBehind].
+	
+	self comeToFront
 ]
 
 {
