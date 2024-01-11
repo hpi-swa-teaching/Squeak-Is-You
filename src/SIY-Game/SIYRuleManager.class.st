@@ -19,7 +19,7 @@ Class {
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 12:01'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:37'
 }
 SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
 
@@ -28,7 +28,6 @@ SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
 	nounBlocks := self collectNounsLeftOf: anIsBlock.
 	replacementNoun := self collectNounRightOf: anIsBlock.
 
-	"check for any horizontal replacement rules"
 	(nounBlocks notEmpty and: replacementNoun notNil)
 		ifTrue: [nounBlocks
 			do: [:aNoun | aDictionary at: aNoun representsBlock
@@ -40,7 +39,7 @@ SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 11:53'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:39'
 }
 SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
@@ -51,8 +50,8 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
-		ifTrue: [propertyBlocks
-			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
+		ifTrue: [propertyBlocks do: [:aProperty | 
+				aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
 	
@@ -62,7 +61,7 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 12:10'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:36'
 }
 SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
 
@@ -71,7 +70,6 @@ SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
 	nounBlocks := self collectNounsAbove: anIsBlock.
 	replacementNoun := self collectNounBelow: anIsBlock.
 
-	"check for any horizontal replacement rules"
 	(nounBlocks notEmpty and: replacementNoun notNil)
 		ifTrue: [nounBlocks
 			do: [:aNoun | aDictionary at: aNoun representsBlock
@@ -83,7 +81,7 @@ SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 11:53'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:39'
 }
 SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
@@ -94,8 +92,8 @@ SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 	
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
-		ifTrue: [propertyBlocks
-			do: [:aProperty | aSet := aDictionary at: aProperty class ifAbsent: Set new.
+		ifTrue: [propertyBlocks do: [:aProperty |
+				aSet := aDictionary at: aProperty class ifAbsent: Set new.
 				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
 				aDictionary at: aProperty class put: aSet]].
 	
@@ -183,37 +181,44 @@ SIYRuleManager >> checkWin: aBlock onTile: aTile [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:56'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:27'
 }
-SIYRuleManager >> collectNounBelow: anOperatorBlock [
+SIYRuleManager >> collectNounBelow: aBlock [
 	"recursively collect the first noun below this operator block (if conjoined with SIYAnd)"
 	
-	anOperatorBlock neighborsBelow ifNotNil: [anOperatorBlock neighborsBelow
-		do: [:aTextBlock | (aTextBlock isKindOf: SIYNoun) ifTrue: [^ aTextBlock].
-			(aTextBlock isKindOf: SIYProperty) ifTrue: [aTextBlock neighborsBelow
-				ifNotNil: [aTextBlock neighborsBelow do: [:anAnd | (anAnd isKindOf: SIYAnd)
-					ifTrue: [^ self collectNounBelow: anAnd]]]]]].
+	aBlock neighborsBelow ifNil: [^ nil].
+
+	(aBlock isKindOf: SIYOperator) 
+		ifTrue: [aBlock neighborsBelow do: [:each |
+			(each isKindOf: SIYNoun) ifTrue: [^ each].
+			(each isKindOf: SIYProperty) ifTrue: [^ self collectNounBelow: each]]].
 	
-	"return nil, if no noun was found"
+	(aBlock isKindOf: SIYProperty)
+		ifTrue: [aBlock neighborsBelow do: [:each |
+			(each isKindOf: SIYAnd) ifTrue: [^ self collectNounBelow: each]]].
+	
 	^ nil
-		
 
 ]
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:56'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:34'
 }
-SIYRuleManager >> collectNounRightOf: anOperatorBlock [
+SIYRuleManager >> collectNounRightOf: aBlock [
 	"recursively collect the first noun right of this operator block (if conjoined with SIYAnd)"
 	
-	anOperatorBlock neighborsRight ifNotNil: [anOperatorBlock neighborsRight
-		do: [:aTextBlock | (aTextBlock isKindOf: SIYNoun) ifTrue: [^ aTextBlock].
-			(aTextBlock isKindOf: SIYProperty) ifTrue: [aTextBlock neighborsRight
-				ifNotNil: [aTextBlock neighborsRight do: [:anAnd | (anAnd isKindOf: SIYAnd)
-					ifTrue: [^ self collectNounRightOf: anAnd]]]]]].
+	aBlock neighborsRight ifNil: [^ nil].
+
+	(aBlock isKindOf: SIYOperator) 
+		ifTrue: [aBlock neighborsRight do: [:each |
+			(each isKindOf: SIYNoun) ifTrue: [^ each].
+			(each isKindOf: SIYProperty) ifTrue: [^ self collectNounRightOf: each]]].
 	
-	"return nil, if no noun was found"
+	(aBlock isKindOf: SIYProperty)
+		ifTrue: [aBlock neighborsRight do: [:each |
+			(each isKindOf: SIYAnd) ifTrue: [^ self collectNounRightOf: each]]].
+	
 	^ nil
 		
 
@@ -221,40 +226,53 @@ SIYRuleManager >> collectNounRightOf: anOperatorBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:48'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:50'
 }
-SIYRuleManager >> collectNounsAbove: anOperatorBlock [
+SIYRuleManager >> collectNounsAbove: aBlock [
 	"recursively collect all nouns above this operator block (if conjoined with SIYAnd)"
-
+	
 	| aSet |
 	
 	aSet := Set new.
+	aBlock neighborsAbove ifNil: [^ aSet].
+
+	(aBlock isKindOf: SIYOperator) 
+		ifTrue: [aBlock neighborsAbove do: [:each |
+			(each isKindOf: SIYNoun) 
+				ifTrue: [aSet add: each. 
+					aSet addAll: (self collectNounsAbove: each)]]].
 	
-	anOperatorBlock neighborsAbove ifNotNil: [anOperatorBlock neighborsAbove
-		do: [:aNoun | (aNoun isKindOf: SIYNoun) ifTrue: [aSet add: aNoun. 
-			aNoun neighborsAbove ifNotNil: [aNoun neighborsAbove 
-				do: [:anAnd | (anAnd isKindOf: SIYAnd)
-					ifTrue: [aSet addAll: (self collectNounsAbove: anAnd)]]]]]].
+	(aBlock isKindOf: SIYNoun)
+		ifTrue: [aBlock neighborsAbove do: [:each |
+			(each isKindOf: SIYAnd) 
+				ifTrue: [aSet addAll: (self collectNounsAbove: each)]]].
 	
 	^ aSet
+
 ]
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:48'
+	#'squeak_changestamp' : 'LK 1/11/2024 22:52'
 }
-SIYRuleManager >> collectNounsLeftOf: anOperatorBlock [
+SIYRuleManager >> collectNounsLeftOf: aBlock [
 	"recursively collect all nouns left of this operator block (if conjoined with SIYAnd)"
 
 	| aSet |
 	
 	aSet := Set new.
+	aBlock neighborsLeft ifNil: [^ aSet].
+
+	(aBlock isKindOf: SIYOperator) 
+		ifTrue: [aBlock neighborsLeft do: [:each |
+			(each isKindOf: SIYNoun) 
+				ifTrue: [aSet add: each. 
+					aSet addAll: (self collectNounsLeftOf: each)]]].
 	
-	anOperatorBlock neighborsLeft ifNotNil: [anOperatorBlock neighborsLeft
-		do: [:aNoun | (aNoun isKindOf: SIYNoun) ifTrue: [aSet add: aNoun. 
-			aNoun neighborsLeft ifNotNil: [aNoun neighborsLeft
-				do: [:anAnd | (anAnd isKindOf: SIYAnd)
-					ifTrue: [aSet addAll: (self collectNounsLeftOf: anAnd)]]]]]].
+	(aBlock isKindOf: SIYNoun)
+		ifTrue: [aBlock neighborsLeft do: [:each |
+			(each isKindOf: SIYAnd) 
+				ifTrue: [aSet addAll: (self collectNounsLeftOf: each)]]].
 	
 	^ aSet
 
@@ -263,20 +281,27 @@ SIYRuleManager >> collectNounsLeftOf: anOperatorBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:47'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:04'
 }
-SIYRuleManager >> collectPropertiesBelow: anOperatorBlock [
+SIYRuleManager >> collectPropertiesBelow: aBlock [
 	"recursively collect all properties below this operator block (if conjoined with SIYAnd)"
 
 	| aSet |
 	
 	aSet := Set new.
+	aBlock neighborsBelow ifNil: [^ aSet].
+
+	(aBlock isKindOf: SIYOperator) 
+		ifTrue: [aBlock neighborsBelow do: [:each |
+			(each isKindOf: SIYProperty) 
+				ifTrue: [aSet add: each].
+			((each isKindOf: SIYProperty) or: (each isKindOf: SIYNoun))
+				ifTrue: [aSet addAll: (self collectPropertiesBelow: each)]]].
 	
-	anOperatorBlock neighborsBelow ifNotNil: [anOperatorBlock neighborsBelow
-		do: [:aProperty | (aProperty isKindOf: SIYProperty) ifTrue: [aSet add: aProperty.
-			aProperty neighborsBelow ifNotNil: [aProperty neighborsBelow 
-				do: [:anAnd | (anAnd isKindOf: SIYAnd)
-					ifTrue: [aSet addAll: (self collectPropertiesBelow: anAnd)]]]]]].
+	((aBlock isKindOf: SIYProperty) or: (aBlock isKindOf: SIYNoun))
+		ifTrue: [aBlock neighborsBelow do: [:each |
+			(each isKindOf: SIYAnd) 
+				ifTrue: [aSet addAll: (self collectPropertiesBelow: each)]]].
 	
 	^ aSet
 		
@@ -284,20 +309,27 @@ SIYRuleManager >> collectPropertiesBelow: anOperatorBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/6/2024 11:48'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:05'
 }
-SIYRuleManager >> collectPropertiesRightOf: anOperatorBlock [
+SIYRuleManager >> collectPropertiesRightOf: aBlock [
 	"recursively collect all properties right of this operator block (if conjoined with SIYAnd)"
 
 	| aSet |
 	
 	aSet := Set new.
+	aBlock neighborsRight ifNil: [^ aSet].
+
+	(aBlock isKindOf: SIYOperator) 
+		ifTrue: [aBlock neighborsRight do: [:each |
+			(each isKindOf: SIYProperty) 
+				ifTrue: [aSet add: each].
+			((each isKindOf: SIYProperty) or: (each isKindOf: SIYNoun))
+				ifTrue: [aSet addAll: (self collectPropertiesRightOf: each)]]].
 	
-	anOperatorBlock neighborsRight ifNotNil: [anOperatorBlock neighborsRight
-		do: [:aProperty | (aProperty isKindOf: SIYProperty) ifTrue: [aSet add: aProperty. 
-			aProperty neighborsRight ifNotNil: [aProperty neighborsRight
-				do: [:anAnd | (anAnd isKindOf: SIYAnd)
-					ifTrue: [aSet addAll: (self collectPropertiesRightOf: anAnd)]]]]]].
+	((aBlock isKindOf: SIYProperty) or: (aBlock isKindOf: SIYNoun))
+		ifTrue: [aBlock neighborsRight do: [:each |
+			(each isKindOf: SIYAnd) 
+				ifTrue: [aSet addAll: (self collectPropertiesRightOf: each)]]].
 	
 	^ aSet
 		
@@ -544,12 +576,12 @@ SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/9/2024 12:11'
+	#'squeak_changestamp' : 'LK 1/11/2024 21:21'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
 
-	| ruleDictionary replacementDictionary|
+	| ruleDictionary replacementDictionary |
 	
 	ruleDictionary := Dictionary new.
 	replacementDictionary := Dictionary new.
