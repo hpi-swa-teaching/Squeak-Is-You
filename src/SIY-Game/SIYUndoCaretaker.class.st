@@ -10,11 +10,39 @@ Class {
 	#name : #SIYUndoCaretaker,
 	#superclass : #Object,
 	#instVars : [
-		'history'
+		'history',
+		'arena'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:52'
 }
+
+{
+	#category : #'instance creation',
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:16'
+}
+SIYUndoCaretaker class >> newWithArena: anArena [
+	
+	^ self basicNew initializeWithArena: anArena
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:19'
+}
+SIYUndoCaretaker >> arena [
+
+	^ arena
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:11'
+}
+SIYUndoCaretaker >> arena: anArena [
+	
+	arena := anArena 
+]
 
 {
 	#category : #accessing,
@@ -37,6 +65,16 @@ SIYUndoCaretaker >> history [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:12'
+}
+SIYUndoCaretaker >> initializeWithArena: anArena [
+	
+	super initialize.
+	self arena: anArena
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/4/2024 14:02'
 }
@@ -49,11 +87,11 @@ SIYUndoCaretaker >> pushSnapshot: aSnapshot [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:37'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:21'
 }
 SIYUndoCaretaker >> undo [
 	"restore arena state to snapshot on top of stack"
 	
-	self history isEmpty ifFalse: [self history pop restore]
+	self history isEmpty ifFalse: [arena restoreSnapshot:  self history pop]
 
 ]

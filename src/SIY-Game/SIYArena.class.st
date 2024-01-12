@@ -336,6 +336,24 @@ SIYArena >> resetDictionaryAndSet [
 ]
 
 {
+	#category : #undo,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:06'
+}
+SIYArena >> restoreSnapshot: aSnapshot [
+	"restores arena state to this snapshot"
+	
+	"restore blocks from position dictionary"
+	aSnapshot positionDictionary 
+		keysAndValuesDo: [:key :value | key owner ifNil: key respawn.
+			key setTextureForDirection: key coords - value.
+			key coords: value].
+		
+	"delete blocks from replacementSet"
+	aSnapshot replacementSet do: [:aBlock | aBlock delete]
+
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 12:50'
 }
@@ -432,11 +450,11 @@ SIYArena >> textureSize [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:07'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:18'
 }
 SIYArena >> undoCaretaker [
 
-	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker new]
+	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker newWithArena: self]
 ]
 
 {
