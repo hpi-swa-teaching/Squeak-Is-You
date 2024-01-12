@@ -73,21 +73,3 @@ SIYSnapshot >> replacementSet: aSet [
 	
 	replacementSet := aSet
 ]
-
-{
-	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:37'
-}
-SIYSnapshot >> restore [
-	"restores arena state to this snapshot"
-	
-	"restore blocks from position dictionary"
-	self positionDictionary 
-		keysAndValuesDo: [:key :value | key owner ifNil: key respawn.
-			key setTextureForDirection: key coords - value.
-			key coords: value].
-		
-	"delete blocks from replacementSet"
-	self replacementSet do: [:aBlock | aBlock delete]
-
-]
