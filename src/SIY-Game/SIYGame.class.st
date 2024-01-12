@@ -19,8 +19,7 @@ Class {
 		'level',
 		'backgroundMorph',
 		'customScaleFactor',
-		'levelDescription',
-		'soundPlayer'
+		'levelDescription'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
@@ -143,13 +142,12 @@ SIYGame >> enableBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'KD 1/9/2024 14:39'
+	#'squeak_changestamp' : 'KD 1/13/2024 00:28'
 }
 SIYGame >> initialize [
 
 	super initialize.
-  
-  	soundPlayer := SoundPlayer startUp.
+	
 	self startLevel: SIYLevel01 atPosition: World clearArea center + self keyHintOffset
 	
 ]

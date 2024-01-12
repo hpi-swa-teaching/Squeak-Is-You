@@ -143,7 +143,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:34'
+	#'squeak_changestamp' : 'KD 1/13/2024 00:26'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -169,6 +169,8 @@ SIYArena >> checkKeyboardInputs [
 		"level switching"
             [$m] -> [self game nextLevel].
             [$n] -> [self game previousLevel].
+		[$p] -> [(RepeatingSound repeatForever: (SIYAudioManager new getSound: 'SIYthemeSound.wav')) play].
+		[$o] -> [SoundPlayer stopPlayingAll].
      } otherwise: ["do nothing"]
 	
 ]
@@ -319,7 +321,7 @@ SIYArena >> postMoveBlocksRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'KD 1/10/2024 16:08'
+	#'squeak_changestamp' : 'KD 1/13/2024 00:32'
 }
 SIYArena >> preMoveBlocksRoutine [
 	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
@@ -329,9 +331,8 @@ SIYArena >> preMoveBlocksRoutine [
 	self resetDictionaryAndSet.
 	self ruleManager updateRulesInArena: self.
 	
-	squeak := self audioManager move.
-	[squeak reset; play] fork.
-
+	"squeak := self audioManager move.
+	[squeak reset; play] fork."
 	
 ]
 

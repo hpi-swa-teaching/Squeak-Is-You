@@ -99,17 +99,19 @@ SIYWinAnimation >> incrementAnimationStep [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:55'
+	#'squeak_changestamp' : 'KD 1/13/2024 00:31'
 }
 SIYWinAnimation >> initialize [
 
 	super initialize.
 	
+	[(SIYAudioManager new getSound: 'SIYwinSound.wav') initialVolume: 0.2; reset; play] fork.
+	
 	self changeTexture.
 	
 	self openInWorld;
 		comeToFront
-	
+
 ]
 
 {

@@ -471,5 +471,17 @@ OrderedCollection [
 			'audio',
 			'SIYmoveSound.wav'
 		]
+	},
+	SquotSoundMapper {
+		#path : FSAbsolutePath [
+			'audio',
+			'SIYthemeSound.wav'
+		]
+	},
+	SquotSoundMapper {
+		#path : FSAbsolutePath [
+			'audio',
+			'SIYwinSound.wav'
+		]
 	}
 ]
