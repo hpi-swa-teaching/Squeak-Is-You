@@ -538,7 +538,7 @@ SIYBlock >> position: aPoint [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:30'
+	#'squeak_changestamp' : 'LK 1/12/2024 23:29'
 }
 SIYBlock >> postMoveRoutine: aDirection [
 	"This routine gets triggered, after the block has been moved using basicMove,
@@ -546,7 +546,7 @@ SIYBlock >> postMoveRoutine: aDirection [
 	moved using the halo."
 
 	self setTextureForDirection: aDirection.
-	self ruleManager checkRulesFor: self
+	"self ruleManager checkRulesFor: self"
 ]
 
 {
