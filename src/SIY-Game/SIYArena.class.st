@@ -268,17 +268,16 @@ SIYArena >> positionDictionary [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/6/2024 19:28'
+	#'squeak_changestamp' : 'LK 1/12/2024 23:29'
 }
 SIYArena >> postMoveBlocksRoutine [
 	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
 	self ruleManager updateRulesInArena: self.
-	
-	"check rules for all SIYYou blocks again (sometimes necessary),
-	direction for queue generation doesn't matter"
-	(self blockMediator generateQueueForDirection: 1@0)
+
+	"check rules for all blocks"
+	(self blockMediator getBlocksOfType: SIYBlock)
 		do: [:aBlock | self ruleManager checkRulesFor: aBlock].	
 			
 	self undoCaretaker createSnapshotOf: self.
@@ -382,13 +381,13 @@ SIYArena >> scaleFactor: aScaleFactor [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'KD 1/8/2024 15:10'
+	#'squeak_changestamp' : 'LK 1/12/2024 20:25'
 }
 SIYArena >> slowStepTime [
 	"slower step time affects the delay between block movements, while a keyboard
 	button is held down"
 
-	^ 180
+	^ 155
 ]
 
 {
