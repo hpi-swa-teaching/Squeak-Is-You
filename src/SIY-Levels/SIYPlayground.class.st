@@ -6,11 +6,11 @@ Class {
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 17:08'
+	#'squeak_changestamp' : 'LK 1/15/2024 22:42'
 }
 SIYPlayground >> arenaExtent [
 
-	^ 21@16
+	^ 22@16
 ]
 
 {
@@ -24,7 +24,7 @@ SIYPlayground >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 17:08'
+	#'squeak_changestamp' : 'LK 1/15/2024 22:42'
 }
 SIYPlayground >> buildLevel [
 	
@@ -85,11 +85,14 @@ SIYPlayground >> buildLevel [
 	self placeNounFor: SIYPillar at: 19@1.
 	self placeBlock: SIYPillar at: 19@2.
 	
-	self placeNounFor: SIYBrick at: 20@1.
-	self placeBlock: SIYBrick at: 20@2.
+	self placeNounFor: SIYCog at: 20@1.
+	self placeBlock: SIYCog at: 20@2.
 	
-	self placeNounFor: SIYTile at: 21@1.
-	self placeBlock: SIYTile at: 21@2.
+	self placeNounFor: SIYBrick at: 21@1.
+	self placeBlock: SIYBrick at: 21@2.
+	
+	self placeNounFor: SIYTile at: 22@1.
+	self placeBlock: SIYTile at: 22@2.
 	
 	self placeMultipleBlocks: SIYWall from: 1@3 to: (self arenaExtent x)@3.
 	
