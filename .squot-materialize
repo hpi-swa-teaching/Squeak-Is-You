@@ -294,20 +294,6 @@ OrderedCollection [
 	SquotImageMapper {
 		#path : FSAbsolutePath [
 			'textures',
-			'SIYTile.png'
-		],
-		#encoding : @6
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
-			'SIYIceT.png'
-		],
-		#encoding : @6
-	},
-	SquotImageMapper {
-		#path : FSAbsolutePath [
-			'textures',
 			'SIYJellyT.png'
 		],
 		#encoding : @6
@@ -463,6 +449,34 @@ OrderedCollection [
 		#path : FSAbsolutePath [
 			'textures',
 			'SIYTextT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYTile.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYCogT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYIceT.png'
+		],
+		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYCog.png'
 		],
 		#encoding : @6
 	}

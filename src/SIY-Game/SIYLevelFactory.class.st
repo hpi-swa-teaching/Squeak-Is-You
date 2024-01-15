@@ -26,6 +26,16 @@ SIYLevelFactory class >> newWithScale: aFloat [
 
 {
 	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/15/2024 22:54'
+}
+SIYLevelFactory >> addBlock: aBlockClass at: aPoint [
+	"place new block in arena, WITHOUT removing any block that was on the tile before"
+
+	aBlockClass newInArena: self arena at: aPoint
+]
+
+{
+	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
 }
 SIYLevelFactory >> arena [
