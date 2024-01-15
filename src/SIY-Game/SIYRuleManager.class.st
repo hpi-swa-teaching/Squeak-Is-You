@@ -134,14 +134,13 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
+	#'squeak_changestamp' : 'LK 1/15/2024 17:18'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| groundTile floatingTile |
-	
-	"don't check rules if game is locked"
+
 	aBlock arena isGameLocked ifTrue: [^ nil].
 	
 	"all rules need to be checked twice: for blocks that are float and 
@@ -151,11 +150,18 @@ SIYRuleManager >> checkRulesFor: aBlock [
 	
 	{groundTile . floatingTile} 
 		do: [:aTile | aTile 
-			ifNotEmpty: [self checkWin: aBlock onTile: aTile copy.
-				self checkDefeat: aBlock onTile: aTile copy.
+			ifNotEmpty: [self checkDefeat: aBlock onTile: aTile copy.
 				self checkSink: aBlock onTile: aTile copy.
 				self checkOpen: aBlock onTile: aTile copy.
-				self checkMelt: aBlock onTile: aTile copy]]
+				self checkMelt: aBlock onTile: aTile copy]].
+	
+	"isWin rule needs to be checked exclusively and with reloaded tile, because other
+	rules side effects could prevent isWin (e.g. block has been defeated)"
+	groundTile := aBlock neighborsHere select: [:each | each isFloat not].
+	floatingTile := aBlock neighborsHere select: [:each | each isFloat].
+	
+	{groundTile . floatingTile} 
+		do: [:aTile | aTile ifNotEmpty: [self checkWin: aBlock onTile: aTile copy]]
 ]
 
 {
@@ -538,7 +544,7 @@ SIYRuleManager >> isStop: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
+	#'squeak_changestamp' : 'LK 1/15/2024 17:14'
 }
 SIYRuleManager >> isWin: aBlock [
 	
