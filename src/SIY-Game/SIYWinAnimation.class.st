@@ -1,3 +1,11 @@
+"
+A SIYWinAnimation is the animation that is displayed, when isWin is being invoked.
+
+Instance Variables
+	animationStep: <Integer>
+	arena: <SIYArena>
+
+"
 Class {
 	#name : #SIYWinAnimation,
 	#superclass : #ImageMorph,
@@ -5,7 +13,8 @@ Class {
 		'animationStep',
 		'arena'
 	],
-	#category : #'SIY-Game'
+	#category : #'SIY-Game',
+	#'squeak_changestamp' : 'LK 1/11/2024 22:30'
 }
 
 {
