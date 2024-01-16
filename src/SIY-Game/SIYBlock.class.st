@@ -140,15 +140,19 @@ SIYBlock >> blockTextureUp [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/16/2024 18:33'
+	#'squeak_changestamp' : 'LK 1/16/2024 19:34'
 }
-SIYBlock >> cantMove [
-	"gets called if block tries to move, but can't"
+SIYBlock >> cantMoveIn: aDirection [
+	"gets called if block tries to move in specific direction, but can't"
 	
-	self isWeak ifTrue: [self ruleManager invokeWeak: {self}].
+	self isWeak 
+		ifTrue: [self basicMove: aDirection.
+			self ruleManager invokeWeak: {self}.
+			^ true].
 	
-	"we return true, because the block couldn't move"
+	"we return false, because the block couldn't be moved"
 	^ false
+	
 ]
 
 {
@@ -451,7 +455,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/16/2024 18:38'
+	#'squeak_changestamp' : 'LK 1/16/2024 19:30'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -463,23 +467,23 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	
 	neighbours := self blockMediator getBlocksOnTile: (self coords + aDirection).
 	
-	"check rules for isShut & isOpen"
+	"check rules, which override default movement behavior"
 	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
 	aBlock ifNotNil: [(self isOpen and: aBlock isShut) ifTrue: [^ true]].
 	
 	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
-	(neighbours isNil) ifTrue: [^ self cantMove].
+	(neighbours isNil) ifTrue: [^ self cantMoveIn: aDirection].
 	(neighbours anySatisfy: [:each | (each isStop) and: (each isShut and: self isOpen) not])
-		ifTrue: [^ self cantMove].
+		ifTrue: [^ self cantMoveIn: aDirection].
 	
 	"if there are any blocks in the way, try recursively moving them too"
 	neighbours isEmpty
 		ifTrue: [^ self basicMove: aDirection]
 		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 			ifTrue: [^ self basicMove: aDirection]
-			ifFalse: [^ self cantMove]]
+			ifFalse: [^ self cantMoveIn: aDirection]]
 
 ]
 

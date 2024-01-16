@@ -145,9 +145,9 @@ SIYPlayground >> nextLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/15/2024 23:47'
+	#'squeak_changestamp' : 'LK 1/16/2024 18:43'
 }
 SIYPlayground >> previousLevel [
 
-	^ SIYIsland11
+	^ SIYRuins01
 ]
