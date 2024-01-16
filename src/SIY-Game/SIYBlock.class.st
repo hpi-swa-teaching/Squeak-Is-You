@@ -139,6 +139,23 @@ SIYBlock >> blockTextureUp [
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 1/16/2024 19:34'
+}
+SIYBlock >> cantMoveIn: aDirection [
+	"gets called if block tries to move in specific direction, but can't"
+	
+	self isWeak 
+		ifTrue: [self basicMove: aDirection.
+			self ruleManager invokeWeak: {self}.
+			^ true].
+	
+	"we return false, because the block couldn't be moved"
+	^ false
+	
+]
+
+{
 	#category : #appearance,
 	#'squeak_changestamp' : 'LK 1/11/2024 21:19'
 }
@@ -400,6 +417,15 @@ SIYBlock >> isStop [
 
 {
 	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:07'
+}
+SIYBlock >> isWeak [
+
+	^ self ruleManager isWeak: self
+]
+
+{
+	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
 }
 SIYBlock >> isWin [
@@ -429,34 +455,35 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:24'
+	#'squeak_changestamp' : 'LK 1/16/2024 19:30'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
-	For example, calling this method only has an effect, if the block is able to move. It might
-	also push other blocks."
+	Calling this method only has an effect, if the blocks in front of it allow it. 
+	This method returns true/false, depending on whether the block who pushed this block
+	(aBlock) should be able to move onto this blocks tile."
 	
 	| neighbours |
 	
 	neighbours := self blockMediator getBlocksOnTile: (self coords + aDirection).
 	
-	"check rules for isShut & isOpen"
+	"check rules, which override default movement behavior"
 	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
 	aBlock ifNotNil: [(self isOpen and: aBlock isShut) ifTrue: [^ true]].
 	
 	"check for rules, which would prevent this block from moving"
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
-	(neighbours isNil) ifTrue: [^ false].
+	(neighbours isNil) ifTrue: [^ self cantMoveIn: aDirection].
 	(neighbours anySatisfy: [:each | (each isStop) and: (each isShut and: self isOpen) not])
-		ifTrue: [^ false].
+		ifTrue: [^ self cantMoveIn: aDirection].
 	
 	"if there are any blocks in the way, try recursively moving them too"
 	neighbours isEmpty
 		ifTrue: [^ self basicMove: aDirection]
 		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
-					ifTrue: [^ self basicMove: aDirection]
-					ifFalse: [^ false]]
+			ifTrue: [^ self basicMove: aDirection]
+			ifFalse: [^ self cantMoveIn: aDirection]]
 
 ]
 

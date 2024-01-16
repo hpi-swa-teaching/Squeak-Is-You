@@ -134,7 +134,7 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/15/2024 17:18'
+	#'squeak_changestamp' : 'LK 1/16/2024 19:11'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
@@ -143,25 +143,17 @@ SIYRuleManager >> checkRulesFor: aBlock [
 
 	aBlock arena isGameLocked ifTrue: [^ nil].
 	
-	"all rules need to be checked twice: for blocks that are float and 
-	for blocks that are not float"
-	groundTile := aBlock neighborsHere select: [:each | each isFloat not].
-	floatingTile := aBlock neighborsHere select: [:each | each isFloat].
+	groundTile := [aBlock neighborsHere select: [:each | each isFloat not]].
+	floatingTile := [aBlock neighborsHere select: [:each | each isFloat]].
 	
 	{groundTile . floatingTile} 
-		do: [:aTile | aTile 
-			ifNotEmpty: [self checkDefeat: aBlock onTile: aTile copy.
-				self checkSink: aBlock onTile: aTile copy.
-				self checkOpen: aBlock onTile: aTile copy.
-				self checkMelt: aBlock onTile: aTile copy]].
-	
-	"isWin rule needs to be checked exclusively and with reloaded tile, because other
-	rules side effects could prevent isWin (e.g. block has been defeated)"
-	groundTile := aBlock neighborsHere select: [:each | each isFloat not].
-	floatingTile := aBlock neighborsHere select: [:each | each isFloat].
-	
-	{groundTile . floatingTile} 
-		do: [:aTile | aTile ifNotEmpty: [self checkWin: aBlock onTile: aTile copy]]
+		do: [:aTile | aTile value
+			ifNotEmpty: [self checkWeak: aBlock onTile: aTile value copy.
+				self checkDefeat: aBlock onTile: aTile value copy.
+				self checkSink: aBlock onTile: aTile value copy.
+				self checkOpen: aBlock onTile: aTile value copy.
+				self checkMelt: aBlock onTile: aTile value copy.
+				self checkWin: aBlock onTile: aTile value copy]]
 ]
 
 {
@@ -172,6 +164,16 @@ SIYRuleManager >> checkSink: aBlock onTile: aTile [
 	
 	((aTile anySatisfy: [:each | each isSink]) and: aTile size > 1)
 			ifTrue: [self invokeSink: aTile]
+]
+
+{
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:19'
+}
+SIYRuleManager >> checkWeak: aBlock onTile: aTile [
+
+	((aTile anySatisfy: [:each | each isWeak]) and: (aTile size > 1))
+		ifTrue: [self invokeWeak: aTile]
 ]
 
 {
@@ -416,6 +418,15 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:10'
+}
+SIYRuleManager >> invokeWeak: aTile [
+
+	aTile do: [:each | (each isWeak) ifTrue: [each deleteAndRemember]]
+]
+
+{
+	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
 }
 SIYRuleManager >> invokeWin: aBlock [
@@ -531,14 +542,24 @@ SIYRuleManager >> isSink: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 1/16/2024 18:58'
 }
 SIYRuleManager >> isStop: aBlock [
 	
-	"isYou and isPush can override this rule"
-	(aBlock isYou or: aBlock isPush) ifTrue: [^ false].
+	"isYou, isPush and isWeak can override this rule"
+	(aBlock isYou or: aBlock isPush or: aBlock isWeak) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYStop forBlock: aBlock
+
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:07'
+}
+SIYRuleManager >> isWeak: aBlock [
+	
+	^ self isRuleInDictionary: SIYWeak forBlock: aBlock
 
 ]
 
@@ -569,15 +590,16 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/9/2024 11:38'
+	#'squeak_changestamp' : 'LK 1/16/2024 11:54'
 }
 SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
 	"blocks can't be replaced with textblocks"
 	(anotherBlockClass = SIYText) ifTrue: [^ nil "do nothing"].
 	
-	(anArena blockMediator getBlocksOfType: aBlockClass)
-		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
+	(aBlockClass = anotherBlockClass)
+		ifFalse: [(anArena blockMediator getBlocksOfType: aBlockClass)
+			do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]]
 ]
 
 {

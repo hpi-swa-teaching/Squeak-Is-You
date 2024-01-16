@@ -55,11 +55,11 @@ SIYIsland11 >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 15:13'
+	#'squeak_changestamp' : 'LK 1/16/2024 18:43'
 }
 SIYIsland11 >> nextLevel [
 
-	^ SIYPlayground
+	^ SIYRuins01
 ]
 
 {

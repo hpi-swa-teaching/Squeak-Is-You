@@ -24,7 +24,7 @@ SIYPlayground >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/15/2024 22:42'
+	#'squeak_changestamp' : 'LK 1/16/2024 18:11'
 }
 SIYPlayground >> buildLevel [
 	
@@ -111,6 +111,7 @@ SIYPlayground >> buildLevel [
 	self placeBlock: SIYShut at: 9@4.
 	self placeBlock: SIYOpen at: 10@4.
 	self placeBlock: SIYFloat at: 11@4.
+	self placeBlock: SIYWeak at: 12@4.
 	
 	self placeMultipleBlocks: SIYWall from: 1@5 to: (self arenaExtent x)@5.
 	
@@ -144,9 +145,9 @@ SIYPlayground >> nextLevel [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/15/2024 23:47'
+	#'squeak_changestamp' : 'LK 1/16/2024 18:43'
 }
 SIYPlayground >> previousLevel [
 
-	^ SIYIsland11
+	^ SIYRuins01
 ]

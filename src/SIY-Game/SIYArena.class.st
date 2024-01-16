@@ -114,7 +114,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:34'
+	#'squeak_changestamp' : 'LK 1/16/2024 15:44'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -140,6 +140,8 @@ SIYArena >> checkKeyboardInputs [
 		"level switching"
             [$m] -> [self game nextLevel].
             [$n] -> [self game previousLevel].
+		"exit game"
+		[Character escape] -> [self game exitGame].
      } otherwise: ["do nothing"]
 	
 ]

@@ -479,5 +479,12 @@ OrderedCollection [
 			'SIYCog.png'
 		],
 		#encoding : @6
+	},
+	SquotImageMapper {
+		#path : FSAbsolutePath [
+			'textures',
+			'SIYWeak.png'
+		],
+		#encoding : @6
 	}
 ]

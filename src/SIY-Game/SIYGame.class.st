@@ -143,6 +143,15 @@ SIYGame >> enableBackground [
 ]
 
 {
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/16/2024 15:47'
+}
+SIYGame >> exitGame [
+
+	self backgroundMorph delete
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/9/2024 19:41'
 }
