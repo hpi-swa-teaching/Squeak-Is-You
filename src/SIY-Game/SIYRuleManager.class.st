@@ -134,7 +134,7 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/15/2024 17:18'
+	#'squeak_changestamp' : 'LK 1/16/2024 18:12'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
@@ -153,7 +153,8 @@ SIYRuleManager >> checkRulesFor: aBlock [
 			ifNotEmpty: [self checkDefeat: aBlock onTile: aTile copy.
 				self checkSink: aBlock onTile: aTile copy.
 				self checkOpen: aBlock onTile: aTile copy.
-				self checkMelt: aBlock onTile: aTile copy]].
+				self checkMelt: aBlock onTile: aTile copy.
+				self checkWeak: aBlock onTile: aTile copy]].
 	
 	"isWin rule needs to be checked exclusively and with reloaded tile, because other
 	rules side effects could prevent isWin (e.g. block has been defeated)"
@@ -172,6 +173,16 @@ SIYRuleManager >> checkSink: aBlock onTile: aTile [
 	
 	((aTile anySatisfy: [:each | each isSink]) and: aTile size > 1)
 			ifTrue: [self invokeSink: aTile]
+]
+
+{
+	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:19'
+}
+SIYRuleManager >> checkWeak: aBlock onTile: aTile [
+
+	((aTile anySatisfy: [:each | each isWeak]) and: (aTile size > 1))
+		ifTrue: [self invokeWeak: aTile]
 ]
 
 {
@@ -416,6 +427,15 @@ SIYRuleManager >> invokeSink: aTile [
 
 {
 	#category : #'rule invoking',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:10'
+}
+SIYRuleManager >> invokeWeak: aTile [
+
+	aTile do: [:each | (each isWeak) ifTrue: [each deleteAndRemember]]
+]
+
+{
+	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
 }
 SIYRuleManager >> invokeWin: aBlock [
@@ -539,6 +559,16 @@ SIYRuleManager >> isStop: aBlock [
 	(aBlock isYou or: aBlock isPush) ifTrue: [^ false].
 	
 	^ self isRuleInDictionary: SIYStop forBlock: aBlock
+
+]
+
+{
+	#category : #'rule detection',
+	#'squeak_changestamp' : 'LK 1/16/2024 18:07'
+}
+SIYRuleManager >> isWeak: aBlock [
+	
+	^ self isRuleInDictionary: SIYWeak forBlock: aBlock
 
 ]
 
