@@ -569,15 +569,16 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/9/2024 11:38'
+	#'squeak_changestamp' : 'LK 1/16/2024 11:54'
 }
 SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
 	"blocks can't be replaced with textblocks"
 	(anotherBlockClass = SIYText) ifTrue: [^ nil "do nothing"].
 	
-	(anArena blockMediator getBlocksOfType: aBlockClass)
-		do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]
+	(aBlockClass = anotherBlockClass)
+		ifFalse: [(anArena blockMediator getBlocksOfType: aBlockClass)
+			do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]]
 ]
 
 {
