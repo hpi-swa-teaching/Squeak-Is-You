@@ -143,7 +143,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:34'
+	#'squeak_changestamp' : 'KD 1/16/2024 11:24'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -169,6 +169,8 @@ SIYArena >> checkKeyboardInputs [
 		"level switching"
             [$m] -> [self game nextLevel].
             [$n] -> [self game previousLevel].
+		[$p] -> [(RepeatingSound repeatForever: (SIYAudioManager new getSound: 'SIYthemeSound.wav')) play].
+		[$o] -> [SoundPlayer stopPlayingAll].
      } otherwise: ["do nothing"]
 	
 ]
