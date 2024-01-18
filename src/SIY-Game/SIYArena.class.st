@@ -143,7 +143,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 1/13/2024 00:26'
+	#'squeak_changestamp' : 'KD 1/18/2024 19:44'
 }
 SIYArena >> checkKeyboardInputs [
 	

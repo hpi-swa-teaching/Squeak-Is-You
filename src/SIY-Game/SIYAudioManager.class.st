@@ -27,10 +27,10 @@ SIYAudioManager >> basePath [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'KD 1/9/2024 13:42'
+	#'squeak_changestamp' : 'KD 1/15/2024 15:35'
 }
 SIYAudioManager >> getSound: aFilename [
-	"you need to upload .wav files with 20050 Hz and 16 Bitresolution"
+	"you need to upload .wav files with 20050 Hz and 16 Bitresolutios"
 
 	^ self assetLoader loadSound: aFilename
 ]
