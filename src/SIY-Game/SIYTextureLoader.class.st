@@ -8,22 +8,10 @@ Instance Variables
 "
 Class {
 	#name : #SIYTextureLoader,
-	#superclass : #Object,
-	#instVars : [
-		'assetLoader'
-	],
+	#superclass : #SIYAssetLoader,
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:51'
 }
-
-{
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:49'
-}
-SIYTextureLoader >> assetLoader [
-
-	^ assetLoader ifNil: [assetLoader := GitAssetLoader for: self repositoryName basePath: self basePath.]
-]
 
 {
 	#category : #configuration,
@@ -41,13 +29,4 @@ SIYTextureLoader >> basePath [
 SIYTextureLoader >> getTexture: aFilename [
 
 	^ self assetLoader loadForm: aFilename
-]
-
-{
-	#category : #configuration,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:38'
-}
-SIYTextureLoader >> repositoryName [
-
-	^ 'swa23-24-group16'
 ]
