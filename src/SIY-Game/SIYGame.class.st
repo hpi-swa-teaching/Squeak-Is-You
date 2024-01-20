@@ -144,10 +144,11 @@ SIYGame >> enableBackground [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/16/2024 15:47'
+	#'squeak_changestamp' : 'KD 1/20/2024 15:11'
 }
 SIYGame >> exitGame [
 
+	SIYAudioLoader stopPlayback.
 	self backgroundMorph delete
 ]
 
