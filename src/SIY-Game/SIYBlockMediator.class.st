@@ -46,10 +46,10 @@ SIYBlockMediator >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:11'
+	#'squeak_changestamp' : 'KD 1/20/2024 14:08'
 }
 SIYBlockMediator >> createGameBoard [
-	"returns a matrix with the size of the arena, initialized with empty sets"
+	"returns a matrix with the size of the arena, initialized with an empty sets"
 
 	| aMatrix |
 

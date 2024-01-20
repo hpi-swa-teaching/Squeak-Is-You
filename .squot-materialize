@@ -486,5 +486,12 @@ OrderedCollection [
 			'SIYWeak.png'
 		],
 		#encoding : @6
+	},
+	SquotSoundMapper {
+		#path : FSAbsolutePath [
+			'audio',
+			'SIYthemeSound.wav'
+		],
+		#encoding : 'WAV'
 	}
 ]
