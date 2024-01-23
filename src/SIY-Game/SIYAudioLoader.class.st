@@ -24,6 +24,15 @@ SIYAudioLoader class >> playTheme [
 
 {
 	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'KD 1/23/2024 01:45'
+}
+SIYAudioLoader class >> playWin [
+
+	[(self new getSound: 'SIYwinSound.wav') reset; play] fork
+]
+
+{
+	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'KD 1/20/2024 15:02'
 }
 SIYAudioLoader class >> stopPlayback [
