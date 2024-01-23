@@ -46,10 +46,10 @@ SIYBlockMediator >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:11'
+	#'squeak_changestamp' : 'KD 1/20/2024 14:08'
 }
 SIYBlockMediator >> createGameBoard [
-	"returns a matrix with the size of the arena, initialized with empty sets"
+	"returns a matrix with the size of the arena, initialized with an empty sets"
 
 	| aMatrix |
 
@@ -99,7 +99,7 @@ SIYBlockMediator >> generateQueueFromBottom [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:18'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
 }
 SIYBlockMediator >> generateQueueFromLeft [
 	"Returns array of blocks in arena, ordered by x coordinate"
@@ -108,7 +108,7 @@ SIYBlockMediator >> generateQueueFromLeft [
 	
 	aCollection := OrderedCollection new.
 	
-	(1 to: self arena arenaHeight)
+	1 to: self arena arenaHeight
 		do: [:y | (1 to: self arena arenaWidth)
 			do: [:x | (self gameBoard at: x at: y)
 				do: [:aBlock | aCollection add: aBlock]]].
@@ -128,7 +128,7 @@ SIYBlockMediator >> generateQueueFromRight [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:24'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
 }
 SIYBlockMediator >> generateQueueFromTop [
 	"Returns array of blocks in arena, reverse ordered by y coordinate"
@@ -137,7 +137,7 @@ SIYBlockMediator >> generateQueueFromTop [
 	
 	aCollection := OrderedCollection new.
 	
-	(1 to: self arena arenaWidth)
+	1 to: self arena arenaWidth
 		do: [:x | (1 to: self arena arenaHeight)
 			do: [:y | (self gameBoard at: x at: y)
 				do: [:aBlock | aCollection add: aBlock]]].
@@ -147,7 +147,7 @@ SIYBlockMediator >> generateQueueFromTop [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
 }
 SIYBlockMediator >> getBlocksOfType: aBlockClass [
 	"returns set of all blocks of specified block type in the arena"
@@ -156,7 +156,7 @@ SIYBlockMediator >> getBlocksOfType: aBlockClass [
 
 	aSet := Set new.
 	
-	(1 to: self arena arenaHeight)
+	1 to: self arena arenaHeight
 		do: [:y | (1 to: self arena arenaWidth)
 			do: [:x | (self getBlocksOnTile: x@y)
 				do: [:aBlock | (aBlock isKindOf: aBlockClass)

@@ -81,7 +81,7 @@ SIYGame >> backgroundMorph [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/9/2024 20:54'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
 }
 SIYGame >> createBackgroundMorph [
 
@@ -91,7 +91,8 @@ SIYGame >> createBackgroundMorph [
 		extent: World clearArea extent;
 		color: self backgroundColor;
 		beSticky;
-		openInWorld.
+		openInWorld;
+		yourself.
 
 	anotherMorph := self createKeyHintMorph.
 	aMorph addMorphCentered: anotherMorph.
@@ -139,6 +140,16 @@ SIYGame >> customScaleFactor: aFloat [
 SIYGame >> enableBackground [
 
 	^ self customScaleFactor isNil
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'KD 1/20/2024 15:11'
+}
+SIYGame >> exitGame [
+
+	SIYAudioLoader stopPlayback.
+	self backgroundMorph delete
 ]
 
 {

@@ -26,11 +26,30 @@ SIYLevelFactory class >> newWithScale: aFloat [
 
 {
 	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/15/2024 22:54'
+}
+SIYLevelFactory >> addBlock: aBlockClass at: aPoint [
+	"place new block in arena, WITHOUT removing any block that was on the tile before"
+
+	aBlockClass newInArena: self arena at: aPoint
+]
+
+{
+	#category : #'level building',
 	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
 }
 SIYLevelFactory >> arena [
 
 	^ arena
+]
+
+{
+	#category : #'level building',
+	#'squeak_changestamp' : 'LK 1/11/2024 23:29'
+}
+SIYLevelFactory >> arena: anArena [
+
+	arena := anArena
 ]
 
 {
@@ -86,11 +105,11 @@ SIYLevelFactory >> calculateScale [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 13:31'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:15'
 }
 SIYLevelFactory >> createLevelScaled: aFloat [
 	
-	arena := SIYArena newWithExtent: self arenaExtent scaled: aFloat.
+	self arena: (SIYArena newWithExtent: self arenaExtent scaled: aFloat).
 	
 	self buildLevel.
 	self arena color: self backgroundColor.
@@ -118,11 +137,12 @@ SIYLevelFactory >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 22:51'
+	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
 }
 SIYLevelFactory >> initializeWithScale: aFloat [
 	
 	super initialize.
+	
 	self createLevelScaled: (aFloat ifNil: [self calculateScale])
 ]
 
