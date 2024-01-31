@@ -197,7 +197,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:39'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:38'
 }
 SIYArena >> initialize [
 
@@ -264,11 +264,11 @@ SIYArena >> moveBlocksDirection: aDirection [
 
 {
 	#category : #audio,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:25'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:55'
 }
 SIYArena >> outOfWorld: aWorld [
 
-	self game audioPlayer killSound.
+	self game audioPlayer pauseMusic.
 	
 	^ super outOfWorld: aWorld
 ]

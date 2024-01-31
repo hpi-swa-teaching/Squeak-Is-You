@@ -85,6 +85,15 @@ SIYWinAnimation >> checkIfAnimationDone [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 14:39'
+}
+SIYWinAnimation >> game [
+
+	^ self arena game
+]
+
+{
 	#category : #appearance,
 	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
 }
@@ -108,12 +117,13 @@ SIYWinAnimation >> incrementAnimationStep [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:55'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:40'
 }
 SIYWinAnimation >> initialize [
 
 	super initialize.
 	
+	self game audioPlayer playWinSoundIfNotMuted.
 	self changeTexture.
 	
 	self openInWorld;

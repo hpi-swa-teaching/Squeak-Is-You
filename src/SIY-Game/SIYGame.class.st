@@ -183,13 +183,12 @@ SIYGame >> handlesMouseDown: anEvent [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:34'
 }
 SIYGame >> initialize [
 
 	super initialize.
-	
-	self audioPlayer playMusicIfNotMuted.
+
 	self startLevel: SIYIntro01 atPosition: World clearArea center + self keyHintOffset
 ]
 
@@ -311,12 +310,13 @@ SIYGame >> restartLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:27'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:38'
 }
 SIYGame >> startLevel: aLevel [
 
 	self level: (aLevel newWithScale: self customScaleFactor).
 	self arena game: self.
+	self audioPlayer playMusicIfNotMuted.
 	
 	self enableBackground
 		ifTrue: [self backgroundMorph addMorph: self arena.
