@@ -318,12 +318,12 @@ SIYLevelFactory >> previousLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
 SIYLevelFactory >> removeBlockAt: aPoint [
 	"remove all blocks on specified tile"
 
-	(self arena blockMediator getBlocksOnTile: aPoint)
+	(self arena gameBoard getBlocksOnTile: aPoint)
 		do: [:each | each delete]
 ]
 
