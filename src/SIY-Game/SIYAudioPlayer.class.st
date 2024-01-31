@@ -82,7 +82,7 @@ SIYAudioPlayer >> pauseMusic [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:50'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:04'
 }
 SIYAudioPlayer >> playMusic [
 	
@@ -124,11 +124,11 @@ SIYAudioPlayer >> playWinSoundIfNotMuted [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:45'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:07'
 }
 SIYAudioPlayer >> resumeMusic [
 
-	SoundPlayer resumePlaying: self backgroundMusic
+	SoundPlayer resumePlaying: self backgroundMusic quickStart: false 
 ]
 
 {
