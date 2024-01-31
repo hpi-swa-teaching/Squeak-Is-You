@@ -95,6 +95,15 @@ SIYArena >> arenaWidth: val [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 14:25'
+}
+SIYArena >> audioPlayer [
+
+	^ self game audioPlayer
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:08'
 }
@@ -114,7 +123,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 1/20/2024 15:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 13:59'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -138,8 +147,8 @@ SIYArena >> checkKeyboardInputs [
 		[$d] -> [self moveBlocksDirection: 1@0].
 		[$a] -> [self moveBlocksDirection: (-1)@0].
 		"level switching"
-            [$m] -> [self game nextLevel].
-            [$n] -> [self game previousLevel].
+            [$l] -> [self game nextLevel].
+            [$k] -> [self game previousLevel].
 		"audio switching"
             [$p] -> [SIYAudioLoader playTheme].
             [$o] -> [SIYAudioLoader stopPlayback].
@@ -251,6 +260,17 @@ SIYArena >> moveBlocksDirection: aDirection [
 	(self blockMediator generateQueueForDirection: aDirection)
 		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
+]
+
+{
+	#category : #audio,
+	#'squeak_changestamp' : 'LK 1/31/2024 14:25'
+}
+SIYArena >> outOfWorld: aWorld [
+
+	self game audioPlayer killSound.
+	
+	^ super outOfWorld: aWorld
 ]
 
 {
