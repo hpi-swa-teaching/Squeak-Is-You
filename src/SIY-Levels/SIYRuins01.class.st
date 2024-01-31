@@ -15,7 +15,7 @@ SIYRuins01 >> arenaExtent [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/16/2024 18:56'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/30/2024 22:26'
 }
 SIYRuins01 >> buildLevel [
 	
@@ -41,7 +41,7 @@ SIYRuins01 >> buildLevel [
 	self placeHorizontalRule: SIYRock	 is: SIYPush at: 15@12.
 	self placeHorizontalRule: SIYFlag is: SIYWin at: 8@14.
 	
-	self placeBlock: SIYFlag at: 8@16.
+	self placeBlock: SIYFlag at: 8@16
 ]
 
 {
