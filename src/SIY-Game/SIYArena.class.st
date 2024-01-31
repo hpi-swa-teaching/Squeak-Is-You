@@ -123,7 +123,7 @@ SIYArena >> blockMediator [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/31/2024 13:59'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:03'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -149,9 +149,8 @@ SIYArena >> checkKeyboardInputs [
 		"level switching"
             [$l] -> [self game nextLevel].
             [$k] -> [self game previousLevel].
-		"audio switching"
-            [$p] -> [SIYAudioLoader playTheme].
-            [$o] -> [SIYAudioLoader stopPlayback].
+		"audio muting"
+            [$m] -> [self audioPlayer toggleMute].
 		"exit game"
 		[Character escape] -> [self game exitGame].
      } otherwise: ["do nothing"]
@@ -260,17 +259,6 @@ SIYArena >> moveBlocksDirection: aDirection [
 	(self blockMediator generateQueueForDirection: aDirection)
 		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
-]
-
-{
-	#category : #audio,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:55'
-}
-SIYArena >> outOfWorld: aWorld [
-
-	self game audioPlayer pauseMusic.
-	
-	^ super outOfWorld: aWorld
 ]
 
 {

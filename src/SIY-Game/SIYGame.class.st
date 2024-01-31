@@ -13,7 +13,7 @@ Instance Variables
 "
 Class {
 	#name : #SIYGame,
-	#superclass : #Object,
+	#superclass : #Morph,
 	#instVars : [
 		'arena',
 		'level',
@@ -54,6 +54,19 @@ SIYGame >> abortLevel [
 ]
 
 {
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/31/2024 16:37'
+}
+SIYGame >> addKeyHintMorph [
+
+	| aMorph |
+
+	aMorph := self createKeyHintMorph.
+	self addMorphCentered: aMorph.
+	aMorph bottom: self bottom
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:46'
 }
@@ -84,33 +97,11 @@ SIYGame >> backgroundColor [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:28'
+	#'squeak_changestamp' : 'LK 1/31/2024 16:29'
 }
 SIYGame >> backgroundMorph [
 
-	^ backgroundMorph ifNil: [backgroundMorph := self createBackgroundMorph]
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
-}
-SIYGame >> createBackgroundMorph [
-
-	| aMorph anotherMorph |
-	
-	aMorph := Morph new
-		extent: World clearArea extent;
-		color: self backgroundColor;
-		beSticky;
-		openInWorld;
-		yourself.
-
-	anotherMorph := self createKeyHintMorph.
-	aMorph addMorphCentered: anotherMorph.
-	anotherMorph bottom: aMorph bottom.
-	
-	^ aMorph
+	^ self
 ]
 
 {
@@ -146,30 +137,30 @@ SIYGame >> customScaleFactor: aFloat [
 ]
 
 {
-	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:22'
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 16:48'
 }
-SIYGame >> delete [
+SIYGame >> defaultPosition [
+
+	^ World clearArea center + self keyHintOffset
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
+}
+SIYGame >> exitGame [
 	
-	super delete
+	self abandon
 ]
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
+	#'squeak_changestamp' : 'LK 1/31/2024 16:31'
 }
-SIYGame >> enableBackground [
+SIYGame >> fullscreenEnabled [
 
 	^ self customScaleFactor isNil
-]
-
-{
-	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:17'
-}
-SIYGame >> exitGame [
-
-	self backgroundMorph delete
 ]
 
 {
@@ -183,13 +174,30 @@ SIYGame >> handlesMouseDown: anEvent [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:34'
+	#'squeak_changestamp' : 'LK 1/31/2024 20:51'
 }
 SIYGame >> initialize [
 
 	super initialize.
+	self initializeBackground.
+	
+	self audioPlayer playMusicIfNotMuted.
+	self startLevel: SIYIntro01 atPosition: self center
+]
 
-	self startLevel: SIYIntro01 atPosition: World clearArea center + self keyHintOffset
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 16:56'
+}
+SIYGame >> initializeBackground [
+
+	self color: self backgroundColor;
+		openInWorld;
+		center: self defaultPosition.
+		
+	self fullscreenEnabled
+		ifTrue: [self updateExtent;
+			addKeyHintMorph].
 ]
 
 {
@@ -276,6 +284,17 @@ SIYGame >> nextLevel [
 
 {
 	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
+}
+SIYGame >> outOfWorld: aWorld [
+
+	self audioPlayer stopMusic.
+	
+	^ super outOfWorld: aWorld
+]
+
+{
+	#category : #'level control',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:32'
 }
 SIYGame >> previousLevel [
@@ -310,17 +329,18 @@ SIYGame >> restartLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:38'
+	#'squeak_changestamp' : 'LK 1/31/2024 20:51'
 }
 SIYGame >> startLevel: aLevel [
 
 	self level: (aLevel newWithScale: self customScaleFactor).
 	self arena game: self.
-	self audioPlayer playMusicIfNotMuted.
 	
-	self enableBackground
-		ifTrue: [self backgroundMorph addMorph: self arena.
-				self arena setProperty: #indicateKeyboardFocus toValue: #never.
+	self updateExtent.
+	self backgroundMorph addMorphCentered: self arena.
+	
+	self fullscreenEnabled
+		ifTrue: [self arena setProperty: #indicateKeyboardFocus toValue: #never.
 				self updateLevelDescription]
 	
 ]
@@ -333,6 +353,23 @@ SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
 	self arena center: aPoint
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/31/2024 16:57'
+}
+SIYGame >> updateExtent [
+	
+	| aPoint |
+
+	aPoint := self center.
+	
+	self fullscreenEnabled
+		ifTrue: [self extent: World clearArea extent;
+			center: World clearArea center]
+		ifFalse: [self extent: self arena extent;
+			center: aPoint]
 ]
 
 {
