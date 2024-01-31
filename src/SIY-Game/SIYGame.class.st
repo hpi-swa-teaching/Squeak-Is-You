@@ -17,9 +17,6 @@ Class {
 	#instVars : [
 		'arena',
 		'level',
-		'backgroundMorph',
-		'customScaleFactor',
-		'levelDescription',
 		'audioPlayer'
 	],
 	#category : #'SIY-Game',
@@ -28,20 +25,29 @@ Class {
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'jt 11/30/2023 15:20'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:07'
 }
-SIYGame class >> start [
-
-	self new
+SIYGame class >> new [
+	
+	^ self start
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:06'
+}
+SIYGame class >> start [
+
+	^ SIYFullscreenGame start
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:03'
 }
 SIYGame class >> startWithScale: aScaleFactor [
 
-	^ self basicNew initializeWithScale: aScaleFactor
+	^ SIYScaledGame startWithScale: aScaleFactor
 ]
 
 {
@@ -54,25 +60,21 @@ SIYGame >> abortLevel [
 ]
 
 {
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/31/2024 16:37'
-}
-SIYGame >> addKeyHintMorph [
-
-	| aMorph |
-
-	aMorph := self createKeyHintMorph.
-	self addMorphCentered: aMorph.
-	aMorph bottom: self bottom
-]
-
-{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:46'
 }
 SIYGame >> arena [
 
 	^ self level arena
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:42'
+}
+SIYGame >> arenaPosition [
+
+	^ SubclassResponsibility
 ]
 
 {
@@ -96,56 +98,6 @@ SIYGame >> backgroundColor [
 ]
 
 {
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/31/2024 16:29'
-}
-SIYGame >> backgroundMorph [
-
-	^ self
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
-}
-SIYGame >> createKeyHintMorph [
-
-	| aMorph aForm |
-	
-	aForm := SIYTextureLoader new getTexture: self keyHintTexture.
-	aMorph := (aForm scaledToHeight: self keyHintHeight) asMorph openInWorld.
-	
-	^ aMorph
-]
-
-{
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
-}
-SIYGame >> customScaleFactor [
-
-	^ customScaleFactor
-]
-
-{
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
-}
-SIYGame >> customScaleFactor: aFloat [
-	
-	customScaleFactor := aFloat
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 16:48'
-}
-SIYGame >> defaultPosition [
-
-	^ World clearArea center + self keyHintOffset
-]
-
-{
 	#category : #'level control',
 	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
 }
@@ -156,85 +108,35 @@ SIYGame >> exitGame [
 
 {
 	#category : #background,
-	#'squeak_changestamp' : 'LK 1/31/2024 16:31'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:31'
 }
 SIYGame >> fullscreenEnabled [
 
-	^ self customScaleFactor isNil
-]
-
-{
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/9/2024 19:41'
-}
-SIYGame >> handlesMouseDown: anEvent [
-
-	^ true
+	^ false
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 20:51'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:42'
 }
 SIYGame >> initialize [
 
 	super initialize.
+	
 	self initializeBackground.
 	
 	self audioPlayer playMusicIfNotMuted.
-	self startLevel: SIYIntro01 atPosition: self center
+	self startLevel: SIYIntro01 atPosition: self arenaPosition
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 16:56'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:53'
 }
 SIYGame >> initializeBackground [
 
-	self color: self backgroundColor;
-		openInWorld;
-		center: self defaultPosition.
-		
-	self fullscreenEnabled
-		ifTrue: [self updateExtent;
-			addKeyHintMorph].
-]
+	^ SubclassResponsibility
 
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
-}
-SIYGame >> initializeWithScale: aFloat [
-	
-	self customScaleFactor: aFloat.
-	self initialize
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 21:57'
-}
-SIYGame >> keyHintHeight [
-
-	^ 50 px
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:22'
-}
-SIYGame >> keyHintOffset [
-
-	^ 0@(self keyHintHeight / 2 negated)
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 19:59'
-}
-SIYGame >> keyHintTexture [
-
-	^ '/KeyHints.png'
 ]
 
 {
@@ -253,24 +155,6 @@ SIYGame >> level [
 SIYGame >> level: aLevel [
 
 	level := aLevel
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:24'
-}
-SIYGame >> levelDescription [
-
-	^ levelDescription ifNil: [levelDescription := TextMorph new]
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:32'
-}
-SIYGame >> levelDescriptionOffset [
-
-	^ ((15 px)@(-15 px))
 ]
 
 {
@@ -328,20 +212,28 @@ SIYGame >> restartLevel [
 ]
 
 {
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:02'
+}
+SIYGame >> scaleFactor [
+
+	^ SubclassResponsibility
+]
+
+{
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/31/2024 20:51'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:01'
 }
 SIYGame >> startLevel: aLevel [
 
-	self level: (aLevel newWithScale: self customScaleFactor).
+	self level: (aLevel newWithScale: self scaleFactor).
 	self arena game: self.
 	
 	self updateExtent.
-	self backgroundMorph addMorphCentered: self arena.
 	
-	self fullscreenEnabled
-		ifTrue: [self arena setProperty: #indicateKeyboardFocus toValue: #never.
-				self updateLevelDescription]
+	self arena center: self arenaPosition.
+	self addMorph: self arena.
+
 	
 ]
 
@@ -353,37 +245,4 @@ SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
 	self arena center: aPoint
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/31/2024 16:57'
-}
-SIYGame >> updateExtent [
-	
-	| aPoint |
-
-	aPoint := self center.
-	
-	self fullscreenEnabled
-		ifTrue: [self extent: World clearArea extent;
-			center: World clearArea center]
-		ifFalse: [self extent: self arena extent;
-			center: aPoint]
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:30'
-}
-SIYGame >> updateLevelDescription [
-
-	self levelDescription
-		contents: self level description;
-		lock;
-		color: Color white.
-
-	self backgroundMorph addMorph: self levelDescription.
-	self levelDescription
-		bottomLeft: self backgroundMorph bottomLeft + self levelDescriptionOffset
 ]

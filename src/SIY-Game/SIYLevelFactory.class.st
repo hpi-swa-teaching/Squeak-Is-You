@@ -63,12 +63,12 @@ SIYLevelFactory >> arenaExtent [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:14'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:41'
 }
 SIYLevelFactory >> arenaMargin [
 	"arena margin measured in pixel"
 
-	^ SIYGame basicNew keyHintHeight / 2 + 20 px
+	^ SIYFullscreenGame basicNew keyHintHeight / 2 + 20 px
 ]
 
 {

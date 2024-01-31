@@ -45,7 +45,7 @@ SIYAudioPlayer >> getWinSound [
 ]
 
 {
-	#category : #'as yet unclassified',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/31/2024 21:08'
 }
 SIYAudioPlayer >> isMuted [
@@ -54,7 +54,7 @@ SIYAudioPlayer >> isMuted [
 ]
 
 {
-	#category : #'as yet unclassified',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/31/2024 21:09'
 }
 SIYAudioPlayer >> isMuted: aBoolean [
@@ -63,12 +63,12 @@ SIYAudioPlayer >> isMuted: aBoolean [
 ]
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:12'
+	#category : #configuration,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:28'
 }
 SIYAudioPlayer >> isMutedOnStart [
 
-	^ false
+	^ true
 ]
 
 {
@@ -131,7 +131,7 @@ SIYAudioPlayer >> stopMusic [
 ]
 
 {
-	#category : #'as yet unclassified',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/31/2024 21:09'
 }
 SIYAudioPlayer >> toggleMute [
