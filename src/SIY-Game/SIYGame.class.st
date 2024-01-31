@@ -19,7 +19,8 @@ Class {
 		'level',
 		'backgroundMorph',
 		'customScaleFactor',
-		'levelDescription'
+		'levelDescription',
+		'audioPlayer'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
@@ -59,6 +60,17 @@ SIYGame >> abortLevel [
 SIYGame >> arena [
 
 	^ self level arena
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 14:11'
+}
+SIYGame >> audioPlayer [
+
+	^ audioPlayer ifNil: [audioPlayer := SIYAudioPlayer new]
+
+	
 ]
 
 {
@@ -134,6 +146,15 @@ SIYGame >> customScaleFactor: aFloat [
 ]
 
 {
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/31/2024 14:22'
+}
+SIYGame >> delete [
+	
+	super delete
+]
+
+{
 	#category : #background,
 	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
 }
@@ -144,11 +165,10 @@ SIYGame >> enableBackground [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'KD 1/20/2024 15:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:17'
 }
 SIYGame >> exitGame [
 
-	SIYAudioLoader stopPlayback.
 	self backgroundMorph delete
 ]
 
@@ -163,12 +183,13 @@ SIYGame >> handlesMouseDown: anEvent [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/9/2024 17:30'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:11'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
+	self audioPlayer playMusicIfNotMuted.
 	self startLevel: SIYIntro01 atPosition: World clearArea center + self keyHintOffset
 ]
 
