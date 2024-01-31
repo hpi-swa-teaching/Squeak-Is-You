@@ -32,6 +32,15 @@ SIYScaledGame class >> startWithScale: aScaleFactor [
 
 {
 	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:51'
+}
+SIYScaledGame class >> startWithScale: aScaleFactor atLevel: aLevelClass [
+
+	^ self basicNew initializeWithScale: aScaleFactor atLevel: aLevelClass
+]
+
+{
+	#category : #initialization,
 	#'squeak_changestamp' : 'LK 1/31/2024 21:56'
 }
 SIYScaledGame >> arenaPosition [
@@ -52,12 +61,22 @@ SIYScaledGame >> initializeBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:02'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:44'
 }
-SIYScaledGame >> initializeWithScale: aFloat [
+SIYScaledGame >> initializeWithScale: aScaleFactor [
 	
-	self scaleFactor: aFloat.
+	self scaleFactor: aScaleFactor.
 	self initialize
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:51'
+}
+SIYScaledGame >> initializeWithScale: aScaleFactor atLevel: aLevelClass [
+	
+	self level: aLevelClass.
+	self initializeWithScale: aScaleFactor
 ]
 
 {

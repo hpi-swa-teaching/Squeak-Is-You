@@ -43,11 +43,11 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:58'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:43'
 }
 SIYGame class >> startAtLevel: aLevel [
 
-	^ self basicNew initializeAtLevel: aLevel
+	^ SIYFullscreenGame startAtLevel: aLevel
 ]
 
 {
@@ -61,11 +61,11 @@ SIYGame class >> startWithScale: aScaleFactor [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:58'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:51'
 }
-SIYGame class >> startWithScale: aScalingFactor atLevel: aLevel [
+SIYGame class >> startWithScale: aScaleFactor atLevel: aLevelClass [
 
-	^ self basicNew initializeWithScale: aScalingFactor atLevel: aLevel
+	^ SIYScaledGame startWithScale: aScaleFactor atLevel: aLevelClass
 ]
 
 {
@@ -144,7 +144,7 @@ SIYGame >> fullscreenEnabled [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 21:42'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:49'
 }
 SIYGame >> initialize [
 
@@ -153,16 +153,16 @@ SIYGame >> initialize [
 	self initializeBackground.
 	
 	self audioPlayer playMusicIfNotMuted.
-	self startLevel: SIYIntro01 atPosition: self arenaPosition
+	self startLevel: self level atPosition: self arenaPosition
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:13'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:50'
 }
-SIYGame >> initializeAtLevel: aLevel [
+SIYGame >> initializeAtLevel: aLevelClass [
 
-	self level: aLevel.
+	self level: aLevelClass.
 	self initialize
 ]
 
@@ -174,17 +174,6 @@ SIYGame >> initializeBackground [
 
 	^ SubclassResponsibility
 
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:13'
-}
-SIYGame >> initializeWithScale: aScalingFactor atLevel: aLevel [
-
-	self customScaleFactor: aScalingFactor.
-	self level: aLevel.
-	self initialize
 ]
 
 {

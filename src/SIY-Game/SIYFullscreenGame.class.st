@@ -31,6 +31,15 @@ SIYFullscreenGame class >> start [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:51'
+}
+SIYFullscreenGame class >> startAtLevel: aLevelClass [
+
+	self basicNew initializeAtLevel: aLevelClass
+]
+
+{
 	#category : #keyhint,
 	#'squeak_changestamp' : 'LK 1/31/2024 16:37'
 }
