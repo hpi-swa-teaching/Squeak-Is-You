@@ -427,7 +427,7 @@ SIYRuleManager >> invokeWeak: aTile [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:35'
 }
 SIYRuleManager >> invokeWin: aBlock [
 	
@@ -436,6 +436,7 @@ SIYRuleManager >> invokeWin: aBlock [
 	
 	"don't switch levels here, SIYWinAnimation will do that if it has finished playing"
 	SIYWinAnimation playFor: aBlock
+	
 ]
 
 {
