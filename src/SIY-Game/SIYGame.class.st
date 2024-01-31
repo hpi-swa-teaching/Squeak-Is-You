@@ -36,11 +36,29 @@ SIYGame class >> start [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:58'
 }
-SIYGame class >> startWithScale: aScaleFactor [
+SIYGame class >> startAtLevel: aLevel [
 
-	^ self basicNew initializeWithScale: aScaleFactor
+	^ self basicNew initializeAtLevel: aLevel
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:54'
+}
+SIYGame class >> startWithScale: aScalingFactor [
+
+	^ self basicNew initializeWithScale: aScalingFactor
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:58'
+}
+SIYGame class >> startWithScale: aScalingFactor atLevel: aLevel [
+
+	^ self basicNew initializeWithScale: aScalingFactor atLevel: aLevel
 ]
 
 {
@@ -134,6 +152,15 @@ SIYGame >> customScaleFactor: aFloat [
 ]
 
 {
+	#category : #'level control',
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:10'
+}
+SIYGame >> defaultLevel [
+
+	^ SIYIntro01
+]
+
+{
 	#category : #background,
 	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
 }
@@ -163,22 +190,43 @@ SIYGame >> handlesMouseDown: anEvent [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/9/2024 17:30'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:06'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	self startLevel: SIYIntro01 atPosition: World clearArea center + self keyHintOffset
+	self startLevel: self level atPosition: World clearArea center + self keyHintOffset
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:13'
 }
-SIYGame >> initializeWithScale: aFloat [
+SIYGame >> initializeAtLevel: aLevel [
+
+	self level: aLevel.
+	self initialize
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:53'
+}
+SIYGame >> initializeWithScale: aScalingFactor [
 	
-	self customScaleFactor: aFloat.
+	self customScaleFactor: aScalingFactor.
+	self initialize
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:13'
+}
+SIYGame >> initializeWithScale: aScalingFactor atLevel: aLevel [
+
+	self customScaleFactor: aScalingFactor.
+	self level: aLevel.
 	self initialize
 ]
 
@@ -211,11 +259,11 @@ SIYGame >> keyHintTexture [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:42'
+	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:09'
 }
 SIYGame >> level [ 
 
-	^ level
+	^ level ifNil: [level := self defaultLevel]
 ]
 
 {
