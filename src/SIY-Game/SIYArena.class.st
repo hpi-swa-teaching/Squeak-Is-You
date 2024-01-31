@@ -197,24 +197,24 @@ SIYArena >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:38'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:36'
 }
 SIYArena >> initialize [
 
 	super initialize.
-	self color: self backgroundColor.
-	self gmRegisterToKeyHandler
+	self color: self backgroundColor;
+		gmRegisterToKeyHandler
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 22:18'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:37'
 }
 SIYArena >> initializeWithExtent: aPoint [
 
-	self initialize.
-	self arenaWidth: aPoint x.
-	self arenaHeight: aPoint y
+	self initialize;
+		arenaWidth: aPoint x;
+		arenaHeight: aPoint y
 	
 	
 	
@@ -222,12 +222,12 @@ SIYArena >> initializeWithExtent: aPoint [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 21:52'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:37'
 }
 SIYArena >> initializeWithExtent: aPoint scaled: aFloat [
 
-	self scaleFactor: aFloat.
-	self initializeWithExtent: aPoint
+	self scaleFactor: aFloat;
+		initializeWithExtent: aPoint
 	
 ]
 
@@ -351,7 +351,7 @@ SIYArena >> replacementSet [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:19'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:33'
 }
 SIYArena >> resetDictionaryAndSet [
 
@@ -361,13 +361,13 @@ SIYArena >> resetDictionaryAndSet [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/30/2024 23:39'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:34'
 }
 SIYArena >> restoreSnapshot: aSnapshot [
 	"restores arena state to this snapshot"
 	
-	self undoMovement: aSnapshot positionDictionary.
-	self undoTransformations: aSnapshot replacementSet
+	self undoMovement: aSnapshot positionDictionary;
+		undoTransformations: aSnapshot replacementSet
 	
 	
 		

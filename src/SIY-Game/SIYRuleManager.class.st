@@ -134,7 +134,7 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 1/16/2024 19:11'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:52'
 }
 SIYRuleManager >> checkRulesFor: aBlock [
 	"check all rules for a given block"
@@ -148,12 +148,12 @@ SIYRuleManager >> checkRulesFor: aBlock [
 	
 	{groundTile . floatingTile} 
 		do: [:aTile | aTile value
-			ifNotEmpty: [self checkWeak: aBlock onTile: aTile value copy.
-				self checkDefeat: aBlock onTile: aTile value copy.
-				self checkSink: aBlock onTile: aTile value copy.
-				self checkOpen: aBlock onTile: aTile value copy.
-				self checkMelt: aBlock onTile: aTile value copy.
-				self checkWin: aBlock onTile: aTile value copy]]
+			ifNotEmpty: [self checkWeak: aBlock onTile: aTile value copy;
+					checkDefeat: aBlock onTile: aTile value copy;
+					checkSink: aBlock onTile: aTile value copy;
+					checkOpen: aBlock onTile: aTile value copy;
+					checkMelt: aBlock onTile: aTile value copy;
+					checkWin: aBlock onTile: aTile value copy]]
 ]
 
 {
@@ -605,7 +605,7 @@ SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 21:21'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:53'
 }
 SIYRuleManager >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
@@ -629,6 +629,6 @@ SIYRuleManager >> updateRulesInArena: anArena [
 			replacementDictionary := self addVerticalReplacementRulesFor: anIsBlock
 				 to: replacementDictionary].
 	
-	self invokeReplacementRules: replacementDictionary in: anArena.
-	self currentRules: ruleDictionary
+	self invokeReplacementRules: replacementDictionary in: anArena;
+		currentRules: ruleDictionary
 ]

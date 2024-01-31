@@ -194,12 +194,12 @@ SIYGame >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:48'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:46'
 }
 SIYGame >> initializeWithScale: aFloat [
 	
-	self customScaleFactor: aFloat.
-	self initialize
+	self customScaleFactor: aFloat;
+		initialize
 ]
 
 {

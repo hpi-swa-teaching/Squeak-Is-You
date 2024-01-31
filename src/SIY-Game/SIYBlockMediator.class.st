@@ -190,12 +190,12 @@ SIYBlockMediator >> privateAdd: aBlock to: aPoint [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:31'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:45'
 }
 SIYBlockMediator >> privateMove: aBlock fromTile: aTile to: aPoint [
 
-	self privateRemove: aBlock fromTile: aTile.
-	self privateAdd: aBlock to: aPoint
+	self privateRemove: aBlock fromTile: aTile;
+		privateAdd: aBlock to: aPoint
 ]
 
 {

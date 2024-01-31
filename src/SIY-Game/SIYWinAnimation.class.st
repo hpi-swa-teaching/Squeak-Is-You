@@ -64,12 +64,12 @@ SIYWinAnimation >> arena: anArena [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:55'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:54'
 }
 SIYWinAnimation >> changeTexture [
 
-	self incrementAnimationStep.	
-	self image: (self getFormForTexture: self animationStep)
+	self incrementAnimationStep;
+		image: (self getFormForTexture: self animationStep)
 ]
 
 {
@@ -117,16 +117,16 @@ SIYWinAnimation >> incrementAnimationStep [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:40'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:54'
 }
 SIYWinAnimation >> initialize [
 
 	super initialize.
 	
 	self game audioPlayer playWinSoundIfNotMuted.
-	self changeTexture.
 	
-	self openInWorld;
+	self changeTexture;
+		openInWorld;
 		comeToFront
 	
 ]
@@ -147,12 +147,12 @@ SIYWinAnimation >> initializeFor: aBlock [
 
 {
 	#category : #step,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:55'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:55'
 }
 SIYWinAnimation >> step [
 
-	self checkIfAnimationDone.
-	self changeTexture
+	self checkIfAnimationDone;
+		changeTexture
 ]
 
 {
