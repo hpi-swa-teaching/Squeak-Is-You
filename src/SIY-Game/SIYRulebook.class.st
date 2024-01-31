@@ -8,7 +8,7 @@ Instance Variables
 
 "
 Class {
-	#name : #SIYRuleManager,
+	#name : #SIYRulebook,
 	#superclass : #Object,
 	#instVars : [
 		'currentRules'
@@ -21,7 +21,7 @@ Class {
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:37'
 }
-SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
+SIYRulebook >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
 
 	| nounBlocks replacementNoun |
 	
@@ -41,7 +41,7 @@ SIYRuleManager >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:39'
 }
-SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
+SIYRulebook >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
 	| nounBlocks propertyBlocks aSet |
 	
@@ -63,7 +63,7 @@ SIYRuleManager >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:36'
 }
-SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
+SIYRulebook >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
 
 	| nounBlocks replacementNoun |
 	
@@ -83,7 +83,7 @@ SIYRuleManager >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:39'
 }
-SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
+SIYRulebook >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
 	| nounBlocks propertyBlocks aSet |
 	
@@ -104,7 +104,7 @@ SIYRuleManager >> addVerticalRulesFor: anIsBlock to: aDictionary [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:18'
 }
-SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
+SIYRulebook >> checkDefeat: aBlock onTile: aTile [
 	
 	((aTile anySatisfy: [:each | each isYou]) 
 		and: (aTile anySatisfy: [:each | each isDefeat]))
@@ -115,7 +115,7 @@ SIYRuleManager >> checkDefeat: aBlock onTile: aTile [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/5/2024 14:26'
 }
-SIYRuleManager >> checkMelt: aBlock onTile: aTile [
+SIYRulebook >> checkMelt: aBlock onTile: aTile [
 
 	((aTile anySatisfy: [:each | each isMelt]) and: (aTile anySatisfy: [:each | each isHot]))
 		ifTrue: [self invokeMelt: aTile]
@@ -125,7 +125,7 @@ SIYRuleManager >> checkMelt: aBlock onTile: aTile [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/6/2024 21:15'
 }
-SIYRuleManager >> checkOpen: aBlock onTile: aTile [
+SIYRulebook >> checkOpen: aBlock onTile: aTile [
 
 	((aTile anySatisfy: [:each | each isOpen])
 		and: (aTile anySatisfy: [:each | each isShut]))
@@ -136,7 +136,7 @@ SIYRuleManager >> checkOpen: aBlock onTile: aTile [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/16/2024 19:11'
 }
-SIYRuleManager >> checkRulesFor: aBlock [
+SIYRulebook >> checkRulesFor: aBlock [
 	"check all rules for a given block"
 
 	| groundTile floatingTile |
@@ -160,7 +160,7 @@ SIYRuleManager >> checkRulesFor: aBlock [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
-SIYRuleManager >> checkSink: aBlock onTile: aTile [
+SIYRulebook >> checkSink: aBlock onTile: aTile [
 	
 	((aTile anySatisfy: [:each | each isSink]) and: aTile size > 1)
 			ifTrue: [self invokeSink: aTile]
@@ -170,7 +170,7 @@ SIYRuleManager >> checkSink: aBlock onTile: aTile [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/16/2024 18:19'
 }
-SIYRuleManager >> checkWeak: aBlock onTile: aTile [
+SIYRulebook >> checkWeak: aBlock onTile: aTile [
 
 	((aTile anySatisfy: [:each | each isWeak]) and: (aTile size > 1))
 		ifTrue: [self invokeWeak: aTile]
@@ -180,7 +180,7 @@ SIYRuleManager >> checkWeak: aBlock onTile: aTile [
 	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:19'
 }
-SIYRuleManager >> checkWin: aBlock onTile: aTile [
+SIYRulebook >> checkWin: aBlock onTile: aTile [
 
 	((aTile anySatisfy: [:each | each isYou]) 
 		and: (aTile anySatisfy: [:each | each isWin]))
@@ -191,7 +191,7 @@ SIYRuleManager >> checkWin: aBlock onTile: aTile [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:27'
 }
-SIYRuleManager >> collectNounBelow: aBlock [
+SIYRulebook >> collectNounBelow: aBlock [
 	"recursively collect the first noun below this operator block (if conjoined with SIYAnd)"
 	
 	aBlock neighborsBelow ifNil: [^ nil].
@@ -213,7 +213,7 @@ SIYRuleManager >> collectNounBelow: aBlock [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:34'
 }
-SIYRuleManager >> collectNounRightOf: aBlock [
+SIYRulebook >> collectNounRightOf: aBlock [
 	"recursively collect the first noun right of this operator block (if conjoined with SIYAnd)"
 	
 	aBlock neighborsRight ifNil: [^ nil].
@@ -236,7 +236,7 @@ SIYRuleManager >> collectNounRightOf: aBlock [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:50'
 }
-SIYRuleManager >> collectNounsAbove: aBlock [
+SIYRulebook >> collectNounsAbove: aBlock [
 	"recursively collect all nouns above this operator block (if conjoined with SIYAnd)"
 	
 	| aSet |
@@ -263,7 +263,7 @@ SIYRuleManager >> collectNounsAbove: aBlock [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 22:52'
 }
-SIYRuleManager >> collectNounsLeftOf: aBlock [
+SIYRulebook >> collectNounsLeftOf: aBlock [
 	"recursively collect all nouns left of this operator block (if conjoined with SIYAnd)"
 
 	| aSet |
@@ -291,7 +291,7 @@ SIYRuleManager >> collectNounsLeftOf: aBlock [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 23:04'
 }
-SIYRuleManager >> collectPropertiesBelow: aBlock [
+SIYRulebook >> collectPropertiesBelow: aBlock [
 	"recursively collect all properties below this operator block (if conjoined with SIYAnd)"
 
 	| aSet |
@@ -319,7 +319,7 @@ SIYRuleManager >> collectPropertiesBelow: aBlock [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/11/2024 23:05'
 }
-SIYRuleManager >> collectPropertiesRightOf: aBlock [
+SIYRulebook >> collectPropertiesRightOf: aBlock [
 	"recursively collect all properties right of this operator block (if conjoined with SIYAnd)"
 
 	| aSet |
@@ -348,7 +348,7 @@ SIYRuleManager >> collectPropertiesRightOf: aBlock [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/3/2024 23:00'
 }
-SIYRuleManager >> currentRules [
+SIYRulebook >> currentRules [
 
 	^ currentRules ifNil: [currentRules := Dictionary new]
 ]
@@ -357,7 +357,7 @@ SIYRuleManager >> currentRules [
 	#category : #'rule updating',
 	#'squeak_changestamp' : 'LK 1/3/2024 22:59'
 }
-SIYRuleManager >> currentRules: aDictionary [
+SIYRulebook >> currentRules: aDictionary [
 
 	currentRules := aDictionary
 ]
@@ -366,7 +366,7 @@ SIYRuleManager >> currentRules: aDictionary [
 	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:03'
 }
-SIYRuleManager >> invokeDefeat: aTile [
+SIYRulebook >> invokeDefeat: aTile [
 
 	aTile do: [:each | (each isYou) ifTrue: [each deleteAndRemember]]
 ]
@@ -375,7 +375,7 @@ SIYRuleManager >> invokeDefeat: aTile [
 	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/5/2024 14:20'
 }
-SIYRuleManager >> invokeMelt: aTile [
+SIYRulebook >> invokeMelt: aTile [
 
 	aTile do: [:each | (each isMelt) ifTrue: [each deleteAndRemember]]
 	
@@ -387,7 +387,7 @@ SIYRuleManager >> invokeMelt: aTile [
 	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/5/2024 12:29'
 }
-SIYRuleManager >> invokeOpen: aTile [
+SIYRulebook >> invokeOpen: aTile [
 
 	aTile do: [:each | (each isShut or: each isOpen) ifTrue: [each deleteAndRemember]]
 	
@@ -399,7 +399,7 @@ SIYRuleManager >> invokeOpen: aTile [
 	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/9/2024 12:56'
 }
-SIYRuleManager >> invokeReplacementRules: aDictionary in: anArena [
+SIYRulebook >> invokeReplacementRules: aDictionary in: anArena [
 
 	aDictionary
 		keysAndValuesDo: [:aBlockClass :replacementBlock | 
@@ -410,7 +410,7 @@ SIYRuleManager >> invokeReplacementRules: aDictionary in: anArena [
 	#category : #'rule invoking',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:06'
 }
-SIYRuleManager >> invokeSink: aTile [
+SIYRulebook >> invokeSink: aTile [
 	
 	aTile do: [:each | (each isFloat not) ifTrue: [each deleteAndRemember]]
 
@@ -420,29 +420,30 @@ SIYRuleManager >> invokeSink: aTile [
 	#category : #'rule invoking',
 	#'squeak_changestamp' : 'LK 1/16/2024 18:10'
 }
-SIYRuleManager >> invokeWeak: aTile [
+SIYRulebook >> invokeWeak: aTile [
 
 	aTile do: [:each | (each isWeak) ifTrue: [each deleteAndRemember]]
 ]
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/7/2024 19:01'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:35'
 }
-SIYRuleManager >> invokeWin: aBlock [
+SIYRulebook >> invokeWin: aBlock [
 	
 	"lock game to prevent player movement while win animation plays"
 	aBlock arena lockGame.
 	
 	"don't switch levels here, SIYWinAnimation will do that if it has finished playing"
 	SIYWinAnimation playFor: aBlock
+	
 ]
 
 {
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:16'
 }
-SIYRuleManager >> isDefeat: aBlock [
+SIYRulebook >> isDefeat: aBlock [
 	
 	^ self isRuleInDictionary: SIYDefeat forBlock: aBlock
 ]
@@ -451,7 +452,7 @@ SIYRuleManager >> isDefeat: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:00'
 }
-SIYRuleManager >> isFloat: aBlock [
+SIYRulebook >> isFloat: aBlock [
 
 	^ self isRuleInDictionary: SIYFloat forBlock: aBlock
 ]
@@ -460,7 +461,7 @@ SIYRuleManager >> isFloat: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
-SIYRuleManager >> isHot: aBlock [
+SIYRulebook >> isHot: aBlock [
 
 	^ self isRuleInDictionary: SIYHot forBlock: aBlock
 
@@ -475,7 +476,7 @@ SIYRuleManager >> isHot: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
-SIYRuleManager >> isMelt: aBlock [
+SIYRulebook >> isMelt: aBlock [
 
 	^ self isRuleInDictionary: SIYMelt forBlock: aBlock
 
@@ -490,7 +491,7 @@ SIYRuleManager >> isMelt: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
-SIYRuleManager >> isOpen: aBlock [
+SIYRulebook >> isOpen: aBlock [
 	
 	^ self isRuleInDictionary: SIYOpen forBlock: aBlock
 ]
@@ -499,7 +500,7 @@ SIYRuleManager >> isOpen: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
 }
-SIYRuleManager >> isPush: aBlock [
+SIYRulebook >> isPush: aBlock [
 	
 	"text blocks are always isPush"
 	(aBlock isKindOf: SIYText) ifTrue: [^ true].
@@ -512,7 +513,7 @@ SIYRuleManager >> isPush: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/10/2024 22:51'
 }
-SIYRuleManager >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
+SIYRulebook >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
 	
 	"if block is of type text, check for SIYText instead of aBlock class"
 	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
@@ -526,7 +527,7 @@ SIYRuleManager >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
-SIYRuleManager >> isShut: aBlock [
+SIYRulebook >> isShut: aBlock [
 	
 	^ self isRuleInDictionary: SIYShut forBlock: aBlock
 ]
@@ -535,7 +536,7 @@ SIYRuleManager >> isShut: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/9/2024 10:17'
 }
-SIYRuleManager >> isSink: aBlock [
+SIYRulebook >> isSink: aBlock [
 
 	^ self isRuleInDictionary: SIYSink forBlock: aBlock
 ]
@@ -544,7 +545,7 @@ SIYRuleManager >> isSink: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/16/2024 18:58'
 }
-SIYRuleManager >> isStop: aBlock [
+SIYRulebook >> isStop: aBlock [
 	
 	"isYou, isPush and isWeak can override this rule"
 	(aBlock isYou or: aBlock isPush or: aBlock isWeak) ifTrue: [^ false].
@@ -557,7 +558,7 @@ SIYRuleManager >> isStop: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/16/2024 18:07'
 }
-SIYRuleManager >> isWeak: aBlock [
+SIYRulebook >> isWeak: aBlock [
 	
 	^ self isRuleInDictionary: SIYWeak forBlock: aBlock
 
@@ -567,7 +568,7 @@ SIYRuleManager >> isWeak: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/15/2024 17:14'
 }
-SIYRuleManager >> isWin: aBlock [
+SIYRulebook >> isWin: aBlock [
 	
 	^ self isRuleInDictionary: SIYWin forBlock: aBlock
 
@@ -577,7 +578,7 @@ SIYRuleManager >> isWin: aBlock [
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
 }
-SIYRuleManager >> isYou: aBlock [
+SIYRulebook >> isYou: aBlock [
 
 	^ self isRuleInDictionary: SIYYou forBlock: aBlock
 
@@ -590,23 +591,23 @@ SIYRuleManager >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/16/2024 11:54'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYRuleManager >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
+SIYRulebook >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
 	"blocks can't be replaced with textblocks"
 	(anotherBlockClass = SIYText) ifTrue: [^ nil "do nothing"].
 	
 	(aBlockClass = anotherBlockClass)
-		ifFalse: [(anArena blockMediator getBlocksOfType: aBlockClass)
+		ifFalse: [(anArena gameBoard getBlocksOfType: aBlockClass)
 			do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]]
 ]
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 21:21'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYRuleManager >> updateRulesInArena: anArena [
+SIYRulebook >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
 
 	| ruleDictionary replacementDictionary |
@@ -614,7 +615,7 @@ SIYRuleManager >> updateRulesInArena: anArena [
 	ruleDictionary := Dictionary new.
 	replacementDictionary := Dictionary new.
 	
-	(anArena blockMediator getBlocksOfType: SIYIs)
+	(anArena gameBoard getBlocksOfType: SIYIs)
 		do: [:anIsBlock | 
 			"collect noun-is-property rules"
 			ruleDictionary := self addHorizontalRulesFor: anIsBlock 

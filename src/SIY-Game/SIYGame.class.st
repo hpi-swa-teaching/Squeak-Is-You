@@ -13,13 +13,11 @@ Instance Variables
 "
 Class {
 	#name : #SIYGame,
-	#superclass : #Object,
+	#superclass : #Morph,
 	#instVars : [
 		'arena',
 		'level',
-		'backgroundMorph',
-		'customScaleFactor',
-		'levelDescription'
+		'audioPlayer'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
@@ -27,38 +25,47 @@ Class {
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'jt 11/30/2023 15:20'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:07'
+}
+SIYGame class >> new [
+	
+	^ self start
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:06'
 }
 SIYGame class >> start [
 
-	self new
+	^ SIYFullscreenGame start
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:58'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:43'
 }
 SIYGame class >> startAtLevel: aLevel [
 
-	^ self basicNew initializeAtLevel: aLevel
+	^ SIYFullscreenGame startAtLevel: aLevel
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:54'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:03'
 }
-SIYGame class >> startWithScale: aScalingFactor [
+SIYGame class >> startWithScale: aScaleFactor [
 
-	^ self basicNew initializeWithScale: aScalingFactor
+	^ SIYScaledGame startWithScale: aScaleFactor
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:58'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:51'
 }
-SIYGame class >> startWithScale: aScalingFactor atLevel: aLevel [
+SIYGame class >> startWithScale: aScaleFactor atLevel: aLevelClass [
 
-	^ self basicNew initializeWithScale: aScalingFactor atLevel: aLevel
+	^ SIYScaledGame startWithScale: aScaleFactor atLevel: aLevelClass
 ]
 
 {
@@ -80,75 +87,32 @@ SIYGame >> arena [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:42'
+}
+SIYGame >> arenaPosition [
+
+	^ SubclassResponsibility
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 14:11'
+}
+SIYGame >> audioPlayer [
+
+	^ audioPlayer ifNil: [audioPlayer := SIYAudioPlayer new]
+
+	
+]
+
+{
 	#category : #background,
 	#'squeak_changestamp' : 'LK 1/5/2024 13:36'
 }
 SIYGame >> backgroundColor [
 
 	^ Color veryVeryDarkGray
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:28'
-}
-SIYGame >> backgroundMorph [
-
-	^ backgroundMorph ifNil: [backgroundMorph := self createBackgroundMorph]
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
-}
-SIYGame >> createBackgroundMorph [
-
-	| aMorph anotherMorph |
-	
-	aMorph := Morph new
-		extent: World clearArea extent;
-		color: self backgroundColor;
-		beSticky;
-		openInWorld;
-		yourself.
-
-	anotherMorph := self createKeyHintMorph.
-	aMorph addMorphCentered: anotherMorph.
-	anotherMorph bottom: aMorph bottom.
-	
-	^ aMorph
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
-}
-SIYGame >> createKeyHintMorph [
-
-	| aMorph aForm |
-	
-	aForm := SIYTextureLoader new getTexture: self keyHintTexture.
-	aMorph := (aForm scaledToHeight: self keyHintHeight) asMorph openInWorld.
-	
-	^ aMorph
-]
-
-{
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
-}
-SIYGame >> customScaleFactor [
-
-	^ customScaleFactor
-]
-
-{
-	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
-}
-SIYGame >> customScaleFactor: aFloat [
-	
-	customScaleFactor := aFloat
 ]
 
 {
@@ -161,100 +125,55 @@ SIYGame >> defaultLevel [
 ]
 
 {
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:43'
-}
-SIYGame >> enableBackground [
-
-	^ self customScaleFactor isNil
-]
-
-{
 	#category : #'level control',
-	#'squeak_changestamp' : 'KD 1/20/2024 15:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
 }
 SIYGame >> exitGame [
-
-	SIYAudioLoader stopPlayback.
-	self backgroundMorph delete
+	
+	self abandon
 ]
 
 {
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/9/2024 19:41'
+	#category : #background,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:31'
 }
-SIYGame >> handlesMouseDown: anEvent [
+SIYGame >> fullscreenEnabled [
 
-	^ true
+	^ false
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:06'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:49'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
-	self startLevel: self level atPosition: World clearArea center + self keyHintOffset
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:13'
-}
-SIYGame >> initializeAtLevel: aLevel [
-
-	self level: aLevel.
-	self initialize
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 13:53'
-}
-SIYGame >> initializeWithScale: aScalingFactor [
+	self initializeBackground.
 	
-	self customScaleFactor: aScalingFactor.
+	self audioPlayer playMusicIfNotMuted.
+	self startLevel: self level atPosition: self arenaPosition
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:50'
+}
+SIYGame >> initializeAtLevel: aLevelClass [
+
+	self level: aLevelClass.
 	self initialize
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/31/2024 14:13'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:53'
 }
-SIYGame >> initializeWithScale: aScalingFactor atLevel: aLevel [
+SIYGame >> initializeBackground [
 
-	self customScaleFactor: aScalingFactor.
-	self level: aLevel.
-	self initialize
-]
+	^ SubclassResponsibility
 
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 21:57'
-}
-SIYGame >> keyHintHeight [
-
-	^ 50 px
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 20:22'
-}
-SIYGame >> keyHintOffset [
-
-	^ 0@(self keyHintHeight / 2 negated)
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 19:59'
-}
-SIYGame >> keyHintTexture [
-
-	^ '/KeyHints.png'
 ]
 
 {
@@ -276,30 +195,23 @@ SIYGame >> level: aLevel [
 ]
 
 {
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:24'
-}
-SIYGame >> levelDescription [
-
-	^ levelDescription ifNil: [levelDescription := TextMorph new]
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:32'
-}
-SIYGame >> levelDescriptionOffset [
-
-	^ ((15 px)@(-15 px))
-]
-
-{
 	#category : #'level control',
 	#'squeak_changestamp' : 'LK 1/4/2024 22:31'
 }
 SIYGame >> nextLevel [
 
 	self level nextLevel ifNotNil: [self replaceLevelWith: self level nextLevel]
+]
+
+{
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
+}
+SIYGame >> outOfWorld: aWorld [
+
+	self audioPlayer stopMusic.
+	
+	^ super outOfWorld: aWorld
 ]
 
 {
@@ -337,18 +249,28 @@ SIYGame >> restartLevel [
 ]
 
 {
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:02'
+}
+SIYGame >> scaleFactor [
+
+	^ SubclassResponsibility
+]
+
+{
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:27'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:01'
 }
 SIYGame >> startLevel: aLevel [
 
-	self level: (aLevel newWithScale: self customScaleFactor).
+	self level: (aLevel newWithScale: self scaleFactor).
 	self arena game: self.
 	
-	self enableBackground
-		ifTrue: [self backgroundMorph addMorph: self arena.
-				self arena setProperty: #indicateKeyboardFocus toValue: #never.
-				self updateLevelDescription]
+	self updateExtent.
+	
+	self arena center: self arenaPosition.
+	self addMorph: self arena.
+
 	
 ]
 
@@ -360,20 +282,4 @@ SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
 	self arena center: aPoint
-]
-
-{
-	#category : #background,
-	#'squeak_changestamp' : 'LK 1/5/2024 22:30'
-}
-SIYGame >> updateLevelDescription [
-
-	self levelDescription
-		contents: self level description;
-		lock;
-		color: Color white.
-
-	self backgroundMorph addMorph: self levelDescription.
-	self levelDescription
-		bottomLeft: self backgroundMorph bottomLeft + self levelDescriptionOffset
 ]

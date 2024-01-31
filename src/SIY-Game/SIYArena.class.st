@@ -25,14 +25,14 @@ Class {
 		'arenaHeight',
 		'stepTime',
 		'game',
-		'blockMediator',
-		'ruleManager',
 		'positionDictionary',
 		'replacementSet',
 		'pressedKey',
 		'undoCaretaker',
 		'scaleFactor',
-		'gameLock'
+		'gameLock',
+		'gameBoard',
+		'rulebook'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
@@ -95,6 +95,15 @@ SIYArena >> arenaWidth: val [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 14:25'
+}
+SIYArena >> audioPlayer [
+
+	^ self game audioPlayer
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:08'
 }
@@ -104,17 +113,8 @@ SIYArena >> backgroundColor [
 ]
 
 {
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:17'
-}
-SIYArena >> blockMediator [
-
-	^ blockMediator ifNil: [blockMediator := SIYBlockMediator newForArena: self]
-]
-
-{
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 1/20/2024 15:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:03'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -138,11 +138,10 @@ SIYArena >> checkKeyboardInputs [
 		[$d] -> [self moveBlocksDirection: 1@0].
 		[$a] -> [self moveBlocksDirection: (-1)@0].
 		"level switching"
-            [$m] -> [self game nextLevel].
-            [$n] -> [self game previousLevel].
-		"audio switching"
-            [$p] -> [SIYAudioLoader playTheme].
-            [$o] -> [SIYAudioLoader stopPlayback].
+            [$l] -> [self game nextLevel].
+            [$k] -> [self game previousLevel].
+		"audio muting"
+            [$m] -> [self audioPlayer toggleMute].
 		"exit game"
 		[Character escape] -> [self game exitGame].
      } otherwise: ["do nothing"]
@@ -187,8 +186,17 @@ SIYArena >> game: aGame [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 22:57'
+}
+SIYArena >> gameBoard [
+
+	^ gameBoard ifNil: [gameBoard := SIYGameBoard newForArena: self]
+]
+
+{
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 23:39'
+	#'squeak_changestamp' : 'LK 1/31/2024 14:38'
 }
 SIYArena >> initialize [
 
@@ -242,13 +250,13 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/9/2024 12:52'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction"
 	
 	self preMoveBlocksRoutine.
-	(self blockMediator generateQueueForDirection: aDirection)
+	(self gameBoard generateQueueForDirection: aDirection)
 		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
 ]
@@ -273,17 +281,17 @@ SIYArena >> positionDictionary [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/12/2024 23:29'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYArena >> postMoveBlocksRoutine [
 	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
-	self ruleManager updateRulesInArena: self.
+	self rulebook updateRulesInArena: self.
 
 	"check rules for all blocks"
-	(self blockMediator getBlocksOfType: SIYBlock)
-		do: [:aBlock | self ruleManager checkRulesFor: aBlock].	
+	(self gameBoard getBlocksOfType: SIYBlock)
+		do: [:aBlock | self rulebook checkRulesFor: aBlock].	
 			
 	self undoCaretaker createSnapshotOf: self.
 	
@@ -293,14 +301,14 @@ SIYArena >> postMoveBlocksRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:19'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYArena >> preMoveBlocksRoutine [
 	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
 	self resetDictionaryAndSet.
-	self ruleManager updateRulesInArena: self.
+	self rulebook updateRulesInArena: self.
 
 	
 ]
@@ -357,11 +365,11 @@ SIYArena >> restoreSnapshot: aSnapshot [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 12:50'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
-SIYArena >> ruleManager [
+SIYArena >> rulebook [
 
-	^ ruleManager ifNil: [ruleManager := SIYRuleManager new]
+	^ rulebook ifNil: [rulebook := SIYRulebook new]
 ]
 
 {
