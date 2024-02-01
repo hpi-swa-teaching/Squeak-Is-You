@@ -158,12 +158,12 @@ SIYGame >> initialize [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:50'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:43'
 }
 SIYGame >> initializeAtLevel: aLevelClass [
 
-	self level: aLevelClass.
-	self initialize
+	self level: aLevelClass;
+		initialize
 ]
 
 {

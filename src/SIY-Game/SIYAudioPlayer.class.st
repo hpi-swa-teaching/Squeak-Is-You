@@ -1,3 +1,17 @@
+"
+A SIYAudioPlayer (if it isn't muted) playes soundeffects and tracks.
+
+Instance Variables
+	backgroundMusic:		<Object>
+	isMuted:		<Object>
+
+backgroundMusic
+	- xxxxx
+
+isMuted
+	- xxxxx
+
+"
 Class {
 	#name : #SIYAudioPlayer,
 	#superclass : #Object,
@@ -5,7 +19,8 @@ Class {
 		'isMuted',
 		'backgroundMusic'
 	],
-	#category : #'SIY-Game'
+	#category : #'SIY-Game',
+	#'squeak_changestamp' : 'KD 2/1/2024 13:58'
 }
 
 {

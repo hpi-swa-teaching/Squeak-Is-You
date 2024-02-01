@@ -114,7 +114,7 @@ SIYArena >> backgroundColor [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/31/2024 21:03'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:43'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -128,15 +128,15 @@ SIYArena >> checkKeyboardInputs [
 		[$r] -> [self game restartLevel].
         	[$z] -> [self undoCaretaker undo].
 		"movement with arrow keys"
-		[Character arrowUp] -> [self moveBlocksDirection: 0@(-1)].
+		[Character arrowUp] -> [self moveBlocksDirection: 0@ -1].
 		[Character arrowDown] -> [self moveBlocksDirection: 0@1].
 		[Character arrowRight] -> [self moveBlocksDirection: 1@0].
-		[Character arrowLeft] -> [self moveBlocksDirection: (-1)@0].
+		[Character arrowLeft] -> [self moveBlocksDirection: -1@0].
 		"movement with WASD"
-		[$w] -> [self moveBlocksDirection: 0@(-1)].
+		[$w] -> [self moveBlocksDirection: 0@ -1].
 		[$s] -> [self moveBlocksDirection: 0@1].
 		[$d] -> [self moveBlocksDirection: 1@0].
-		[$a] -> [self moveBlocksDirection: (-1)@0].
+		[$a] -> [self moveBlocksDirection: -1@0].
 		"level switching"
             [$l] -> [self game nextLevel].
             [$k] -> [self game previousLevel].

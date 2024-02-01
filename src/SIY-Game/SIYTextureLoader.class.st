@@ -1,16 +1,14 @@
 "
-A SIYTextureManager is an interface for loading block textures through the Git Asset Browser.
+A SIYTextureLoader is a subclass of the SIYAssetLoader for only textures.
 
 Instance Variables
-	assetLoader: <GitAssetLoader> 
-
 
 "
 Class {
 	#name : #SIYTextureLoader,
 	#superclass : #SIYAssetLoader,
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:51'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:54'
 }
 
 {

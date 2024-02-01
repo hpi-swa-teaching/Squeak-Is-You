@@ -1,7 +1,14 @@
+"
+A SIYText is one Textblock in the Game.
+
+Instance Variables
+
+"
 Class {
 	#name : #SIYText,
 	#superclass : #SIYBlock,
-	#category : #'SIY-Blocks'
+	#category : #'SIY-Blocks',
+	#'squeak_changestamp' : 'KD 2/1/2024 14:07'
 }
 
 {

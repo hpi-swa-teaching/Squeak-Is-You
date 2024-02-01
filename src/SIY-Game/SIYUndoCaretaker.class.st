@@ -46,13 +46,13 @@ SIYUndoCaretaker >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:29'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:58'
 }
 SIYUndoCaretaker >> createSnapshotOf: anArena [
 
 	self pushSnapshot: (SIYSnapshot 
-		newWithDictionary: (anArena positionDictionary copy)
-		andSet: (anArena replacementSet copy))
+		newWithDictionary: anArena positionDictionary copy
+		andSet: anArena replacementSet copy)
 ]
 
 {

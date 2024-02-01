@@ -74,14 +74,14 @@ SIYWinAnimation >> changeTexture [
 
 {
 	#category : #step,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:44'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:59'
 }
 SIYWinAnimation >> checkIfAnimationDone [
 	"if animation has finished playing, switch to next level"
 	
 	self arena 
-		ifNotNil: [(self animationStep >= self animationDuration)
-			ifTrue: [self arena game nextLevel]]
+		ifNotNil: [self animationStep >= self animationDuration
+				ifTrue: [self arena game nextLevel]]
 ]
 
 {
@@ -95,7 +95,7 @@ SIYWinAnimation >> game [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
+	#'squeak_changestamp' : 'KD 2/1/2024 15:00'
 }
 SIYWinAnimation >> getFormForTexture: aNumber [
 
@@ -103,16 +103,16 @@ SIYWinAnimation >> getFormForTexture: aNumber [
 	
 	aForm := SIYTextureLoader new getTexture: (self winAnimationTexture: aNumber).
 	
-	^ (aForm scaledToHeight: self winAnimationTextureSize)
+	^ aForm scaledToHeight: self winAnimationTextureSize
 ]
 
 {
 	#category : #step,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:38'
+	#'squeak_changestamp' : 'KD 2/1/2024 15:00'
 }
 SIYWinAnimation >> incrementAnimationStep [
 	
-	animationStep := (self animationStep + 1)
+	animationStep := self animationStep + 1
 ]
 
 {
@@ -177,11 +177,11 @@ SIYWinAnimation >> winAnimationTexture: aNumber [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:51'
+	#'squeak_changestamp' : 'KD 2/1/2024 15:01'
 }
 SIYWinAnimation >> winAnimationTextureSize [
 	
 	^ self arena
-		ifNotNil: [3 * (self arena pixelPerBlock)]
 		ifNil: [3 * 72]
+		ifNotNil: [3 * self arena pixelPerBlock]
 ]
