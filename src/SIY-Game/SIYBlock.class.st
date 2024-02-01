@@ -65,15 +65,15 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:26'
+	#'squeak_changestamp' : 'KD 1/31/2024 16:43'
 }
 SIYBlock >> basicMove: aDirection [
 	"Moves this block in specified direction, WITHOUT considering the rules that currently apply.
 	For example, calling this method won't push other blocks that are in the way."
 
-	self preMoveRoutine: aDirection.
-	self coords: self coords + aDirection.
-	self postMoveRoutine: aDirection.
+	self preMoveRoutine: aDirection;
+		coords: self coords + aDirection;
+		postMoveRoutine: aDirection.
 	
 	"we return true, because the block was successfully moved"
 	^ true
