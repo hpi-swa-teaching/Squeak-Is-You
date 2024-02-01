@@ -123,11 +123,11 @@ SIYAudioPlayer >> playWinSoundIfNotMuted [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:07'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:35'
 }
 SIYAudioPlayer >> stopMusic [
 
-	SoundPlayer resumePlaying: self backgroundMusic quickStart: false 
+	SoundPlayer pauseSound: self backgroundMusic
 ]
 
 {
