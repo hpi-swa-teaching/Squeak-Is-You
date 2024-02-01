@@ -9,15 +9,6 @@ Class {
 }
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:05'
-}
-SIYAudioPlayer >> audioMuted [
-
-	^ isMuted ifNil: [isMuted := self isMutedOnStart]
-]
-
-{
 	#category : #music,
 	#'squeak_changestamp' : 'LK 1/31/2024 14:42'
 }
@@ -54,12 +45,30 @@ SIYAudioPlayer >> getWinSound [
 ]
 
 {
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:12'
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:08'
+}
+SIYAudioPlayer >> isMuted [
+
+	^ isMuted ifNil: [isMuted := self isMutedOnStart]
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:09'
+}
+SIYAudioPlayer >> isMuted: aBoolean [
+
+	isMuted := aBoolean
+]
+
+{
+	#category : #configuration,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:28'
 }
 SIYAudioPlayer >> isMutedOnStart [
 
-	^ false
+	^ true
 ]
 
 {
@@ -73,31 +82,21 @@ SIYAudioPlayer >> mainTheme [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:55'
-}
-SIYAudioPlayer >> pauseMusic [
-
-	SoundPlayer pauseSound: self backgroundMusic
-]
-
-{
-	#category : #music,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:04'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:10'
 }
 SIYAudioPlayer >> playMusic [
-	
-	self backgroundMusic 
-		ifNil: [self startMusic]
-		ifNotNil: [self resumeMusic].
+
+	self backgroundMusic: (RepeatingSound repeatForever: self getMusic) play;
+		yourself
 ]
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:08'
 }
 SIYAudioPlayer >> playMusicIfNotMuted [
 
-	self audioMuted 
+	self isMuted 
 		ifFalse: [self playMusic]
 ]
 
@@ -113,41 +112,35 @@ SIYAudioPlayer >> playWinSound [
 
 {
 	#category : #'sound effects',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:37'
+	#'squeak_changestamp' : 'LK 1/31/2024 21:08'
 }
 SIYAudioPlayer >> playWinSoundIfNotMuted [
 	
-	self audioMuted
+	self isMuted
 		ifFalse: [self playWinSound]
 	
 ]
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:07'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:35'
 }
-SIYAudioPlayer >> resumeMusic [
+SIYAudioPlayer >> stopMusic [
 
-	SoundPlayer resumePlaying: self backgroundMusic quickStart: false 
+	SoundPlayer pauseSound: self backgroundMusic
 ]
 
 {
-	#category : #music,
-	#'squeak_changestamp' : 'LK 1/31/2024 14:44'
-}
-SIYAudioPlayer >> startMusic [
-
-	self backgroundMusic: (RepeatingSound repeatForever: self getMusic) play;
-		yourself
-]
-
-{
-	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:04'
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 1/31/2024 21:09'
 }
 SIYAudioPlayer >> toggleMute [
 
+	self isMuted: self isMuted not.
 	
+	self isMuted 
+		ifTrue: [self stopMusic]
+		ifFalse: [self playMusic].
 ]
 
 {

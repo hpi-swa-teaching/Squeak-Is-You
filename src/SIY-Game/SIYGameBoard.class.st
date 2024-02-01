@@ -7,11 +7,11 @@ Instance Variables
 
 "
 Class {
-	#name : #SIYBlockMediator,
+	#name : #SIYGameBoard,
 	#superclass : #Object,
 	#instVars : [
-		'gameBoard',
-		'arena'
+		'arena',
+		'boardMatrix'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:33'
@@ -21,7 +21,7 @@ Class {
 	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'LK 12/6/2023 20:03'
 }
-SIYBlockMediator class >> newForArena: anArena [
+SIYGameBoard class >> newForArena: anArena [
 
 	^ (self basicNew) arena: anArena; initialize; yourself
 ]
@@ -30,7 +30,7 @@ SIYBlockMediator class >> newForArena: anArena [
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/3/2024 22:38'
 }
-SIYBlockMediator >> arena [
+SIYGameBoard >> arena [
 
 	^ arena
 ]
@@ -39,16 +39,16 @@ SIYBlockMediator >> arena [
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/6/2023 19:59'
 }
-SIYBlockMediator >> arena: anArena [
+SIYGameBoard >> arena: anArena [
 
 	arena := anArena
 ]
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'KD 1/20/2024 14:08'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> createGameBoard [
+SIYGameBoard >> createBoardMatrix [
 	"returns a matrix with the size of the arena, initialized with an empty sets"
 
 	| aMatrix |
@@ -64,18 +64,18 @@ SIYBlockMediator >> createGameBoard [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:21'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> gameBoard [
+SIYGameBoard >> gameBoard [
 
-	^ gameBoard ifNil: [gameBoard := self createGameBoard]
+	^ boardMatrix ifNil: [boardMatrix := self createBoardMatrix]
 ]
 
 {
 	#category : #'movement queue',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:12'
 }
-SIYBlockMediator >> generateQueueForDirection: aPoint [
+SIYGameBoard >> generateQueueForDirection: aPoint [
 	"returns movement queue for specified direction"
 
 	aPoint caseOf: {
@@ -91,7 +91,7 @@ SIYBlockMediator >> generateQueueForDirection: aPoint [
 	#category : #'movement queue',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
 }
-SIYBlockMediator >> generateQueueFromBottom [
+SIYGameBoard >> generateQueueFromBottom [
 	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
 	^ self generateQueueFromTop reversed
@@ -99,9 +99,9 @@ SIYBlockMediator >> generateQueueFromBottom [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> generateQueueFromLeft [
+SIYGameBoard >> generateQueueFromLeft [
 	"Returns array of blocks in arena, ordered by x coordinate"
 	
 	| aCollection |
@@ -120,7 +120,7 @@ SIYBlockMediator >> generateQueueFromLeft [
 	#category : #'movement queue',
 	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
 }
-SIYBlockMediator >> generateQueueFromRight [
+SIYGameBoard >> generateQueueFromRight [
 	"Returns array of blocks in arena, reverse ordered by x coordinate"
 
 	^ self generateQueueFromLeft reversed
@@ -128,9 +128,9 @@ SIYBlockMediator >> generateQueueFromRight [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> generateQueueFromTop [
+SIYGameBoard >> generateQueueFromTop [
 	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
 	| aCollection |
@@ -149,7 +149,7 @@ SIYBlockMediator >> generateQueueFromTop [
 	#category : #'position storing',
 	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
 }
-SIYBlockMediator >> getBlocksOfType: aBlockClass [
+SIYGameBoard >> getBlocksOfType: aBlockClass [
 	"returns set of all blocks of specified block type in the arena"
 
 	| aSet |
@@ -167,9 +167,9 @@ SIYBlockMediator >> getBlocksOfType: aBlockClass [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> getBlocksOnTile: aPoint [
+SIYGameBoard >> getBlocksOnTile: aPoint [
 	"returns set of blocks at given coordinates, returns nil if aPoint is out of arena"
 
 	((aPoint x between: 1 and: self arena arenaWidth)
@@ -180,9 +180,9 @@ SIYBlockMediator >> getBlocksOnTile: aPoint [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:31'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> privateAdd: aBlock to: aPoint [
+SIYGameBoard >> privateAdd: aBlock to: aPoint [
 	
 	(self gameBoard at: aPoint x at: aPoint y) add: aBlock
 
@@ -192,7 +192,7 @@ SIYBlockMediator >> privateAdd: aBlock to: aPoint [
 	#category : #private,
 	#'squeak_changestamp' : 'KD 1/31/2024 16:45'
 }
-SIYBlockMediator >> privateMove: aBlock fromTile: aTile to: aPoint [
+SIYGameBoard >> privateMove: aBlock fromTile: aTile to: aPoint [
 
 	self privateRemove: aBlock fromTile: aTile;
 		privateAdd: aBlock to: aPoint
@@ -202,7 +202,7 @@ SIYBlockMediator >> privateMove: aBlock fromTile: aTile to: aPoint [
 	#category : #private,
 	#'squeak_changestamp' : 'LK 1/4/2024 00:32'
 }
-SIYBlockMediator >> privateRemove: aBlock fromTile: aTile [
+SIYGameBoard >> privateRemove: aBlock fromTile: aTile [
 	
 	aTile ifNotNil: [aTile remove: aBlock]
 	
@@ -211,9 +211,9 @@ SIYBlockMediator >> privateRemove: aBlock fromTile: aTile [
 
 {
 	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:30'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
 }
-SIYBlockMediator >> saveBlock: aBlock at: aPoint [
+SIYGameBoard >> saveBlock: aBlock at: aPoint [
 	"saves/moves/deletes given block from gameBoard"
 
 	| currentTile |
