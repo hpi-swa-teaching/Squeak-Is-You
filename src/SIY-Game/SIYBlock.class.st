@@ -174,7 +174,7 @@ SIYBlock >> coordX [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:29'
 }
 SIYBlock >> coordX: aNumber [
 	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -182,7 +182,7 @@ SIYBlock >> coordX: aNumber [
 	| anotherNumber aPoint |
 	
 	anotherNumber := (aNumber clampLow: 1 high: self arena arenaWidth) - 1.
-	aPoint := (anotherNumber * self arena pixelPerBlock)@(self relativePosition y).
+	aPoint := anotherNumber * self arena pixelPerBlock@self relativePosition y.
 	super position: self arena position + aPoint.
 	
 	self postPositionRoutine
@@ -202,7 +202,7 @@ SIYBlock >> coordY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:17'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:28'
 }
 SIYBlock >> coordY: aNumber [
 	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
@@ -210,7 +210,7 @@ SIYBlock >> coordY: aNumber [
 	| anotherNumber aPoint |
 	
 	anotherNumber := (aNumber clampLow: 1 high: self arena arenaHeight) - 1.
-	aPoint := (self relativePosition x)@(anotherNumber * self arena pixelPerBlock).
+	aPoint := self relativePosition x@(anotherNumber * self arena pixelPerBlock).
 	super position: self arena position + aPoint.
 	
 	self postPositionRoutine
@@ -218,11 +218,11 @@ SIYBlock >> coordY: aNumber [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:03'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:28'
 }
 SIYBlock >> coords [
 	
-	^ (self coordX)@(self coordY)
+	^ self coordX@self coordY
 ]
 
 {
@@ -280,16 +280,16 @@ SIYBlock >> gameBoard [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:45'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:41'
 }
 SIYBlock >> getTextureForDirection: aPoint [
 	"returns block texture for specified direction"
 
 	aPoint caseOf: {
 		[1@0] -> [^ self blockTextureRight].
-		[(-1)@0] -> [^ self blockTextureLeft].
+		[-1@0] -> [^ self blockTextureLeft].
 		[0@1] -> [^ self blockTextureDown].
-		[0@(-1)] -> [^ self blockTextureUp]
+		[0@ -1] -> [^ self blockTextureUp]
 	} otherwise: [^ self blockTexture]
 ]
 
@@ -445,7 +445,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:31'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -455,7 +455,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	
 	| neighbours |
 	
-	neighbours := self gameBoard getBlocksOnTile: (self coords + aDirection).
+	neighbours := self gameBoard getBlocksOnTile: self coords + aDirection.
 	
 	"check rules, which override default movement behavior"
 	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
@@ -465,7 +465,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	(self isStop) ifTrue: [^ false].
 	(self isPush or: self isYou) ifFalse: [^ true].
 	(neighbours isNil) ifTrue: [^ self cantMoveIn: aDirection].
-	(neighbours anySatisfy: [:each | (each isStop) and: (each isShut and: self isOpen) not])
+	(neighbours anySatisfy: [:each | each isStop and: (each isShut and: self isOpen) not])
 		ifTrue: [^ self cantMoveIn: aDirection].
 	
 	"if there are any blocks in the way, try recursively moving them too"
@@ -649,7 +649,7 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:26'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 
@@ -657,7 +657,7 @@ SIYBlock >> setTextureForDirection: aPoint [
 	
 	aForm := SIYTextureLoader new getTexture: (self getTextureForDirection: aPoint).
 	
-	self image: (aForm scaledToSize: (self arena pixelPerBlock)@(self arena pixelPerBlock))
+	self image: (aForm scaledToSize: self arena pixelPerBlock@self arena pixelPerBlock)
 ]
 
 {

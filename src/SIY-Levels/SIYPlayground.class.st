@@ -1,7 +1,14 @@
+"
+A SIYPlayground is a possibility to let your creativity go wild and build your own levels via the halo.
+
+Instance Variables
+
+"
 Class {
 	#name : #SIYPlayground,
 	#superclass : #SIYLevelFactory,
-	#category : #'SIY-Levels'
+	#category : #'SIY-Levels',
+	#'squeak_changestamp' : 'KD 2/1/2024 14:13'
 }
 
 {

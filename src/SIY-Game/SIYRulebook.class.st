@@ -364,20 +364,20 @@ SIYRulebook >> currentRules: aDictionary [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/9/2024 10:03'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:55'
 }
 SIYRulebook >> invokeDefeat: aTile [
 
-	aTile do: [:each | (each isYou) ifTrue: [each deleteAndRemember]]
+	aTile do: [:each | each isYou ifTrue: [each deleteAndRemember]]
 ]
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:20'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:55'
 }
 SIYRulebook >> invokeMelt: aTile [
 
-	aTile do: [:each | (each isMelt) ifTrue: [each deleteAndRemember]]
+	aTile do: [:each | each isMelt ifTrue: [each deleteAndRemember]]
 	
 	
 
@@ -408,21 +408,21 @@ SIYRulebook >> invokeReplacementRules: aDictionary in: anArena [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:06'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:56'
 }
 SIYRulebook >> invokeSink: aTile [
 	
-	aTile do: [:each | (each isFloat not) ifTrue: [each deleteAndRemember]]
+	aTile do: [:each | each isFloat not ifTrue: [each deleteAndRemember]]
 
 ]
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/16/2024 18:10'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:56'
 }
 SIYRulebook >> invokeWeak: aTile [
 
-	aTile do: [:each | (each isWeak) ifTrue: [each deleteAndRemember]]
+	aTile do: [:each | each isWeak ifTrue: [each deleteAndRemember]]
 ]
 
 {
@@ -591,14 +591,14 @@ SIYRulebook >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:57'
 }
 SIYRulebook >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
 	"blocks can't be replaced with textblocks"
-	(anotherBlockClass = SIYText) ifTrue: [^ nil "do nothing"].
+	anotherBlockClass = SIYText ifTrue: [^ nil "do nothing"].
 	
-	(aBlockClass = anotherBlockClass)
+	aBlockClass = anotherBlockClass
 		ifFalse: [(anArena gameBoard getBlocksOfType: aBlockClass)
 			do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]]
 ]

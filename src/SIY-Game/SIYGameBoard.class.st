@@ -46,17 +46,17 @@ SIYGameBoard >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'KD 2/1/2024 15:02'
 }
 SIYGameBoard >> createBoardMatrix [
 	"returns a matrix with the size of the arena, initialized with an empty sets"
 
 	| aMatrix |
 
-	aMatrix := Matrix rows: (self arena arenaWidth) columns: (self arena arenaHeight).
+	aMatrix := Matrix rows: self arena arenaWidth columns: self arena arenaHeight.
 	
-	1 to: (self arena arenaWidth) 
-		do: [:x | 1 to: (self arena arenaHeight)
+	1 to: self arena arenaWidth
+		do: [:x | 1 to: self arena arenaHeight
 			do: [:y | aMatrix at: x at: y put: Set new]].
 	
 	^ aMatrix
@@ -73,16 +73,15 @@ SIYGameBoard >> gameBoard [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:12'
+	#'squeak_changestamp' : 'KD 2/1/2024 15:05'
 }
 SIYGameBoard >> generateQueueForDirection: aPoint [
-	"returns movement queue for specified direction"
-
+	
 	aPoint caseOf: {
 		[1@0] -> [^ self generateQueueFromRight].
-		[(-1)@0] -> [^ self generateQueueFromLeft].
+		[-1@0] -> [^ self generateQueueFromLeft].
 		[0@1] -> [^ self generateQueueFromBottom].
-		[0@(-1)] -> [^ self generateQueueFromTop]
+		[0@ -1] -> [^ self generateQueueFromTop]
 	}
 	
 ]

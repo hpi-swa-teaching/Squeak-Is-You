@@ -1,10 +1,21 @@
+"
+A SIYNoun is e.g. the written word 'Squeak' you see ingame.
+
+Instance Variables
+	representsBlock:		<Object>
+
+representsBlock
+	- xxxxx
+
+"
 Class {
 	#name : #SIYNoun,
 	#superclass : #SIYText,
 	#instVars : [
 		'representsBlock'
 	],
-	#category : #'SIY-Blocks'
+	#category : #'SIY-Blocks',
+	#'squeak_changestamp' : 'KD 2/1/2024 14:08'
 }
 
 {
