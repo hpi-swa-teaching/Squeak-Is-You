@@ -1,5 +1,5 @@
 "
-A SIYTextureManager is an interface for loading block textures through the Git Asset Browser.
+A SIYAssetLoader is an interface for loading Assets through the Git Asset Browser.
 
 Instance Variables
 	assetLoader: <GitAssetLoader> 
@@ -13,7 +13,7 @@ Class {
 		'assetLoader'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : '<historical>'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:50'
 }
 
 {

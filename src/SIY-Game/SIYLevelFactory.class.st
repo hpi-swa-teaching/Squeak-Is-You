@@ -1,5 +1,5 @@
 "
-A SIYLevelFactory is a factory for creating diffrent levels.
+A SIYLevelFactory is a factory for creating different levels.
 Each level can build and return an arena.
 
 Instance Variables
@@ -12,7 +12,7 @@ Class {
 		'arena'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:38'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:04'
 }
 
 {

@@ -1,5 +1,5 @@
 "
-The SIYBlockMediator is an interface for accessing other blocks in the same arena.
+The SIYGameBoard is an interface for accessing other blocks in the same arena.
 
 Instance Variables
 	arena: <SIYArena>
@@ -14,7 +14,7 @@ Class {
 		'boardMatrix'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:33'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:03'
 }
 
 {

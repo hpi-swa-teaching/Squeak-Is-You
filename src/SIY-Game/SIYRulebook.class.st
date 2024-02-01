@@ -1,5 +1,5 @@
 "
-A SIYRuleManager is an interface for checking and accessing current game rules.
+A SIYRulebook is an interface for checking and accessing current game rules.
 
 Instance Variables
 	currentRules: <Dictionary>
@@ -14,7 +14,7 @@ Class {
 		'currentRules'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/9/2024 11:39'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:04'
 }
 
 {

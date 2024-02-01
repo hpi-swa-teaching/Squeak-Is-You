@@ -1,16 +1,14 @@
 "
-A SIYTextureManager is an interface for loading block textures through the Git Asset Browser.
+A SIYAudioLoader is a subclass of the SIYAssetLoader for only sounds.
 
 Instance Variables
-	assetLoader: <GitAssetLoader> 
-
 
 "
 Class {
 	#name : #SIYAudioLoader,
 	#superclass : #SIYAssetLoader,
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : '<historical>'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:54'
 }
 
 {

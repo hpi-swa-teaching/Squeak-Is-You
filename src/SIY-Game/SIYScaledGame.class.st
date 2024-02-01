@@ -1,7 +1,7 @@
 "
-A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level.
+When the game is in scaled mode it aids the developer to work on featrues while still being able to play the game.
 
-If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
+If you want to start a new game scaled, run `SIYGame startWithScale XX`. 
 
 Instance Variables
 	arena: <SIYArena>
@@ -18,7 +18,7 @@ Class {
 		'scaleFactor'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : '<historical>'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:03'
 }
 
 {
@@ -61,22 +61,22 @@ SIYScaledGame >> initializeBackground [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:44'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:45'
 }
 SIYScaledGame >> initializeWithScale: aScaleFactor [
 	
-	self scaleFactor: aScaleFactor.
-	self initialize
+	self scaleFactor: aScaleFactor;
+		initialize
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:51'
+	#'squeak_changestamp' : 'KD 2/1/2024 13:46'
 }
 SIYScaledGame >> initializeWithScale: aScaleFactor atLevel: aLevelClass [
 	
-	self level: aLevelClass.
-	self initializeWithScale: aScaleFactor
+	self level: aLevelClass;
+		initializeWithScale: aScaleFactor
 ]
 
 {
