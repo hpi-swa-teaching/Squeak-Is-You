@@ -12,4 +12,4 @@
 
 ## License 🔑
 
-**_Squeak Is You_ is based on [Baba Is You](https://www.hempuli.com/baba/) by Hempuli (Arvi Teikari).** We have the permission from the original author to publish this project for educational purposes. More information can be found in the [LICENSE.md](License.md).
+**_Squeak Is You_ is based on [Baba Is You](https://www.hempuli.com/baba/) by Hempuli (Arvi Teikari).** We have the permission from the original author to publish this project for educational purposes. More information can be found in the [LICENSE.md](LICENSE.md).
