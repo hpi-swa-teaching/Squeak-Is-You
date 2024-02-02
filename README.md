@@ -34,7 +34,7 @@ The game is compatible with the Morph Halo: Blocks can be duplicated, deleted an
 
 ## Trailer 🎥
 
-_(work in progress)_
+https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/4d05f14e-b786-4f25-aa96-f56b38821758
 
 ## Screenshots 🖼️
 
