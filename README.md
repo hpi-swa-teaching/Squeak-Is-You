@@ -1,6 +1,7 @@
 <p align="center">
   <img width="400" src="assets/squeak-is-you-logo-darkmode.png#gh-dark-mode-only" alt="Squeak Is You">
   <img width="400" src="assets/squeak-is-you-logo-lightmode.png#gh-light-mode-only" alt="Squeak Is You">
+  <p align="center"><i>A puzzle game about changing the rules (Baba Is You clone)</i></p>
 </p>
 
 ## Installation ⚙️
