@@ -1,13 +1,16 @@
 <p align="center">
-  <img width="400" src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/330fa6a2-d3e9-476a-81ae-8e5d22d71002" alt="Squeak Is You">
+  <img width="400" src="assets/squeak-is-you-logo-darkmode.png#gh-dark-mode-only" alt="Squeak Is You">
+  <img width="400" src="assets/squeak-is-you-logo-lightmode.png#gh-light-mode-only" alt="Squeak Is You">
 </p>
+
 
 # License 🔑
 
 **_Squeak Is You_ is based on [Baba Is You](https://www.hempuli.com/baba/) by Hempuli (Arvi Teikari).** We have the permission from the original author to publish this project for educational purposes:
 
 <p align="center">
-  <img width="757" alt="License-Email" src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/d8f2edfb-ee8f-4cd4-8ed8-3e8e22f0096e">
+  <img width="750" src="assets/license-email-darkmode.png#gh-dark-mode-only">
+  <img width="750" src="assets/license-email-lightmode.png#gh-light-mode-only">
 </p>
 
 In this table you can check which parts of the game we created ourselves and which were taken from the original game:
