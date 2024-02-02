@@ -4,7 +4,7 @@
   <p align="center"><i>A puzzle game about changing the rules (Baba Is You clone)</i></p>
 </p>
 
-# License 🔑
+## License 🔑
 
 **_Squeak Is You_ is based on [Baba Is You](https://www.hempuli.com/baba/) by Hempuli (Arvi Teikari).** We have the permission from the original author to publish this project for educational purposes:
 
