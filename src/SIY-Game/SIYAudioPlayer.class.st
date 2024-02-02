@@ -79,11 +79,11 @@ SIYAudioPlayer >> isMuted: aBoolean [
 
 {
 	#category : #configuration,
-	#'squeak_changestamp' : 'LK 1/31/2024 21:28'
+	#'squeak_changestamp' : 'LK 1/31/2024 23:32'
 }
 SIYAudioPlayer >> isMutedOnStart [
 
-	^ true
+	^ false
 ]
 
 {
@@ -97,12 +97,12 @@ SIYAudioPlayer >> mainTheme [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 1/31/2024 21:10'
+	#'squeak_changestamp' : 'LK 2/1/2024 12:03'
 }
 SIYAudioPlayer >> playMusic [
 
-	self backgroundMusic: (RepeatingSound repeatForever: self getMusic) play;
-		yourself
+	self backgroundMusic: ((RepeatingSound repeatForever: self getMusic)
+		initialVolume: self volume; play)
 ]
 
 {
@@ -117,11 +117,11 @@ SIYAudioPlayer >> playMusicIfNotMuted [
 
 {
 	#category : #'sound effects',
-	#'squeak_changestamp' : 'LK 1/31/2024 14:37'
+	#'squeak_changestamp' : 'LK 2/1/2024 12:01'
 }
 SIYAudioPlayer >> playWinSound [
 	
-	[self getWinSound reset; play] fork
+	[self getWinSound initialVolume: self volume; reset; play] fork
 	
 ]
 
@@ -156,6 +156,15 @@ SIYAudioPlayer >> toggleMute [
 	self isMuted 
 		ifTrue: [self stopMusic]
 		ifFalse: [self playMusic].
+]
+
+{
+	#category : #configuration,
+	#'squeak_changestamp' : 'LK 2/1/2024 12:03'
+}
+SIYAudioPlayer >> volume [
+
+	^ 0.7
 ]
 
 {
