@@ -4,7 +4,7 @@
   <p align="center"><i>A puzzle game about changing the rules (Baba Is You clone)</i></p>
 </p>
 
-## Installating ⚙️
+## Installing ⚙️
 
 1. Download the newest version of _Squeak Is You_ on the [releases page](https://github.com/hpi-swa-teaching/Squeak-Is-You/releases/).
 2. Drag and drop the `.sar`-file into your Squeak image, then select `install SAR`.
