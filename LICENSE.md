@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="400" src="https://raw.githubusercontent.com/hpi-swa-teaching/Squeak-Is-You/main/assets/Squeak-Is-You-Logo.png" alt="Squeak Is You">
+  <img width="400" src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/330fa6a2-d3e9-476a-81ae-8e5d22d71002" alt="Squeak Is You">
 </p>
 
 # License 🔑
