@@ -1,95 +1,54 @@
-# Squeak Style Guide
+<p align="center">
+  <img width="400" src="assets/squeak-is-you-logo-darkmode.png#gh-dark-mode-only" alt="Squeak Is You">
+  <img width="400" src="assets/squeak-is-you-logo-lightmode.png#gh-light-mode-only" alt="Squeak Is You">
+  <p align="center"><i>A puzzle game about changing the rules (Baba Is You clone)</i></p>
+</p>
 
-Hier finden Sie sämtliche Dokumentation für den Codestyle des SWA-Projekts von der Gruppe 16 aka. die Programmier Pandas für das Spiel: "SQUEAK IS YOU" 
+## Installing ⚙️
 
-## Beispiel für schönen Code
+1. Download the newest version of _Squeak Is You_ on the [releases page](https://github.com/hpi-swa-teaching/Squeak-Is-You/releases/).
+2. Drag and drop the `.sar`-file into your Squeak image, then select `install SAR`.
 
-```smalltalk
-| y |
+## How To Play 🎮
 
-(true or: [false not] or: [nil isNil]) ifFalse: [self halt].
+To start the game in fullscreen, open a workspace and run `SIYGame start`. If you don't want to run the game in fullscreen, run `SIYGame startWithScale: 1.0` instead.
 
-y := self size + super size.
+| **Key**              | **Function**                     |
+| -------------------- | -------------------------------- |
+| `WASD` or Arrow Keys | move _isYou_-blocks              |
+| `Z`                  | undo                             |
+| `R`                  | restart level                    |
+| `K` / `L`            | previous / next level            |
+| `M`                  | mute music / sound               |
+| `ESC`                | exit game _(only in fullscreen)_ |
 
-{$a . #a . 'a’ . 1 . 1,0}
-    do: [:each | Transcript
-        show: each class name;
-        show: each printString;
-        show: ' '].
+## Hints & Solutions 💡
 
-^ x < y
-```
+If you get stuck on a level, take a look at [Baba Is Hint](https://www.keyofw.com/baba-is-hint), which aims to give hints as spoiler-free as possible.
 
-## Naming
+Check out the [Baba Is You Wiki](https://babaiswiki.fandom.com/wiki/Baba_Is_You_Wiki). It contains solutions for all levels and explains exactly how all rule blocks work.
 
-1. Descriptive Names
-2. **Capitilize** Class names, global variables, pool dictionaries and class variables
-3. **DON'T** capitilize instance and temp variables, parameters and methods
-4. wichtig: Projekt spezifischer Präfix (hier in diesem Projekt `SIY`)
-5. Have it make sense in natural Language
-    
-        aVehicle hasFourWheels `VS.` aVehicle fourWheels
-6. Use a phrase beginning with a verb for methods that answer a Boolean
-7. __NO__ magic numbers => put them in variables
-8. Spell out identifiers
-9. Avoid the parameter type or name in the method name
-    
-        fileSystem at: aKey put: aFile
-        VS. 
-        fileSystem atKey: aKey putFile: aFile
+## Build Your Own Levels 🛠️
 
-## Comments
+The game is compatible with the Morph Halo: Blocks can be duplicated, deleted and moved via the Halo. Combined with the `Playground` level (which contains all implemented blocks) this feature can be used for level prototyping and experimenting.
 
-1. quick, helpful comments
-2. **Do not comment bad code – rewrite it**
-3. always comment what your object/function does (aber Algorithmus sollte auch ohne Kommentar verständlich sein)
-    ```
-    # BAD
-    DataVisualization>>show 
-        "Step 1: setup the state“ 
-        self data: ...
+## Trailer 🎥
 
-        "Step 2: display the data“ 
-        self addMorph: ... 
+https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/4d05f14e-b786-4f25-aa96-f56b38821758
 
-    vs.
+## Screenshots 🖼️
 
-    # GOOD
-    DataVisualization>>show 
-        self
-            setupState; 
-            displayData.
+<p float="left" align="center">
+  <img src="assets/screenshot-2.png" width="40%"> 
+  <img src="assets/screenshot-3.png" width="40%"> 
+  <img src="assets/screenshot-4.png" width="40%"> 
+  <img src="assets/screenshot-1.png" width="40%">
+</p>
 
-    DataVisualization>>setupState 
-        self data: ...
-    ```
-4. **Use keyword `TODO` to indicate unfertige Funktionen**
-5. Use comments to highlight code that is unusual
+## License 🔑
 
-## Code Formatting
-
-2. Use the general template for a method
-    ```
-    messageSelectorAndArgumentNames
-        "comment stating purpose of message"
-
-        | temporary variable names | 
-        statements
-    ```
-3. Employ a **consistent spacing** around messages and delimiters
-4. Employ at least one blank before and after a binary selector
-
-        answer := (3 + 4 * 36) >= (32 + x).  `vs.` answer:=(3+4*36)>=(32+x).
-
-5. Leave spaces around @ (when both receiver and argument are positive integers) 
-
-        10 @ 235 `vs.` 10@235
-
-6. Leave at least one blank before a left parenthesis and after a right parenthesis
-
-        #((2 3) (3 4) (4 5)) `VS.` #((2 3)(3 4)(4 5))
-
-7. Leave at least one blank after but not before a comma (,), a semicolon (;), and a colon (:) in a selector
+**_Squeak Is You_ is based on [Baba Is You](https://www.hempuli.com/baba/) by Hempuli (Arvi Teikari).** We have the permission from the original author to publish this project for educational purposes. More information can be found in the [LICENSE.md](LICENSE.md).
+ot before a comma (,), a semicolon (;), and a colon (:) in a selector
 
         value between: top and: bottom `VS.` value between:top and:bottom
 
