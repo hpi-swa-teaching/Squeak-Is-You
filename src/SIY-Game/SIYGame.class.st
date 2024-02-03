@@ -126,11 +126,11 @@ SIYGame >> defaultLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
+	#'squeak_changestamp' : 'LK 2/3/2024 21:17'
 }
 SIYGame >> exitGame [
 	
-	self abandon
+	^ SubclassResponsibility
 ]
 
 {

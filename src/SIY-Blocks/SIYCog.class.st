@@ -21,3 +21,12 @@ SIYCog >> nounTexture [
 
 	^ '/SIYCogT.png'
 ]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:29'
+}
+SIYCog >> symbol [
+
+	^ #cog
+]

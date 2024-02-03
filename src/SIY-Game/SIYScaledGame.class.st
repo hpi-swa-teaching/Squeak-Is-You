@@ -49,6 +49,15 @@ SIYScaledGame >> arenaPosition [
 ]
 
 {
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 2/3/2024 21:17'
+}
+SIYScaledGame >> exitGame [
+
+	^ nil "do nothing"
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'LK 1/31/2024 21:57'
 }

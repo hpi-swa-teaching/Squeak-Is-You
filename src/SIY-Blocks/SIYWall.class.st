@@ -21,3 +21,12 @@ SIYWall >> nounTexture [
 
 	^ '/SIYWallT.png'
 ]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:31'
+}
+SIYWall >> symbol [
+
+	^ #wall
+]

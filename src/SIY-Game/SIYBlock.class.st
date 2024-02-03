@@ -16,6 +16,60 @@ Class {
 }
 
 {
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> isAndOperator [
+
+	^ self basicNew isAndOperator
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> isIsOperator [
+
+	^ self basicNew isIsOperator
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:43'
+}
+SIYBlock class >> isNoun [
+
+	^ self basicNew isNoun
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> isOperator [
+
+	^ self basicNew isOperator
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:43'
+}
+SIYBlock class >> isProperty [
+
+	^ self basicNew isProperty
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:43'
+}
+SIYBlock class >> isText [
+
+	^ self basicNew isText
+]
+
+{
 	#category : #'instance creation',
 	#'squeak_changestamp' : 'LK 12/4/2023 17:02'
 }
@@ -33,6 +87,15 @@ SIYBlock class >> newInArena: anArena at: aPoint [
 	"create new block in SIY arena at given coordinates"
 
 	^ self basicNew initializeInArena: anArena at: aPoint
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> symbol [
+
+	^ self basicNew symbol
 ]
 
 {
@@ -237,7 +300,7 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> delete [
 	
@@ -271,7 +334,7 @@ SIYBlock >> duplicateMorph: evt [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> gameBoard [
 
@@ -489,17 +552,17 @@ SIYBlock >> isYou [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:11'
+	#'squeak_changestamp' : 'LK 2/3/2024 21:04'
 }
 SIYBlock >> move: aDirection [
 	
-	self move: aDirection pushedBy: nil
+	self move: aDirection pushedBy: SIYNullBlock new
 
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'KD 2/1/2024 14:31'
+	#'squeak_changestamp' : 'LK 2/3/2024 21:15'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -507,22 +570,16 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 	This method returns true/false, depending on whether the block who pushed this block
 	(aBlock) should be able to move onto this blocks tile."
 	
-	| neighbours |
+	| neighbours canMoveHere |
 	
 	neighbours := self gameBoard getBlocksOnTile: self coords + aDirection.
 	
-	"check rules, which override default movement behavior"
-	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
-	aBlock ifNotNil: [(self isOpen and: aBlock isShut) ifTrue: [^ true]].
+	canMoveHere := self rulebook checkMovementRulesFor: self 
+		pushedBy: aBlock
+		havingNeighbours: neighbours 
+		inDirection: aDirection.
+	canMoveHere ifNotNil: [^ canMoveHere].
 	
-	"check for rules, which would prevent this block from moving"
-	(self isStop) ifTrue: [^ false].
-	(self isPush or: self isYou) ifFalse: [^ true].
-	(neighbours isNil) ifTrue: [^ self cantMoveIn: aDirection].
-	(neighbours anySatisfy: [:each | each isStop and: (each isShut and: self isOpen) not])
-		ifTrue: [^ self cantMoveIn: aDirection].
-	
-	"if there are any blocks in the way, try recursively moving them too"
 	neighbours isEmpty
 		ifTrue: [^ self basicMove: aDirection]
 		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
@@ -533,7 +590,7 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> neighborsAbove [
 	"Return set of blocks at coords above.
@@ -544,7 +601,7 @@ SIYBlock >> neighborsAbove [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> neighborsBelow [
 	"Return set of blocks at coords below.
@@ -555,7 +612,7 @@ SIYBlock >> neighborsBelow [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> neighborsHere [
 	"Return set of blocks at current coords.
@@ -566,7 +623,7 @@ SIYBlock >> neighborsHere [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> neighborsLeft [
 	"Return set of blocks at coords to the left.
@@ -577,7 +634,7 @@ SIYBlock >> neighborsLeft [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> neighborsRight [
 	"Return set of blocks at coords to the right.
@@ -715,8 +772,17 @@ SIYBlock >> setTextureForDirection: aPoint [
 ]
 
 {
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock >> symbol [
+
+	^ nil
+]
+
+{
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:57'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYBlock >> updateGameBoard [
 	"notifies blockMediator of current position"

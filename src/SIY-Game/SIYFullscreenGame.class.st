@@ -76,6 +76,15 @@ SIYFullscreenGame >> createKeyHintMorph [
 ]
 
 {
+	#category : #'level control',
+	#'squeak_changestamp' : 'LK 2/3/2024 21:17'
+}
+SIYFullscreenGame >> exitGame [
+
+	^ self abandon
+]
+
+{
 	#category : #background,
 	#'squeak_changestamp' : 'LK 1/31/2024 21:31'
 }

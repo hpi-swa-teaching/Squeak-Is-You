@@ -21,3 +21,12 @@ SIYFlag >> nounTexture [
 
 	^ '/SIYFlagT.png'
 ]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:30'
+}
+SIYFlag >> symbol [
+
+	^ #flag
+]

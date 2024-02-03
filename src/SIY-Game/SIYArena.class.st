@@ -187,7 +187,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:57'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYArena >> gameBoard [
 
@@ -250,7 +250,7 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:14'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction"
@@ -281,7 +281,7 @@ SIYArena >> positionDictionary [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:26'
 }
 SIYArena >> postMoveBlocksRoutine [
 	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
@@ -289,11 +289,10 @@ SIYArena >> postMoveBlocksRoutine [
 
 	self rulebook updateRulesInArena: self.
 
-	"check rules for all blocks"
-	(self gameBoard getBlocksOfType: SIYBlock)
+	self gameBoard getAllBlocks
 		do: [:aBlock | self rulebook checkRulesFor: aBlock].	
 			
-	self undoCaretaker createSnapshotOf: self.
+	self undoCaretaker createSnapshotOf: self
 	
 
 	

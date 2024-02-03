@@ -123,6 +123,27 @@ SIYRulebook >> checkMelt: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
+	#'squeak_changestamp' : 'LK 2/3/2024 21:20'
+}
+SIYRulebook >> checkMovementRulesFor: aBlock pushedBy: anotherBlock havingNeighbours: aSet inDirection: aDirection [
+	"This method returns true/false, depending on whether the anotherBlock, who pushed aBlock 	aBlock should be able to move onto aBlock's tile according to rules. If the rule checks 	implemented here can't decide whether this should be the case, we return nil."
+	
+	(aBlock isShut and: anotherBlock isOpen) ifTrue: [^ true].
+	(aBlock isOpen and: anotherBlock isShut) ifTrue: [^ true].
+	
+	aBlock isStop ifTrue: [^ false].
+	(aBlock isPush or: aBlock isYou) ifFalse: [^ true].
+	aSet ifNil: [^ aBlock cantMoveIn: aDirection].
+	
+	(aSet anySatisfy: [:each | each isStop and: (each isShut and: aBlock isOpen) not])
+		ifTrue: [^ aBlock cantMoveIn: aDirection].
+		
+	^ nil
+	
+]
+
+{
+	#category : #'rule checking',
 	#'squeak_changestamp' : 'LK 1/6/2024 21:15'
 }
 SIYRulebook >> checkOpen: aBlock onTile: aTile [
@@ -583,21 +604,21 @@ SIYRulebook >> isYou: aBlock [
 
 {
 	#category : #'rule invoking',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:57'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:40'
 }
 SIYRulebook >> replaceBlocks: aBlockClass with: anotherBlockClass in: anArena [
 
 	"blocks can't be replaced with textblocks"
-	anotherBlockClass = SIYText ifTrue: [^ nil "do nothing"].
+	anotherBlockClass isText ifTrue: [^ nil "do nothing"].
 	
 	aBlockClass = anotherBlockClass
-		ifFalse: [(anArena gameBoard getBlocksOfType: aBlockClass)
+		ifFalse: [(anArena gameBoard getBlocksLike: aBlockClass)
 			do: [:aBlock | aBlock replaceWithAndRemember: anotherBlockClass]]
 ]
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:45'
 }
 SIYRulebook >> updateRulesInArena: anArena [
 	"check for rule blocks in arena and update rule dictionary accordingly"
@@ -607,15 +628,10 @@ SIYRulebook >> updateRulesInArena: anArena [
 	ruleDictionary := Dictionary new.
 	replacementDictionary := Dictionary new.
 	
-	(anArena gameBoard getBlocksOfType: SIYIs)
+	(anArena gameBoard getBlocksThatSatisfy: [:each | each isIsOperator])
 		do: [:anIsBlock | 
-			"collect noun-is-property rules"
-			ruleDictionary := self addHorizontalRulesFor: anIsBlock 
-				to: ruleDictionary.
-			ruleDictionary := self addVerticalRulesFor: anIsBlock
-				 to: ruleDictionary.
-				
-			"collect noun-is-noun rules"
+			ruleDictionary := self addHorizontalRulesFor: anIsBlock to: ruleDictionary.
+			ruleDictionary := self addVerticalRulesFor: anIsBlock to: ruleDictionary.
 			replacementDictionary := self addHorizontalReplacementRulesFor: anIsBlock 
 				to: replacementDictionary.
 			replacementDictionary := self addVerticalReplacementRulesFor: anIsBlock
