@@ -168,13 +168,13 @@ SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:48'
+	#'squeak_changestamp' : 'KD 2/3/2024 22:12'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
 	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
 	
-	self placeNounFor: aBlockClass at: (-3)@0 + aPoint;
-		placeBlock: SIYAnd at: (-2)@0 + aPoint;
+	self placeNounFor: aBlockClass at: -3@0 + aPoint;
+		placeBlock: SIYAnd at: -2@0 + aPoint;
 		placeHorizontalRule: anotherBlockClass is: aPropertyClass at: aPoint
 	
 	
