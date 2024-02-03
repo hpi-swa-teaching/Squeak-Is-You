@@ -73,34 +73,34 @@ SIYGameBoard >> gameBoard [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'KD 2/1/2024 15:05'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
 }
-SIYGameBoard >> generateQueueForDirection: aPoint [
+SIYGameBoard >> getBlocksFromBottom [
+	"Returns array of blocks in arena, reverse ordered by y coordinate"
+	
+	^ self getBlocksFromTop reversed
+]
+
+{
+	#category : #'movement queue',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
+}
+SIYGameBoard >> getBlocksFromDirection: aPoint [
 	
 	aPoint caseOf: {
-		[1@0] -> [^ self generateQueueFromRight].
-		[-1@0] -> [^ self generateQueueFromLeft].
-		[0@1] -> [^ self generateQueueFromBottom].
-		[0@ -1] -> [^ self generateQueueFromTop]
+		[1@0] -> [^ self getBlocksFromRight].
+		[-1@0] -> [^ self getBlocksFromLeft].
+		[0@1] -> [^ self getBlocksFromBottom].
+		[0@ -1] -> [^ self getBlocksFromTop]
 	}
 	
 ]
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
 }
-SIYGameBoard >> generateQueueFromBottom [
-	"Returns array of blocks in arena, reverse ordered by y coordinate"
-	
-	^ self generateQueueFromTop reversed
-]
-
-{
-	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
-}
-SIYGameBoard >> generateQueueFromLeft [
+SIYGameBoard >> getBlocksFromLeft [
 	"Returns array of blocks in arena, ordered by x coordinate"
 	
 	| aCollection |
@@ -117,19 +117,19 @@ SIYGameBoard >> generateQueueFromLeft [
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
 }
-SIYGameBoard >> generateQueueFromRight [
+SIYGameBoard >> getBlocksFromRight [
 	"Returns array of blocks in arena, reverse ordered by x coordinate"
 
-	^ self generateQueueFromLeft reversed
+	^ self getBlocksFromLeft reversed
 ]
 
 {
 	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:14'
 }
-SIYGameBoard >> generateQueueFromTop [
+SIYGameBoard >> getBlocksFromTop [
 	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
 	| aCollection |

@@ -114,7 +114,7 @@ SIYArena >> backgroundColor [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:43'
+	#'squeak_changestamp' : 'LK 2/2/2024 15:42'
 }
 SIYArena >> checkKeyboardInputs [
 	
@@ -250,13 +250,13 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:14'
 }
 SIYArena >> moveBlocksDirection: aDirection [
 	"Informs all isYou blocks in arena to move in specified direction"
 	
 	self preMoveBlocksRoutine.
-	(self gameBoard generateQueueForDirection: aDirection)
+	(self gameBoard getBlocksFromDirection: aDirection)
 		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
 ]

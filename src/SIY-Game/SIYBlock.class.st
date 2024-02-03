@@ -322,6 +322,15 @@ SIYBlock >> initializeInArena: anArena at: aPoint [
 ]
 
 {
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:00'
+}
+SIYBlock >> isAndOperator [
+
+	^ false
+]
+
+{
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
@@ -350,6 +359,15 @@ SIYBlock >> isHot [
 ]
 
 {
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:00'
+}
+SIYBlock >> isIsOperator [
+
+	^ false
+]
+
+{
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
@@ -360,12 +378,39 @@ SIYBlock >> isMelt [
 ]
 
 {
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 19:59'
+}
+SIYBlock >> isNoun [
+
+	^ false
+]
+
+{
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isOpen [
 
 	^ self rulebook isOpen: self
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:02'
+}
+SIYBlock >> isOperator [
+
+	^ false
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 19:59'
+}
+SIYBlock >> isProperty [
+
+	^ false
 ]
 
 {
@@ -403,6 +448,15 @@ SIYBlock >> isStop [
 
 	^ self rulebook isStop: self
 	
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 19:59'
+}
+SIYBlock >> isText [
+
+	^ false
 ]
 
 {

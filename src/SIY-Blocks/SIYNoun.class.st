@@ -44,6 +44,15 @@ SIYNoun >> duplicateMorph: evt [
 
 {
 	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:01'
+}
+SIYNoun >> isNoun [
+
+	^ true
+]
+
+{
+	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'LK 1/2/2024 12:52'
 }
 SIYNoun >> representsBlock [

@@ -143,7 +143,7 @@ SIYPlayground >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 15:33'
+	#'squeak_changestamp' : 'LK 2/2/2024 12:14'
 }
 SIYPlayground >> nextLevel [
 

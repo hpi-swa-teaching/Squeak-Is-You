@@ -19,3 +19,12 @@ SIYProperty >> blockTexture [
 
 	^ SubclassResponsibility
 ]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:02'
+}
+SIYProperty >> isProperty [
+
+	^ true
+]

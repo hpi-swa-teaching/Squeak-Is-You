@@ -189,21 +189,21 @@ SIYRulebook >> checkWin: aBlock onTile: aTile [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 22:27'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:03'
 }
 SIYRulebook >> collectNounBelow: aBlock [
 	"recursively collect the first noun below this operator block (if conjoined with SIYAnd)"
 	
 	aBlock neighborsBelow ifNil: [^ nil].
 
-	(aBlock isKindOf: SIYOperator) 
+	aBlock isOperator
 		ifTrue: [aBlock neighborsBelow do: [:each |
-			(each isKindOf: SIYNoun) ifTrue: [^ each].
-			(each isKindOf: SIYProperty) ifTrue: [^ self collectNounBelow: each]]].
+			each isNoun ifTrue: [^ each].
+			each isProperty ifTrue: [^ self collectNounBelow: each]]].
 	
-	(aBlock isKindOf: SIYProperty)
+	aBlock isProperty
 		ifTrue: [aBlock neighborsBelow do: [:each |
-			(each isKindOf: SIYAnd) ifTrue: [^ self collectNounBelow: each]]].
+			each isAndOperator ifTrue: [^ self collectNounBelow: each]]].
 	
 	^ nil
 
@@ -211,21 +211,21 @@ SIYRulebook >> collectNounBelow: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 22:34'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:04'
 }
 SIYRulebook >> collectNounRightOf: aBlock [
 	"recursively collect the first noun right of this operator block (if conjoined with SIYAnd)"
 	
 	aBlock neighborsRight ifNil: [^ nil].
 
-	(aBlock isKindOf: SIYOperator) 
+	aBlock isOperator
 		ifTrue: [aBlock neighborsRight do: [:each |
-			(each isKindOf: SIYNoun) ifTrue: [^ each].
-			(each isKindOf: SIYProperty) ifTrue: [^ self collectNounRightOf: each]]].
+			each isNoun ifTrue: [^ each].
+			each isOperator ifTrue: [^ self collectNounRightOf: each]]].
 	
-	(aBlock isKindOf: SIYProperty)
+	aBlock isProperty
 		ifTrue: [aBlock neighborsRight do: [:each |
-			(each isKindOf: SIYAnd) ifTrue: [^ self collectNounRightOf: each]]].
+			each isAndOperator ifTrue: [^ self collectNounRightOf: each]]].
 	
 	^ nil
 		
@@ -234,7 +234,7 @@ SIYRulebook >> collectNounRightOf: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 22:50'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:07'
 }
 SIYRulebook >> collectNounsAbove: aBlock [
 	"recursively collect all nouns above this operator block (if conjoined with SIYAnd)"
@@ -244,16 +244,14 @@ SIYRulebook >> collectNounsAbove: aBlock [
 	aSet := Set new.
 	aBlock neighborsAbove ifNil: [^ aSet].
 
-	(aBlock isKindOf: SIYOperator) 
+	aBlock isOperator
 		ifTrue: [aBlock neighborsAbove do: [:each |
-			(each isKindOf: SIYNoun) 
-				ifTrue: [aSet add: each. 
+			each isNoun ifTrue: [aSet add: each. 
 					aSet addAll: (self collectNounsAbove: each)]]].
 	
-	(aBlock isKindOf: SIYNoun)
+	aBlock isNoun
 		ifTrue: [aBlock neighborsAbove do: [:each |
-			(each isKindOf: SIYAnd) 
-				ifTrue: [aSet addAll: (self collectNounsAbove: each)]]].
+			each isAndOperator ifTrue: [aSet addAll: (self collectNounsAbove: each)]]].
 	
 	^ aSet
 
@@ -261,7 +259,7 @@ SIYRulebook >> collectNounsAbove: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 22:52'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:07'
 }
 SIYRulebook >> collectNounsLeftOf: aBlock [
 	"recursively collect all nouns left of this operator block (if conjoined with SIYAnd)"
@@ -271,16 +269,14 @@ SIYRulebook >> collectNounsLeftOf: aBlock [
 	aSet := Set new.
 	aBlock neighborsLeft ifNil: [^ aSet].
 
-	(aBlock isKindOf: SIYOperator) 
+	aBlock isOperator
 		ifTrue: [aBlock neighborsLeft do: [:each |
-			(each isKindOf: SIYNoun) 
-				ifTrue: [aSet add: each. 
-					aSet addAll: (self collectNounsLeftOf: each)]]].
+			each isNoun ifTrue: [aSet add: each. 
+				aSet addAll: (self collectNounsLeftOf: each)]]].
 	
-	(aBlock isKindOf: SIYNoun)
+	aBlock isNoun
 		ifTrue: [aBlock neighborsLeft do: [:each |
-			(each isKindOf: SIYAnd) 
-				ifTrue: [aSet addAll: (self collectNounsLeftOf: each)]]].
+			each isAndOperator ifTrue: [aSet addAll: (self collectNounsLeftOf: each)]]].
 	
 	^ aSet
 
@@ -289,7 +285,7 @@ SIYRulebook >> collectNounsLeftOf: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 23:04'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:09'
 }
 SIYRulebook >> collectPropertiesBelow: aBlock [
 	"recursively collect all properties below this operator block (if conjoined with SIYAnd)"
@@ -299,17 +295,15 @@ SIYRulebook >> collectPropertiesBelow: aBlock [
 	aSet := Set new.
 	aBlock neighborsBelow ifNil: [^ aSet].
 
-	(aBlock isKindOf: SIYOperator) 
+	aBlock isOperator
 		ifTrue: [aBlock neighborsBelow do: [:each |
-			(each isKindOf: SIYProperty) 
-				ifTrue: [aSet add: each].
-			((each isKindOf: SIYProperty) or: (each isKindOf: SIYNoun))
+			each isProperty ifTrue: [aSet add: each].
+			(each isProperty or: each isNoun)
 				ifTrue: [aSet addAll: (self collectPropertiesBelow: each)]]].
 	
-	((aBlock isKindOf: SIYProperty) or: (aBlock isKindOf: SIYNoun))
+	(aBlock isProperty or: aBlock isNoun)
 		ifTrue: [aBlock neighborsBelow do: [:each |
-			(each isKindOf: SIYAnd) 
-				ifTrue: [aSet addAll: (self collectPropertiesBelow: each)]]].
+			each isAndOperator ifTrue: [aSet addAll: (self collectPropertiesBelow: each)]]].
 	
 	^ aSet
 		
@@ -317,7 +311,7 @@ SIYRulebook >> collectPropertiesBelow: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 23:05'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:10'
 }
 SIYRulebook >> collectPropertiesRightOf: aBlock [
 	"recursively collect all properties right of this operator block (if conjoined with SIYAnd)"
@@ -327,17 +321,15 @@ SIYRulebook >> collectPropertiesRightOf: aBlock [
 	aSet := Set new.
 	aBlock neighborsRight ifNil: [^ aSet].
 
-	(aBlock isKindOf: SIYOperator) 
+	aBlock isOperator
 		ifTrue: [aBlock neighborsRight do: [:each |
-			(each isKindOf: SIYProperty) 
-				ifTrue: [aSet add: each].
-			((each isKindOf: SIYProperty) or: (each isKindOf: SIYNoun))
+			each isProperty ifTrue: [aSet add: each].
+			(each isProperty or: each isNoun)
 				ifTrue: [aSet addAll: (self collectPropertiesRightOf: each)]]].
 	
-	((aBlock isKindOf: SIYProperty) or: (aBlock isKindOf: SIYNoun))
+	(aBlock isProperty or: aBlock isNoun)
 		ifTrue: [aBlock neighborsRight do: [:each |
-			(each isKindOf: SIYAnd) 
-				ifTrue: [aSet addAll: (self collectPropertiesRightOf: each)]]].
+			each isAndOperator ifTrue: [aSet addAll: (self collectPropertiesRightOf: each)]]].
 	
 	^ aSet
 		
@@ -498,12 +490,12 @@ SIYRulebook >> isOpen: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 13:01'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:10'
 }
 SIYRulebook >> isPush: aBlock [
 	
 	"text blocks are always isPush"
-	(aBlock isKindOf: SIYText) ifTrue: [^ true].
+	aBlock isText ifTrue: [^ true].
 	
 	^ self isRuleInDictionary: SIYPush forBlock: aBlock
 
@@ -511,12 +503,12 @@ SIYRulebook >> isPush: aBlock [
 
 {
 	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/10/2024 22:51'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:10'
 }
 SIYRulebook >> isRuleInDictionary: aPropertyClass forBlock: aBlock [
 	
 	"if block is of type text, check for SIYText instead of aBlock class"
-	((aBlock isKindOf: SIYText) and: (aBlock class = SIYText) not)
+	(aBlock isText and: (aBlock class = SIYText) not)
 		ifTrue: [^ (self currentRules at: aPropertyClass ifAbsent: [^ false])
 			includes: SIYText]
 		ifFalse: [^ (self currentRules at: aPropertyClass ifAbsent: [^ false])
