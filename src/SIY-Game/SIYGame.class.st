@@ -15,7 +15,6 @@ Class {
 	#name : #SIYGame,
 	#superclass : #Morph,
 	#instVars : [
-		'arena',
 		'level',
 		'audioPlayer',
 		'keyboardHandler'
@@ -202,13 +201,11 @@ SIYGame >> keyboardHandler [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:50'
 }
 SIYGame >> keyboardHandler: anObject [
 
-	keyboardHandler := anObject.
-	
-	self addMorph: keyboardHandler
+	keyboardHandler := anObject
 
 	
 ]
@@ -319,4 +316,13 @@ SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
 	self arena center: aPoint
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:43'
+}
+SIYGame >> updateExtent [
+
+	^ SubclassResponsibility
 ]

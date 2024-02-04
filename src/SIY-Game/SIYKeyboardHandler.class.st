@@ -19,6 +19,15 @@ SIYKeyboardHandler class >> newFor: aGame [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:49'
+}
+SIYKeyboardHandler >> addToGame [
+
+	self game addMorph: self
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 2/4/2024 17:25'
 }
@@ -52,6 +61,15 @@ SIYKeyboardHandler >> checkKeyboardInputs [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:29'
+}
+SIYKeyboardHandler >> eventHandler [
+
+	^ self game eventHandler
+]
+
+{
 	#category : #stepping,
 	#'squeak_changestamp' : 'LK 2/4/2024 17:23'
 }
@@ -81,14 +99,16 @@ SIYKeyboardHandler >> game: aGame [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:00'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:49'
 }
 SIYKeyboardHandler >> initializeFor: aGame [
 	
-	self initialize.
-	self game: aGame.
+	super initialize.
 	
-	self openInWorld; hide
+	self game: aGame;
+		addToGame;
+		openInWorld; 
+		hide
 ]
 
 {
@@ -141,11 +161,11 @@ SIYKeyboardHandler >> pressedKey [
 
 {
 	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 2/4/2024 17:55'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:29'
 }
 SIYKeyboardHandler >> pressedKeys [
 
-	^ self game eventHandler pressedKeys asOrderedCollection
+	^ self eventHandler pressedKeys asOrderedCollection
 ]
 
 {

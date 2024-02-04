@@ -35,7 +35,7 @@ SIYLevelFactory >> addBlock: aBlockClass at: aPoint [
 ]
 
 {
-	#category : #'level building',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 12/5/2023 10:45'
 }
 SIYLevelFactory >> arena [
@@ -44,7 +44,7 @@ SIYLevelFactory >> arena [
 ]
 
 {
-	#category : #'level building',
+	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/11/2024 23:29'
 }
 SIYLevelFactory >> arena: anArena [
@@ -127,6 +127,15 @@ SIYLevelFactory >> description [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:33'
+}
+SIYLevelFactory >> gameBoard [
+
+	^ self arena gameBoard
+]
+
+{
 	#category : #initialization,
 	#'squeak_changestamp' : 'LK 1/4/2024 22:48'
 }
@@ -157,13 +166,16 @@ SIYLevelFactory >> nextLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 16:18'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:25'
 }
 SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
-	"place new block in arena, remove the block that was on the tile before"
-
-	self removeBlockAt: aPoint.
-	aBlockClass newInArena: self arena at: aPoint
+	
+	| anotherPoint |
+	
+	anotherPoint := self arena clampPointToArenaDimension: aPoint.
+	
+	self removeBlockAt: anotherPoint.
+	aBlockClass newInArena: self arena at: anotherPoint
 ]
 
 {
@@ -318,12 +330,16 @@ SIYLevelFactory >> previousLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:26'
 }
 SIYLevelFactory >> removeBlockAt: aPoint [
 	"remove all blocks on specified tile"
 
-	(self arena gameBoard getBlocksOnTile: aPoint)
+	| anotherPoint |
+	
+	anotherPoint := self arena clampPointToArenaDimension: aPoint.
+
+	(self gameBoard getBlocksOnTile: anotherPoint)
 		do: [:each | each delete]
 ]
 

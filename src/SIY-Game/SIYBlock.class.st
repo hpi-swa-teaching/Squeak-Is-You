@@ -99,6 +99,15 @@ SIYBlock class >> symbol [
 ]
 
 {
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:48'
+}
+SIYBlock >> addToArena [
+
+	self arena addMorph: self
+]
+
+{
 	#category : #positioning,
 	#'squeak_changestamp' : 'LK 1/4/2024 00:07'
 }
@@ -124,6 +133,24 @@ SIYBlock >> arena [
 SIYBlock >> arena: anArena [
 	
 	arena := anArena
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:30'
+}
+SIYBlock >> arenaPositionDictionary [
+
+	^ self arena positionDictionary
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:36'
+}
+SIYBlock >> arenaReplacementSet [
+
+	^ self arena replacementSet
 ]
 
 {
@@ -310,13 +337,13 @@ SIYBlock >> delete [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:28'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:31'
 }
 SIYBlock >> deleteAndRemember [
 	"deleting a block using this method, allows to undo the deletion"
 	
-	(self arena positionDictionary includesKey: self)
-		ifFalse: [self arena positionDictionary at: self put: self coords].
+	(self arenaPositionDictionary includesKey: self)
+		ifFalse: [self arenaPositionDictionary at: self put: self coords].
 		
 	self delete
 ]
@@ -358,30 +385,18 @@ SIYBlock >> getTextureForDirection: aPoint [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:57'
-}
-SIYBlock >> initialize [
-	
-	self setDefaultTexture.
-	self arena addMorph: self.
-	self updateGameBoard
-	
-	
-	
-
-	
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:48'
 }
 SIYBlock >> initializeInArena: anArena at: aPoint [
 
 	self arena: anArena.
 	super initialize.
-	self coords: aPoint.
-	self initialize
+	
+	self coords: aPoint;
+		setDefaultTexture;
+		updateGameBoard;
+		addToArena
+	
 ]
 
 {
@@ -562,13 +577,13 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 2/4/2024 15:17'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:01'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
-	"Moves this block in specified direction, while considering the rules that currently apply.
-	Calling this method only has an effect, if the blocks in front of it allow it. 
-	This method returns true/false, depending on whether the block who pushed this block
-	(aBlock) should be able to move onto this blocks tile."
+	"Moves this block in specified direction, while considering the rules that 
+	currently apply. Calling this method only has an effect, if the blocks in front
+	of it allow it. This method returns true/false, depending on whether the block 
+	who pushed this block (aBlock) should be able to move onto this blocks tile."
 	
 	| neighbours canMoveHere |
 	
@@ -579,9 +594,6 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 		havingNeighbours: neighbours 
 		inDirection: aDirection.
 	canMoveHere ifNotNil: [^ canMoveHere].
-	
-	neighbours ifEmpty: [^ self basicMove: aDirection].
-	neighbours ifNil: [^ self cantMoveIn: aDirection].
 	
 	(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 		ifTrue: [^ self basicMove: aDirection]
@@ -718,15 +730,14 @@ SIYBlock >> relativePosition [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:24'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:36'
 }
 SIYBlock >> replaceWithAndRemember: aBlockClass [
 
 	| aBlock |
 
 	aBlock := aBlockClass newInArena: self arena at: self coords.
-	self arena replacementSet add: aBlock.
-	
+	self arenaReplacementSet add: aBlock.
 	self deleteAndRemember
 ]
 

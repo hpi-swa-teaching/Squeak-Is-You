@@ -111,6 +111,17 @@ SIYArena >> backgroundColor [
 ]
 
 {
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:20'
+}
+SIYArena >> clampPointToArenaDimension: aPoint [
+
+	^ (aPoint x clampLow: 1 high: self arenaWidth)
+		@(aPoint y clampLow: 1 high: self arenaHeight)
+
+]
+
+{
 	#category : #dropping,
 	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
 }
@@ -191,6 +202,17 @@ SIYArena >> isGameLocked [
 ]
 
 {
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:22'
+}
+SIYArena >> isPointInArenaDimensions: aPoint [
+
+	^ (aPoint x between: 1 and: self arenaWidth) 
+		and: (aPoint y between: 1 and: self arenaHeight) 
+
+]
+
+{
 	#category : #accessing,
 	#'squeak_changestamp' : 'LK 1/7/2024 19:06'
 }
@@ -268,7 +290,7 @@ SIYArena >> positionDictionary [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:26'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:34'
 }
 SIYArena >> postMoveBlocksRoutine [
 	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
@@ -280,9 +302,7 @@ SIYArena >> postMoveBlocksRoutine [
 		do: [:aBlock | self rulebook checkRulesFor: aBlock].	
 			
 	self undoCaretaker createSnapshotOf: self
-	
 
-	
 ]
 
 {
@@ -382,15 +402,15 @@ SIYArena >> undoCaretaker [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/30/2024 23:42'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:37'
 }
 SIYArena >> undoMovement: aPositionDictionary [
 	"restore last positions from position dictionary, respawn if necessary"
 	
 	aPositionDictionary keysAndValuesDo: [:key :value | 
-			key owner ifNil: key respawn.
-			key setTextureForDirection: key coords - value.
-			key coords: value]
+		key owner ifNil: key respawn.
+		key setTextureForDirection: key coords - value.
+		key coords: value]
 ]
 
 {

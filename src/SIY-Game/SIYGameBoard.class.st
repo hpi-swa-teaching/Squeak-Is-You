@@ -107,7 +107,7 @@ SIYGameBoard >> getBlocksFromDirection: aPoint [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:12'
 }
 SIYGameBoard >> getBlocksFromLeft [
 	"Returns array of blocks in arena, ordered by x coordinate"
@@ -117,9 +117,8 @@ SIYGameBoard >> getBlocksFromLeft [
 	aCollection := OrderedCollection new.
 	
 	1 to: self arena arenaHeight
-		do: [:y | (1 to: self arena arenaWidth)
-			do: [:x | (self boardMatrix at: x at: y)
-				do: [:aBlock | aCollection add: aBlock]]].
+		do: [:y | 1 to: self arena arenaWidth
+			do: [:x | aCollection addAll: (self boardMatrix at: x at: y)]].
 
 	^ aCollection
 ]
@@ -136,7 +135,7 @@ SIYGameBoard >> getBlocksFromRight [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:12'
 }
 SIYGameBoard >> getBlocksFromTop [
 	"Returns array of blocks in arena, reverse ordered by y coordinate"
@@ -146,9 +145,8 @@ SIYGameBoard >> getBlocksFromTop [
 	aCollection := OrderedCollection new.
 	
 	1 to: self arena arenaWidth
-		do: [:x | (1 to: self arena arenaHeight)
-			do: [:y | (self boardMatrix at: x at: y)
-				do: [:aBlock | aCollection add: aBlock]]].
+		do: [:x | 1 to: self arena arenaHeight
+			do: [:y | aCollection addAll: (self boardMatrix at: x at: y)]].
 
 	^ aCollection
 ]
@@ -164,20 +162,18 @@ SIYGameBoard >> getBlocksLike: aBlock [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:26'
 }
 SIYGameBoard >> getBlocksOnTile: aPoint [
-	"returns set of blocks at given coordinates, returns nil if aPoint is out of arena"
 
-	((aPoint x between: 1 and: self arena arenaWidth)
-		and: (aPoint y between: 1 and: self arena arenaHeight))
-			ifTrue: [^ self boardMatrix at: aPoint x at: aPoint y]
-			ifFalse: [^ nil]	
+	(self arena isPointInArenaDimensions: aPoint)
+		ifTrue: [^ self boardMatrix at: aPoint x at: aPoint y]
+		ifFalse: [^ nil]
 ]
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:14'
 }
 SIYGameBoard >> getBlocksThatSatisfy: aBlockClosure [
 
@@ -185,9 +181,7 @@ SIYGameBoard >> getBlocksThatSatisfy: aBlockClosure [
 
 	aSet := Set new.
 	
-	self boardMatrix do: [:aTile |
-		aTile do: [:aBlock | (aBlockClosure value: aBlock) 
-			ifTrue: [aSet add: aBlock]]].
+	self boardMatrix do: [:aTile | aSet addAll: (aTile select: aBlockClosure)].
 
 	^ aSet
 ]
@@ -203,7 +197,7 @@ SIYGameBoard >> getBlocksWithSymbol: aBlockSymbol [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:35'
 }
 SIYGameBoard >> privateAdd: aBlock to: aPoint [
 	

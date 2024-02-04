@@ -39,7 +39,7 @@ SIYRulebook >> addHorizontalReplacementRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 22:39'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:40'
 }
 SIYRulebook >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 
@@ -51,9 +51,9 @@ SIYRulebook >> addHorizontalRulesFor: anIsBlock to: aDictionary [
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
 		ifTrue: [propertyBlocks do: [:aProperty | 
-				aSet := aDictionary at: aProperty class ifAbsent: Set new.
-				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
-				aDictionary at: aProperty class put: aSet]].
+			aSet := aDictionary at: aProperty class ifAbsent: Set new.
+			aSet addAll: (nounBlocks collect: [:aNoun | aNoun representsBlock]).
+			aDictionary at: aProperty class put: aSet]].
 	
 	^ aDictionary
 
@@ -81,7 +81,7 @@ SIYRulebook >> addVerticalReplacementRulesFor: anIsBlock to: aDictionary [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 1/11/2024 22:39'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:41'
 }
 SIYRulebook >> addVerticalRulesFor: anIsBlock to: aDictionary [
 
@@ -93,9 +93,9 @@ SIYRulebook >> addVerticalRulesFor: anIsBlock to: aDictionary [
 	"add combinations of nouns and properties to dictionary"
 	(nounBlocks notEmpty and: propertyBlocks notEmpty)
 		ifTrue: [propertyBlocks do: [:aProperty |
-				aSet := aDictionary at: aProperty class ifAbsent: Set new.
-				nounBlocks do: [:aNoun | aSet add: aNoun representsBlock].
-				aDictionary at: aProperty class put: aSet]].
+			aSet := aDictionary at: aProperty class ifAbsent: Set new.
+			aSet addAll: (nounBlocks collect: [:aNoun | aNoun representsBlock]).
+			aDictionary at: aProperty class put: aSet]].
 	
 	^ aDictionary
 ]
@@ -123,7 +123,7 @@ SIYRulebook >> checkMelt: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 2/4/2024 15:16'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:01'
 }
 SIYRulebook >> checkMovementRulesFor: aBlock pushedBy: anotherBlock havingNeighbours: aSet inDirection: aDirection [
 	"This method returns true/false, depending on whether anotherBlock, who pushed
@@ -136,6 +136,9 @@ SIYRulebook >> checkMovementRulesFor: aBlock pushedBy: anotherBlock havingNeighb
 	
 	(aBlock isPush or: aBlock isYou) ifFalse: [^ true].
 	aBlock isStop ifTrue: [^ false].
+	
+	aSet ifNil: [^ aBlock cantMoveIn: aDirection].
+	aSet ifEmpty: [^ aBlock basicMove: aDirection].
 	
 	(aSet anySatisfy: [:each | each isStop and: (each isShut and: aBlock isOpen) not])
 		ifTrue: [^ aBlock cantMoveIn: aDirection].
@@ -257,7 +260,7 @@ SIYRulebook >> collectNounRightOf: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:07'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:27'
 }
 SIYRulebook >> collectNounsAbove: aBlock [
 	"recursively collect all nouns above this operator block (if conjoined with SIYAnd)"
@@ -270,7 +273,7 @@ SIYRulebook >> collectNounsAbove: aBlock [
 	aBlock isOperator
 		ifTrue: [aBlock neighborsAbove do: [:each |
 			each isNoun ifTrue: [aSet add: each. 
-					aSet addAll: (self collectNounsAbove: each)]]].
+				aSet addAll: (self collectNounsAbove: each)]]].
 	
 	aBlock isNoun
 		ifTrue: [aBlock neighborsAbove do: [:each |

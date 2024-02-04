@@ -115,15 +115,6 @@ SIYNullBlock >> cantMoveIn: aDirection [
 ]
 
 {
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 2/3/2024 21:22'
-}
-SIYNullBlock >> initialize [
-
-	"do nothing"
-]
-
-{
 	#category : #'rule detection',
 	#'squeak_changestamp' : 'LK 2/3/2024 21:01'
 }

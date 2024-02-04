@@ -97,12 +97,14 @@ SIYAudioPlayer >> mainTheme [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 2/1/2024 12:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:03'
 }
 SIYAudioPlayer >> playMusic [
 
 	self backgroundMusic: ((RepeatingSound repeatForever: self getMusic)
-		initialVolume: self volume; play)
+		initialVolume: self volume;
+		play;
+		yourself)
 ]
 
 {
@@ -160,11 +162,11 @@ SIYAudioPlayer >> toggleMute [
 
 {
 	#category : #configuration,
-	#'squeak_changestamp' : 'LK 2/1/2024 12:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:48'
 }
 SIYAudioPlayer >> volume [
 
-	^ 0.7
+	^ 0.5
 ]
 
 {
