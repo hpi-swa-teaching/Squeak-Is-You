@@ -87,10 +87,10 @@ SIYUndoCaretaker >> pushSnapshot: aSnapshot [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 2/4/2024 20:18'
+	#'squeak_changestamp' : 'LK 2/5/2024 00:35'
 }
 SIYUndoCaretaker >> undo [
 	
-	self history ifNotEmpty: [arena restoreSnapshot: self history pop]
+	self history isEmpty ifFalse: [arena restoreSnapshot: self history pop]
 
 ]
