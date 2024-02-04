@@ -1,9 +1,9 @@
 "
-A SIYSnapshot contains changes in the arena. It's used for the undo functionality.
+A SIYSnapshot contains transformations and position changes in the arena.
 
 Instance Variables
 	positionDictionary: <Dictionary>
-	replacementSet: <Set>
+	transformationSet: <Set>
 
 "
 Class {
@@ -11,10 +11,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'positionDictionary',
-		'replacementSet'
+		'transformationSet'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:21'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:17'
 }
 
 {
@@ -29,14 +29,14 @@ SIYSnapshot class >> newWithDictionary: aDictionary andSet: aSet [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:32'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:17'
 }
 SIYSnapshot >> initializeWithDictionary: aDictionary andSet: aSet [
 
 	super initialize.
 	
 	self positionDictionary: aDictionary.
-	self replacementSet: aSet
+	self transformationSet: aSet
 ]
 
 {
@@ -59,18 +59,18 @@ SIYSnapshot >> positionDictionary: aDictionary [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:21'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:17'
 }
-SIYSnapshot >> replacementSet [
+SIYSnapshot >> transformationSet [
 
-	^ replacementSet
+	^ transformationSet
 ]
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:21'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:17'
 }
-SIYSnapshot >> replacementSet: aSet [
+SIYSnapshot >> transformationSet: aSet [
 	
-	replacementSet := aSet
+	transformationSet := aSet
 ]

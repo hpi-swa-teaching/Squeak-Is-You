@@ -1,10 +1,21 @@
+"
+A SIYNoun is e.g. the written word 'Squeak' you see ingame.
+
+Instance Variables
+	representsBlock:		<Object>
+
+representsBlock
+	- xxxxx
+
+"
 Class {
 	#name : #SIYNoun,
 	#superclass : #SIYText,
 	#instVars : [
 		'representsBlock'
 	],
-	#category : #'SIY-Blocks'
+	#category : #'SIY-Blocks',
+	#'squeak_changestamp' : 'KD 2/1/2024 14:08'
 }
 
 {
@@ -33,6 +44,15 @@ SIYNoun >> duplicateMorph: evt [
 
 {
 	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:01'
+}
+SIYNoun >> isNoun [
+
+	^ true
+]
+
+{
+	#category : #'as yet unclassified',
 	#'squeak_changestamp' : 'LK 1/2/2024 12:52'
 }
 SIYNoun >> representsBlock [
@@ -42,7 +62,7 @@ SIYNoun >> representsBlock [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:02'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:49'
 }
 SIYNoun >> representsBlock: aBlock [
 

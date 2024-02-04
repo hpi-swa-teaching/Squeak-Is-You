@@ -16,6 +16,60 @@ Class {
 }
 
 {
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> isAndOperator [
+
+	^ self basicNew isAndOperator
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> isIsOperator [
+
+	^ self basicNew isIsOperator
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:43'
+}
+SIYBlock class >> isNoun [
+
+	^ self basicNew isNoun
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+}
+SIYBlock class >> isOperator [
+
+	^ self basicNew isOperator
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:43'
+}
+SIYBlock class >> isProperty [
+
+	^ self basicNew isProperty
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:43'
+}
+SIYBlock class >> isText [
+
+	^ self basicNew isText
+]
+
+{
 	#category : #'instance creation',
 	#'squeak_changestamp' : 'LK 12/4/2023 17:02'
 }
@@ -33,6 +87,24 @@ SIYBlock class >> newInArena: anArena at: aPoint [
 	"create new block in SIY arena at given coordinates"
 
 	^ self basicNew initializeInArena: anArena at: aPoint
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
+}
+SIYBlock class >> symbol [
+
+	^ self basicNew symbol
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:48'
+}
+SIYBlock >> addToArena [
+
+	self arena addMorph: self
 ]
 
 {
@@ -65,28 +137,19 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:26'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:05'
 }
 SIYBlock >> basicMove: aDirection [
-	"Moves this block in specified direction, WITHOUT considering the rules that currently apply.
-	For example, calling this method won't push other blocks that are in the way."
+	"Moves this block in specified direction, WITHOUT considering the rules that currently
+	apply. For example, calling this method won't push other blocks that are in the way."
 
-	self preMoveRoutine: aDirection.
-	self coords: self coords + aDirection.
-	self postMoveRoutine: aDirection.
+	self preMoveRoutine: aDirection;
+		coords: self coords + aDirection;
+		postMoveRoutine: aDirection.
 	
 	"we return true, because the block was successfully moved"
 	^ true
 
-]
-
-{
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:31'
-}
-SIYBlock >> blockMediator [
-
-	^ self arena blockMediator
 ]
 
 {
@@ -100,54 +163,50 @@ SIYBlock >> blockTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureDown [
-	"block texture if block has been moved down, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureLeft [
-	"block texture if block has been moved left, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureRight [
-	"block texture if block has been moved right, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureUp [
-	"block texture if block has been moved up, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/16/2024 19:34'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> cantMoveIn: aDirection [
 	"gets called if block tries to move in specific direction, but can't"
 	
 	self isWeak 
 		ifTrue: [self basicMove: aDirection.
-			self ruleManager invokeWeak: {self}.
+			self rulebook invokeWeak: {self}.
 			^ true].
 	
 	"we return false, because the block couldn't be moved"
@@ -171,38 +230,35 @@ SIYBlock >> comeToFrontIfFloat [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordX [
-	"calculates and returns x coordinate within arena (rounded to nearest block)"
 	
 	^ 1 + (self relativePosition x / self arena pixelPerBlock) rounded
-			clampLow: 1
-			high: self arena arenaWidth
+		clampLow: 1
+		high: self arena arenaWidth
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordX: aNumber [
-	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
 	
 	| anotherNumber aPoint |
 	
 	anotherNumber := (aNumber clampLow: 1 high: self arena arenaWidth) - 1.
-	aPoint := (anotherNumber * self arena pixelPerBlock)@(self relativePosition y).
-	super position: self arena position + aPoint.
+	aPoint := anotherNumber * self arena pixelPerBlock@self relativePosition y.
 	
+	super position: self arena position + aPoint.
 	self postPositionRoutine
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordY [
-	"calculates and returns y coordinate within arena (rounded to nearest block)"
 
 	^ 1 + (self relativePosition y / self arena pixelPerBlock) rounded
 		clampLow: 1
@@ -211,27 +267,26 @@ SIYBlock >> coordY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 00:17'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordY: aNumber [
-	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
 	
 	| anotherNumber aPoint |
 	
 	anotherNumber := (aNumber clampLow: 1 high: self arena arenaHeight) - 1.
-	aPoint := (self relativePosition x)@(anotherNumber * self arena pixelPerBlock).
-	super position: self arena position + aPoint.
+	aPoint := self relativePosition x@(anotherNumber * self arena pixelPerBlock).
 	
+	super position: self arena position + aPoint.
 	self postPositionRoutine
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 12/4/2023 17:03'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:28'
 }
 SIYBlock >> coords [
 	
-	^ (self coordX)@(self coordY)
+	^ self coordX@self coordY
 ]
 
 {
@@ -246,17 +301,17 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/4/2024 17:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:48'
 }
 SIYBlock >> delete [
 	
-	self blockMediator saveBlock: self at: nil.
-	super delete.
+	self gameBoard saveBlock: self at: nil.
+	super delete
 ]
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/5/2024 12:28'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:48'
 }
 SIYBlock >> deleteAndRemember [
 	"deleting a block using this method, allows to undo the deletion"
@@ -279,267 +334,289 @@ SIYBlock >> duplicateMorph: evt [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+}
+SIYBlock >> gameBoard [
+
+	^ self arena gameBoard
+]
+
+{
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:45'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> getTextureForDirection: aPoint [
-	"returns block texture for specified direction"
 
 	aPoint caseOf: {
 		[1@0] -> [^ self blockTextureRight].
-		[(-1)@0] -> [^ self blockTextureLeft].
+		[-1@0] -> [^ self blockTextureLeft].
 		[0@1] -> [^ self blockTextureDown].
 		[0@(-1)] -> [^ self blockTextureUp]
 	} otherwise: [^ self blockTexture]
 ]
 
 {
-	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:29'
-}
-SIYBlock >> informMediator [
-	"notifies blockMediator of current position"
-
-	^ self blockMediator saveBlock: self at: self coords
-]
-
-{
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:38'
-}
-SIYBlock >> initialize [
-	
-	self setDefaultTexture.
-	self arena addMorph: self.
-	self informMediator
-	
-	
-	
-
-	
-]
-
-{
-	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/3/2024 23:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:48'
 }
 SIYBlock >> initializeInArena: anArena at: aPoint [
 
 	self arena: anArena.
 	super initialize.
-	self coords: aPoint.
-	self initialize
+	
+	self coords: aPoint;
+		setDefaultTexture;
+		updateGameBoard;
+		addToArena
+	
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:00'
+}
+SIYBlock >> isAndOperator [
+
+	^ false
+]
+
+{
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isDefeat [
 
-	^ self ruleManager isDefeat: self
+	^ self rulebook isDefeat: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/8/2024 12:13'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isFloat [
 
-	^ self ruleManager isFloat: self
+	^ self rulebook isFloat: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:19'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isHot [
 
-	^ self ruleManager isHot: self
+	^ self rulebook isHot: self
 	
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/5/2024 14:19'
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:00'
+}
+SIYBlock >> isIsOperator [
+
+	^ false
+]
+
+{
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isMelt [
 
-	^ self ruleManager isMelt: self
+	^ self rulebook isMelt: self
 	
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/4/2024 18:20'
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 19:59'
+}
+SIYBlock >> isNoun [
+
+	^ false
+]
+
+{
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isOpen [
 
-	^ self ruleManager isOpen: self
+	^ self rulebook isOpen: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 20:02'
+}
+SIYBlock >> isOperator [
+
+	^ false
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 19:59'
+}
+SIYBlock >> isProperty [
+
+	^ false
+]
+
+{
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isPush [
 
-	^ self ruleManager isPush: self
+	^ self rulebook isPush: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'KD 1/4/2024 17:03'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isShut [
 
-	^ self ruleManager isShut: self
+	^ self rulebook isShut: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'KD 1/4/2024 16:31'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isSink [
 
-	^ self ruleManager isSink: self
+	^ self rulebook isSink: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isStop [
 
-	^ self ruleManager isStop: self
+	^ self rulebook isStop: self
 	
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/16/2024 18:07'
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/3/2024 19:59'
+}
+SIYBlock >> isText [
+
+	^ false
+]
+
+{
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isWeak [
 
-	^ self ruleManager isWeak: self
+	^ self rulebook isWeak: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:41'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isWin [
 
-	^ self ruleManager isWin: self
+	^ self rulebook isWin: self
 ]
 
 {
-	#category : #'rule detection',
-	#'squeak_changestamp' : 'LK 1/3/2024 19:39'
+	#category : #'rule testing',
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isYou [
 
-	^ self ruleManager isYou: self
+	^ self rulebook isYou: self
 	
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/4/2024 18:11'
+	#'squeak_changestamp' : 'LK 2/3/2024 21:04'
 }
 SIYBlock >> move: aDirection [
 	
-	self move: aDirection pushedBy: nil
+	self move: aDirection pushedBy: SIYNullBlock new
 
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/16/2024 19:30'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:01'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
-	"Moves this block in specified direction, while considering the rules that currently apply.
-	Calling this method only has an effect, if the blocks in front of it allow it. 
-	This method returns true/false, depending on whether the block who pushed this block
-	(aBlock) should be able to move onto this blocks tile."
+	"Moves this block in specified direction, while considering the rules that 
+	currently apply. Calling this method only has an effect, if the blocks in front
+	of it allow it. This method returns true/false, depending on whether the block 
+	who pushed this block (aBlock) should be able to move onto this blocks tile."
 	
-	| neighbours |
+	| neighbours canMoveHere |
 	
-	neighbours := self blockMediator getBlocksOnTile: (self coords + aDirection).
+	neighbours := self gameBoard getBlocksOnTile: self coords + aDirection.
 	
-	"check rules, which override default movement behavior"
-	aBlock ifNotNil: [(self isShut and: aBlock isOpen) ifTrue: [^ true]].
-	aBlock ifNotNil: [(self isOpen and: aBlock isShut) ifTrue: [^ true]].
+	canMoveHere := self rulebook checkMovementRulesFor: self 
+		pushedBy: aBlock
+		havingNeighbours: neighbours 
+		inDirection: aDirection.
+	canMoveHere ifNotNil: [^ canMoveHere].
 	
-	"check for rules, which would prevent this block from moving"
-	(self isStop) ifTrue: [^ false].
-	(self isPush or: self isYou) ifFalse: [^ true].
-	(neighbours isNil) ifTrue: [^ self cantMoveIn: aDirection].
-	(neighbours anySatisfy: [:each | (each isStop) and: (each isShut and: self isOpen) not])
-		ifTrue: [^ self cantMoveIn: aDirection].
-	
-	"if there are any blocks in the way, try recursively moving them too"
-	neighbours isEmpty
+	(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 		ifTrue: [^ self basicMove: aDirection]
-		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
-			ifTrue: [^ self basicMove: aDirection]
-			ifFalse: [^ self cantMoveIn: aDirection]]
+		ifFalse: [^ self cantMoveIn: aDirection]
 
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsAbove [
-	"Return set of blocks at coords above.
-	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocksOnTile: 0@(-1) + self coords
+	^ self gameBoard getBlocksOnTile: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsBelow [
-	"Return set of blocks at coords below.
-	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocksOnTile: 0@1 + self coords
+	^ self gameBoard getBlocksOnTile: 0@1 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsHere [
-	"Return set of blocks at current coords.
-	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocksOnTile: self coords
+	^ self gameBoard getBlocksOnTile: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsLeft [
-	"Return set of blocks at coords to the left.
-	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocksOnTile: (-1)@0 + self coords
+	^ self gameBoard getBlocksOnTile: -1@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 1/8/2024 23:00'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> neighborsRight [
-	"Return set of blocks at coords to the right.
-	Returns empty set if none. Return nil if out of arena."
 	
-	^ self blockMediator getBlocksOnTile: 1@0 + self coords
+	^ self gameBoard getBlocksOnTile: 1@0 + self coords
 ]
 
 {
@@ -577,13 +654,13 @@ SIYBlock >> postMoveRoutine: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/10/2024 20:11'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:57'
 }
 SIYBlock >> postPositionRoutine [
 	"This routine gets triggered, after the block changed its position, no matter how.
 	For example, this routine will also be triggered, if the block was moved through the halo."
 
-	self informMediator.
+	self updateGameBoard.
 	
 	"only come to front if game is unlocked, to prevent the block from overlapping
 	the win animation"
@@ -606,34 +683,31 @@ SIYBlock >> preMoveRoutine: aDirection [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:36'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:52'
 }
 SIYBlock >> relativePosition [
-	"returns position relative to arena (measured in pixel)"
 
 	^ self position - self arena position
 ]
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:24'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:37'
 }
 SIYBlock >> replaceWithAndRemember: aBlockClass [
 
 	| aBlock |
 
 	aBlock := aBlockClass newInArena: self arena at: self coords.
-	self arena replacementSet add: aBlock.
-	
+	self arena transformationSet add: aBlock.
 	self deleteAndRemember
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:49'
 }
 SIYBlock >> respawn [
-	"Makes a deleted block reappear."
 
 	self openInWorld.
 	self arena addMorph: self
@@ -641,11 +715,11 @@ SIYBlock >> respawn [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/3/2024 22:26'
+	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
-SIYBlock >> ruleManager [
+SIYBlock >> rulebook [
 
-	^ self arena ruleManager
+	^ self arena rulebook
 ]
 
 {
@@ -659,7 +733,7 @@ SIYBlock >> setDefaultTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/10/2024 23:48'
+	#'squeak_changestamp' : 'KD 2/1/2024 14:26'
 }
 SIYBlock >> setTextureForDirection: aPoint [
 
@@ -667,5 +741,23 @@ SIYBlock >> setTextureForDirection: aPoint [
 	
 	aForm := SIYTextureLoader new getTexture: (self getTextureForDirection: aPoint).
 	
-	self image: (aForm scaledToSize: (self arena pixelPerBlock)@(self arena pixelPerBlock))
+	self image: (aForm scaledToSize: self arena pixelPerBlock@self arena pixelPerBlock)
+]
+
+{
+	#category : #testing,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:52'
+}
+SIYBlock >> symbol [
+
+	^ SubclassResponsibility
+]
+
+{
+	#category : #positioning,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:52'
+}
+SIYBlock >> updateGameBoard [
+
+	^ self gameBoard saveBlock: self at: self coords
 ]

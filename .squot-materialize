@@ -493,5 +493,18 @@ OrderedCollection [
 			'SIYthemeSound.wav'
 		],
 		#encoding : 'WAV'
+	},
+	SquotSoundMapper {
+		#path : FSAbsolutePath [
+			'audio',
+			'SIYwinSound.wav'
+		],
+		#encoding : 'WAV'
+	},
+	SquotPlaintextMapper {
+		#path : FSAbsolutePath [
+			'LICENSE.md'
+		],
+		#encoding : 'TXT'
 	}
 ]
