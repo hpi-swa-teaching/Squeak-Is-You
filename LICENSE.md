@@ -9,8 +9,8 @@
 **_Squeak Is You_ is based on [Baba Is You](https://www.hempuli.com/baba/) by Hempuli (Arvi Teikari).** We have the permission from the original author to publish this project for educational purposes:
 
 <p align="center">
-  <img src="assets/license-email-darkmode.png#gh-dark-mode-only">
-  <img src="assets/license-email-lightmode.png#gh-light-mode-only">
+  <img src="../../assets/42419545/26a589fd-9669-4ba8-a577-321535a4e997#gh-dark-mode-only">
+  <img src="../../assets/42419545/1764c455-f000-4ddb-b853-d3a11cbd999a#gh-light-mode-only">
 </p>
 
 In this table you can check which parts of the game we created ourselves and which were taken from the original game:
