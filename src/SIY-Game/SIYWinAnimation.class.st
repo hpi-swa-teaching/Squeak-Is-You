@@ -74,14 +74,14 @@ SIYWinAnimation >> changeTexture [
 
 {
 	#category : #step,
-	#'squeak_changestamp' : 'KD 2/1/2024 14:59'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:19'
 }
 SIYWinAnimation >> checkIfAnimationDone [
 	"if animation has finished playing, switch to next level"
 	
 	self arena 
 		ifNotNil: [self animationStep >= self animationDuration
-				ifTrue: [self arena game nextLevel]]
+			ifTrue: [self arena game nextLevel]]
 ]
 
 {
@@ -177,11 +177,9 @@ SIYWinAnimation >> winAnimationTexture: aNumber [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'KD 2/1/2024 15:01'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:20'
 }
 SIYWinAnimation >> winAnimationTextureSize [
 	
-	^ self arena
-		ifNil: [3 * 72]
-		ifNotNil: [3 * self arena pixelPerBlock]
+	^ 3 * self arena pixelPerBlock
 ]

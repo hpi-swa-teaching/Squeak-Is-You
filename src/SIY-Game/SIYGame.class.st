@@ -1,14 +1,14 @@
 "
-A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level.
+A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level. 
+
+Creating a new instance of this class is overwritten and will default to SIYFullscreenGame or SIYScaledGame.
 
 If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
 
 Instance Variables
-	arena: <SIYArena>
 	level: <SIYLevel>
-	backgroundMorph: <Morph>
-	customScaleFactor: <Float>
-	levelDescription: <TextMorph>
+	audioPlayer: <SIYAudioPlayer>
+	keyboardHandler: <SIYKeyboardHandler>
 
 "
 Class {
@@ -20,7 +20,7 @@ Class {
 		'keyboardHandler'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:00'
 }
 
 {
@@ -144,17 +144,16 @@ SIYGame >> fullscreenEnabled [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:54'
 }
 SIYGame >> initialize [
 
 	super initialize.
-	
 	self initializeBackground.
 	self initializeKeyboardHandler.
 	
 	self audioPlayer playMusicIfNotMuted.
-	
+
 	self startLevel: self level atPosition: self arenaPosition
 ]
 

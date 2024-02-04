@@ -1,6 +1,5 @@
 "
-A SIYLevelFactory is a factory for creating different levels.
-Each level can build and return an arena.
+The SIYLevelFactory is a factory for creating different levels. Each level builds and returns an arena.
 
 Instance Variables
 	arena: <SIYArena>
@@ -12,7 +11,7 @@ Class {
 		'arena'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:04'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:08'
 }
 
 {
@@ -63,12 +62,11 @@ SIYLevelFactory >> arenaExtent [
 
 {
 	#category : #scaling,
-	#'squeak_changestamp' : 'LK 1/31/2024 21:41'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:08'
 }
 SIYLevelFactory >> arenaMargin [
-	"arena margin measured in pixel"
 
-	^ SIYFullscreenGame basicNew keyHintHeight / 2 + 20 px
+	^ SIYFullscreenGame basicNew keyHintHeight / 2 + self defaultArenaMargin
 ]
 
 {
@@ -115,6 +113,15 @@ SIYLevelFactory >> createLevelScaled: aFloat [
 	self arena color: self backgroundColor.
 	self arena openInWorld
 
+]
+
+{
+	#category : #scaling,
+	#'squeak_changestamp' : 'LK 2/4/2024 20:08'
+}
+SIYLevelFactory >> defaultArenaMargin [
+
+	^ 20 px
 ]
 
 {
@@ -180,13 +187,12 @@ SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:48'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:10'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
-	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
 	
-	self placeNounFor: aBlockClass at: (-3)@0 + aPoint;
-		placeBlock: SIYAnd at: (-2)@0 + aPoint;
+	self placeNounFor: aBlockClass at: -3@0 + aPoint;
+		placeBlock: SIYAnd at: -2@0 + aPoint;
 		placeHorizontalRule: anotherBlockClass is: aPropertyClass at: aPoint
 	
 	
@@ -194,10 +200,9 @@ SIYLevelFactory >> placeHorizontalRule: aBlockClass and: anotherBlockClass is: a
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:49'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:10'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass and: anotherPropertyClass at: aPoint [
-	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
 	
 	self placeHorizontalRule: aBlockClass is: aPropertyClass at: aPoint;
 		placeBlock: SIYAnd at: 2@0 + aPoint;
@@ -206,12 +211,11 @@ SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass and: anot
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:49'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:10'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass is: aPropertyClass at: aPoint [
-	"place horizontal rule, where aPoint is the coordinate of the SIYIs block"
-	
-	self placeNounFor: aBlockClass at: (-1)@0 + aPoint;
+
+	self placeNounFor: aBlockClass at: -1@0 + aPoint;
 		placeBlock: SIYIs at: aPoint;
 		placeBlock: aPropertyClass at: 1@0 + aPoint
 ]
@@ -249,44 +253,41 @@ SIYLevelFactory >> placeMultipleBlocks: aBlockClass from: firstPoint to: secondP
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:49'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:10'
 }
 SIYLevelFactory >> placeMultipleBlocksHollow: aBlockClass from: firstPoint to: secondPoint [
 
 	self placeMultipleBlocks: aBlockClass
-		from: firstPoint
-		to: (firstPoint x)@(secondPoint y);
-		
+			from: firstPoint
+			to: (firstPoint x)@(secondPoint y);
 		placeMultipleBlocks: aBlockClass
-		from: firstPoint
-		to: (secondPoint x)@(firstPoint y);
-		
+			from: firstPoint
+			to: (secondPoint x)@(firstPoint y);
 		placeMultipleBlocks: aBlockClass
-		from: (firstPoint x)@(secondPoint y)
-		to: secondPoint;
-		
+			from: (firstPoint x)@(secondPoint y)
+			to: secondPoint;
 		placeMultipleBlocks: aBlockClass
-		from: (secondPoint x)@(firstPoint y)
-		to: secondPoint
+			from: (secondPoint x)@(firstPoint y)
+			to: secondPoint
 ]
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 1/5/2024 21:24'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:11'
 }
 SIYLevelFactory >> placeNounFor: aBlockClass at: aPoint [
 	
 	self removeBlockAt: aPoint.
+	
 	(SIYNoun newInArena: self arena at: aPoint)
 		representsBlock: aBlockClass
 ]
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:50'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:11'
 }
 SIYLevelFactory >> placeVerticalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
-	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
 	
 	self placeNounFor: aBlockClass at: 0@(-3) + aPoint;
 		placeBlock: SIYAnd at: 0@(-2) + aPoint;
@@ -297,10 +298,9 @@ SIYLevelFactory >> placeVerticalRule: aBlockClass and: anotherBlockClass is: aPr
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:50'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:11'
 }
 SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass and: anotherPropertyClass at: aPoint [
-	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
 	
 	self placeVerticalRule: aBlockClass is: aPropertyClass at: aPoint;
 		placeBlock: SIYAnd at: 0@2 + aPoint;
@@ -309,10 +309,9 @@ SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass and: anothe
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'KD 1/31/2024 16:51'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:11'
 }
 SIYLevelFactory >> placeVerticalRule: aBlockClass is: aPropertyClass at: aPoint [
-	"place vertical rule, where aPoint is the coordinate of the SIYIs block"
 	
 	self placeNounFor: aBlockClass at: 0@(-1) + aPoint;
 		placeBlock: SIYIs at: aPoint;
@@ -330,10 +329,9 @@ SIYLevelFactory >> previousLevel [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 2/4/2024 19:26'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:11'
 }
 SIYLevelFactory >> removeBlockAt: aPoint [
-	"remove all blocks on specified tile"
 
 	| anotherPoint |
 	

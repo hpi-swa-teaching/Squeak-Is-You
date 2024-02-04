@@ -136,24 +136,6 @@ SIYBlock >> arena: anArena [
 ]
 
 {
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:30'
-}
-SIYBlock >> arenaPositionDictionary [
-
-	^ self arena positionDictionary
-]
-
-{
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:36'
-}
-SIYBlock >> arenaReplacementSet [
-
-	^ self arena replacementSet
-]
-
-{
 	#category : #movement,
 	#'squeak_changestamp' : 'LK 2/4/2024 15:05'
 }
@@ -181,40 +163,36 @@ SIYBlock >> blockTexture [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureDown [
-	"block texture if block has been moved down, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureLeft [
-	"block texture if block has been moved left, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureRight [
-	"block texture if block has been moved right, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:44'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> blockTextureUp [
-	"block texture if block has been moved up, defaults to the normal block texture"
 
 	^ self blockTexture
 ]
@@ -252,38 +230,35 @@ SIYBlock >> comeToFrontIfFloat [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordX [
-	"calculates and returns x coordinate within arena (rounded to nearest block)"
 	
 	^ 1 + (self relativePosition x / self arena pixelPerBlock) rounded
-			clampLow: 1
-			high: self arena arenaWidth
+		clampLow: 1
+		high: self arena arenaWidth
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'KD 2/1/2024 14:29'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordX: aNumber [
-	"set x coordinate within arena (measured in blocks, clamped to arena dimensions)"
 	
 	| anotherNumber aPoint |
 	
 	anotherNumber := (aNumber clampLow: 1 high: self arena arenaWidth) - 1.
 	aPoint := anotherNumber * self arena pixelPerBlock@self relativePosition y.
-	super position: self arena position + aPoint.
 	
+	super position: self arena position + aPoint.
 	self postPositionRoutine
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:35'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordY [
-	"calculates and returns y coordinate within arena (rounded to nearest block)"
 
 	^ 1 + (self relativePosition y / self arena pixelPerBlock) rounded
 		clampLow: 1
@@ -292,17 +267,16 @@ SIYBlock >> coordY [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'KD 2/1/2024 14:28'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> coordY: aNumber [
-	"set y coordinate within arena (measured in blocks, clamped to arena dimensions)"
 	
 	| anotherNumber aPoint |
 	
 	anotherNumber := (aNumber clampLow: 1 high: self arena arenaHeight) - 1.
 	aPoint := self relativePosition x@(anotherNumber * self arena pixelPerBlock).
-	super position: self arena position + aPoint.
 	
+	super position: self arena position + aPoint.
 	self postPositionRoutine
 ]
 
@@ -327,23 +301,23 @@ SIYBlock >> coords: aPoint [
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:48'
 }
 SIYBlock >> delete [
 	
 	self gameBoard saveBlock: self at: nil.
-	super delete.
+	super delete
 ]
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:31'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:48'
 }
 SIYBlock >> deleteAndRemember [
 	"deleting a block using this method, allows to undo the deletion"
 	
-	(self arenaPositionDictionary includesKey: self)
-		ifFalse: [self arenaPositionDictionary at: self put: self coords].
+	(self arena positionDictionary includesKey: self)
+		ifFalse: [self arena positionDictionary at: self put: self coords].
 		
 	self delete
 ]
@@ -370,16 +344,15 @@ SIYBlock >> gameBoard [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'KD 2/1/2024 14:41'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> getTextureForDirection: aPoint [
-	"returns block texture for specified direction"
 
 	aPoint caseOf: {
 		[1@0] -> [^ self blockTextureRight].
 		[-1@0] -> [^ self blockTextureLeft].
 		[0@1] -> [^ self blockTextureDown].
-		[0@ -1] -> [^ self blockTextureUp]
+		[0@(-1)] -> [^ self blockTextureUp]
 	} otherwise: [^ self blockTexture]
 ]
 
@@ -409,7 +382,7 @@ SIYBlock >> isAndOperator [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isDefeat [
@@ -418,7 +391,7 @@ SIYBlock >> isDefeat [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isFloat [
@@ -427,7 +400,7 @@ SIYBlock >> isFloat [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isHot [
@@ -446,7 +419,7 @@ SIYBlock >> isIsOperator [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isMelt [
@@ -465,7 +438,7 @@ SIYBlock >> isNoun [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isOpen [
@@ -492,7 +465,7 @@ SIYBlock >> isProperty [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isPush [
@@ -501,7 +474,7 @@ SIYBlock >> isPush [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isShut [
@@ -510,7 +483,7 @@ SIYBlock >> isShut [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isSink [
@@ -519,7 +492,7 @@ SIYBlock >> isSink [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isStop [
@@ -538,7 +511,7 @@ SIYBlock >> isText [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isWeak [
@@ -547,7 +520,7 @@ SIYBlock >> isWeak [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isWin [
@@ -556,7 +529,7 @@ SIYBlock >> isWin [
 ]
 
 {
-	#category : #'rule detection',
+	#category : #'rule testing',
 	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
 }
 SIYBlock >> isYou [
@@ -603,55 +576,45 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsAbove [
-	"Return set of blocks at coords above.
-	Returns empty set if none. Return nil if out of arena."
 	
 	^ self gameBoard getBlocksOnTile: 0@(-1) + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsBelow [
-	"Return set of blocks at coords below.
-	Returns empty set if none. Return nil if out of arena."
 	
 	^ self gameBoard getBlocksOnTile: 0@1 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsHere [
-	"Return set of blocks at current coords.
-	Returns empty set if none. Return nil if out of arena."
 	
 	^ self gameBoard getBlocksOnTile: self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsLeft [
-	"Return set of blocks at coords to the left.
-	Returns empty set if none. Return nil if out of arena."
 	
-	^ self gameBoard getBlocksOnTile: (-1)@0 + self coords
+	^ self gameBoard getBlocksOnTile: -1@0 + self coords
 ]
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:51'
 }
 SIYBlock >> neighborsRight [
-	"Return set of blocks at coords to the right.
-	Returns empty set if none. Return nil if out of arena."
 	
 	^ self gameBoard getBlocksOnTile: 1@0 + self coords
 ]
@@ -720,33 +683,31 @@ SIYBlock >> preMoveRoutine: aDirection [
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:36'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:52'
 }
 SIYBlock >> relativePosition [
-	"returns position relative to arena (measured in pixel)"
 
 	^ self position - self arena position
 ]
 
 {
 	#category : #deletion,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:36'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:37'
 }
 SIYBlock >> replaceWithAndRemember: aBlockClass [
 
 	| aBlock |
 
 	aBlock := aBlockClass newInArena: self arena at: self coords.
-	self arenaReplacementSet add: aBlock.
+	self arena transformationSet add: aBlock.
 	self deleteAndRemember
 ]
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:49'
 }
 SIYBlock >> respawn [
-	"Makes a deleted block reappear."
 
 	self openInWorld.
 	self arena addMorph: self
@@ -785,19 +746,18 @@ SIYBlock >> setTextureForDirection: aPoint [
 
 {
 	#category : #testing,
-	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:52'
 }
 SIYBlock >> symbol [
 
-	^ nil
+	^ SubclassResponsibility
 ]
 
 {
 	#category : #positioning,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:52'
 }
 SIYBlock >> updateGameBoard [
-	"notifies blockMediator of current position"
 
 	^ self gameBoard saveBlock: self at: self coords
 ]

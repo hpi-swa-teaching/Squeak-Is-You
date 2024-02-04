@@ -1,20 +1,19 @@
 "
-The SIYArena is the visible part of the game and contains all SIYBlocks.
+The SIYArena is the visible part of the game, that contains all SIYBlocks.
 
 If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
 
 Instance Variables
 	arenaHeight: <Integer>
 	arenaWidth: <Integer>
-	blockMediator: <SIYBlockMediator>
-	game: <SIYGame>
-	positionDictionary: <Dictionary>
-	replacementSet: <Set>
-	pressedKey: <Character>
-	ruleManager: <SIYRuleManager>
-	snapshotCaretaker: <SIYSnapshotCaretaker>
-	stepTime: <Integer>
 	scaleFactor: <Float>
+	positionDictionary: <Dictionary>
+	transformationSet: <Set>
+	game: <SIYGame>
+	gameBoard: <SIYGameboard>
+	rulebook: <SIYRulebook>
+	undoCaretaker: <SIYUndoCaretaker>
+
 
 "
 Class {
@@ -25,15 +24,15 @@ Class {
 		'arenaHeight',
 		'game',
 		'positionDictionary',
-		'replacementSet',
 		'undoCaretaker',
 		'scaleFactor',
 		'gameLock',
 		'gameBoard',
-		'rulebook'
+		'rulebook',
+		'transformationSet'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:42'
 }
 
 {
@@ -194,7 +193,7 @@ SIYArena >> initializeWithExtent: aPoint scaled: aFloat [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:58'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:30'
 }
 SIYArena >> isGameLocked [
 
@@ -223,10 +222,9 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:34'
 }
 SIYArena >> moveBlocksDirection: aDirection [
-	"Informs all isYou blocks in arena to move in specified direction"
 	
 	self preMoveBlocksRoutine.
 	(self gameBoard getBlocksFromDirection: aDirection)
@@ -307,46 +305,37 @@ SIYArena >> postMoveBlocksRoutine [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:35'
 }
 SIYArena >> preMoveBlocksRoutine [
 	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
 	self resetDictionaryAndSet.
-	self rulebook updateRulesInArena: self.
+	self rulebook updateRulesInArena: self
 
 	
 ]
 
 {
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:18'
-}
-SIYArena >> replacementSet [
-
-	^ replacementSet ifNil: [replacementSet := Set new]
-]
-
-{
 	#category : #undo,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:33'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> resetDictionaryAndSet [
 
 	self positionDictionary removeAll.
-	self replacementSet removeAll
+	self transformationSet removeAll
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:34'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> restoreSnapshot: aSnapshot [
 	"restores arena state to this snapshot"
 	
 	self undoMovement: aSnapshot positionDictionary;
-		undoTransformations: aSnapshot replacementSet
+		undoTransformations: aSnapshot transformationSet
 	
 	
 		
@@ -392,20 +381,28 @@ SIYArena >> textureSize [
 ]
 
 {
-	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:18'
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
-SIYArena >> undoCaretaker [
+SIYArena >> transformationSet [
 
-	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker newWithArena: self]
+	^ transformationSet ifNil: [transformationSet := Set new]
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:37'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
+}
+SIYArena >> undoCaretaker [
+
+	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker newInArena: self]
+]
+
+{
+	#category : #undo,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> undoMovement: aPositionDictionary [
-	"restore last positions from position dictionary, respawn if necessary"
 	
 	aPositionDictionary keysAndValuesDo: [:key :value | 
 		key owner ifNil: key respawn.
@@ -415,10 +412,9 @@ SIYArena >> undoMovement: aPositionDictionary [
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/30/2024 23:39'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> undoTransformations: aReplacementSet [
-	"delete blocks from replacementSet"
 	
 	aReplacementSet do: [:aBlock | aBlock delete]
 ]
@@ -434,14 +430,12 @@ SIYArena >> unlockGame [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:15'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:34'
 }
 SIYArena >> updateDimensions [
 
-	self arenaWidth 
-		ifNotNil: [self width: self pixelPerBlock * self arenaWidth].
-	self arenaHeight 
-		ifNotNil: [self height: self pixelPerBlock * self arenaHeight]
+	self arenaWidth ifNotNil: [self width: self pixelPerBlock * self arenaWidth].
+	self arenaHeight ifNotNil: [self height: self pixelPerBlock * self arenaHeight]
 
 ]
 

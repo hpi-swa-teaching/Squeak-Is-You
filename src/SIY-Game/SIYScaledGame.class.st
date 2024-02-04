@@ -1,15 +1,8 @@
 "
-When the game is in scaled mode it aids the developer to work on featrues while still being able to play the game.
-
-If you want to start a new game scaled, run `SIYGame startWithScale XX`. 
+Creating an instance of this class will start the game in a non-fullscreen, scaled version.
 
 Instance Variables
-	arena: <SIYArena>
-	level: <SIYLevel>
-	backgroundMorph: <Morph>
-	customScaleFactor: <Float>
-	levelDescription: <TextMorph>
-
+	scaleFactor: <Float>
 "
 Class {
 	#name : #SIYScaledGame,
@@ -18,7 +11,7 @@ Class {
 		'scaleFactor'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:59'
 }
 
 {
@@ -108,7 +101,7 @@ SIYScaledGame >> scaleFactor: aFloat [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'LK 1/31/2024 21:58'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:00'
 }
 SIYScaledGame >> updateExtent [
 	

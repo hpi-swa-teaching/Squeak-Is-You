@@ -1,7 +1,7 @@
 "
-A SIYUndoCaretaker is an interface for creating and restoring snapshots of the arena. It's used for  the undo functionality.
-
+A SIYUndoCaretaker is an interface for creating and restoring snapshots of the arena.
 Instance Variables
+	arena: <SIYArena>
 	history: <Stack>
 
 
@@ -14,16 +14,16 @@ Class {
 		'arena'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:52'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:18'
 }
 
 {
 	#category : #'instance creation',
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:16'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
-SIYUndoCaretaker class >> newWithArena: anArena [
+SIYUndoCaretaker class >> newInArena: anArena [
 	
-	^ self basicNew initializeWithArena: anArena
+	^ self basicNew initializeInArena: anArena
 ]
 
 {
@@ -46,13 +46,13 @@ SIYUndoCaretaker >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'KD 2/1/2024 14:58'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYUndoCaretaker >> createSnapshotOf: anArena [
 
 	self pushSnapshot: (SIYSnapshot 
 		newWithDictionary: anArena positionDictionary copy
-		andSet: anArena replacementSet copy)
+		andSet: anArena transformationSet copy)
 ]
 
 {
@@ -66,9 +66,9 @@ SIYUndoCaretaker >> history [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:12'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:35'
 }
-SIYUndoCaretaker >> initializeWithArena: anArena [
+SIYUndoCaretaker >> initializeInArena: anArena [
 	
 	super initialize.
 	self arena: anArena
@@ -87,11 +87,10 @@ SIYUndoCaretaker >> pushSnapshot: aSnapshot [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:21'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:18'
 }
 SIYUndoCaretaker >> undo [
-	"restore arena state to snapshot on top of stack"
 	
-	self history isEmpty ifFalse: [arena restoreSnapshot:  self history pop]
+	self history ifNotEmpty: [arena restoreSnapshot: self history pop]
 
 ]

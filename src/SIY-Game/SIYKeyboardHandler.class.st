@@ -1,3 +1,12 @@
+"
+The SIYKeyboardHandler fetches and evaluates keyboard inputs.
+
+Instance Variables
+	game:	<SIYGame>
+	pressedKey: <Character>
+	stepTime: <Float>
+
+"
 Class {
 	#name : #SIYKeyboardHandler,
 	#superclass : #Morph,
@@ -6,7 +15,8 @@ Class {
 		'stepTime',
 		'game'
 	],
-	#category : #'SIY-Game'
+	#category : #'SIY-Game',
+	#'squeak_changestamp' : 'LK 2/4/2024 20:05'
 }
 
 {
@@ -71,10 +81,10 @@ SIYKeyboardHandler >> eventHandler [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'LK 2/4/2024 17:23'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:07'
 }
 SIYKeyboardHandler >> fastStepTime [
-	"faster step time for polling keyboard inputs, while no button is pressed"
+	"faster step time for polling keyboard inputs, while no key is pressed"
 
 	^ 0.5
 ]
@@ -170,11 +180,10 @@ SIYKeyboardHandler >> pressedKeys [
 
 {
 	#category : #stepping,
-	#'squeak_changestamp' : 'LK 2/4/2024 17:23'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:06'
 }
 SIYKeyboardHandler >> slowStepTime [
-	"slower step time affects the delay between block movements, while a keyboard
-	button is held down"
+	"slower step time affects the delay between block movements (when a key is held down)"
 
 	^ 155
 ]

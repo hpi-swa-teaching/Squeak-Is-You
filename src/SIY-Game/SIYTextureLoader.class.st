@@ -1,14 +1,12 @@
 "
-A SIYTextureLoader is a subclass of the SIYAssetLoader for only textures.
-
-Instance Variables
+A SIYTextureLoader is a subclass of the SIYAssetLoader used only to load textures.
 
 "
 Class {
 	#name : #SIYTextureLoader,
 	#superclass : #SIYAssetLoader,
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 13:54'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:43'
 }
 
 {

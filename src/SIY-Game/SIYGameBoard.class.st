@@ -1,9 +1,9 @@
 "
-The SIYGameBoard is an interface for accessing other blocks in the same arena.
+The SIYGameBoard is an interface for accessing other blocks in the arena.
 
 Instance Variables
 	arena: <SIYArena>
-	gameBoard: <Matrix>
+	boardMatrix: <Matrix>
 
 "
 Class {
@@ -14,7 +14,7 @@ Class {
 		'boardMatrix'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:01'
 }
 
 {
@@ -55,10 +55,9 @@ SIYGameBoard >> boardMatrix [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'KD 2/1/2024 15:02'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
 SIYGameBoard >> createBoardMatrix [
-	"returns a matrix with the size of the arena, initialized with an empty sets"
 
 	| aMatrix |
 
@@ -82,10 +81,9 @@ SIYGameBoard >> getAllBlocks [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
 SIYGameBoard >> getBlocksFromBottom [
-	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
 	^ self getBlocksFromTop reversed
 ]
@@ -107,10 +105,9 @@ SIYGameBoard >> getBlocksFromDirection: aPoint [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/4/2024 18:12'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
 SIYGameBoard >> getBlocksFromLeft [
-	"Returns array of blocks in arena, ordered by x coordinate"
 	
 	| aCollection |
 	
@@ -125,20 +122,18 @@ SIYGameBoard >> getBlocksFromLeft [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
 SIYGameBoard >> getBlocksFromRight [
-	"Returns array of blocks in arena, reverse ordered by x coordinate"
 
 	^ self getBlocksFromLeft reversed
 ]
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/4/2024 18:12'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
 SIYGameBoard >> getBlocksFromTop [
-	"Returns array of blocks in arena, reverse ordered by y coordinate"
 	
 	| aCollection |
 	
@@ -197,12 +192,12 @@ SIYGameBoard >> getBlocksWithSymbol: aBlockSymbol [
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 2/4/2024 18:35'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:04'
 }
 SIYGameBoard >> privateAdd: aBlock to: aPoint [
 	
-	(self boardMatrix at: aPoint x at: aPoint y) add: aBlock
-
+	(self boardMatrix at: aPoint x at: aPoint y) 
+		add: aBlock
 ]
 
 {
@@ -228,10 +223,9 @@ SIYGameBoard >> privateRemove: aBlock fromTile: aTile [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:04'
 }
 SIYGameBoard >> saveBlock: aBlock at: aPoint [
-	"saves/moves/deletes given block from gameBoard"
 
 	| currentTile |
 	
@@ -242,7 +236,5 @@ SIYGameBoard >> saveBlock: aBlock at: aPoint [
 		ifNotNil: [currentTile
 			ifNil: [self privateAdd: aBlock to: aPoint] 
 			ifNotNil: [self privateMove: aBlock fromTile: currentTile to: aPoint]]
-
-	
 	
 ]

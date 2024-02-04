@@ -1,15 +1,11 @@
 "
-A SIYBlock is one block visible in the arena.
-
-Instance Variables
-	arena:	<SIYArena>
-
+The SIYNullBlock is the null object for SIYBlock.
 "
 Class {
 	#name : #SIYNullBlock,
 	#superclass : #SIYBlock,
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : '<historical>'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:53'
 }
 
 {

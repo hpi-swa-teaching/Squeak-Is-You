@@ -1,14 +1,12 @@
 "
-A SIYAudioLoader is a subclass of the SIYAssetLoader for only sounds.
-
-Instance Variables
+A SIYAudioLoader is a subclass of the SIYAssetLoader used only to load sounds.
 
 "
 Class {
 	#name : #SIYAudioLoader,
 	#superclass : #SIYAssetLoader,
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 13:54'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:43'
 }
 
 {

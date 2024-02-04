@@ -1,14 +1,9 @@
 "
-When the Game is in Fullscreen it shows keyHints and LevelDiscription to aid the game experience.
-
-If you want to start a new game, run `SIYGame start`.
+Creating an instance of this class will start the game in fullscreen, which includes displaying the current level name aswell as a key hint. 
 
 Instance Variables
-	arena: <SIYArena>
-	level: <SIYLevel>
-	backgroundMorph: <Morph>
-	customScaleFactor: <Float>
 	levelDescription: <TextMorph>
+
 
 "
 Class {
@@ -18,7 +13,7 @@ Class {
 		'levelDescription'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:57'
 }
 
 {
@@ -154,11 +149,11 @@ SIYFullscreenGame >> levelDescriptionColor [
 
 {
 	#category : #'level description',
-	#'squeak_changestamp' : 'LK 1/5/2024 22:32'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:57'
 }
 SIYFullscreenGame >> levelDescriptionOffset [
 
-	^ ((15 px)@(-15 px))
+	^ (15 px)@(-15 px)
 ]
 
 {
@@ -181,12 +176,11 @@ SIYFullscreenGame >> scaleFactor [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 2/4/2024 18:04'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:58'
 }
 SIYFullscreenGame >> startLevel: aLevel [
 
 	super startLevel: aLevel.
-	
 	self updateLevelDescription
 	
 ]
