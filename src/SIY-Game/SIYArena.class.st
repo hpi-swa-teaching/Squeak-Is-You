@@ -23,11 +23,9 @@ Class {
 	#instVars : [
 		'arenaWidth',
 		'arenaHeight',
-		'stepTime',
 		'game',
 		'positionDictionary',
 		'replacementSet',
-		'pressedKey',
 		'undoCaretaker',
 		'scaleFactor',
 		'gameLock',
@@ -113,58 +111,12 @@ SIYArena >> backgroundColor [
 ]
 
 {
-	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 2/2/2024 15:42'
-}
-SIYArena >> checkKeyboardInputs [
-	
-	| aKey |
-	
-	aKey := self pressedKey.
-	aKey ifNil: [self stepFaster] ifNotNil: [self stepSlower].
-	
-	aKey caseOf: {
-		"restart & undo"
-		[$r] -> [self game restartLevel].
-        	[$z] -> [self undoCaretaker undo].
-		"movement with arrow keys"
-		[Character arrowUp] -> [self moveBlocksDirection: 0@ -1].
-		[Character arrowDown] -> [self moveBlocksDirection: 0@1].
-		[Character arrowRight] -> [self moveBlocksDirection: 1@0].
-		[Character arrowLeft] -> [self moveBlocksDirection: -1@0].
-		"movement with WASD"
-		[$w] -> [self moveBlocksDirection: 0@ -1].
-		[$s] -> [self moveBlocksDirection: 0@1].
-		[$d] -> [self moveBlocksDirection: 1@0].
-		[$a] -> [self moveBlocksDirection: -1@0].
-		"level switching"
-            [$l] -> [self game nextLevel].
-            [$k] -> [self game previousLevel].
-		"audio muting"
-            [$m] -> [self audioPlayer toggleMute].
-		"exit game"
-		[Character escape] -> [self game exitGame].
-     } otherwise: ["do nothing"]
-	
-]
-
-{
 	#category : #dropping,
 	#'squeak_changestamp' : 'LK 12/12/2023 11:07'
 }
 SIYArena >> dropEnabled [
 
 	^ true
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'KD 1/8/2024 15:10'
-}
-SIYArena >> fastStepTime [
-	"faster step time for polling keyboard inputs, while no button is pressed"
-
-	^ 0.5
 ]
 
 {
@@ -196,13 +148,12 @@ SIYArena >> gameBoard [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:36'
+	#'squeak_changestamp' : 'LK 2/4/2024 17:30'
 }
 SIYArena >> initialize [
 
 	super initialize.
-	self color: self backgroundColor;
-		gmRegisterToKeyHandler
+	self color: self backgroundColor
 ]
 
 {
@@ -262,6 +213,42 @@ SIYArena >> moveBlocksDirection: aDirection [
 ]
 
 {
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksDown [
+	
+	self moveBlocksDirection: 0@1
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksLeft [
+	
+	self moveBlocksDirection: -1@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksRight [
+	
+	self moveBlocksDirection: 1@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksUp [
+	
+	self moveBlocksDirection: 0@(-1)
+]
+
+{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 1/5/2024 12:59'
 }
@@ -310,21 +297,6 @@ SIYArena >> preMoveBlocksRoutine [
 	self rulebook updateRulesInArena: self.
 
 	
-]
-
-{
-	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:38'
-}
-SIYArena >> pressedKey [
-	"returns the key currently pressed, while ignoring multiple simultaneous keyboard inputs"
-
-	self eventHandler pressedKeys size caseOf: {
-		[0] -> [pressedKey := nil].
-		[1] -> [pressedKey := self eventHandler pressedKeys asOrderedCollection first]
-	} otherwise: ["do nothing"].
-	
-	^ pressedKey
 ]
 
 {
@@ -387,64 +359,6 @@ SIYArena >> scaleFactor [
 SIYArena >> scaleFactor: aScaleFactor [
 
 	scaleFactor := aScaleFactor
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/12/2024 20:25'
-}
-SIYArena >> slowStepTime [
-	"slower step time affects the delay between block movements, while a keyboard
-	button is held down"
-
-	^ 155
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/7/2024 19:05'
-}
-SIYArena >> step [
-	
-	self isGameLocked 
-		ifFalse: [self checkKeyboardInputs]
-
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/3/2024 21:46'
-}
-SIYArena >> stepFaster [
-
-	self stepTime: self fastStepTime
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/3/2024 21:46'
-}
-SIYArena >> stepSlower [
-
-	self stepTime: self slowStepTime
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:17'
-}
-SIYArena >> stepTime [
-
-	^ stepTime ifNil: [stepTime := self stepFaster]
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:16'
-}
-SIYArena >> stepTime: aNumber [
-
-	stepTime := aNumber
 ]
 
 {

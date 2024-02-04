@@ -91,7 +91,7 @@ SIYBlock class >> newInArena: anArena at: aPoint [
 
 {
 	#category : #testing,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
 SIYBlock class >> symbol [
 
@@ -128,11 +128,11 @@ SIYBlock >> arena: anArena [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:43'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:05'
 }
 SIYBlock >> basicMove: aDirection [
-	"Moves this block in specified direction, WITHOUT considering the rules that currently apply.
-	For example, calling this method won't push other blocks that are in the way."
+	"Moves this block in specified direction, WITHOUT considering the rules that currently
+	apply. For example, calling this method won't push other blocks that are in the way."
 
 	self preMoveRoutine: aDirection;
 		coords: self coords + aDirection;
@@ -562,7 +562,7 @@ SIYBlock >> move: aDirection [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 2/3/2024 21:15'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:17'
 }
 SIYBlock >> move: aDirection pushedBy: aBlock [
 	"Moves this block in specified direction, while considering the rules that currently apply.
@@ -580,11 +580,12 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 		inDirection: aDirection.
 	canMoveHere ifNotNil: [^ canMoveHere].
 	
-	neighbours isEmpty
+	neighbours ifEmpty: [^ self basicMove: aDirection].
+	neighbours ifNil: [^ self cantMoveIn: aDirection].
+	
+	(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
 		ifTrue: [^ self basicMove: aDirection]
-		ifFalse: [(neighbours allSatisfy: [:each | each move: aDirection pushedBy: self])
-			ifTrue: [^ self basicMove: aDirection]
-			ifFalse: [^ self cantMoveIn: aDirection]]
+		ifFalse: [^ self cantMoveIn: aDirection]
 
 ]
 
@@ -773,7 +774,7 @@ SIYBlock >> setTextureForDirection: aPoint [
 
 {
 	#category : #testing,
-	#'squeak_changestamp' : 'LK 2/3/2024 20:42'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
 SIYBlock >> symbol [
 

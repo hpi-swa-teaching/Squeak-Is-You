@@ -155,7 +155,7 @@ SIYGameBoard >> getBlocksFromTop [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:40'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
 SIYGameBoard >> getBlocksLike: aBlock [
 
@@ -194,7 +194,7 @@ SIYGameBoard >> getBlocksThatSatisfy: aBlockClosure [
 
 {
 	#category : #'block storing',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:40'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
 SIYGameBoard >> getBlocksWithSymbol: aBlockSymbol [
 

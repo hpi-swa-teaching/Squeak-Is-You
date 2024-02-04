@@ -17,7 +17,8 @@ Class {
 	#instVars : [
 		'arena',
 		'level',
-		'audioPlayer'
+		'audioPlayer',
+		'keyboardHandler'
 	],
 	#category : #'SIY-Game',
 	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
@@ -144,15 +145,17 @@ SIYGame >> fullscreenEnabled [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:49'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:03'
 }
 SIYGame >> initialize [
 
 	super initialize.
 	
 	self initializeBackground.
+	self initializeKeyboardHandler.
 	
 	self audioPlayer playMusicIfNotMuted.
+	
 	self startLevel: self level atPosition: self arenaPosition
 ]
 
@@ -174,6 +177,40 @@ SIYGame >> initializeBackground [
 
 	^ SubclassResponsibility
 
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:02'
+}
+SIYGame >> initializeKeyboardHandler [
+
+	self keyboardHandler: (SIYKeyboardHandler newFor: self).
+	self gmRegisterToKeyHandler
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:02'
+}
+SIYGame >> keyboardHandler [
+
+	^ keyboardHandler
+
+	
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:03'
+}
+SIYGame >> keyboardHandler: anObject [
+
+	keyboardHandler := anObject.
+	
+	self addMorph: keyboardHandler
+
+	
 ]
 
 {

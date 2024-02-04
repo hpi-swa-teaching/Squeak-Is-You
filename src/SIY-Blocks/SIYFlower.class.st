@@ -24,7 +24,7 @@ SIYFlower >> nounTexture [
 
 {
 	#category : #'as yet unclassified',
-	#'squeak_changestamp' : 'LK 2/3/2024 20:30'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
 SIYFlower >> symbol [
 

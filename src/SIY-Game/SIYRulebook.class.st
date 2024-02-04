@@ -123,17 +123,19 @@ SIYRulebook >> checkMelt: aBlock onTile: aTile [
 
 {
 	#category : #'rule checking',
-	#'squeak_changestamp' : 'LK 2/3/2024 21:20'
+	#'squeak_changestamp' : 'LK 2/4/2024 15:16'
 }
 SIYRulebook >> checkMovementRulesFor: aBlock pushedBy: anotherBlock havingNeighbours: aSet inDirection: aDirection [
-	"This method returns true/false, depending on whether the anotherBlock, who pushed aBlock 	aBlock should be able to move onto aBlock's tile according to rules. If the rule checks 	implemented here can't decide whether this should be the case, we return nil."
+	"This method returns true/false, depending on whether anotherBlock, who pushed
+	aBlock, should be able to move onto aBlock's tile according to rules. 
+	If the rule checks implemented here can't decide whether this should be the case, 
+	we return nil."
 	
 	(aBlock isShut and: anotherBlock isOpen) ifTrue: [^ true].
 	(aBlock isOpen and: anotherBlock isShut) ifTrue: [^ true].
 	
-	aBlock isStop ifTrue: [^ false].
 	(aBlock isPush or: aBlock isYou) ifFalse: [^ true].
-	aSet ifNil: [^ aBlock cantMoveIn: aDirection].
+	aBlock isStop ifTrue: [^ false].
 	
 	(aSet anySatisfy: [:each | each isStop and: (each isShut and: aBlock isOpen) not])
 		ifTrue: [^ aBlock cantMoveIn: aDirection].

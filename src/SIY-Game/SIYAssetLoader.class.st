@@ -18,11 +18,20 @@ Class {
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:49'
+	#'squeak_changestamp' : 'LK 2/3/2024 21:49'
 }
 SIYAssetLoader >> assetLoader [
 
-	^ assetLoader ifNil: [assetLoader := GitAssetLoader for: self repositoryName basePath: self basePath.]
+	^ assetLoader ifNil: [assetLoader := GitAssetLoader for: self repositoryName basePath: self basePath]
+]
+
+{
+	#category : #configuration,
+	#'squeak_changestamp' : 'LK 2/3/2024 21:49'
+}
+SIYAssetLoader >> basePath [
+
+	^ SubclassResponsibility
 ]
 
 {
