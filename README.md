@@ -1,6 +1,6 @@
 <p align="center">
-  <img width="400" src="assets/squeak-is-you-logo-darkmode.png#gh-dark-mode-only" alt="Squeak Is You">
-  <img width="400" src="assets/squeak-is-you-logo-lightmode.png#gh-light-mode-only" alt="Squeak Is You">
+  <img width="400" src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/605daf41-c927-4034-b4f0-c0898657c731#gh-dark-mode-only" alt="Squeak Is You">
+  <img width="400" src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/02a561ef-3a5c-46f1-8008-2e6f39c601e6#gh-light-mode-only" alt="Squeak Is You">
   <p align="center"><i>A puzzle game about changing the rules (Baba Is You clone)</i></p>
 </p>
 
@@ -39,10 +39,10 @@ https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/4d05f14e-b786-
 ## Screenshots 🖼️
 
 <p float="left" align="center">
-  <img src="assets/screenshot-2.png" width="40%"> 
-  <img src="assets/screenshot-3.png" width="40%"> 
-  <img src="assets/screenshot-4.png" width="40%"> 
-  <img src="assets/screenshot-1.png" width="40%">
+  <img src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/83759be3-790d-4ce9-a034-7cb1b147d7b5" width="40%"> 
+  <img src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/5624723b-a308-45e6-9978-a8fce518c948" width="40%"> 
+  <img src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/8f27a51a-0678-4647-bf3a-ef793b5caaf5" width="40%"> 
+  <img src="https://github.com/hpi-swa-teaching/Squeak-Is-You/assets/42419545/4d6ff56a-646d-42c3-b461-fe2938a865fe" width="40%">
 </p>
 
 ## License 🔑
