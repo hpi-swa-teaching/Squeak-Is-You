@@ -500,5 +500,11 @@ OrderedCollection [
 			'SIYwinSound.wav'
 		],
 		#encoding : 'WAV'
+	},
+	SquotPlaintextMapper {
+		#path : FSAbsolutePath [
+			'LICENSE.md'
+		],
+		#encoding : 'TXT'
 	}
 ]
