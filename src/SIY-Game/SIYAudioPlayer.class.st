@@ -1,15 +1,9 @@
 "
-A SIYAudioPlayer (if it isn't muted) playes soundeffects and tracks.
+The SIYAudioPlayer plays sound effects and background music.
 
 Instance Variables
-	backgroundMusic:		<Object>
-	isMuted:		<Object>
-
-backgroundMusic
-	- xxxxx
-
-isMuted
-	- xxxxx
+	backgroundMusic:	<RepeatingSound>
+	isMuted: <Boolean>
 
 "
 Class {
@@ -20,7 +14,7 @@ Class {
 		'backgroundMusic'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 13:58'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:44'
 }
 
 {
@@ -97,12 +91,14 @@ SIYAudioPlayer >> mainTheme [
 
 {
 	#category : #music,
-	#'squeak_changestamp' : 'LK 2/1/2024 12:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:03'
 }
 SIYAudioPlayer >> playMusic [
 
 	self backgroundMusic: ((RepeatingSound repeatForever: self getMusic)
-		initialVolume: self volume; play)
+		initialVolume: self volume;
+		play;
+		yourself)
 ]
 
 {
@@ -117,11 +113,14 @@ SIYAudioPlayer >> playMusicIfNotMuted [
 
 {
 	#category : #'sound effects',
-	#'squeak_changestamp' : 'LK 2/1/2024 12:01'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:45'
 }
 SIYAudioPlayer >> playWinSound [
 	
-	[self getWinSound initialVolume: self volume; reset; play] fork
+	[self getWinSound 
+		initialVolume: self volume; 
+		reset; 
+		play] fork
 	
 ]
 
@@ -160,11 +159,11 @@ SIYAudioPlayer >> toggleMute [
 
 {
 	#category : #configuration,
-	#'squeak_changestamp' : 'LK 2/1/2024 12:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:48'
 }
 SIYAudioPlayer >> volume [
 
-	^ 0.7
+	^ 0.5
 ]
 
 {

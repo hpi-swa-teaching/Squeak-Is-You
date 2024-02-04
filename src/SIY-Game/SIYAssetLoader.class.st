@@ -1,5 +1,5 @@
 "
-A SIYAssetLoader is an interface for loading Assets through the Git Asset Browser.
+A SIYAssetLoader is an interface for loading assets through the Git Asset Browser.
 
 Instance Variables
 	assetLoader: <GitAssetLoader> 
@@ -13,16 +13,26 @@ Class {
 		'assetLoader'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 13:50'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:42'
 }
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/4/2024 15:49'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:45'
 }
 SIYAssetLoader >> assetLoader [
 
-	^ assetLoader ifNil: [assetLoader := GitAssetLoader for: self repositoryName basePath: self basePath.]
+	^ assetLoader ifNil: [assetLoader := GitAssetLoader for: self repositoryName 
+		basePath: self basePath]
+]
+
+{
+	#category : #configuration,
+	#'squeak_changestamp' : 'LK 2/3/2024 21:49'
+}
+SIYAssetLoader >> basePath [
+
+	^ SubclassResponsibility
 ]
 
 {

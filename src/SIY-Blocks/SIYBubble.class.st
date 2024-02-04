@@ -21,3 +21,12 @@ SIYBubble >> nounTexture [
 
 	^ '/SIYBubbleT.png'
 ]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
+}
+SIYBubble >> symbol [
+
+	^ #bubble
+]

@@ -1,26 +1,26 @@
 "
-A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level.
+A SIYGame is the main class of the game. It can start a new game and creates the arena for the corresponding level. 
+
+Creating a new instance of this class is overwritten and will default to SIYFullscreenGame or SIYScaledGame.
 
 If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
 
 Instance Variables
-	arena: <SIYArena>
 	level: <SIYLevel>
-	backgroundMorph: <Morph>
-	customScaleFactor: <Float>
-	levelDescription: <TextMorph>
+	audioPlayer: <SIYAudioPlayer>
+	keyboardHandler: <SIYKeyboardHandler>
 
 "
 Class {
 	#name : #SIYGame,
 	#superclass : #Morph,
 	#instVars : [
-		'arena',
 		'level',
-		'audioPlayer'
+		'audioPlayer',
+		'keyboardHandler'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:00'
 }
 
 {
@@ -126,11 +126,11 @@ SIYGame >> defaultLevel [
 
 {
 	#category : #'level control',
-	#'squeak_changestamp' : 'LK 1/31/2024 20:55'
+	#'squeak_changestamp' : 'LK 2/3/2024 21:17'
 }
 SIYGame >> exitGame [
 	
-	self abandon
+	^ SubclassResponsibility
 ]
 
 {
@@ -144,15 +144,16 @@ SIYGame >> fullscreenEnabled [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:49'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:54'
 }
 SIYGame >> initialize [
 
 	super initialize.
-	
 	self initializeBackground.
+	self initializeKeyboardHandler.
 	
 	self audioPlayer playMusicIfNotMuted.
+
 	self startLevel: self level atPosition: self arenaPosition
 ]
 
@@ -174,6 +175,38 @@ SIYGame >> initializeBackground [
 
 	^ SubclassResponsibility
 
+]
+
+{
+	#category : #initialization,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:02'
+}
+SIYGame >> initializeKeyboardHandler [
+
+	self keyboardHandler: (SIYKeyboardHandler newFor: self).
+	self gmRegisterToKeyHandler
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:02'
+}
+SIYGame >> keyboardHandler [
+
+	^ keyboardHandler
+
+	
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:50'
+}
+SIYGame >> keyboardHandler: anObject [
+
+	keyboardHandler := anObject
+
+	
 ]
 
 {
@@ -282,4 +315,13 @@ SIYGame >> startLevel: aLevel atPosition: aPoint [
 
 	self startLevel: aLevel.
 	self arena center: aPoint
+]
+
+{
+	#category : #background,
+	#'squeak_changestamp' : 'LK 2/4/2024 18:43'
+}
+SIYGame >> updateExtent [
+
+	^ SubclassResponsibility
 ]

@@ -31,7 +31,7 @@ SIYPlayground >> backgroundColor [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/16/2024 18:11'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:27'
 }
 SIYPlayground >> buildLevel [
 	
@@ -143,7 +143,7 @@ SIYPlayground >> description [
 
 {
 	#category : #'level design',
-	#'squeak_changestamp' : 'LK 1/9/2024 15:33'
+	#'squeak_changestamp' : 'LK 2/2/2024 12:14'
 }
 SIYPlayground >> nextLevel [
 

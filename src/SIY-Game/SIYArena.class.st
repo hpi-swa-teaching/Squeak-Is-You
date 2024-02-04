@@ -1,20 +1,19 @@
 "
-The SIYArena is the visible part of the game and contains all SIYBlocks.
+The SIYArena is the visible part of the game, that contains all SIYBlocks.
 
 If you want to start a new game, run `SIYGame start`. To prevent the game from running in fullscreen, specify a scale factor when starting the game: `SIYGame startWithScale: 1.0`.
 
 Instance Variables
 	arenaHeight: <Integer>
 	arenaWidth: <Integer>
-	blockMediator: <SIYBlockMediator>
-	game: <SIYGame>
-	positionDictionary: <Dictionary>
-	replacementSet: <Set>
-	pressedKey: <Character>
-	ruleManager: <SIYRuleManager>
-	snapshotCaretaker: <SIYSnapshotCaretaker>
-	stepTime: <Integer>
 	scaleFactor: <Float>
+	positionDictionary: <Dictionary>
+	transformationSet: <Set>
+	game: <SIYGame>
+	gameBoard: <SIYGameboard>
+	rulebook: <SIYRulebook>
+	undoCaretaker: <SIYUndoCaretaker>
+
 
 "
 Class {
@@ -23,19 +22,17 @@ Class {
 	#instVars : [
 		'arenaWidth',
 		'arenaHeight',
-		'stepTime',
 		'game',
 		'positionDictionary',
-		'replacementSet',
-		'pressedKey',
 		'undoCaretaker',
 		'scaleFactor',
 		'gameLock',
 		'gameBoard',
-		'rulebook'
+		'rulebook',
+		'transformationSet'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 1/9/2024 09:47'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:42'
 }
 
 {
@@ -113,39 +110,14 @@ SIYArena >> backgroundColor [
 ]
 
 {
-	#category : #'keyboard input',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:43'
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:20'
 }
-SIYArena >> checkKeyboardInputs [
-	
-	| aKey |
-	
-	aKey := self pressedKey.
-	aKey ifNil: [self stepFaster] ifNotNil: [self stepSlower].
-	
-	aKey caseOf: {
-		"restart & undo"
-		[$r] -> [self game restartLevel].
-        	[$z] -> [self undoCaretaker undo].
-		"movement with arrow keys"
-		[Character arrowUp] -> [self moveBlocksDirection: 0@ -1].
-		[Character arrowDown] -> [self moveBlocksDirection: 0@1].
-		[Character arrowRight] -> [self moveBlocksDirection: 1@0].
-		[Character arrowLeft] -> [self moveBlocksDirection: -1@0].
-		"movement with WASD"
-		[$w] -> [self moveBlocksDirection: 0@ -1].
-		[$s] -> [self moveBlocksDirection: 0@1].
-		[$d] -> [self moveBlocksDirection: 1@0].
-		[$a] -> [self moveBlocksDirection: -1@0].
-		"level switching"
-            [$l] -> [self game nextLevel].
-            [$k] -> [self game previousLevel].
-		"audio muting"
-            [$m] -> [self audioPlayer toggleMute].
-		"exit game"
-		[Character escape] -> [self game exitGame].
-     } otherwise: ["do nothing"]
-	
+SIYArena >> clampPointToArenaDimension: aPoint [
+
+	^ (aPoint x clampLow: 1 high: self arenaWidth)
+		@(aPoint y clampLow: 1 high: self arenaHeight)
+
 ]
 
 {
@@ -155,16 +127,6 @@ SIYArena >> checkKeyboardInputs [
 SIYArena >> dropEnabled [
 
 	^ true
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'KD 1/8/2024 15:10'
-}
-SIYArena >> fastStepTime [
-	"faster step time for polling keyboard inputs, while no button is pressed"
-
-	^ 0.5
 ]
 
 {
@@ -187,7 +149,7 @@ SIYArena >> game: aGame [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:57'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
 }
 SIYArena >> gameBoard [
 
@@ -196,13 +158,12 @@ SIYArena >> gameBoard [
 
 {
 	#category : #initialization,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:36'
+	#'squeak_changestamp' : 'LK 2/4/2024 17:30'
 }
 SIYArena >> initialize [
 
 	super initialize.
-	self color: self backgroundColor;
-		gmRegisterToKeyHandler
+	self color: self backgroundColor
 ]
 
 {
@@ -232,11 +193,22 @@ SIYArena >> initializeWithExtent: aPoint scaled: aFloat [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/7/2024 18:58'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:30'
 }
 SIYArena >> isGameLocked [
 
 	^ gameLock ifNil: [gameLock := false]
+]
+
+{
+	#category : #layout,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:22'
+}
+SIYArena >> isPointInArenaDimensions: aPoint [
+
+	^ (aPoint x between: 1 and: self arenaWidth) 
+		and: (aPoint y between: 1 and: self arenaHeight) 
+
 ]
 
 {
@@ -250,15 +222,50 @@ SIYArena >> lockGame [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:34'
 }
 SIYArena >> moveBlocksDirection: aDirection [
-	"Informs all isYou blocks in arena to move in specified direction"
 	
 	self preMoveBlocksRoutine.
-	(self gameBoard generateQueueForDirection: aDirection)
+	(self gameBoard getBlocksFromDirection: aDirection)
 		do: [:aBlock | aBlock isYou ifTrue: [aBlock move: aDirection]].
 	self postMoveBlocksRoutine
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksDown [
+	
+	self moveBlocksDirection: 0@1
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksLeft [
+	
+	self moveBlocksDirection: -1@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksRight [
+	
+	self moveBlocksDirection: 1@0
+]
+
+{
+	#category : #movement,
+	#'squeak_changestamp' : 'LK 2/4/2024 17:12'
+}
+SIYArena >> moveBlocksUp [
+	
+	self moveBlocksDirection: 0@(-1)
 ]
 
 {
@@ -281,7 +288,7 @@ SIYArena >> positionDictionary [
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
+	#'squeak_changestamp' : 'LK 2/4/2024 18:34'
 }
 SIYArena >> postMoveBlocksRoutine [
 	"This routine gets triggered, after every block has been moved through the 	moveBlocksDirection method, for example after keyboard input.
@@ -289,73 +296,46 @@ SIYArena >> postMoveBlocksRoutine [
 
 	self rulebook updateRulesInArena: self.
 
-	"check rules for all blocks"
-	(self gameBoard getBlocksOfType: SIYBlock)
+	self gameBoard getAllBlocks
 		do: [:aBlock | self rulebook checkRulesFor: aBlock].	
 			
-	self undoCaretaker createSnapshotOf: self.
-	
+	self undoCaretaker createSnapshotOf: self
 
-	
 ]
 
 {
 	#category : #movement,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:59'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:35'
 }
 SIYArena >> preMoveBlocksRoutine [
 	"This routine gets triggered, bevore every block will be moved through the 	moveBlocksDirection method, for example after keyboard input.
 	This routine will NOT get triggered, if blocks are moved using the halo."
 
 	self resetDictionaryAndSet.
-	self rulebook updateRulesInArena: self.
+	self rulebook updateRulesInArena: self
 
 	
-]
-
-{
-	#category : #'keyboard input',
-	#'squeak_changestamp' : 'LK 1/4/2024 14:38'
-}
-SIYArena >> pressedKey [
-	"returns the key currently pressed, while ignoring multiple simultaneous keyboard inputs"
-
-	self eventHandler pressedKeys size caseOf: {
-		[0] -> [pressedKey := nil].
-		[1] -> [pressedKey := self eventHandler pressedKeys asOrderedCollection first]
-	} otherwise: ["do nothing"].
-	
-	^ pressedKey
-]
-
-{
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/8/2024 23:18'
-}
-SIYArena >> replacementSet [
-
-	^ replacementSet ifNil: [replacementSet := Set new]
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:33'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> resetDictionaryAndSet [
 
 	self positionDictionary removeAll.
-	self replacementSet removeAll
+	self transformationSet removeAll
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'KD 1/31/2024 16:34'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> restoreSnapshot: aSnapshot [
 	"restores arena state to this snapshot"
 	
 	self undoMovement: aSnapshot positionDictionary;
-		undoTransformations: aSnapshot replacementSet
+		undoTransformations: aSnapshot transformationSet
 	
 	
 		
@@ -391,64 +371,6 @@ SIYArena >> scaleFactor: aScaleFactor [
 ]
 
 {
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/12/2024 20:25'
-}
-SIYArena >> slowStepTime [
-	"slower step time affects the delay between block movements, while a keyboard
-	button is held down"
-
-	^ 155
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/7/2024 19:05'
-}
-SIYArena >> step [
-	
-	self isGameLocked 
-		ifFalse: [self checkKeyboardInputs]
-
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/3/2024 21:46'
-}
-SIYArena >> stepFaster [
-
-	self stepTime: self fastStepTime
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/3/2024 21:46'
-}
-SIYArena >> stepSlower [
-
-	self stepTime: self slowStepTime
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 1/4/2024 14:17'
-}
-SIYArena >> stepTime [
-
-	^ stepTime ifNil: [stepTime := self stepFaster]
-]
-
-{
-	#category : #stepping,
-	#'squeak_changestamp' : 'LK 12/15/2023 19:16'
-}
-SIYArena >> stepTime: aNumber [
-
-	stepTime := aNumber
-]
-
-{
 	#category : #layout,
 	#'squeak_changestamp' : 'LK 1/5/2024 12:59'
 }
@@ -459,33 +381,40 @@ SIYArena >> textureSize [
 ]
 
 {
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
+}
+SIYArena >> transformationSet [
+
+	^ transformationSet ifNil: [transformationSet := Set new]
+]
+
+{
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/12/2024 13:18'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> undoCaretaker [
 
-	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker newWithArena: self]
+	^ undoCaretaker ifNil: [undoCaretaker := SIYUndoCaretaker newInArena: self]
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/30/2024 23:42'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> undoMovement: aPositionDictionary [
-	"restore last positions from position dictionary, respawn if necessary"
 	
 	aPositionDictionary keysAndValuesDo: [:key :value | 
-			key owner ifNil: key respawn.
-			key setTextureForDirection: key coords - value.
-			key coords: value]
+		key owner ifNil: key respawn.
+		key setTextureForDirection: key coords - value.
+		key coords: value]
 ]
 
 {
 	#category : #undo,
-	#'squeak_changestamp' : 'ivenschlegelmilch 1/30/2024 23:39'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:36'
 }
 SIYArena >> undoTransformations: aReplacementSet [
-	"delete blocks from replacementSet"
 	
 	aReplacementSet do: [:aBlock | aBlock delete]
 ]
@@ -501,14 +430,12 @@ SIYArena >> unlockGame [
 
 {
 	#category : #layout,
-	#'squeak_changestamp' : 'LK 1/11/2024 23:15'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:34'
 }
 SIYArena >> updateDimensions [
 
-	self arenaWidth 
-		ifNotNil: [self width: self pixelPerBlock * self arenaWidth].
-	self arenaHeight 
-		ifNotNil: [self height: self pixelPerBlock * self arenaHeight]
+	self arenaWidth ifNotNil: [self width: self pixelPerBlock * self arenaWidth].
+	self arenaHeight ifNotNil: [self height: self pixelPerBlock * self arenaHeight]
 
 ]
 

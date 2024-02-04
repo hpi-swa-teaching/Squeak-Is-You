@@ -1,9 +1,9 @@
 "
-The SIYGameBoard is an interface for accessing other blocks in the same arena.
+The SIYGameBoard is an interface for accessing other blocks in the arena.
 
 Instance Variables
 	arena: <SIYArena>
-	gameBoard: <Matrix>
+	boardMatrix: <Matrix>
 
 "
 Class {
@@ -14,7 +14,7 @@ Class {
 		'boardMatrix'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'KD 2/1/2024 14:03'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:01'
 }
 
 {
@@ -46,10 +46,18 @@ SIYGameBoard >> arena: anArena [
 
 {
 	#category : #accessing,
-	#'squeak_changestamp' : 'KD 2/1/2024 15:02'
+	#'squeak_changestamp' : 'LK 2/3/2024 20:25'
+}
+SIYGameBoard >> boardMatrix [
+
+	^ boardMatrix ifNil: [boardMatrix := self createBoardMatrix]
+]
+
+{
+	#category : #accessing,
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
 SIYGameBoard >> createBoardMatrix [
-	"returns a matrix with the size of the arena, initialized with an empty sets"
 
 	| aMatrix |
 
@@ -63,128 +71,133 @@ SIYGameBoard >> createBoardMatrix [
 ]
 
 {
-	#category : #accessing,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:24'
 }
-SIYGameBoard >> gameBoard [
-
-	^ boardMatrix ifNil: [boardMatrix := self createBoardMatrix]
+SIYGameBoard >> getAllBlocks [
+	
+	^ self getBlocksFromLeft
 ]
 
 {
-	#category : #'movement queue',
-	#'squeak_changestamp' : 'KD 2/1/2024 15:05'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
-SIYGameBoard >> generateQueueForDirection: aPoint [
+SIYGameBoard >> getBlocksFromBottom [
+	
+	^ self getBlocksFromTop reversed
+]
+
+{
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:15'
+}
+SIYGameBoard >> getBlocksFromDirection: aPoint [
 	
 	aPoint caseOf: {
-		[1@0] -> [^ self generateQueueFromRight].
-		[-1@0] -> [^ self generateQueueFromLeft].
-		[0@1] -> [^ self generateQueueFromBottom].
-		[0@ -1] -> [^ self generateQueueFromTop]
+		[1@0] -> [^ self getBlocksFromRight].
+		[-1@0] -> [^ self getBlocksFromLeft].
+		[0@1] -> [^ self getBlocksFromBottom].
+		[0@ -1] -> [^ self getBlocksFromTop]
 	}
 	
 ]
 
 {
-	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
-SIYGameBoard >> generateQueueFromBottom [
-	"Returns array of blocks in arena, reverse ordered by y coordinate"
-	
-	^ self generateQueueFromTop reversed
-]
-
-{
-	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
-}
-SIYGameBoard >> generateQueueFromLeft [
-	"Returns array of blocks in arena, ordered by x coordinate"
+SIYGameBoard >> getBlocksFromLeft [
 	
 	| aCollection |
 	
 	aCollection := OrderedCollection new.
 	
 	1 to: self arena arenaHeight
-		do: [:y | (1 to: self arena arenaWidth)
-			do: [:x | (self gameBoard at: x at: y)
-				do: [:aBlock | aCollection add: aBlock]]].
+		do: [:y | 1 to: self arena arenaWidth
+			do: [:x | aCollection addAll: (self boardMatrix at: x at: y)]].
 
 	^ aCollection
 ]
 
 {
-	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/4/2024 15:23'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
-SIYGameBoard >> generateQueueFromRight [
-	"Returns array of blocks in arena, reverse ordered by x coordinate"
+SIYGameBoard >> getBlocksFromRight [
 
-	^ self generateQueueFromLeft reversed
+	^ self getBlocksFromLeft reversed
 ]
 
 {
-	#category : #'movement queue',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 20:03'
 }
-SIYGameBoard >> generateQueueFromTop [
-	"Returns array of blocks in arena, reverse ordered by y coordinate"
+SIYGameBoard >> getBlocksFromTop [
 	
 	| aCollection |
 	
 	aCollection := OrderedCollection new.
 	
 	1 to: self arena arenaWidth
-		do: [:x | (1 to: self arena arenaHeight)
-			do: [:y | (self gameBoard at: x at: y)
-				do: [:aBlock | aCollection add: aBlock]]].
+		do: [:x | 1 to: self arena arenaHeight
+			do: [:y | aCollection addAll: (self boardMatrix at: x at: y)]].
 
 	^ aCollection
 ]
 
 {
-	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/11/2024 23:33'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
-SIYGameBoard >> getBlocksOfType: aBlockClass [
-	"returns set of all blocks of specified block type in the arena"
+SIYGameBoard >> getBlocksLike: aBlock [
+
+	^ self getBlocksWithSymbol: aBlock symbol
+]
+
+{
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 19:26'
+}
+SIYGameBoard >> getBlocksOnTile: aPoint [
+
+	(self arena isPointInArenaDimensions: aPoint)
+		ifTrue: [^ self boardMatrix at: aPoint x at: aPoint y]
+		ifFalse: [^ nil]
+]
+
+{
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 18:14'
+}
+SIYGameBoard >> getBlocksThatSatisfy: aBlockClosure [
 
 	| aSet |
 
 	aSet := Set new.
 	
-	1 to: self arena arenaHeight
-		do: [:y | (1 to: self arena arenaWidth)
-			do: [:x | (self getBlocksOnTile: x@y)
-				do: [:aBlock | (aBlock isKindOf: aBlockClass)
-					ifTrue: [aSet add: aBlock]]]].
+	self boardMatrix do: [:aTile | aSet addAll: (aTile select: aBlockClosure)].
 
 	^ aSet
 ]
 
 {
-	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 15:08'
 }
-SIYGameBoard >> getBlocksOnTile: aPoint [
-	"returns set of blocks at given coordinates, returns nil if aPoint is out of arena"
+SIYGameBoard >> getBlocksWithSymbol: aBlockSymbol [
 
-	((aPoint x between: 1 and: self arena arenaWidth)
-		and: (aPoint y between: 1 and: self arena arenaHeight))
-			ifTrue: [^ self gameBoard at: aPoint x at: aPoint y]
-			ifFalse: [^ nil]	
+	^ self getBlocksThatSatisfy: [:each | each symbol == aBlockSymbol]
 ]
 
 {
 	#category : #private,
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#'squeak_changestamp' : 'LK 2/4/2024 20:04'
 }
 SIYGameBoard >> privateAdd: aBlock to: aPoint [
 	
-	(self gameBoard at: aPoint x at: aPoint y) add: aBlock
-
+	(self boardMatrix at: aPoint x at: aPoint y) 
+		add: aBlock
 ]
 
 {
@@ -209,22 +222,19 @@ SIYGameBoard >> privateRemove: aBlock fromTile: aTile [
 ]
 
 {
-	#category : #'position storing',
-	#'squeak_changestamp' : 'LK 1/31/2024 22:56'
+	#category : #'block storing',
+	#'squeak_changestamp' : 'LK 2/4/2024 20:04'
 }
 SIYGameBoard >> saveBlock: aBlock at: aPoint [
-	"saves/moves/deletes given block from gameBoard"
 
 	| currentTile |
 	
-	currentTile := self gameBoard detect: [:each | each includes: aBlock] ifNone: [nil].
+	currentTile := self boardMatrix detect: [:each | each includes: aBlock] ifNone: [nil].
 	
 	aPoint
  		ifNil: [self privateRemove: aBlock fromTile: currentTile] 
 		ifNotNil: [currentTile
 			ifNil: [self privateAdd: aBlock to: aPoint] 
 			ifNotNil: [self privateMove: aBlock fromTile: currentTile to: aPoint]]
-
-	
 	
 ]

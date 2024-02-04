@@ -12,3 +12,12 @@ SIYIs >> blockTexture [
 
 	^ '/SIYIs.png'
 ]
+
+{
+	#category : #'as yet unclassified',
+	#'squeak_changestamp' : 'LK 2/3/2024 20:02'
+}
+SIYIs >> isIsOperator [
+
+	^ true
+]
