@@ -1,5 +1,5 @@
 "
-Creating an instance of this class will start the game in fullscreen, which includes displaying the current level name aswell as a key hint. 
+Creating an instance of this class will start the game in fullscreen, which includes displaying the current level name as well as a key hint. 
 
 Instance Variables
 	levelDescription: <TextMorph>
@@ -13,7 +13,7 @@ Class {
 		'levelDescription'
 	],
 	#category : #'SIY-Game',
-	#'squeak_changestamp' : 'LK 2/4/2024 19:57'
+	#'squeak_changestamp' : 'KD 2/5/2024 14:43'
 }
 
 {
