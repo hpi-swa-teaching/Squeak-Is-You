@@ -344,7 +344,7 @@ SIYBlock >> gameBoard [
 
 {
 	#category : #appearance,
-	#'squeak_changestamp' : 'KD 2/5/2024 10:06'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:47'
 }
 SIYBlock >> getTextureForDirection: aPoint [
 
@@ -352,7 +352,7 @@ SIYBlock >> getTextureForDirection: aPoint [
 		[1@0] -> [^ self blockTextureRight].
 		[-1@0] -> [^ self blockTextureLeft].
 		[0@1] -> [^ self blockTextureDown].
-		[0@ -1] -> [^ self blockTextureUp]
+		[0@(-1)] -> [^ self blockTextureUp]
 	} otherwise: [^ self blockTexture]
 ]
 
@@ -576,11 +576,11 @@ SIYBlock >> move: aDirection pushedBy: aBlock [
 
 {
 	#category : #'neighbour sensing',
-	#'squeak_changestamp' : 'KD 2/5/2024 10:06'
+	#'squeak_changestamp' : 'LK 2/4/2024 19:50'
 }
 SIYBlock >> neighborsAbove [
 	
-	^ self gameBoard getBlocksOnTile: 0@ -1 + self coords
+	^ self gameBoard getBlocksOnTile: 0@(-1) + self coords
 ]
 
 {
