@@ -187,7 +187,7 @@ SIYLevelFactory >> placeBlock: aBlockClass at: aPoint [
 
 {
 	#category : #'level building',
-	#'squeak_changestamp' : 'LK 2/4/2024 20:10'
+	#'squeak_changestamp' : 'KD 2/5/2024 14:40'
 }
 SIYLevelFactory >> placeHorizontalRule: aBlockClass and: anotherBlockClass is: aPropertyClass at: aPoint [
 	
