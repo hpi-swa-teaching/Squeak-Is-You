@@ -235,7 +235,7 @@ SIYRulebook >> collectNounBelow: aBlock [
 
 {
 	#category : #'rule updating',
-	#'squeak_changestamp' : 'LK 2/4/2024 20:15'
+	#'squeak_changestamp' : 'LK 2/5/2024 21:50'
 }
 SIYRulebook >> collectNounRightOf: aBlock [
 	
@@ -244,7 +244,7 @@ SIYRulebook >> collectNounRightOf: aBlock [
 	aBlock isOperator
 		ifTrue: [aBlock neighborsRight do: [:each |
 			each isNoun ifTrue: [^ each].
-			each isOperator ifTrue: [^ self collectNounRightOf: each]]].
+			each isProperty ifTrue: [^ self collectNounRightOf: each]]].
 	
 	aBlock isProperty
 		ifTrue: [aBlock neighborsRight do: [:each |
