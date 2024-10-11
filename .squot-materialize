@@ -269,13 +269,17 @@ OrderedCollection [
 		#package : MCPackage {
 			#name : 'SIY-Levels'
 		},
-		#path : @79
+		#path : FSAbsolutePath [
+			'src'
+		]
 	},
 	SquotTonelMapper {
 		#package : MCPackage {
 			#name : 'SIY-Blocks'
 		},
-		#path : @79
+		#path : FSAbsolutePath [
+			'src'
+		]
 	},
 	SquotImageMapper {
 		#path : FSAbsolutePath [
