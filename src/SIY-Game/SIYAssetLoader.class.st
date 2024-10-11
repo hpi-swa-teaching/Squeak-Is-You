@@ -41,5 +41,5 @@ SIYAssetLoader >> basePath [
 }
 SIYAssetLoader >> repositoryName [
 
-	^ 'swa23-24-group16'
+	^ 'Squeak-Is-You'
 ]
