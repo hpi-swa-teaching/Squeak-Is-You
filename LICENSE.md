@@ -20,7 +20,7 @@ In this table you can check which parts of the game we created ourselves and whi
 |--------------|------------|
 | Game Idea | Arvi Teikari |
 | Level Design | Arvi Teikari |
-| Code         | [@Ivenjs](https://github.com/Ivenjs) [@KarlDuda](https://github.com/KarlDuda) [@julia-tonne](https://github.com/julia-tonne) [@linuskoester](https://github.com/linuskoester) |
-| Textures     | Arvi Teikari, [@linuskoester](https://github.com/linuskoester) |
+| Code         | [@Ivenjs](https://github.com/Ivenjs) [@KarlDuda](https://github.com/KarlDuda) [@julia-tonne](https://github.com/julia-tonne) [@arcuslinus](https://github.com/arcuslinus) |
+| Textures     | Arvi Teikari, [@arcuslinus](https://github.com/arcuslinus) |
 | Music & Sound | [@KarlDuda](https://github.com/KarlDuda) |
-| Trailer      | [@KarlDuda](https://github.com/KarlDuda) [@julia-tonne](https://github.com/julia-tonne) [@linuskoester](https://github.com/linuskoester), inspired by the [original trailer](https://www.youtube.com/watch?v=z3_yA4HTJfs) |
+| Trailer      | [@KarlDuda](https://github.com/KarlDuda) [@julia-tonne](https://github.com/julia-tonne) [@arcuslinus](https://github.com/arcuslinus), inspired by the [original trailer](https://www.youtube.com/watch?v=z3_yA4HTJfs) |
